@@ -1,0 +1,18 @@
+﻿namespace TheCoffeeHouse.BackendApi.Entities
+{
+    public class CategoryMember
+    {
+        public string ID { get; set; }
+        public int MinPoint { get; set; }
+        public int MaxPoint { get; set; }
+        public string ConversionForm { get; set; }
+        public string Description { get; set; }
+        public string Name { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime dateTime { get; set; }
+
+        public string UserCreateID { get; set; }
+        public string UserUpdateID { get; set; }
+
+    }
+}

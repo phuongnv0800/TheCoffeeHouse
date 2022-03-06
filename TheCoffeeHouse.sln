@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheCoffeeHouse.BackendApi", "TheCoffeeHouse.BackendApi\TheCoffeeHouse.BackendApi.csproj", "{5AB4B313-FD1E-42BB-99DD-51262AFFC167}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheCoffeeHouse.BackendApi", "TheCoffeeHouse.BackendApi\TheCoffeeHouse.BackendApi.csproj", "{5AB4B313-FD1E-42BB-99DD-51262AFFC167}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheCoffeeHouse.Utilities", "TheCoffeeHouse.Utilities\TheCoffeeHouse.Utilities.csproj", "{1654B089-1C7F-4DC8-AFE3-5A9748FD614D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5AB4B313-FD1E-42BB-99DD-51262AFFC167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AB4B313-FD1E-42BB-99DD-51262AFFC167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AB4B313-FD1E-42BB-99DD-51262AFFC167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1654B089-1C7F-4DC8-AFE3-5A9748FD614D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1654B089-1C7F-4DC8-AFE3-5A9748FD614D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1654B089-1C7F-4DC8-AFE3-5A9748FD614D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1654B089-1C7F-4DC8-AFE3-5A9748FD614D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
