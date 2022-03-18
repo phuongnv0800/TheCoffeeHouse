@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCH.BackendApi", "TCH.BackendApi\TCH.BackendApi.csproj", "{CBA4DB4C-32E9-435C-9F97-E901CBF14341}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCH.Web", "TCH.Web\TCH.Web.csproj", "{A7DB6C7B-48B6-4C6A-89B2-9BE06981663B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CBA4DB4C-32E9-435C-9F97-E901CBF14341}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBA4DB4C-32E9-435C-9F97-E901CBF14341}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBA4DB4C-32E9-435C-9F97-E901CBF14341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7DB6C7B-48B6-4C6A-89B2-9BE06981663B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7DB6C7B-48B6-4C6A-89B2-9BE06981663B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7DB6C7B-48B6-4C6A-89B2-9BE06981663B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7DB6C7B-48B6-4C6A-89B2-9BE06981663B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
