@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TCH.BackendApi.Models.Enum;
-using TCH.BackendApi.Models.System.Roles;
 
-namespace TCH.ViewModel.System.Users
+namespace TCH.BackendApi.Models.System
 {
     public class UserVm
     {
         public string Id { get; set; }
 
-        [Display(Name ="Tên tài khoản")]
+        [Display(Name = "Tên tài khoản")]
         public string UserName { get; set; }
 
         [Display(Name = "Tên")]
@@ -28,6 +27,6 @@ namespace TCH.ViewModel.System.Users
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
 
-        public IList<RoleVm> Roles { get; set; }
+        public IList<string> Roles { get; set; }
     }
 }

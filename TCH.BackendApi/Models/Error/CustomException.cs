@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Settings.Error
+namespace TCH.BackendApi.Models.Error
 {
     public class CustomException : Exception
     {

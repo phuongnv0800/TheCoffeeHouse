@@ -6,15 +6,15 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
-using TCH.BackendApi.Repositories.Common;
 using TCH.BackendApi.Models.DataRepository;
-using TCH.ViewModel.System.Users;
-using TCH.BackendApi.Models.Common;
 using TCH.BackendApi.Models.SubModels;
+using TCH.BackendApi.Models.System;
+using TCH.BackendApi.Models.Searchs;
+using TCH.BackendApi.Models.Paginations;
 
-namespace TCH.BackendApi.Service.System
+namespace TCH.BackendApi.Models.DataManager
 {
-    public class UserManager : IUserRepository
+    public class UserManager : IUserRepository, IDisposable
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
@@ -43,7 +43,7 @@ namespace TCH.BackendApi.Service.System
                 return new Respond<dynamic>()
                 {
                     Result = 0,
-                    Message = "Tài khoản chưa đăng ký",
+                    Message = "Tài khoản không tồn tại",
                     Data = "",
                 };
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
@@ -108,7 +108,7 @@ namespace TCH.BackendApi.Service.System
                 Message = "Xoá tài khoản thất bại",
             };
         }
-
+        
         public async Task<Respond<UserVm>> GetById(string id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -133,7 +133,7 @@ namespace TCH.BackendApi.Service.System
                 Gender = user.Gender,
                 Address = user.Address,
                 //Avatar = SystemConstants.BaseUrlImage + USER_CONTENT_FOLDER_NAME + "/" + user.Avatar,
-                //Roles = roles,
+                Roles = roles,
             };
             return new Respond<UserVm>()
             {
@@ -142,6 +142,7 @@ namespace TCH.BackendApi.Service.System
                 Data = userVm,
             };
         }
+        
         public async Task<Respond<UserVm>> GetByUserName(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
@@ -166,7 +167,7 @@ namespace TCH.BackendApi.Service.System
                 Gender = user.Gender,
                 Address = user.Address,
                 //Avatar = SystemConstants.BaseUrlImage + USER_CONTENT_FOLDER_NAME + "/" + user.Avatar,
-                //Roles = roles,
+                Roles = roles,
             };
             return new Respond<UserVm>()
             {
@@ -176,16 +177,18 @@ namespace TCH.BackendApi.Service.System
             };
         }
 
-        public async Task<PagedList<UserVm>> GetUsersPaging(PagingRequest request)
+        public async Task<PagedList<UserVm>> GetAll(Search request)
         {
             var query = _userManager.Users;
-            if (!string.IsNullOrEmpty(request.Keyword))
+            if (!string.IsNullOrEmpty(request.Name))
             {
-                query = query.Where(x => x.UserName.Contains(request.Keyword));
+                query = query.Where(x => x.UserName.Contains(request.Name));
             }
             //paging
             int totalRow = await query.CountAsync();
-            var data = await query
+            if(request.IsPging == true)
+            {
+                var data = await query
                 .Select(
                     x => new UserVm()
                     {
@@ -201,23 +204,53 @@ namespace TCH.BackendApi.Service.System
                         //Avatar = SystemConstants.BaseUrlImage + USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
                     }
                 )
-                .OrderBy(x => x.Id)
+                //.OrderBy(x => x.Id)
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToListAsync();
-            // select
-            var pagedResult = new PagedList<UserVm>()
-            {
-                MetaData = new MetaData()
+                // select
+                var pagedResult = new PagedList<UserVm>()
                 {
                     TotalRecord = totalRow,
                     PageSize = request.PageSize,
                     CurrentPage = request.PageNumber,
                     TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
-                },
-                Items = data,
-            };
-            return pagedResult;
+                    Items = data,
+                };
+                return pagedResult;
+            }
+            else
+            {
+                var data = await query
+                .Select(
+                    x => new UserVm()
+                    {
+                        Email = x.Email,
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        UserName = x.UserName,
+                        Id = x.Id,
+                        PhoneNumber = x.PhoneNumber,
+                        DateOfBirth = x.DateOfBirth,
+                        Gender = x.Gender,
+                        Address = x.Address,
+                        //Avatar = SystemConstants.BaseUrlImage + USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
+                    }
+                )
+                //.OrderBy(x => x.Id)
+                .ToListAsync();
+                // select
+                var pagedResult = new PagedList<UserVm>()
+                {
+                    TotalRecord = totalRow,
+                    PageSize = totalRow,
+                    CurrentPage = 1,
+                    TotalPages = 1,
+                    Items = data,
+                };
+                return pagedResult;
+            }
+            
         }
 
         public async Task<MessageResult> Register(RegisterRequest request)
@@ -225,7 +258,8 @@ namespace TCH.BackendApi.Service.System
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user != null)
             {
-                return new MessageResult(){
+                return new MessageResult()
+                {
                     Message = "Tài khoản đã tồn tại",
                     Result = 0,
                 };
@@ -241,7 +275,7 @@ namespace TCH.BackendApi.Service.System
 
             user = new AppUser()
             {
-                DateOfBirth = request.Dob,
+                DateOfBirth = request.DateOfBirth,
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
@@ -340,13 +374,65 @@ namespace TCH.BackendApi.Service.System
                 Message = "Không thể cập nhật thông tin",
             };
         }
-
+        
+        public async Task<MessageResult> ChangePasword(ChangePassword req)
+        {
+            if (await _userManager.FindByNameAsync(req.UserName) == null)
+            {
+                return new MessageResult()
+                {
+                    Result = 0,
+                    Message = "Tài khoản không tồn tại",
+                };
+            }
+            var user = await _userManager.FindByLoginAsync(req.UserName, req.PasswordOld);
+            if (user == null)
+            {
+                return new MessageResult()
+                {
+                    Result = 0,
+                    Message = "Mật khẩu không chính xác",
+                };
+            }
+            if (req.PasswordNew.Equals(req.PasswordConfirm) == false)
+            {
+                return new MessageResult()
+                {
+                    Result = 0,
+                    Message = "Mật khẩu mới khách nhau",
+                };
+            }
+            var hasher = new PasswordHasher<AppUser>();
+            user.PasswordHash = hasher.HashPassword(null, req.PasswordNew);
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            { 
+                return new MessageResult()
+                {
+                    Result = 0,
+                    Message = "Thay đổi mật khẩu thành công",
+                };
+            }
+            return new MessageResult()
+            {
+                Result = 0,
+                Message = "Không thể cập nhật mật khẩu",
+            };
+        }
+        
         private async Task<string> SaveFileIFormFile(IFormFile file)
         {
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
             await _storageService.SaveFileAsync(file.OpenReadStream(), USER_CONTENT_FOLDER_NAME + "/" + fileName);
             return fileName;
+        }
+        
+        public void Dispose()
+        {
+            GC.Collect(2, GCCollectionMode.Forced, true);
+            GC.WaitForPendingFinalizers();
+            GC.SuppressFinalize(this);
         }
     }
 }

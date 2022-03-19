@@ -6,18 +6,41 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using TCH.BackendApi.EF;
 using TCH.BackendApi.Entities;
+using TCH.BackendApi.Models.DataManager;
+using TCH.BackendApi.Models.DataRepository;
+using TCH.BackendApi.Service.System;
 
 var builder = WebApplication.CreateBuilder(args);
-ConfigurationManager configuration = builder.Configuration;
+ConfigurationManager config = builder.Configuration;
 IWebHostEnvironment environment = builder.Environment;
+
+builder.Services.AddResponseCaching();
+
+builder.Services.AddDistributedMemoryCache();
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DbShop")));
+{
+    options.UseLoggerFactory(LoggerFactory.Create(builder => { builder.AddConsole(); }));
+    options.EnableSensitiveDataLogging();
+    if (environment.IsProduction())
+    {
+        options.UseSqlServer(config.GetConnectionString("Prod"));
+    }
+    else
+    {
+        options.UseSqlite(config.GetConnectionString("Dev"));
+
+    }
+});
 
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddControllers();
+builder.Services.AddTransient<IUserRepository, UserManager>();
+builder.Services.AddTransient<IRoleRepository, RoleManager>();
+
+builder.Services.AddTransient<IStorageService, FileStorageService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -53,9 +76,8 @@ builder.Services.AddSwaggerGen(c =>
                 });
 });
 //jwt
-string issuer = configuration.GetValue<string>("Jwt:Issuer");
-string signingKey = configuration.GetValue<string>("Jwt:Key");
-
+string issuer = config.GetValue<string>("Jwt:Issuer");
+string signingKey = config.GetValue<string>("Jwt:Key");
 byte[] signingKeyBytes = Encoding.UTF8.GetBytes(signingKey);
 
 builder.Services.AddAuthentication(opt =>
@@ -87,7 +109,20 @@ builder.Services.AddCors(option =>
         .AllowCredentials());
 });
 var app = builder.Build();
-
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        DbInitializer.Initialize(context);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred creating the DB.");
+    }
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -95,6 +130,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseResponseCaching();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TCH.ViewModel.System.Users
+namespace TCH.BackendApi.Models.System
 {
     public class LoginRequest
     {

@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using TCH.BackendApi.Models.Enum;
 
-namespace TCH.ViewModel.System.Users
+namespace TCH.BackendApi.Models.System
 {
     public class RegisterRequest
     {
         [Display(Name = "Tên")]
-        [Required(ErrorMessage ="Tên không được để trống")]
+        [Required(ErrorMessage = "Tên không được để trống")]
         public string FirstName { get; set; }
 
         [Display(Name = "Họ")]
@@ -18,7 +16,7 @@ namespace TCH.ViewModel.System.Users
         [Display(Name = "Ngày sinh")]
         [DataType(DataType.Date)]
         [Required]
-        public DateTime Dob { get; set; } = DateTime.Now;
+        public DateTime DateOfBirth { get; set; } = DateTime.Now;
 
         [Required(ErrorMessage = "Email không được để trống")]
         public string Email { get; set; }

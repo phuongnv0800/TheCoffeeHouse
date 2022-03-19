@@ -1,4 +1,4 @@
-﻿namespace TCH.BackendApi.Models.Common
+﻿namespace TCH.BackendApi.Models.System
 {
     public class SelectedItem
     {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TCH.BackendApi.Models.Enum;
 
-namespace TCH.ViewModel.System.Users
+namespace TCH.BackendApi.Models.System
 {
     public class UserUpdateRequest
     {

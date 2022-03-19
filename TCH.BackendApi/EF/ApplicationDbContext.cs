@@ -12,7 +12,6 @@ namespace TCH.BackendApi.EF
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
             builder.ApplyConfiguration(new AppRoleConfiguration());
             builder.ApplyConfiguration(new AppUserConfiguration());
             builder.ApplyConfiguration(new BranchConfiguration());
@@ -24,8 +23,8 @@ namespace TCH.BackendApi.EF
             builder.ApplyConfiguration(new OrderDetailConfiguration());
             builder.ApplyConfiguration(new OrderDetailToppingConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
-            builder.ApplyConfiguration(new ProductImageConfiguration());
-            builder.ApplyConfiguration(new ProductSizeConfiguration());
+            builder.ApplyConfiguration(new ImageConfiguration());
+            builder.ApplyConfiguration(new SizeConfiguration());
             builder.ApplyConfiguration(new PromotionConfiguration());
             builder.ApplyConfiguration(new PromotionProductConfiguration());
             builder.ApplyConfiguration(new StockConfiguration());
@@ -37,7 +36,7 @@ namespace TCH.BackendApi.EF
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<Image> ProductImages { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Material> Materials { get; set; }
@@ -47,7 +46,7 @@ namespace TCH.BackendApi.EF
         public DbSet<PromotionProduct> PromotionProducts { get; set; }
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<Topping> Toppings { get; set; }
-        public DbSet<ProductSize> ProductSizes { get; set; }
+        public DbSet<Size> Sizes { get; set; }
 
     }
 }

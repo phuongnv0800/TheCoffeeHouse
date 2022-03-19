@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TCH.BackendApi.Repositories.Common
+namespace TCH.BackendApi.Models.DataRepository
 {
     public interface IStorageService
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TCH.BackendApi.Models.Common;
-
-namespace TCH.ViewModel.System.Users
+﻿namespace TCH.BackendApi.Models.System
 {
     public class RoleAssignRequest
     {

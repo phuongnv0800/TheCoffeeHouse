@@ -1,56 +1,112 @@
-﻿//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Mvc;
-//using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TCH.BackendApi.Models.DataRepository;
+using TCH.BackendApi.Models.Error;
+using TCH.BackendApi.Models.Searchs;
 
-//namespace TCH.BackendApi.Controllers
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    [Authorize]
-//    public class CategoriesController : ControllerBase
-//    {
-//        private readonly ICategoryService _categoryService;
+namespace TCH.BackendApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class CategoriesController : ControllerBase
+    {
+        private readonly ICategoryRepository _category;
+        private readonly ILogger<CategoriesController> _logger;
 
-//        public CategoriesController(ICategoryService categoryService)
-//        {
-//            _categoryService = categoryService;
-//        }
-//        [HttpGet]
-//        [AllowAnonymous]
-//        public async Task<IActionResult> GetAll()
-//        {
-//            var result = await _categoryService.GetAll();
-//            if (result == null)
-//                return BadRequest("Can't not find category");
-//            return Ok(result);
-//        }
-//        [HttpPost]
-//        public async Task<IActionResult> Create([FromBody] string name)
-//        {
-//            if (!ModelState.IsValid)
-//                return BadRequest(ModelState);
-//            var result = await _categoryService.Create(name);
-//            if (result == 0)
-//                BadRequest();
-//            return Ok(result);
-//        }
-//        [HttpPut("{id}")]
-//        public async Task<IActionResult> Update(int id, [FromBody] string name)
-//        {
-//            if (!ModelState.IsValid)
-//                return BadRequest(ModelState);
-//            var result = await _categoryService.Update(id, name);
-//            if (result == 0)
-//                BadRequest();
-//            return Ok(result);
-//        }
-//        [HttpDelete("{id}")]
-//        public async Task<IActionResult> Delete(int id)
-//        { 
-//            var result = await _categoryService.Delete(id);
-//            if (result == 0)
-//                BadRequest();
-//            return Ok(result);
-//        }
-//    }
-//}
+        public CategoriesController(ICategoryRepository category, ILogger<CategoriesController> logger)
+        {
+            _category = category;
+            this._logger = logger;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAll(Search search)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+                var result = await _category.GetAll(search);
+                return Ok(result);
+            }
+            catch (CustomException e)
+            {
+                return BadRequest(new { result = -1, message = e.Message });
+            }
+            catch (Exception e)
+            {
+                SQLExceptionFilter.AddFileCheckSQL(e);
+                _logger.LogError(e.ToString());
+                return BadRequest(new { result = -2, message = e.Message });
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] string name)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+                var result = await _category.Create(name);
+                if (result.Result != 1)
+                    BadRequest();
+                return Ok(result);
+            }
+            catch (CustomException e)
+            {
+                return BadRequest(new { result = -1, message = e.Message });
+            }
+            catch (Exception e)
+            {
+                SQLExceptionFilter.AddFileCheckSQL(e);
+                _logger.LogError(e.ToString());
+                return BadRequest(new { result = -2, message = e.Message });
+            }
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, [FromBody] string name)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+                var result = await _category.Update(id, name);
+                if (result.Result != 1)
+                    BadRequest();
+                return Ok(result);
+            }
+            catch (CustomException e)
+            {
+                return BadRequest(new { result = -1, message = e.Message });
+            }
+            catch (Exception e)
+            {
+                SQLExceptionFilter.AddFileCheckSQL(e);
+                _logger.LogError(e.ToString());
+                return BadRequest(new { result = -2, message = e.Message });
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            try
+            {
+                var result = await _category.Delete(id);
+                if (result.Result != 1)
+                    BadRequest();
+                return Ok(result);
+            }
+            catch (CustomException e)
+            {
+                return BadRequest(new { result = -1, message = e.Message });
+            }
+            catch (Exception e)
+            {
+                SQLExceptionFilter.AddFileCheckSQL(e);
+                _logger.LogError(e.ToString());
+                return BadRequest(new { result = -2, message = e.Message });
+            }
+        }
+    }
+}

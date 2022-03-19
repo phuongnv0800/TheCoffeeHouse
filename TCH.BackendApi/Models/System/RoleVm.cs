@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TCH.BackendApi.Models.System.Roles
+﻿namespace TCH.BackendApi.Models.System
 {
     public class RoleVm
     {

@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TCH.BackendApi.Models.DataRepository;
 
-namespace TCH.BackendApi.Repositories.Common
+namespace TCH.BackendApi.Models.DataManager
 {
     public class FileStorageService : IStorageService
     {

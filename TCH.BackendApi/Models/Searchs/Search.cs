@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using ServiceBFF.Models.Paginations;
 
-namespace ServiceBFF.Models.Searchs
+namespace TCH.BackendApi.Models.Searchs
 {
     public enum SortType
     {
         DESC = 1, ASC = 0
     }
-    public class DinnerTableSearch
+    public class Search : PagingParameterModel
     {
         public string BranchID { get; set; }
         public string Name { get; set; } = "";
-        public int Status { get; set; } = -1;
-        public HashSet<string> AreaIDs { get; set; } = new HashSet<string>();
+        public bool IsPging { get; set; } = false;
         public string SortColumnName { get; set; } = null;
         public SortType SortType { get; set; } = SortType.DESC;
     }

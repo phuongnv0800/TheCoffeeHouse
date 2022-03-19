@@ -4,9 +4,9 @@ using TCH.BackendApi.Entities;
 
 namespace TCH.BackendApi.Configuration
 {
-    public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
+    public class ImageConfiguration : IEntityTypeConfiguration<Image>
     {
-        public void Configure(EntityTypeBuilder<ProductImage> builder)
+        public void Configure(EntityTypeBuilder<Image> builder)
         {
             builder.ToTable("ProductImages");
             builder.HasKey(x => x.ID);

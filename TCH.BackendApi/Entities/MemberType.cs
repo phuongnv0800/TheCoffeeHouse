@@ -9,7 +9,8 @@
         public double ConversationMoney { get; set; }
         public int ConversationPoint { get; set; }
         public string ConversionForm { get; set; }
-        public string Description { get; set; } 
+        public string Description { get; set; }
+        public string Unit { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
 

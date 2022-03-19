@@ -1,6 +1,7 @@
-﻿using TCH.ViewModel.System.Users;
-using TCH.BackendApi.Models.SubModels;
-using TCH.BackendApi.Models.Common;
+﻿using TCH.BackendApi.Models.SubModels;
+using TCH.BackendApi.Models.System;
+using TCH.BackendApi.Models.Paginations;
+using TCH.BackendApi.Models.Searchs;
 
 namespace TCH.BackendApi.Models.DataRepository
 {
@@ -12,7 +13,7 @@ namespace TCH.BackendApi.Models.DataRepository
 
         Task<Respond<UserVm>> GetByUserName(string userName);
 
-        Task<PagedList<UserVm>> GetUsersPaging(PagingRequest request);
+        Task<PagedList<UserVm>> GetAll(Search request);
 
         Task<MessageResult> Register(RegisterRequest request);
 
@@ -21,6 +22,7 @@ namespace TCH.BackendApi.Models.DataRepository
         Task<MessageResult> RoleAssign(string id, RoleAssignRequest request);
 
         Task<MessageResult> Delete(string id);
+        Task<MessageResult> ChangePasword(ChangePassword req);
 
     }
 }

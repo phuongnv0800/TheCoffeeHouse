@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using TCH.BackendApi.Service.System;
 using System.Threading.Tasks;
+using TCH.BackendApi.Models.Error;
+using TCH.BackendApi.Models.Searchs;
 
 namespace TCH.BackendApi.Controllers
 {
@@ -11,16 +13,32 @@ namespace TCH.BackendApi.Controllers
     public class RolesController : ControllerBase
     {
         private readonly IRoleRepository _roleService;
-        public RolesController(IRoleRepository roleService)
+        private readonly ILogger<RolesController> _logger;
+
+        public RolesController(IRoleRepository roleService, ILogger<RolesController> logger)
         {
             _roleService = roleService;
+            _logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(Search search)
         {
-            var roles = await _roleService.GetAll();
-            return Ok(roles);
+             try
+            {
+                var roles = await _roleService.GetAll(search);
+                return Ok(roles);
+            }
+            catch (CustomException e)
+            {
+                return BadRequest(new { result = -1, message = e.Message });
+            }
+            catch (Exception e)
+            {
+                SQLExceptionFilter.AddFileCheckSQL(e);
+                _logger.LogError(e.ToString());
+                return BadRequest(new { result = -2, message = e.Message });
+            }
         }
     }
 }
