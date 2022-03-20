@@ -11,6 +11,8 @@ namespace TCH.BackendApi.Configuration
             builder.ToTable("AppUsers");
             builder.Property(x => x.FirstName).IsRequired().HasMaxLength(200);
             builder.Property(x => x.LastName).IsRequired().HasMaxLength(200);
+            builder.HasMany(x => x.Orders).WithOne(x => x.AppUser).HasForeignKey(x => x.UserCreateID);
+            builder.HasMany(x=>x.UserBranches).WithOne(x=>x.User).HasForeignKey(x=>x.UserId);
         }
     }
 }

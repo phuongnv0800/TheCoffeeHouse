@@ -10,10 +10,8 @@ namespace TCH.BackendApi.Configuration
         {
             builder.ToTable("Sizes");
             builder.HasKey(x=>x.ID);
-            builder.Property(z=>z.ID).IsRequired();
-            builder.Property(z=>z.Size).IsRequired();
             builder.Property(z=>z.SubPrice).IsRequired().HasColumnType("decimal(18,2)"); 
-            builder.HasOne(x=>x.Product).WithMany(x=>x.ProductSizes).HasForeignKey(x=>x.ProductID);
+            builder.HasMany(x=>x.OrderDetails).WithOne(x=>x.Size).HasForeignKey(x=>x.SizeID);
         }
     }
 }

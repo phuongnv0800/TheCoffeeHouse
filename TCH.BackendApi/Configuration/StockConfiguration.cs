@@ -10,9 +10,10 @@ namespace TCH.BackendApi.Configuration
         {
             builder.ToTable("Stocks");
             builder.HasKey(e => e.ID);
-            builder.HasOne(x => x.Branch).WithOne(x => x.Stock).HasForeignKey<Stock>(x=>x.BranchID);
+            builder.HasOne(x => x.Branch).WithMany(x => x.Stocks).HasForeignKey(x=>x.BranchID);
             builder.Property(e => e.Description).HasMaxLength(255);
             builder.Property(x=>x.Name).IsRequired().HasMaxLength(255);
+            builder.HasMany(x => x.StockMaterials).WithOne(s => s.Stock).HasForeignKey(x => x.StockID);
         }
     }
 }

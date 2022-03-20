@@ -10,19 +10,18 @@ namespace TCH.BackendApi.Entities
         public ProductType ProductType { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
-        public string UserCreateID { get; set; }
-        public string UserUpdateID { get; set; }
-        public string Formula { get; set; }
+        public string? UserCreateID { get; set; }
+        public string? UserUpdateID { get; set; }
+        public string? Formula { get; set; }
         public double Price { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public string Unit { get; set; }
 
         public string CategoryID { get; set; }
         public Category Category { get; set; }
 
-        public virtual ICollection<Image> ProductImages { get; set; }
-        public virtual ICollection<Size> ProductSizes { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        public virtual ICollection<PromotionProduct> PromotionProducts { get; set; }
+        public  ICollection<ProductImage> ProductImages { get; set; }
+        public  ICollection<OrderDetail> OrderDetails { get; set; }
+        public ICollection<PromotionGift> PromotionGifts { get; set; }
     }
 }

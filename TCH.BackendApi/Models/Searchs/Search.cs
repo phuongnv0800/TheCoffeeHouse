@@ -8,10 +8,10 @@ namespace TCH.BackendApi.Models.Searchs
     }
     public class Search : PagingParameterModel
     {
-        public string BranchID { get; set; }
-        public string Name { get; set; } = "";
+        public string? BranchID { get; set; } 
+        public string? Name { get; set; }
         public bool IsPging { get; set; } = false;
-        public string SortColumnName { get; set; } = null;
+        public string? SortColumnName { get; set; }
         public SortType SortType { get; set; } = SortType.DESC;
     }
 }

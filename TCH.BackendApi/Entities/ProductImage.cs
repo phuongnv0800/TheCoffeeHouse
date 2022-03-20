@@ -1,6 +1,6 @@
 ﻿namespace TCH.BackendApi.Entities
 {
-    public class Image
+    public class ProductImage
     {
         public string ID { get; set; }
         public string Name { get; set; }

@@ -16,7 +16,10 @@ namespace TCH.BackendApi.Configuration
             builder.Property(x => x.Unit).IsRequired().HasMaxLength(100);
             builder.Property(x => x.Description).HasDefaultValue("Mặc định");
             builder.Property(x => x.Supplier).IsRequired();
-            builder.HasOne(x => x.Stock).WithMany(y => y.Materials).HasForeignKey(z => z.StockID);
+            builder.HasMany(x=>x.ImportMaterials).WithOne(x=>x.Material).HasForeignKey(x=>x.ImportID);
+            builder.HasMany(x => x.ExportMaterials).WithOne(x => x.Material).HasForeignKey(x => x.ExportID);
+            builder.HasMany(x => x.StockMaterials).WithOne(x => x.Material).HasForeignKey(x => x.StockID);
+            builder.HasMany(x => x.LiquidationMaterials).WithOne(x => x.Material).HasForeignKey(x => x.LiquidationID);
         }
     }
 }

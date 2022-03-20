@@ -10,13 +10,13 @@ using TCH.BackendApi.Models.SubModels;
 using TCH.BackendApi.Models.Searchs;
 using TCH.BackendApi.Models.Paginations;
 
-namespace TCH.BackendApi.Service.Catalog
+namespace TCH.BackendApi.Models.DataManager
 {
     public class CategoryManager : ICategoryRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly APIContext _context;
 
-        public CategoryManager(ApplicationDbContext context)
+        public CategoryManager(APIContext context)
         {
             _context = context;
         }
@@ -53,8 +53,9 @@ namespace TCH.BackendApi.Service.Catalog
                     TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
                     Items = data,
                 };
-                return new Respond<PagedList<CategoryVm>>() { 
-                    Data =pagedResult,
+                return new Respond<PagedList<CategoryVm>>()
+                {
+                    Data = pagedResult,
                     Result = 1,
                     Message = "Thành công",
                 };
@@ -127,7 +128,7 @@ namespace TCH.BackendApi.Service.Catalog
         public async Task<MessageResult> Delete(string id)
         {
             var category = await _context.Categories.FindAsync(id);
-            if(category == null)
+            if (category == null)
             {
                 return new MessageResult()
                 {

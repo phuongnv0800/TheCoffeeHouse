@@ -18,25 +18,26 @@ builder.Services.AddResponseCaching();
 
 builder.Services.AddDistributedMemoryCache();
 // Add services to the container.
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<APIContext>(options =>
 {
     options.UseLoggerFactory(LoggerFactory.Create(builder => { builder.AddConsole(); }));
     options.EnableSensitiveDataLogging();
-    if (environment.IsProduction())
-    {
+    //if (environment.IsProduction())
+    //{
         options.UseSqlServer(config.GetConnectionString("Prod"));
-    }
-    else
-    {
-        options.UseSqlite(config.GetConnectionString("Dev"));
+    //}
+    //else
+    //{
+    //    options.UseSqlite(config.GetConnectionString("Dev"));
 
-    }
+    //}
 });
 
 builder.Services.AddIdentity<AppUser, AppRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddEntityFrameworkStores<APIContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddControllers();
+builder.Services.AddTransient<ICategoryRepository, CategoryManager>();
 builder.Services.AddTransient<IUserRepository, UserManager>();
 builder.Services.AddTransient<IRoleRepository, RoleManager>();
 
@@ -114,7 +115,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
-        var context = services.GetRequiredService<ApplicationDbContext>();
+        var context = services.GetRequiredService<APIContext>();
         DbInitializer.Initialize(context);
     }
     catch (Exception ex)

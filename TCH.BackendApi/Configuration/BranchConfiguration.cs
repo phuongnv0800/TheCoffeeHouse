@@ -12,15 +12,14 @@ namespace TCH.BackendApi.Configuration
             builder.HasKey(x => x.ID);
             builder.Property(x => x.Adderss).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
-            builder.Property(x => x.NormalizedName).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Area).IsRequired().HasMaxLength(255);
             builder.Property(x => x.City).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Adderss).IsRequired().HasMaxLength(255);
             builder.Property(x => x.District).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Email).IsRequired().HasMaxLength(255);
             builder.HasMany(x=>x.Orders).WithOne(z=>z.Branch).HasForeignKey(x=>x.BranchID);
-            builder.HasMany(x => x.Promotions).WithOne(z => z.Branch).HasForeignKey(x => x.BranchID);
-            builder.HasOne(x => x.Stock).WithOne(x => x.Branch).HasForeignKey<Branch>(x => x.StockID);
+            builder.HasMany(x => x.UserBranches).WithOne(x => x.Branch).HasForeignKey(x => x.BranchID);
+            builder.HasMany(x => x.Stocks).WithOne(x => x.Branch).HasForeignKey(x => x.BranchID);
 
         }
     }

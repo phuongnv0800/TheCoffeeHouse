@@ -14,11 +14,12 @@ namespace TCH.BackendApi.Configuration
             builder.HasAlternateKey(x=>x.MemberID);
             builder.Property(x => x.Phone).IsRequired().HasMaxLength(10);
             builder.Property(x => x.FullName).IsRequired().HasMaxLength(255);
-            builder.Property(x => x.Address).HasMaxLength(255);
             builder.Property(x => x.Email).HasMaxLength(255);
             builder.Property(x => x.Point).HasDefaultValue(0);
 
             builder.HasOne(x => x.MemberType).WithMany(x => x.Customers).HasForeignKey(z => z.MemberTypeID);
+            builder.HasMany(x => x.Addresses).WithOne(x => x.Customer).HasForeignKey(z => z.CustomerID);
+            builder.HasMany(x => x.Orders).WithOne(x => x.Customer).HasForeignKey(z => z.CustomerID);
 
         }
     }

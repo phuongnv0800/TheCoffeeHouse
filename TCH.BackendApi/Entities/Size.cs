@@ -8,5 +8,6 @@ namespace TCH.BackendApi.Entities
         public string Name { get; set; }
         public double SubPrice { get; set; }
         public SizeType SizeType { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

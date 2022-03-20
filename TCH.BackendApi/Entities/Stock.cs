@@ -11,6 +11,6 @@
         public string Description { get; set; }
         public string BranchID { get; set; }
         public Branch Branch { get; set; }
-        public virtual ICollection<Material> Materials { get; set; }
+        public ICollection<StockMaterial> StockMaterials { get; set; }
     }
 }

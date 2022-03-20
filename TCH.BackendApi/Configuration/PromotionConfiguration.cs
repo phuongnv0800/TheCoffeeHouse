@@ -14,7 +14,7 @@ namespace TCH.BackendApi.Configuration
             builder.Property(x => x.Description);
             builder.Property(x => x.Quantity).IsRequired();
             builder.Property(x => x.Code).IsRequired().HasMaxLength(20);
-            builder.HasOne(x => x.Branch).WithMany(x=>x.Promotions);
+            builder.HasMany(x => x.PromotionGifts).WithOne(x => x.Promotion).HasForeignKey(x => x.PromotionID);  
             
         }
     }

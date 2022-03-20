@@ -10,7 +10,7 @@ namespace TCH.BackendApi.Entities
 
         public string? LastName { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; } =DateTime.Now;
 
         public Gender Gender { get; set; } = Gender.Male;
 
@@ -20,6 +20,7 @@ namespace TCH.BackendApi.Entities
 
         public DateTime? UpdateDate { get; set; }
         public DateTime CreateDate { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
+        public ICollection<Order> Orders { get; set; }
+        public ICollection<UserBranch> UserBranches { get; set; }
     }
 }

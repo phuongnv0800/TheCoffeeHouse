@@ -40,4 +40,9 @@
         Food,
         Other
     }
+    public enum OrderType
+    {
+        CarriedAway,
+        ForTopicalUse,
+    }
 }

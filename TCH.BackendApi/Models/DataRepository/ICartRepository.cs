@@ -2,7 +2,7 @@
 
 namespace TCH.BackendApi.Models.DataRepository
 {
-    public interface ICartReposiroty
+    public interface ICartRepository
     {
         Task<bool> Create(CartRequest request);
         Task<bool> Delete(Guid userId, int productId);
