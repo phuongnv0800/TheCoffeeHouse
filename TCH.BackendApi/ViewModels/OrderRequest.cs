@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TCH.BackendApi.Models.Enum;
 
-namespace TCH.ViewModel.Catalog
+namespace TCH.BackendApi.ViewModels
 {
     public class OrderRequest
     {
         public Guid UserId { get; set; }
         public int Id { set; get; }
-        [Required(ErrorMessage ="Nhập thông tin người nhận")]
+        [Required(ErrorMessage = "Nhập thông tin người nhận")]
         public string ShipName { set; get; }
 
         [Required(ErrorMessage = "Nhập địa chỉ người nhận")]

@@ -1,4 +1,6 @@
-﻿namespace TCH.BackendApi.Models.Paginations
+﻿using TCH.BackendApi.ViewModels;
+
+namespace TCH.BackendApi.Models.Paginations
 {
     public class PagedList<T>
     {

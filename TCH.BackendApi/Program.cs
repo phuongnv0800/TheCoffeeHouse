@@ -9,6 +9,7 @@ using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataManager;
 using TCH.BackendApi.Models.DataRepository;
 using TCH.BackendApi.Service.System;
+using TCH.BackendApi.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config = builder.Configuration;
@@ -22,21 +23,21 @@ builder.Services.AddDbContext<APIContext>(options =>
 {
     options.UseLoggerFactory(LoggerFactory.Create(builder => { builder.AddConsole(); }));
     options.EnableSensitiveDataLogging();
-    //if (environment.IsProduction())
-    //{
+    if (environment.IsProduction())
+    {
         options.UseSqlServer(config.GetConnectionString("Prod"));
-    //}
-    //else
-    //{
-    //    options.UseSqlite(config.GetConnectionString("Dev"));
-
-    //}
+    }
+    else
+    {
+        options.UseSqlServer(config.GetConnectionString("Dev"));
+    }
 });
-
+builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Program));
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<APIContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddControllers();
+builder.Services.AddTransient<IProductRepository, ProductManager>();
 builder.Services.AddTransient<ICategoryRepository, CategoryManager>();
 builder.Services.AddTransient<IUserRepository, UserManager>();
 builder.Services.AddTransient<IRoleRepository, RoleManager>();
@@ -125,12 +126,13 @@ using (var scope = app.Services.CreateScope())
     }
 }
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseResponseCaching();
 app.UseHttpsRedirection();
 app.UseStaticFiles();

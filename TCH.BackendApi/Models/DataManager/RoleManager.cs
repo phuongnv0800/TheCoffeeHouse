@@ -4,8 +4,8 @@ using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.Paginations;
 using TCH.BackendApi.Models.Searchs;
 using TCH.BackendApi.Models.SubModels;
-using TCH.BackendApi.Models.System;
 using TCH.BackendApi.Service.System;
+using TCH.BackendApi.ViewModels;
 
 namespace TCH.BackendApi.Models.DataManager
 {

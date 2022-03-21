@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TCH.BackendApi.Models.DataRepository;
 using TCH.BackendApi.Models.Error;
 using TCH.BackendApi.Models.Searchs;
+using TCH.BackendApi.ViewModels;
 
 namespace TCH.BackendApi.Controllers
 {
@@ -42,7 +43,7 @@ namespace TCH.BackendApi.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] string name)
+        public async Task<IActionResult> Create([FromBody] CategoryVm name)
         {
             try
             {
@@ -65,7 +66,7 @@ namespace TCH.BackendApi.Controllers
             }
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] string name)
+        public async Task<IActionResult> Update(string id, [FromBody] CategoryVm name)
         {
             try
             {

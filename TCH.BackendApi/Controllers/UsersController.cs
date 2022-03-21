@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TCH.BackendApi.Models.DataRepository;
-using TCH.BackendApi.Models.System;
 using TCH.BackendApi.Models.Searchs;
 using TCH.BackendApi.Models.Error;
+using TCH.BackendApi.ViewModels;
 
 namespace TCH.BackendApi.Controllers
 {
@@ -48,7 +48,6 @@ namespace TCH.BackendApi.Controllers
         }
 
         [HttpPost("create")]
-        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             try

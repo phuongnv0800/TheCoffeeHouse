@@ -11,7 +11,7 @@ namespace TCH.BackendApi.Models.Searchs
         public string? BranchID { get; set; } 
         public string? Name { get; set; }
         public bool IsPging { get; set; } = false;
-        public string? SortColumnName { get; set; }
+        //public string? SortColumnName { get; set; }
         public SortType SortType { get; set; } = SortType.DESC;
     }
 }

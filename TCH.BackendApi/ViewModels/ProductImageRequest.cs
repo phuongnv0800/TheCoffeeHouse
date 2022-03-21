@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TCH.ViewModel.Catalog
+namespace TCH.BackendApi.ViewModels
 {
     public class ProductImageRequest
     {
-        public string Name { get; set; }
         public bool IsShowHome { get; set; }
         public string Caption { get; set; }
         public IFormFile ImageFile { get; set; }

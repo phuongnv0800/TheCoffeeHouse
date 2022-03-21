@@ -22,7 +22,7 @@ namespace TCH.BackendApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(Search search)
+        public async Task<IActionResult> GetAll([FromQuery]Search search)
         {
              try
             {
