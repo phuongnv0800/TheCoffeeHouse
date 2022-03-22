@@ -108,7 +108,8 @@ builder.Services.AddCors(option =>
         .SetIsOriginAllowed((host) => true)
         .AllowAnyMethod()
         .AllowAnyHeader()
-        .AllowCredentials());
+        .AllowCredentials()
+        .WithMethods("GET, PATCH, DELETE, PUT, POST, OPTIONS"));
 });
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())

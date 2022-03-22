@@ -361,7 +361,46 @@ namespace TCH.BackendApi.Models.DataManager
             GC.SuppressFinalize(this);
         }
 
-        public Task<Respond<PagedList<Size>>> GetAllSize()
+        public async Task<Respond<PagedList<SizeVm>>> GetAllSize()
+        {
+            var sizes = await _context.Sizes.ToListAsync();
+            if (sizes == null)
+            {
+                return new Respond<PagedList<SizeVm>>()
+                {
+                    Data = null,
+                    Result = -1,
+                    Message = "Không có dữ liệu",
+                };
+            }
+            var sizeVms = sizes.Select(x=> _mapper.Map<SizeVm>(x)).ToList();
+            var pagedResult = new PagedList<SizeVm>()
+            {
+                TotalRecord = sizeVms.Count,
+                PageSize = sizeVms.Count,
+                CurrentPage = 1,
+                TotalPages = sizeVms.Count,
+                Items = sizeVms,
+            };
+            return new Respond<PagedList<SizeVm>>()
+            {
+                Data = pagedResult,
+                Result = 1,
+                Message = "Thành công",
+            };
+        }
+
+        public Task<MessageResult> UpdateSize(string sizeID, SizeVm size)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<MessageResult> CreateSize(SizeVm size)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<MessageResult> DeleteSize(string sizeID)
         {
             throw new NotImplementedException();
         }

@@ -14,6 +14,8 @@ namespace TCH.BackendApi.ViewModels
             CreateMap<ProductImageVm, ProductImage>();
             CreateMap<Product, ProductVm>();
             CreateMap<ProductRequest, Product>();
+            CreateMap<Size, SizeVm>();
+            CreateMap<SizeVm, Size>();
         }
     }
 }
