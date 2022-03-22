@@ -1,4 +1,4 @@
-﻿using TCH.ViewModel.Catalog;
+﻿using TCH.BackendApi.ViewModels;
 
 namespace TCH.BackendApi.Models.DataRepository
 {

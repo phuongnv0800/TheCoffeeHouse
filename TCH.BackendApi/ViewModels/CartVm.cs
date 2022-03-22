@@ -4,16 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TCH.ViewModel.Catalog
+namespace TCH.BackendApi.ViewModels
 {
-    public class OrderList
+    public class CartVm
     {
-        public int OrderId { set; get; }
-        public int ProductId { set; get; }
+        public Guid UserId { get; set; }
+        public int ProductId { get; set; }
         public string Name { get; set; }
-        public string ImagePath { get; set; }
         public int Quantity { set; get; }
+
         public decimal Price { set; get; }
         public decimal SubTotal { get; set; }
+        public string ImagePath { get; set; }
+        public DateTime DateCreated { get; set; }
     }
 }

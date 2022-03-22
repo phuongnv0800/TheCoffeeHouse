@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TCH.BackendApi.Models.Enum;
 
-namespace TCH.BackendApi.Models.System
+namespace TCH.BackendApi.ViewModels
 {
     public class RegisterRequest
     {

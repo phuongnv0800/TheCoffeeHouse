@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TCH.ViewModel.Catalog
+namespace TCH.BackendApi.ViewModels
 {
     public class CartRequest
     {

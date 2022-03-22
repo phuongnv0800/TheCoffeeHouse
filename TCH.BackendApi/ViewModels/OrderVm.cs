@@ -1,6 +1,6 @@
 ﻿using TCH.BackendApi.Models.Enum;
 
-namespace TCH.ViewModel.Catalog
+namespace TCH.BackendApi.ViewModels
 {
     public class OrderVm
     {
