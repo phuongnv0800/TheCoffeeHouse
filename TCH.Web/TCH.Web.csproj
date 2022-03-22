@@ -8,21 +8,23 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\icons\facebook.svg" />
+    <Content Remove="wwwroot\product\tea\tra_dao_cam_sa.webp" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="wwwroot\icons\facebook.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Product\" />
+    <Resource Include="wwwroot\product\tea\tra_dao_cam_sa.webp" />
   </ItemGroup>
 
 </Project>
