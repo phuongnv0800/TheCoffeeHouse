@@ -360,5 +360,10 @@ namespace TCH.BackendApi.Models.DataManager
             GC.WaitForPendingFinalizers();
             GC.SuppressFinalize(this);
         }
+
+        public Task<Respond<PagedList<Size>>> GetAllSize()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
