@@ -46,7 +46,7 @@ namespace TCH.BackendApi.Models.DataManager
                 )
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .OrderBy(x=>x.Name)
+                //.OrderBy(x=>x.Name)
                 .ToListAsync();
                 // select
                 var pagedResult = new PagedList<CategoryVm>()
@@ -70,7 +70,7 @@ namespace TCH.BackendApi.Models.DataManager
                 .Select(
                     x => _mapper.Map<CategoryVm>(x)
                 )
-                .OrderBy(x => x.Name)
+                //.OrderBy(x => x.Name)
                 .ToListAsync();
                 // select
                 var pagedResult = new PagedList<CategoryVm>()

@@ -42,9 +42,9 @@ namespace TCH.BackendApi.Models.DataManager
             if (user == null)
                 return new Respond<dynamic>()
                 {
-                    Result = 0,
+                    Result = -1,
                     Message = "Tài khoản không tồn tại",
-                    Data = "",
+                    Data = null,
                 };
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
@@ -53,7 +53,7 @@ namespace TCH.BackendApi.Models.DataManager
                 {
                     Result = 0,
                     Message = "Tài khoản mật khẩu không chính xác",
-                    Data = "",
+                    Data = null,
                 };
             }
 
@@ -91,7 +91,7 @@ namespace TCH.BackendApi.Models.DataManager
             if (user == null)
                 return new MessageResult()
                 {
-                    Result = 0,
+                    Result = -1,
                     Message = "Tài khoản không tồn tại",
                 };
             await _storageService.DeleteFileAsync(USER_CONTENT_FOLDER_NAME + "/" + user.Avatar);
@@ -99,7 +99,7 @@ namespace TCH.BackendApi.Models.DataManager
             if (result.Succeeded)
                 return new MessageResult()
                 {
-                    Result = 0,
+                    Result = 1,
                     Message = "Xoá tài khoản thành công",
                 };
             return new MessageResult()
@@ -115,7 +115,7 @@ namespace TCH.BackendApi.Models.DataManager
             if (user == null)
                 return new Respond<UserVm>()
                 {
-                    Result = 1,
+                    Result = -1,
                     Message = "Tài khoản không tồn tại",
                     Data = null,
                 };
@@ -149,7 +149,7 @@ namespace TCH.BackendApi.Models.DataManager
             if (user == null)
                 return new Respond<UserVm>()
                 {
-                    Result = 1,
+                    Result = 0,
                     Message = "Tài khoản không tồn tại",
                     Data = null,
                 };
@@ -261,7 +261,7 @@ namespace TCH.BackendApi.Models.DataManager
                 return new MessageResult()
                 {
                     Message = "Tài khoản đã tồn tại",
-                    Result = 0,
+                    Result = -1,
                 };
             }
             if (await _userManager.FindByEmailAsync(request.Email) != null)
@@ -299,7 +299,7 @@ namespace TCH.BackendApi.Models.DataManager
             return new MessageResult()
             {
                 Message = "Tạo tài khoản thất bại",
-                Result = 0,
+                Result = -2,
             };
         }
 
@@ -331,7 +331,7 @@ namespace TCH.BackendApi.Models.DataManager
             }
             return new MessageResult()
             {
-                Result = 0,
+                Result = 1,
                 Message = "Phân quyền thành công",
             };
         }
@@ -364,7 +364,7 @@ namespace TCH.BackendApi.Models.DataManager
             {
                 return new MessageResult()
                 {
-                    Result = 0,
+                    Result = 1,
                     Message = "Cập nhật thông tin thành công",
                 };
             }
@@ -398,8 +398,8 @@ namespace TCH.BackendApi.Models.DataManager
             {
                 return new MessageResult()
                 {
-                    Result = 0,
-                    Message = "Mật khẩu mới khách nhau",
+                    Result = -1,
+                    Message = "Mật khẩu mới khác nhau",
                 };
             }
             var hasher = new PasswordHasher<AppUser>();
@@ -409,7 +409,7 @@ namespace TCH.BackendApi.Models.DataManager
             { 
                 return new MessageResult()
                 {
-                    Result = 0,
+                    Result = 1,
                     Message = "Thay đổi mật khẩu thành công",
                 };
             }
