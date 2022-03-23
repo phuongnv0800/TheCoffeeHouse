@@ -20,6 +20,9 @@ namespace TCH.BackendApi.Models.DataRepository
         Task<MessageResult> RemoveImage(string imageID);
         Task<MessageResult> UpdateImage(string imageID, ProductImageRequest request);
 
-        Task<Respond<PagedList<Size>>> GetAllSize();
+        Task<Respond<PagedList<SizeVm>>> GetAllSize();
+        Task<MessageResult> UpdateSize(string sizeID, SizeVm size);
+        Task<MessageResult> CreateSize(SizeVm size);
+        Task<MessageResult> DeleteSize(string sizeID);
     }
 }
