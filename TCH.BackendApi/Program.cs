@@ -108,8 +108,7 @@ builder.Services.AddCors(option =>
         .SetIsOriginAllowed((host) => true)
         .AllowAnyMethod()
         .AllowAnyHeader()
-        .AllowCredentials()
-        .WithMethods("GET, PATCH, DELETE, PUT, POST, OPTIONS"));
+        .AllowCredentials());
 });
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
@@ -138,9 +137,9 @@ app.UseResponseCaching();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseCors("CorsPolicy");
 app.UseRouting();
 
-app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
