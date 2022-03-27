@@ -56,11 +56,13 @@ namespace TCH.BackendApi.EF
         public DbSet<Material> Materials { get; set; }
         public DbSet<MaterialType> MaterialTypes{ get; set; }
         public DbSet<MemberType> MemberTypes { get; set; }
+        public DbSet<Menu> Menus { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<OrderDetailTopping> OrderDetailToppings { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<ProductInMenu> ProductInMenus{ get; set; }
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<PromotionGift> PromotionGifts { get; set; }
         public DbSet<Size> Sizes { get; set; }

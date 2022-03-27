@@ -1,44 +1,42 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TCH.BackendApi.Service.System;
-using System.Threading.Tasks;
 using TCH.BackendApi.Models.Error;
 using TCH.BackendApi.Models.Searchs;
+using TCH.BackendApi.Models.DataRepository;
 
-namespace TCH.BackendApi.Controllers
+namespace TCH.BackendApi.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+[Authorize]
+public class RolesController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    [Authorize]
-    public class RolesController : ControllerBase
+    private readonly IRoleRepository _roleService;
+    private readonly ILogger<RolesController> _logger;
+
+    public RolesController(IRoleRepository roleService, ILogger<RolesController> logger)
     {
-        private readonly IRoleRepository _roleService;
-        private readonly ILogger<RolesController> _logger;
+        _roleService = roleService;
+        _logger = logger;
+    }
 
-        public RolesController(IRoleRepository roleService, ILogger<RolesController> logger)
+    [HttpGet]
+    public async Task<IActionResult> GetAll([FromQuery] Search search)
+    {
+        try
         {
-            _roleService = roleService;
-            _logger = logger;
+            var roles = await _roleService.GetAll(search);
+            return Ok(roles);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery]Search search)
+        catch (CustomException e)
         {
-             try
-            {
-                var roles = await _roleService.GetAll(search);
-                return Ok(roles);
-            }
-            catch (CustomException e)
-            {
-                return BadRequest(new { result = -1, message = e.Message });
-            }
-            catch (Exception e)
-            {
-                SQLExceptionFilter.AddFileCheckSQL(e);
-                _logger.LogError(e.ToString());
-                return BadRequest(new { result = -2, message = e.Message });
-            }
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            SQLExceptionFilter.AddFileCheckSQL(e);
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
         }
     }
 }

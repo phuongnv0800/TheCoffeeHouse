@@ -14,98 +14,98 @@ namespace TCH.BackendApi.EF
             }
             var categories = new Category[]{
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "f7c75354-48e8-49b5-9ea4-dca7b81888df",
                     Name = "Cà Phê Việt Nam",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID="3287ce53-a833-4d4c-b821-a2d5b5cbced5",
                     Name = "Cà Phê Máy",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "0e91fcb8-fa59-4a86-9af9-e608d3175caa",
                     Name = "Cold Brew",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "4047a9ea-36a5-4b6b-a293-e3a914281736",
                     Name = "Trà trái cây",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
                     Name = "Trà sữa Macchiato",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
                     Name = "Đá xay",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "134aac36-958e-4a30-9887-85996c2a9771",
                     Name = "Matcha - Sô cô la",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
                     Name = "Bánh mặn",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
                     Name = "Bánh ngọt",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "3b9db312-c2e6-4d71-b7f3-406c6182eb5d",
                     Name = "Snack",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "2d79d339-660c-468b-9d40-ef62cc9a5baa",
                     Name = "Cà phê tại nhà",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
                     Name = "Trà tại nhà",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "2e008313-4f56-40c0-89a9-01abe3d5e22f",
                     Name = "Bộ sưu tập quà tặng",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Description = "Mặc định",
                 },
                 new Category() {
-                    ID= Guid.NewGuid().ToString(),
+                    ID= "4f0a40b1-b135-4f50-ba4c-8568e7d5e089",
                     Name = "Combo",
                     UpdateDate = DateTime.Now,
                     CreateDate = DateTime.Now,
@@ -117,7 +117,7 @@ namespace TCH.BackendApi.EF
                 context.Categories.Add(item);
             }
             context.SaveChanges();
-
+           
             var branches = new Branch[]
             {
                 new Branch() {
