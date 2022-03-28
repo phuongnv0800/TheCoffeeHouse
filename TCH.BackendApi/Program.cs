@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -8,7 +10,6 @@ using TCH.BackendApi.EF;
 using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataManager;
 using TCH.BackendApi.Models.DataRepository;
-using TCH.BackendApi.Service.System;
 using TCH.BackendApi.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,13 +37,18 @@ builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Program)
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<APIContext>()
     .AddDefaultTokenProviders();
-builder.Services.AddControllers();
-builder.Services.AddTransient<IProductRepository, ProductManager>();
-builder.Services.AddTransient<ICategoryRepository, CategoryManager>();
-builder.Services.AddTransient<IUserRepository, UserManager>();
-builder.Services.AddTransient<IRoleRepository, RoleManager>();
+builder.Services.AddScoped<IProductRepository, ProductManager>();
+builder.Services.AddScoped<ICategoryRepository, CategoryManager>();
+builder.Services.AddScoped<IUserRepository, UserManager>();
+builder.Services.AddScoped<IRoleRepository, RoleManager>();
+builder.Services.AddScoped<IMaterialRepository, MaterialManager>();
+builder.Services.AddScoped<IBranchRepository, BranchManager>();
+builder.Services.AddScoped<IMenuRepository, MenuManager>();
+//builder.Services.AddScoped<IOrderRepository, OrderManager>();
 
-builder.Services.AddTransient<IStorageService, FileStorageService>();
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<IStorageService, FileStorageService>();
+builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -122,7 +128,7 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred creating the DB.");
+        logger.LogError(ex, "An error occurred creating the DB!..");
     }
 }
 // Configure the HTTP request pipeline.
@@ -134,8 +140,14 @@ using (var scope = app.Services.CreateScope())
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseResponseCaching();
+app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(builder.Environment.ContentRootPath, "Uploads")),
+    RequestPath = "/uploads"
+});
 
 app.UseCors("CorsPolicy");
 app.UseRouting();

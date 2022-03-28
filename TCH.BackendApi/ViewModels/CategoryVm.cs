@@ -1,10 +1,7 @@
-﻿namespace TCH.BackendApi.ViewModels
-{
-    public class CategoryVm
-    {
-        public string? Id { get; set; }
+﻿namespace TCH.BackendApi.ViewModels;
 
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-    }
+public class CategoryVm
+{
+    public string? Name { get; set; }
+    public string? Description { get; set; }
 }

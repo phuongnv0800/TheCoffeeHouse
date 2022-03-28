@@ -1,4 +1,4 @@
-﻿using ServiceBFF.Models.Paginations;
+﻿using TCH.BackendApi.Models.Paginations;
 
 namespace TCH.BackendApi.Models.Searchs
 {
@@ -8,7 +8,7 @@ namespace TCH.BackendApi.Models.Searchs
     }
     public class Search : PagingParameterModel
     {
-        public string? BranchID { get; set; } 
+        // public string? BranchID { get; set; } 
         public string? Name { get; set; }
         public bool IsPging { get; set; } = false;
         //public string? SortColumnName { get; set; }

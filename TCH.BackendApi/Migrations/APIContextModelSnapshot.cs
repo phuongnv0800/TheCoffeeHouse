@@ -186,12 +186,17 @@ namespace TCH.BackendApi.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("RoleGroupID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.HasIndex("RoleGroupID");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -266,6 +271,9 @@ namespace TCH.BackendApi.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RoleGroupID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -288,6 +296,8 @@ namespace TCH.BackendApi.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("RoleGroupID");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -487,6 +497,9 @@ namespace TCH.BackendApi.Migrations
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
 
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
 
                     b.ToTable("ExportReports", (string)null);
@@ -537,7 +550,6 @@ namespace TCH.BackendApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StockName")
@@ -550,6 +562,9 @@ namespace TCH.BackendApi.Migrations
 
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
+
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -630,6 +645,9 @@ namespace TCH.BackendApi.Migrations
 
                     b.Property<double>("RecoveryValue")
                         .HasColumnType("float");
+
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -754,6 +772,49 @@ namespace TCH.BackendApi.Migrations
                     b.ToTable("MemberTypes", (string)null);
                 });
 
+            modelBuilder.Entity("TCH.BackendApi.Entities.Menu", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BranchID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserUpdateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BranchID");
+
+                    b.ToTable("Menus");
+                });
+
             modelBuilder.Entity("TCH.BackendApi.Entities.Order", b =>
                 {
                     b.Property<string>("ID")
@@ -839,16 +900,15 @@ namespace TCH.BackendApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("PriceProduct")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PriceSize")
+                        .HasColumnType("float");
 
                     b.Property<string>("ProductID")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -857,15 +917,8 @@ namespace TCH.BackendApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("SizeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("SubAmount")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<double>("SubPrice")
-                        .HasColumnType("float");
 
                     b.HasKey("ID");
 
@@ -896,6 +949,9 @@ namespace TCH.BackendApi.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<double>("SubAmount")
+                        .HasColumnType("float");
+
                     b.HasKey("OrderDetailID", "ToppingID");
 
                     b.HasIndex("ToppingID");
@@ -922,6 +978,16 @@ namespace TCH.BackendApi.Migrations
                     b.Property<string>("Formula")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSale")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LinkImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -932,6 +998,9 @@ namespace TCH.BackendApi.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<double>("PriceSale")
+                        .HasColumnType("float");
 
                     b.Property<int>("ProductType")
                         .HasColumnType("int");
@@ -995,6 +1064,24 @@ namespace TCH.BackendApi.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages", (string)null);
+                });
+
+            modelBuilder.Entity("TCH.BackendApi.Entities.ProductInMenu", b =>
+                {
+                    b.Property<string>("ProductID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MenuID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ProductID", "MenuID");
+
+                    b.HasIndex("MenuID");
+
+                    b.ToTable("ProductInMenus", (string)null);
                 });
 
             modelBuilder.Entity("TCH.BackendApi.Entities.Promotion", b =>
@@ -1083,10 +1170,31 @@ namespace TCH.BackendApi.Migrations
                     b.ToTable("PromotionGifts", (string)null);
                 });
 
+            modelBuilder.Entity("TCH.BackendApi.Entities.RoleGroup", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("RoleGroup");
+                });
+
             modelBuilder.Entity("TCH.BackendApi.Entities.Size", b =>
                 {
                     b.Property<string>("ID")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1097,6 +1205,15 @@ namespace TCH.BackendApi.Migrations
 
                     b.Property<decimal>("SubPrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserUpdateID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -1116,7 +1233,6 @@ namespace TCH.BackendApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -1129,11 +1245,9 @@ namespace TCH.BackendApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserCreateID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserUpdateID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -1173,6 +1287,9 @@ namespace TCH.BackendApi.Migrations
                     b.Property<string>("ID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -1182,6 +1299,15 @@ namespace TCH.BackendApi.Migrations
 
                     b.Property<decimal>("SubPrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserUpdateID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -1265,6 +1391,24 @@ namespace TCH.BackendApi.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("TCH.BackendApi.Entities.AppRole", b =>
+                {
+                    b.HasOne("TCH.BackendApi.Entities.RoleGroup", "RoleGroup")
+                        .WithMany("Roles")
+                        .HasForeignKey("RoleGroupID");
+
+                    b.Navigation("RoleGroup");
+                });
+
+            modelBuilder.Entity("TCH.BackendApi.Entities.AppUser", b =>
+                {
+                    b.HasOne("TCH.BackendApi.Entities.RoleGroup", "RoleGroup")
+                        .WithMany()
+                        .HasForeignKey("RoleGroupID");
+
+                    b.Navigation("RoleGroup");
+                });
+
             modelBuilder.Entity("TCH.BackendApi.Entities.Customer", b =>
                 {
                     b.HasOne("TCH.BackendApi.Entities.MemberType", "MemberType")
@@ -1342,6 +1486,17 @@ namespace TCH.BackendApi.Migrations
                         .IsRequired();
 
                     b.Navigation("MaterialType");
+                });
+
+            modelBuilder.Entity("TCH.BackendApi.Entities.Menu", b =>
+                {
+                    b.HasOne("TCH.BackendApi.Entities.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
                 });
 
             modelBuilder.Entity("TCH.BackendApi.Entities.Order", b =>
@@ -1431,6 +1586,25 @@ namespace TCH.BackendApi.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("TCH.BackendApi.Entities.ProductInMenu", b =>
+                {
+                    b.HasOne("TCH.BackendApi.Entities.Menu", "Menu")
+                        .WithMany("ProductInMenus")
+                        .HasForeignKey("MenuID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TCH.BackendApi.Entities.Product", "Product")
+                        .WithMany("ProductInMenus")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
 
                     b.Navigation("Product");
                 });
@@ -1567,6 +1741,11 @@ namespace TCH.BackendApi.Migrations
                     b.Navigation("Customers");
                 });
 
+            modelBuilder.Entity("TCH.BackendApi.Entities.Menu", b =>
+                {
+                    b.Navigation("ProductInMenus");
+                });
+
             modelBuilder.Entity("TCH.BackendApi.Entities.Order", b =>
                 {
                     b.Navigation("OrderDetails");
@@ -1583,12 +1762,19 @@ namespace TCH.BackendApi.Migrations
 
                     b.Navigation("ProductImages");
 
+                    b.Navigation("ProductInMenus");
+
                     b.Navigation("PromotionGifts");
                 });
 
             modelBuilder.Entity("TCH.BackendApi.Entities.Promotion", b =>
                 {
                     b.Navigation("PromotionGifts");
+                });
+
+            modelBuilder.Entity("TCH.BackendApi.Entities.RoleGroup", b =>
+                {
+                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("TCH.BackendApi.Entities.Size", b =>

@@ -5,6 +5,13 @@
         Male,
         Female,
     }
+    public enum SugarType
+    {
+        ZeroPercent = 1,
+        FiftyPercent = 2,
+        SeventyFivePercent = 3,
+        OneHundredPercent = 4,
+    }
     public enum PromotionObject
     {
         Food = 1, 
@@ -16,6 +23,7 @@
         Amount = 2,
         SumAmount = 3, 
         SumPercent = 4,
+        Gift = 5,
     }
     public enum OrderStatus
     {

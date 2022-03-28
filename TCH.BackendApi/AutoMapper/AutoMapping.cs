@@ -7,7 +7,7 @@ namespace TCH.BackendApi.ViewModels
     {
         public AutoMapping()
         {
-            // nguồn , đích
+            // nguồn , đích ex: AppUser user = mapper.Map<AppUser>(model); model la nguồn
             CreateMap<CategoryVm, Category>();
             CreateMap<Category, CategoryVm>();
             CreateMap<ProductImage, ProductImageVm>();
@@ -16,6 +16,8 @@ namespace TCH.BackendApi.ViewModels
             CreateMap<ProductRequest, Product>();
             CreateMap<Size, SizeVm>();
             CreateMap<SizeVm, Size>();
+
+            CreateMap<BranchRequest, Branch>();
         }
     }
 }
