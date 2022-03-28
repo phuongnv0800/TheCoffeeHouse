@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 using TCH.BackendApi.Models.Enum;
 
 namespace TCH.BackendApi.Entities;
@@ -20,6 +21,7 @@ public class AppUser : IdentityUser
 
     public DateTime? UpdateDate { get; set; }
     public DateTime CreateDate { get; set; }
+    public RoleGroup RoleGroup { get; set; }
     public ICollection<Order> Orders { get; set; }
     public ICollection<UserBranch> UserBranches { get; set; }
 }

@@ -32,6 +32,7 @@ namespace TCH.BackendApi.EF
             builder.ApplyConfiguration(new OrderDetailToppingConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new ProductImageConfiguration());
+            builder.ApplyConfiguration(new ProductInMenuConfiguration());
             builder.ApplyConfiguration(new PromotionConfiguration());
             builder.ApplyConfiguration(new PromotionGiftConfiguration());
             builder.ApplyConfiguration(new SizeConfiguration());

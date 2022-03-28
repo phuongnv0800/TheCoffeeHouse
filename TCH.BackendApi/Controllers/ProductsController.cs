@@ -21,6 +21,25 @@ public class ProductsController : ControllerBase
         this._logger = logger;
     }
 
+    [HttpGet("branch/{branchID}")]
+    public async Task<IActionResult> GetAllByBranchID(string branchID, [FromQuery] Search request)
+    {
+        try
+        {
+            var products = await _productRepository.GetAllByBranchID(branchID,request);
+            return Ok(products);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            SQLExceptionFilter.AddFileCheckSQL(e);
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
     [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> GetAll([FromQuery] Search request)

@@ -8,6 +8,6 @@ public class AppRole : IdentityRole
     public string? Description { get; set; }
 
     [ForeignKey("RoleGroupID")]
-    public string RoleGroupID { get; set; }
+    public string? RoleGroupID { get; set; }
     public RoleGroup RoleGroup { get; set; }
 }

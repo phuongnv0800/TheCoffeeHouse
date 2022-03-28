@@ -43,6 +43,7 @@ builder.Services.AddScoped<IUserRepository, UserManager>();
 builder.Services.AddScoped<IRoleRepository, RoleManager>();
 builder.Services.AddScoped<IMaterialRepository, MaterialManager>();
 builder.Services.AddScoped<IBranchRepository, BranchManager>();
+builder.Services.AddScoped<IMenuRepository, MenuManager>();
 //builder.Services.AddScoped<IOrderRepository, OrderManager>();
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -145,7 +146,7 @@ app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
            Path.Combine(builder.Environment.ContentRootPath, "Uploads")),
-    RequestPath = "/upload"
+    RequestPath = "/uploads"
 });
 
 app.UseCors("CorsPolicy");

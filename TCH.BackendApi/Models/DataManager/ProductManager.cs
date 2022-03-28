@@ -22,7 +22,10 @@ public class ProductManager : IProductRepository, IDisposable
     private readonly string? UserID;
     private const string USER_CONTENT_FOLDER_NAME = "products";
 
-    public ProductManager(APIContext context, IStorageService storageService, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+    public ProductManager(APIContext context, 
+        IHttpContextAccessor httpContextAccessor, 
+        IStorageService storageService, 
+        IMapper mapper)
     {
         _context = context;
         _storageService = storageService;
@@ -31,12 +34,12 @@ public class ProductManager : IProductRepository, IDisposable
         UserID = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
         //_accessToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
     }
-    public async Task<Respond<PagedList<ProductVm>>> GetAll(string branchID, Search request)
+    public async Task<Respond<PagedList<Product>>> GetAllByBranchID(string branchID, Search request)
     {
         var menu = await _context.Menus.FirstOrDefaultAsync(x=>x.BranchID == branchID);
         if(menu == null)
         {
-            return new Respond<PagedList<ProductVm>>()
+            return new Respond<PagedList<Product>>()
             {
                 Result = 0,
                 Message = "Chi nhánh chưa có menu",
@@ -49,16 +52,16 @@ public class ProductManager : IProductRepository, IDisposable
             query = query.Where(x => x.p.Name.Contains(request.Name));
         //paging
         int totalRow = await query.CountAsync();
-        var data = new List<ProductVm>();
+        var data = new List<Product>();
         if (request.IsPging == true)
         {
-            data = await query.Select(x => _mapper.Map<ProductVm>(x))
+            data = await query.Select(x => x.p)
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
         }
         else
-            data = await query.Select(x => _mapper.Map<ProductVm>(x)).ToListAsync();
-        var pagedResult = new PagedList<ProductVm>()
+            data = await query.Select(x => x.p).ToListAsync();
+        var pagedResult = new PagedList<Product>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
@@ -66,30 +69,30 @@ public class ProductManager : IProductRepository, IDisposable
             TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
             Items = data,
         };
-        return new Respond<PagedList<ProductVm>>()
+        return new Respond<PagedList<Product>>()
         {
             Data = pagedResult,
             Result = 1,
             Message = "Thành công",
         };
     }
-    public async Task<Respond<PagedList<ProductVm>>> GetAll(Search request)
+    public async Task<Respond<PagedList<Product>>> GetAll(Search request)
     {
         var query = from c in _context.Products select c;
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.Name.Contains(request.Name));
         //paging
         int totalRow = await query.CountAsync();
-        var data = new List<ProductVm>();
+        var data = new List<Product>();
         if (request.IsPging == true)
         {
-            data = await query.Select(x => _mapper.Map<ProductVm>(x))
+            data = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
         }
         else
-            data = await query.Select(x => _mapper.Map<ProductVm>(x)).ToListAsync();
-        var pagedResult = new PagedList<ProductVm>()
+            data = await query.ToListAsync();
+        var pagedResult = new PagedList<Product>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
@@ -97,7 +100,7 @@ public class ProductManager : IProductRepository, IDisposable
             TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
             Items = data,
         };
-        return new Respond<PagedList<ProductVm>>()
+        return new Respond<PagedList<Product>>()
         {
             Data = pagedResult,
             Result = 1,

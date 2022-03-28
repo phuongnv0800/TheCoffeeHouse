@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using TCH.BackendApi.Config;
 using TCH.BackendApi.EF;
 using TCH.BackendApi.Entities;
+using TCH.BackendApi.Models.DataRepository;
 using TCH.BackendApi.Models.SubModels;
 using TCH.BackendApi.ViewModels;
 
 namespace TCH.BackendApi.Models.DataManager;
 
-public class MenuManager : IDisposable
+public class MenuManager : IDisposable, IMenuRepository
 {
     private readonly APIContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -111,9 +112,9 @@ public class MenuManager : IDisposable
             Result = 1,
         };
     }
-    public async Task<MessageResult> DeactiveProductInMenu(string menuId, string productID)
+    public async Task<MessageResult> DeactiveProductInMenu(string menuID, string productID)
     {
-        var entity = await _context.ProductInMenus.FirstOrDefaultAsync(x => x.MenuID == menuId && x.ProductID == productID);
+        var entity = await _context.ProductInMenus.FirstOrDefaultAsync(x => x.MenuID == menuID && x.ProductID == productID);
         if (entity == null)
         {
             return new MessageResult()
@@ -131,9 +132,9 @@ public class MenuManager : IDisposable
             Message = "Thành công",
         };
     }
-    public async Task<MessageResult> ActiveProductInMenu(string menuId, string productID)
+    public async Task<MessageResult> ActiveProductInMenu(string menuID, string productID)
     {
-        var entity = await _context.ProductInMenus.FirstOrDefaultAsync(x => x.MenuID == menuId && x.ProductID == productID);
+        var entity = await _context.ProductInMenus.FirstOrDefaultAsync(x => x.MenuID == menuID && x.ProductID == productID);
         if (entity == null)
         {
             return new MessageResult()

@@ -19,11 +19,12 @@ public class Product
     public double Price { get; set; }
     public string? Description { get; set; }
     public string Unit { get; set; }
-    public string LinkImgae { get; set; }
+    public string LinkImage { get; set; }
     public string CategoryID { get; set; }
     public Category Category { get; set; }
 
     public ICollection<ProductImage> ProductImages { get; set; }
+    public ICollection<ProductInMenu> ProductInMenus{ get; set; }
     public ICollection<OrderDetail> OrderDetails { get; set; }
     public ICollection<PromotionGift> PromotionGifts { get; set; }
 }
