@@ -24,14 +24,15 @@ builder.Services.AddDbContext<APIContext>(options =>
 {
     options.UseLoggerFactory(LoggerFactory.Create(builder => { builder.AddConsole(); }));
     options.EnableSensitiveDataLogging();
-    if (environment.IsProduction())
-    {
-        options.UseSqlServer(config.GetConnectionString("Prod"));
-    }
-    else
-    {
-        options.UseSqlServer(config.GetConnectionString("Dev"));
-    }
+    //if (environment.IsProduction())
+    //{
+    //    options.UseSqlServer(config.GetConnectionString("Prod"));
+    //}
+    //else
+    //{
+    //    options.UseSqlServer(config.GetConnectionString("Dev"));
+    //}
+    options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Program));
 builder.Services.AddIdentity<AppUser, AppRole>()
@@ -111,7 +112,7 @@ builder.Services.AddAuthentication(opt =>
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("CorsPolicy", builder => builder
-        .SetIsOriginAllowed((host) => true)
+        .SetIsOriginAllowed(origin => true)
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials());
