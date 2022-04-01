@@ -1,7 +1,10 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Security.Claims;
+using TCH.Web.Models;
 
 namespace TCH.Web.Services
 {
@@ -10,6 +13,7 @@ namespace TCH.Web.Services
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;
         private readonly AuthenticationStateProvider _authenticationStateProvider;
+        public IEnumerable<Claim> Claims { get; set; }
 
         public AuthService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider,
                            ILocalStorageService localStorage)
@@ -22,11 +26,13 @@ namespace TCH.Web.Services
         {
 
             var result = await _httpClient.PostAsJsonAsync("/api/Users/authenticate", loginRequest);
-            var content = await result.Content.ReadAsStringAsync();
             if (!result.IsSuccessStatusCode)
             {
                 return false;
             }
+            var content = await result.Content.ReadAsStringAsync();
+            ResponseLogin<string> respond = JsonConvert.DeserializeObject<ResponseLogin<string>>(content);
+            Claims = ((ApiAuthenticationStateProvider)_authenticationStateProvider).ParseClaimsFromJwt(respond.Data);
             await _localStorage.SetItemAsync("authToken", content);
             ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginRequest.UserName);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", content);
@@ -38,6 +44,11 @@ namespace TCH.Web.Services
             await _localStorage.RemoveItemAsync("authToken");
             ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
             _httpClient.DefaultRequestHeaders.Authorization = null;
+        }
+
+        public IEnumerable<Claim> GetClaims()
+        {
+            return this.Claims;
         }
     }
     public class LoginRequest

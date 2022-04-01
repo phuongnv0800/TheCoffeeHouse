@@ -1,4 +1,24 @@
-﻿@page "/fd"
+﻿@page "/"
+@using Blazored.LocalStorage
+@using Newtonsoft.Json
+@using TCH.Web.Models
+@using TCH.Web.Services
+
+@inject ILocalStorageService localStorage
+@inject IAuthService authServices
+@inject NavigationManager navigationManager
 
 <PageTitle>The Coffee House</PageTitle>
+
+
+@code{
+    private string token;
+    protected async override Task OnInitializedAsync()
+    {
+        var authToken = await localStorage.GetItemAsync<string>("authToken");
+        var authTokenJson = JsonConvert.DeserializeObject<ResponseLogin<string>>(authToken);
+        token = authTokenJson.Data;
+        navigationManager.NavigateTo("/admin-dashboard");
+    }
+}
 

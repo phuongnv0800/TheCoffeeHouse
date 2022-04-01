@@ -49,7 +49,7 @@ namespace TCH.Web.Services
             NotifyAuthenticationStateChanged(authState);
         }
 
-        private IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
+        public IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
         {
             var claims = new List<Claim>();
             var payload = jwt.Split('.')[1];

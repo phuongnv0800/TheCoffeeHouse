@@ -1,0 +1,152 @@
+﻿@using TCH.Web.Models
+@using TCH.Web.Models.Enum
+@inject NavigationManager navigationManager
+<div class="modal-dialog modal-dialog-centered mw-650px">
+				<!--begin::Modal content-->
+				<div class="modal-content">
+					
+					<!--begin::Modal body-->
+					<div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+						<!--begin::Form-->
+						<EditForm id="kt_modal_new_card_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" Model="product"  OnSubmit="HandleAdd" action="#">
+							<!--begin::Input group-->
+							<div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
+								<!--begin::Label-->
+								<label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+									<span class="required">Tên sản phẩm</span>
+								
+								</label>
+								<!--end::Label-->
+								<input type="text" class="form-control form-control-solid" placeholder="" @bind-value="product.Name" name="card_name">
+								<div class="fv-plugins-message-container invalid-feedback"></div>
+							</div>
+							<!--end::Input group-->
+							<!--begin::Input group-->
+							<div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
+								<!--begin::Label-->
+								<label class="required fs-6 fw-bold form-label mb-2">Công thức</label>
+								<!--end::Label-->
+								<!--begin::Input wrapper-->
+								<div class="position-relative">
+									<!--begin::Input-->
+									<input type="text" class="form-control form-control-solid" placeholder="Enter card number" name="card_number" @bind-value="product.Formula">
+									<!--end::Input-->
+									
+								</div>
+								<!--end::Input wrapper-->
+							<div class="fv-plugins-message-container invalid-feedback"></div></div>
+							<!--end::Input group-->
+							<!--begin::Input group-->
+							<div class="row mb-10">
+								<!--begin::Col-->
+								<div class="col-md-8 fv-row">
+									<!--begin::Label-->
+									<label class="required fs-6 fw-bold form-label mb-2">Loại sản phẩm</label>
+									<!--end::Label-->
+									<!--begin::Row-->
+									<div class="row fv-row fv-plugins-icon-container">
+										<!--begin::Col-->
+										<div class="col-6">
+											<select name="card_expiry_month" @bind="product.ProductType" class="form-select form-select-solid select2-hidden-accessible" data-control="select2" data-hide-search="true" data-placeholder="Month" data-select2-id="select2-data-16-4jfa" tabindex="-1" aria-hidden="true">
+												<option data-select2-id="select2-data-18-sfl0"></option>
+												@foreach (var type in Enum.GetValues(typeof(ProductType)))
+												{
+													<option value="@type">@type</option>
+												}
+												
+											</select><span class="select2 select2-container select2-container--bootstrap5" dir="ltr" data-select2-id="select2-data-17-bh0p" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single form-select form-select-solid" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-card_expiry_month-xm-container" aria-controls="select2-card_expiry_month-xm-container"><span class="select2-selection__rendered" id="select2-card_expiry_month-xm-container" role="textbox" aria-readonly="true" title="Month"><span class="select2-selection__placeholder">Month</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+										<div class="fv-plugins-message-container invalid-feedback"></div></div>
+										<!--end::Col-->
+									</div>
+									<!--end::Row-->
+								</div>
+								<div class="col-md-8 fv-row">
+									<!--begin::Label-->
+									<label class="required fs-6 fw-bold form-label mb-2">Loại sản phẩm</label>
+									<!--end::Label-->
+									<!--begin::Row-->
+									<div class="row fv-row fv-plugins-icon-container">
+										<!--begin::Col-->
+										<div class="col-6">
+											<select name="card_expiry_month" @bind="product.CategoryID" class="form-select form-select-solid select2-hidden-accessible" data-control="select2" data-hide-search="true" data-placeholder="Month" data-select2-id="select2-data-16-4jfa" tabindex="-1" aria-hidden="true">
+												<option data-select2-id="select2-data-18-sfl0"></option>
+												@if(categories != null){
+													@foreach (var category in categories)
+												{
+													<option value="@category.ID">@category.Name</option>
+												}
+												}
+												
+											</select><span class="select2 select2-container select2-container--bootstrap5" dir="ltr" data-select2-id="select2-data-17-bh0p" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single form-select form-select-solid" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-card_expiry_month-xm-container" aria-controls="select2-card_expiry_month-xm-container"><span class="select2-selection__rendered" id="select2-card_expiry_month-xm-container" role="textbox" aria-readonly="true" title="Month"><span class="select2-selection__placeholder">Month</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+										<div class="fv-plugins-message-container invalid-feedback"></div></div>
+										<!--end::Col-->
+									</div>
+									<!--end::Row-->
+								</div>
+								<!--end::Col-->
+								<!--begin::Col-->
+								<div class="col-md-4 fv-row fv-plugins-icon-container">
+									<!--begin::Label-->
+									<label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+										<span class="required">CVV</span>
+										
+									</label>
+									<!--end::Label-->
+									<!--begin::Input wrapper-->
+									<div class="position-relative">
+										<!--begin::Input-->
+										<input type="text" class="form-control form-control-solid" @bind-value="product.Price" minlength="3" maxlength="4" placeholder="CVV" name="card_cvv">
+										<!--end::Input-->
+									</div>
+									<!--end::Input wrapper-->
+								<div class="fv-plugins-message-container invalid-feedback"></div></div>
+								<!--end::Col-->
+							</div>
+							<!--end::Input group-->
+							<div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
+								<!--begin::Label-->
+								<label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+									<span class="required">Mô tả</span>
+								
+								</label>
+								<!--end::Label-->
+								<input type="text" class="form-control form-control-solid" placeholder="" @bind-value="product.Description" name="card_name">
+								<div class="fv-plugins-message-container invalid-feedback"></div>
+							</div>
+							<!--begin::Actions-->
+							<div class="text-center pt-15">
+								<button type="reset" id="kt_modal_new_card_cancel" class="btn btn-light me-3" onclick="ModalInstance.CancelAsync">Hủy</button>
+								<button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary">
+									<span class="indicator-label">Thêm</span>
+									<span class="indicator-progress">Please wait...
+									<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+								</button>
+							</div>
+							<!--end::Actions-->
+						<div></div></EditForm>
+						<!--end::Form-->
+					</div>
+					<!--end::Modal body-->
+				</div>
+				<!--end::Modal content-->
+			</div>
+
+@code {
+	[CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+	public IEnumerable<Category> categories;
+	public Product product;
+	private HttpClient httpClient = new HttpClient();
+	protected override async void OnInitialized()
+	{
+		categories = await httpClient.GetFromJsonAsync<Category[]>("https://localhost:8000/api/Categories");
+	}
+	public async void HandleAdd()
+	{
+		var response = await httpClient.PostAsJsonAsync("https://localhost:8000/api/Products", product);
+		if (response.IsSuccessStatusCode)
+		{
+			ModalInstance.CloseAsync(ModalResult.Ok<Product>(product));
+		}
+	}
+
+}
