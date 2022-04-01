@@ -8,7 +8,7 @@ namespace TCH.BackendApi.Models.DataRepository;
 
 public interface IProductRepository
 {
-    Task<Respond<PagedList<Product>>> GetAllByBranchID(string branchID, Search request);
+    Task<Respond<PagedList<ProductVm>>> GetAllByBranchID(string branchID, Search request);
     Task<Respond<PagedList<Product>>> GetAll(Search request);
     Task<MessageResult> Create(ProductRequest request);
     Task<MessageResult> Delete(string productId);

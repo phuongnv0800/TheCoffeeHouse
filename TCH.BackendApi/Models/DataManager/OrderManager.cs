@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using TCH.BackendApi.Config;
 using TCH.BackendApi.EF;
+using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataRepository;
+using TCH.BackendApi.Models.Enum;
 using TCH.BackendApi.Models.Paginations;
 using TCH.BackendApi.Models.Searchs;
 using TCH.BackendApi.Models.SubModels;
@@ -175,9 +177,47 @@ public class OrderManager : IOrderRepository, IDisposable
     //        return orderVm;
     //    }
 
-    public Task<MessageResult> Create(OrderRequest request)
+    public async Task<MessageResult> Create(OrderRequest request)
     {
-        throw new NotImplementedException();
+        var branch = await _context.Branches.FindAsync(request.BranchID);
+        if( branch == null)
+        {
+            return new MessageResult()
+            {
+                Result = 0,
+                Message = "Không có thông tin nhánh",
+            };
+        }
+
+        var orderRe = new Order()
+        {
+            ID = Guid.NewGuid().ToString(),
+            Code = "",
+            SubAmount = 0,
+            TotalAmount =0,
+            Vat = request.Vat,
+            Status = request.OrderType == OrderType.ForTopicalUse ? OrderStatus.Finish : OrderStatus.Pending,
+            OrderType = request.OrderType,
+            ReducePromotion = request.ReducePromotion,
+            ReduceAmount = request.ReduceAmount,
+            CustomerPut = request.CustomerPut,
+            CustomerReceive = request.CustomerReceive, 
+            ShippingFee = request.ShippingFee,
+            CreateDate = DateTime.Now,
+            Description  = request.Description,
+            CancellationReason  = "",
+            UserCreateID = UserID,
+            PaymentType = request.PaymentType,
+            CustomerID = request.CustomerID,
+            BranchID = request.BranchID,
+        };
+        _context.Orders.Add(orderRe);
+        await _context.SaveChangesAsync();
+        return new MessageResult()
+        {
+            Result = 1,
+            Message = ""
+        };
     }
 
     public Task<MessageResult> Update(OrderRequest request)

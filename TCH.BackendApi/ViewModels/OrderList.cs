@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TCH.BackendApi.Models.Enum;
 
-namespace TCH.BackendApi.ViewModels
+namespace TCH.BackendApi.ViewModels;
+
+public class OrderList
 {
-    public class OrderList
-    {
-        public int OrderId { set; get; }
-        public int ProductId { set; get; }
-        public string Name { get; set; }
-        public string ImagePath { get; set; }
-        public int Quantity { set; get; }
-        public decimal Price { set; get; }
-        public decimal SubTotal { get; set; }
-    }
+    public string ID { get; set; }
+    public int Quantity { get; set; }
+    public double PriceProduct { get; set; }
+    public double PriceSize { get; set; }
+    public double SubAmount { get; set; }
+    public SugarType SugarType { get; set; }
+    public string? Description { get; set; }
+    public string SizeID { get; set; }
+    public string ProductID { get; set; }
+    public List<OrderListTopping> Toppings { get; set; }
 }
