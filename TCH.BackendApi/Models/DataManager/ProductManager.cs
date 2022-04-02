@@ -34,12 +34,12 @@ public class ProductManager : IProductRepository, IDisposable
         UserID = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
         //_accessToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
     }
-    public async Task<Respond<PagedList<Product>>> GetAllByBranchID(string branchID, Search request)
+    public async Task<Respond<PagedList<ProductVm>>> GetAllByBranchID(string branchID, Search request)
     {
         var menu = await _context.Menus.FirstOrDefaultAsync(x=>x.BranchID == branchID);
         if(menu == null)
         {
-            return new Respond<PagedList<Product>>()
+            return new Respond<PagedList<ProductVm>>()
             {
                 Result = 0,
                 Message = "Chi nhánh chưa có menu",
@@ -52,16 +52,57 @@ public class ProductManager : IProductRepository, IDisposable
             query = query.Where(x => x.p.Name.Contains(request.Name));
         //paging
         int totalRow = await query.CountAsync();
-        var data = new List<Product>();
+        //var products = await _context.Products.Include(x=>x.ProductInMenus).ToListAsync();
+        var data = new List<ProductVm>();
         if (request.IsPging == true)
         {
-            data = await query.Select(x => x.p)
+            data = await query.Select(x => new ProductVm()
+            {
+                ID = x.p.ID,
+                Name = x.p.Name,
+                NormalizedName = x.p.NormalizedName,
+                ProductType= x.p.ProductType,
+                CreateDate = x.p.CreateDate,
+                UpdateDate = x.p.UpdateDate,
+                IsSale = x.p.IsSale,
+                PriceSale = x.p.PriceSale,
+                IsAvailable = x.p.IsAvailable,
+                UserCreateID = x.p.UserCreateID,
+                UserUpdateID = x.p.UserUpdateID,
+                Formula = x.p.Formula,
+                Price = x.p.Price,
+                Description = x.p.Description,
+                Unit = x.p.Unit,
+                LinkImage = x.p.LinkImage,
+                CategoryID = x.p.CategoryID,
+                IsActive = x.pm.IsActive,
+            })
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
         }
         else
-            data = await query.Select(x => x.p).ToListAsync();
-        var pagedResult = new PagedList<Product>()
+            data = await query.Select(x => new ProductVm()
+            {
+                ID = x.p.ID,
+                Name = x.p.Name,
+                NormalizedName = x.p.NormalizedName,
+                ProductType = x.p.ProductType,
+                CreateDate = x.p.CreateDate,
+                UpdateDate = x.p.UpdateDate,
+                IsSale = x.p.IsSale,
+                PriceSale = x.p.PriceSale,
+                IsAvailable = x.p.IsAvailable,
+                UserCreateID = x.p.UserCreateID,
+                UserUpdateID = x.p.UserUpdateID,
+                Formula = x.p.Formula,
+                Price = x.p.Price,
+                Description = x.p.Description,
+                Unit = x.p.Unit,
+                LinkImage = x.p.LinkImage,
+                CategoryID = x.p.CategoryID,
+                IsActive = x.pm.IsActive,
+            }).ToListAsync();
+        var pagedResult = new PagedList<ProductVm>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
@@ -69,7 +110,7 @@ public class ProductManager : IProductRepository, IDisposable
             TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
             Items = data,
         };
-        return new Respond<PagedList<Product>>()
+        return new Respond<PagedList<ProductVm>>()
         {
             Data = pagedResult,
             Result = 1,

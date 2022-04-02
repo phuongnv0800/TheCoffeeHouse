@@ -11,6 +11,7 @@ public class OrderDetail
     public double PriceSize { get; set; }
     public double SubAmount { get; set; }
     public string? Description { get; set; }
+    public SugarType SugarType { get; set; }
     public string SizeID { get; set; }
     public Size Size { get; set; }
     public string ProductID { get; set; }

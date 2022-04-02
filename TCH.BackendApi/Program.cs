@@ -11,6 +11,7 @@ using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataManager;
 using TCH.BackendApi.Models.DataRepository;
 using TCH.BackendApi.ViewModels;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config = builder.Configuration;
@@ -49,7 +50,14 @@ builder.Services.AddScoped<IMenuRepository, MenuManager>();
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IStorageService, FileStorageService>();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+
+//services.AddAutoMapper(typeof(ServiceCollectionExtensions));
+//services.AddMediatR(typeof(ServiceCollectionExtensions));
+//services.AddServices();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

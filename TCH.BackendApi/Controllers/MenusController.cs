@@ -58,8 +58,8 @@ public class MenusController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [HttpPost("active-product/{menuID}")]
-    public async Task<IActionResult> ActiveProduct(string menuID, [FromBody] string productID)
+    [HttpPost("active-product/{menuID}/{productID}")]
+    public async Task<IActionResult> ActiveProduct(string menuID, string productID)
     {
         try
         {
@@ -78,8 +78,8 @@ public class MenusController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [HttpPost("deactive-product/{menuID}")]
-    public async Task<IActionResult> DeactiveProduct(string menuID, [FromBody] string productID)
+    [HttpPost("deactive-product/{menuID}/{productID}")]
+    public async Task<IActionResult> DeactiveProduct(string menuID, string productID)
     {
         try
         {
