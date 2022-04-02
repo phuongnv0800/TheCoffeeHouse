@@ -13,6 +13,7 @@
 <div class="fluid d-flex">
 	<div class="py-5 w-100 px-5 ">
 		<TCH.Web.Shared.Header.Header></TCH.Web.Shared.Header.Header>
+		
 		<div class="card card-flush " style="margin-top:65px">
 		<div class="card-header align-items-center py-5 gap-2 gap-md-5">
 			<div class="card-title">
@@ -27,10 +28,12 @@
 				</div>
 			</div>
 		<div class="card-toolbar">
+			
 			<a  class="btn btn-primary" onclick="@(() => Add())">Thêm sản phẩm</a>
 		</div>
 	</div>
 	<div class="card-body pt-0">
+		
 		<div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
 			<div class="table-responsive">
 				<table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
@@ -53,7 +56,7 @@
 						</tr>
 					</thead>
 					<tbody class="fw-bold text-gray-600">
-						@if (ProductsList != null)
+						@if (ProductsList.Count != 0)
 							{
 								foreach(var product in ProductsList)
 								{
@@ -93,10 +96,10 @@
 									</tr>
 								}
 							}
-						else
+						@*else
 						{
 							<div class="spinner" ></div>
-						}
+						}*@
 
 						</tbody>
 						</table></div><div class="row">
@@ -137,13 +140,16 @@
 </div>
 
 @code {
-	public List<Product> ProductsList;
+	public List<Product>? ProductsList = new List<Product>();
 	[CascadingParameter] public IModalService Modal { get; set; }
 	private string? token;
-
-	protected async override Task OnInitializedAsync()
+	public string Name;
+	protected override async  Task OnParametersSetAsync()
 	{
-		//httpClient.BaseAddress = new Uri("http://fc95-125-212-156-93.ngrok.io");
+		await Get();
+		base.OnParametersSet();
+	}
+	public async Task Get(){
 		ProductsList = await productServices.GetProducts();
 	}
 	public async void Add()

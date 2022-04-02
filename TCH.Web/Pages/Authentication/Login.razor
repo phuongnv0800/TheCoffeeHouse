@@ -52,30 +52,7 @@
 
     private LoginRequest loginModel = new LoginRequest();
 
-    protected override async Task OnInitializedAsync()
-    {
-        //var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-        //var user = authState.User;
-
-        //if (user.Identity.IsAuthenticated)
-        //{
-        //    navigationManager.NavigateTo("/");
-        //}
-    }
-    //protected override async Task OnAfterRenderAsync(bool firstRender)
-    //{
-    //    if (firstRender)
-    //    {
-    //        var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-    //        var user = authState.User;
-
-    //        if (user.Identity.IsAuthenticated)
-    //        {
-    //            navigationManager.NavigateTo("/");
-    //        }
-    //    }
-    //}
-
+    
     private async Task HandleLogin()
     {
         loginModel.RememberMe = true;

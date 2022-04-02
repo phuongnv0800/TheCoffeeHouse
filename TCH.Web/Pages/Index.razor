@@ -12,8 +12,8 @@
 
 
 @code{
-    private string token;
-    protected async override Task OnInitializedAsync()
+    private string? token;
+    protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         var authToken = await localStorage.GetItemAsync<string>("authToken");
         var authTokenJson = JsonConvert.DeserializeObject<ResponseLogin<string>>(authToken);
