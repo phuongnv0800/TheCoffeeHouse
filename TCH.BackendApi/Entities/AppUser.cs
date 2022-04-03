@@ -21,7 +21,7 @@ public class AppUser : IdentityUser
 
     public DateTime? UpdateDate { get; set; }
     public DateTime CreateDate { get; set; }
-    public RoleGroup RoleGroup { get; set; }
+    //public RoleGroup RoleGroup { get; set; }
     public ICollection<Order> Orders { get; set; }
     public ICollection<UserBranch> UserBranches { get; set; }
 }

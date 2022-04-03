@@ -20,6 +20,7 @@ public class MaterialsController : ControllerBase
         this._repository = repository;
         this._logger = logger;
     }
+
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] Search search)
     {
@@ -34,7 +35,6 @@ public class MaterialsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -53,7 +53,6 @@ public class MaterialsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -72,7 +71,6 @@ public class MaterialsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -91,7 +89,6 @@ public class MaterialsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -110,7 +107,6 @@ public class MaterialsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -129,7 +125,6 @@ public class MaterialsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -148,7 +143,6 @@ public class MaterialsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -167,7 +161,6 @@ public class MaterialsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }

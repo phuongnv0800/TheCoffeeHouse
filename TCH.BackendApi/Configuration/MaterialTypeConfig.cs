@@ -4,7 +4,7 @@ using TCH.BackendApi.Entities;
 
 namespace TCH.BackendApi.Configuration
 {
-    public class MaterialTypeConfiguration : IEntityTypeConfiguration<MaterialType>
+    public class MaterialTypeConfig : IEntityTypeConfiguration<MaterialType>
     {
         public void Configure(EntityTypeBuilder<MaterialType> builder)
         {

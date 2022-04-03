@@ -19,6 +19,7 @@ public class OrdersController : ControllerBase
         _orderRepository = orderService;
         _logger = logger;
     }
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery]Search request)
     {

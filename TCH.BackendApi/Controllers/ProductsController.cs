@@ -20,7 +20,6 @@ public class ProductsController : ControllerBase
         _productRepository = productService;
         this._logger = logger;
     }
-
     [HttpGet("branch/{branchID}")]
     public async Task<IActionResult> GetAllByBranchID(string branchID, [FromQuery] Search request)
     {
@@ -35,7 +34,6 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -55,7 +53,6 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -77,7 +74,6 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -104,7 +100,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -127,7 +123,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -148,7 +144,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -171,7 +167,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -194,7 +190,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -216,7 +212,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -242,7 +238,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -267,7 +263,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -287,7 +283,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -306,7 +302,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -326,7 +322,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -346,7 +342,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -366,7 +362,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -385,7 +381,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -405,7 +401,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -425,7 +421,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -445,7 +441,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }

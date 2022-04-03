@@ -10,8 +10,8 @@ public class FileStorageService : IStorageService
     public FileStorageService(IWebHostEnvironment webHostEnvironment)
     {
         //fix webHostEnvironment.WebRootPath = null ??
-        _userContentFolder = Path.Combine(webHostEnvironment.WebRootPath, USER_CONTENT_FOLDER_NAME);
-        //_userContentFolder = Path.Combine(Directory.GetCurrentDirectory(), USER_CONTENT_FOLDER_NAME);
+        //_userContentFolder = Path.Combine(webHostEnvironment.WebRootPath, USER_CONTENT_FOLDER_NAME);
+        _userContentFolder = Path.Combine(Directory.GetCurrentDirectory(), USER_CONTENT_FOLDER_NAME);
     }
 
     public string GetFileUrl(string fileName)

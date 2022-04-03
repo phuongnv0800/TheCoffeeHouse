@@ -3,7 +3,7 @@
 public class ExportMaterial
 {
     public string ExportID { get; set; }
-    public ExportReport ExportReport { get; set; }
+    public Export ExportReport { get; set; }
     public string MaterialID { get; set; }
     public Material Material { get; set; }
     public int Quantity { get; set; }

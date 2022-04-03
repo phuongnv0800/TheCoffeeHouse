@@ -4,9 +4,9 @@ using TCH.BackendApi.Entities;
 
 namespace TCH.BackendApi.Configuration
 {
-    public class LiquidationReportConfiguration : IEntityTypeConfiguration<LiquidationReport>
+    public class LiquidationConfig : IEntityTypeConfiguration<Liquidation>
     {
-        public void Configure(EntityTypeBuilder<LiquidationReport> builder)
+        public void Configure(EntityTypeBuilder<Liquidation> builder)
         {
             builder.ToTable("LiquidationReports");
             builder.HasKey(x =>x.ID);

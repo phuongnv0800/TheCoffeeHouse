@@ -34,8 +34,6 @@ public class MaterialManager : IMaterialRepository
             Description = request.Description,
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
-            UserCreateID = UserID,
-            UserUpdateID = UserID,
             PriceOfUnit = request.PriceOfUnit,
             Supplier = request.Supplier,
             Unit = request.Unit,
@@ -268,7 +266,6 @@ public class MaterialManager : IMaterialRepository
         material.Name = request.Name;
         material.Description = request.Description;
         material.UpdateDate = DateTime.Now;
-        material.UserUpdateID = UserID;
         material.Description = request.Description;
         material.Unit = request.Unit;
         material.Supplier = request.Supplier;

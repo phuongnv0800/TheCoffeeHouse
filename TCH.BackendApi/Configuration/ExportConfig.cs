@@ -4,9 +4,9 @@ using TCH.BackendApi.Entities;
 
 namespace TCH.BackendApi.Configuration
 {
-    public class ExportReportConfiguration : IEntityTypeConfiguration<ExportReport>
+    public class ExportConfig : IEntityTypeConfiguration<Export>
     {
-        public void Configure(EntityTypeBuilder<ExportReport> builder)
+        public void Configure(EntityTypeBuilder<Export> builder)
         {
             builder.ToTable("ExportReports");
             builder.HasKey(x =>x.ID);

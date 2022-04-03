@@ -2,7 +2,7 @@
 
 namespace TCH.BackendApi.Entities;
 
-public class LiquidationReport
+public class Liquidation
 {
     public string ID { get; set; }
     public string Name { get; set; }
@@ -17,7 +17,5 @@ public class LiquidationReport
     public double RecoveryValue { get; set; }
     public string LiquidationName { get; set; }
     public string LiquidationRole { get; set; }
-    [ForeignKey("UserCreateID")]
-    public string? UserCreateID { get; set; }
     public ICollection<LiquidationMaterial> LiquidationMaterials { get; set; }
 }

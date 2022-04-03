@@ -60,19 +60,15 @@ public class ProductManager : IProductRepository, IDisposable
             {
                 ID = x.p.ID,
                 Name = x.p.Name,
-                NormalizedName = x.p.NormalizedName,
                 ProductType= x.p.ProductType,
                 CreateDate = x.p.CreateDate,
                 UpdateDate = x.p.UpdateDate,
                 IsSale = x.p.IsSale,
                 PriceSale = x.p.PriceSale,
                 IsAvailable = x.p.IsAvailable,
-                UserCreateID = x.p.UserCreateID,
-                UserUpdateID = x.p.UserUpdateID,
                 Formula = x.p.Formula,
                 Price = x.p.Price,
                 Description = x.p.Description,
-                Unit = x.p.Unit,
                 LinkImage = x.p.LinkImage,
                 CategoryID = x.p.CategoryID,
                 IsActive = x.pm.IsActive,
@@ -85,19 +81,15 @@ public class ProductManager : IProductRepository, IDisposable
             {
                 ID = x.p.ID,
                 Name = x.p.Name,
-                NormalizedName = x.p.NormalizedName,
                 ProductType = x.p.ProductType,
                 CreateDate = x.p.CreateDate,
                 UpdateDate = x.p.UpdateDate,
                 IsSale = x.p.IsSale,
                 PriceSale = x.p.PriceSale,
                 IsAvailable = x.p.IsAvailable,
-                UserCreateID = x.p.UserCreateID,
-                UserUpdateID = x.p.UserUpdateID,
                 Formula = x.p.Formula,
                 Price = x.p.Price,
                 Description = x.p.Description,
-                Unit = x.p.Unit,
                 LinkImage = x.p.LinkImage,
                 CategoryID = x.p.CategoryID,
                 IsActive = x.pm.IsActive,
@@ -164,9 +156,6 @@ public class ProductManager : IProductRepository, IDisposable
         product.ID = Guid.NewGuid().ToString();
         product.CreateDate = DateTime.Now;
         product.UpdateDate = DateTime.Now;
-        product.UserCreateID = UserID;
-        product.UserUpdateID = UserID;
-        product.NormalizedName = request.Name.Normalize();
 
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
@@ -217,10 +206,7 @@ public class ProductManager : IProductRepository, IDisposable
         product.UpdateDate = DateTime.Now;
         product.Formula = request.Formula;
         product.ProductType = request.ProductType;
-        product.UserUpdateID = UserID;
         product.Description = request.Description;
-        product.Unit = request.Unit;
-        product.NormalizedName = request.Name.Normalize();
         _context.Products.Update(product);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -444,7 +430,6 @@ public class ProductManager : IProductRepository, IDisposable
         size.Name = request.Name;
         size.SubPrice = request.SubPrice;
         size.UpdateDate = DateTime.Now;
-        size.UserUpdateID = UserID;
         _context.Sizes.Update(size);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -459,8 +444,6 @@ public class ProductManager : IProductRepository, IDisposable
         size.ID = Guid.NewGuid().ToString();
         size.CreateDate = DateTime.Now;
         size.UpdateDate = DateTime.Now;
-        size.UserCreateID = UserID;
-        size.UserUpdateID = UserID;
         _context.Sizes.Add(size);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -529,7 +512,6 @@ public class ProductManager : IProductRepository, IDisposable
         topping.Description = request.Description;
         topping.SubPrice = request.SubPrice;
         topping.UpdateDate = DateTime.Now;
-        topping.UserUpdateID = UserID;
         _context.Toppings.Update(topping);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -544,8 +526,6 @@ public class ProductManager : IProductRepository, IDisposable
         topping.ID = Guid.NewGuid().ToString();
         topping.CreateDate = DateTime.Now;
         topping.UpdateDate = DateTime.Now;
-        topping.UserCreateID = UserID;
-        topping.UserUpdateID = UserID;
         _context.Toppings.Add(topping);
         await _context.SaveChangesAsync();
         return new MessageResult()

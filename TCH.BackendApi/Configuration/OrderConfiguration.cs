@@ -17,13 +17,11 @@ namespace TCH.BackendApi.Configuration
             builder.Property(z => z.ReduceAmount).IsRequired().HasColumnType("decimal(18,2)");
             builder.Property(z => z.ReducePromotion).IsRequired().HasColumnType("decimal(18,2)");
             builder.Property(z => z.CustomerPut).IsRequired().HasColumnType("decimal(18,2)");
-            builder.Property(z => z.Vat).IsRequired().HasColumnType("decimal(18,2)");
 
             builder.Property(z => z.ShippingFee).IsRequired().HasColumnType("decimal(18,2)");
             builder.Property(z => z.CustomerReceive).IsRequired().HasColumnType("decimal(18,2)");
             builder.HasOne(x => x.Branch).WithMany(x => x.Orders).HasForeignKey(x => x.BranchID);
             builder.HasOne(x => x.Customer).WithMany(y => y.Orders).HasForeignKey(z => z.CustomerID);
-            builder.HasOne(x=>x.AppUser).WithMany(z=>z.Orders).HasForeignKey(z=>z.UserCreateID);
         }
     }
 }

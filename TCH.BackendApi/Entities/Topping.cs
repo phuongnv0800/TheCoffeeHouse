@@ -6,8 +6,6 @@ public class Topping
     public string Name { get; set; }
     public double SubPrice { get; set; }
     public string? Description { get; set; }
-    public string? UserCreateID { get; set; }
-    public string? UserUpdateID { get; set; }
     public DateTime? CreateDate { get; set; }
     public DateTime? UpdateDate { get; set; }
 

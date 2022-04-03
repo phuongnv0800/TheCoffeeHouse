@@ -27,11 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Uploads\users\" />
+    <Folder Include="Uploads\products\" />
     <Folder Include="Uploads\products\" />
     <Folder Include="Uploads\users\" />
-    <Folder Include="wwwroot\images\" />
-    <Folder Include="wwwroot\products\" />
-    <Folder Include="wwwroot\users\" />
   </ItemGroup>
 
 </Project>

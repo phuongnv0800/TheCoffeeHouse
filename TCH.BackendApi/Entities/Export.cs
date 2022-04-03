@@ -2,7 +2,7 @@
 
 namespace TCH.BackendApi.Entities;
 
-public class ImportReport
+public class Export
 {
     public string ID { get; set; }
     public DateTime CreateDate { get; set; }
@@ -12,7 +12,5 @@ public class ImportReport
     public double TotalAmount { get; set; }
     public string Code { get; set; }
     public string? Description { get; set; }
-    [ForeignKey("UserCreateID")]
-    public string? UserCreateID { get; set; }
-    public ICollection<ImportMaterial> ImportMaterials { get; set; }
+    public ICollection<ExportMaterial> ExportMaterials { get; set; }
 }

@@ -195,8 +195,6 @@ public class OrderManager : IOrderRepository, IDisposable
             Code = "",
             SubAmount = 0,
             TotalAmount =0,
-            Vat = request.Vat,
-            Status = request.OrderType == OrderType.ForTopicalUse ? OrderStatus.Finish : OrderStatus.Pending,
             OrderType = request.OrderType,
             ReducePromotion = request.ReducePromotion,
             ReduceAmount = request.ReduceAmount,

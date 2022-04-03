@@ -15,8 +15,4 @@ public class MemberType
     public DateTime UpdateDate { get; set; }
 
     public virtual ICollection<Customer> Customers { get; set; }
-
-    //public string UserCreateID { get; set; }
-    //public string UserUpdateID { get; set; }
-
 }

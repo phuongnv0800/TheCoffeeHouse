@@ -125,8 +125,6 @@ public class BranchManager : IDisposable, IBranchRepository
         entity.ID = Guid.NewGuid().ToString();
         entity.UpdateDate = DateTime.Now;
         entity.CreateDate = DateTime.Now;
-        entity.UserCreateID = UserID;
-        entity.UserUpdateID = UserID;
         _context.Branches.Add(entity);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -147,13 +145,11 @@ public class BranchManager : IDisposable, IBranchRepository
             };
         }
         entity.Name = request.Name ?? entity.Name;
-        entity.Area = request.Area ?? entity.Area;
         entity.City = request.City ?? entity.City;
         entity.Email = request.Email ?? entity.Email;
         entity.District = request.District ?? entity.District;
         entity.Adderss = request.Adderss ?? entity.Adderss;
         entity.UpdateDate = DateTime.Now;
-        entity.UserUpdateID = UserID;
         _context.Branches.Update(entity);
         await _context.SaveChangesAsync();
         return new MessageResult()

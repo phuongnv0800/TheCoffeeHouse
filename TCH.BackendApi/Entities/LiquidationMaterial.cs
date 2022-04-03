@@ -3,7 +3,7 @@
 public class LiquidationMaterial
 {
     public string LiquidationID { get; set; }
-    public LiquidationReport LiquidationReport { get; set; }
+    public Liquidation LiquidationReport { get; set; }
     public string MaterialID { get; set; }
     public Material Material { get; set; }
     public int Quantity { get; set; }

@@ -20,6 +20,7 @@ public class BranchsController: ControllerBase
         _repository = repository;
         _logger = logger;
     }
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] Search search)
     {

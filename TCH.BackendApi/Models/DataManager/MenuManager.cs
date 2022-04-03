@@ -40,11 +40,8 @@ public class MenuManager : IDisposable, IMenuRepository
         {
             ID = Guid.NewGuid().ToString(),
             Name = request.Name,
-            NormalizedName = request.Name.Normalize(),
             UpdateDate = DateTime.Now,
             CreateDate = DateTime.Now,
-            UserCreateID = UserID,
-            UserUpdateID = UserID,
             Branch = branch,
             BranchID = branchID,
             Description = request.Description,
@@ -101,9 +98,7 @@ public class MenuManager : IDisposable, IMenuRepository
             };
         }
         menu.Name = request.Name;
-        menu.NormalizedName = request.Name.Normalize();
         menu.UpdateDate = DateTime.Now;
-        menu.UserUpdateID = UserID;
         _context.Menus.Update(menu);
         await _context.SaveChangesAsync();
         return new MessageResult()

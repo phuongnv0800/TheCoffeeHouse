@@ -7,21 +7,21 @@ namespace TCH.BackendApi.Models.DataRepository;
 
 public interface IReportRepository
 {
-    Task<MessageResult> CreateImportReport(ImportReport request);
-    Task<MessageResult> UpdateImportReport(string id, ImportReport request);
+    Task<MessageResult> CreateImportReport(Import request);
+    Task<MessageResult> UpdateImportReport(string id, Import request);
     Task<MessageResult> DeleteImportReport(string id);
-    Task<Respond<ImportReport>> GetImportReportByID(string id);
-    Task<Respond<PagedList<ImportReport>>> GetAllImportReport(Search request);
+    Task<Respond<Import>> GetImportReportByID(string id);
+    Task<Respond<PagedList<Import>>> GetAllImportReport(Search request);
 
-    Task<MessageResult> CreateExportReport(ExportReport request);
-    Task<MessageResult> UpdateExportReport(string id, ExportReport request);
+    Task<MessageResult> CreateExportReport(Export request);
+    Task<MessageResult> UpdateExportReport(string id, Export request);
     Task<MessageResult> DeleteExportReport(string id);
-    Task<Respond<ExportReport>> GetExportReportByID(string id);
-    Task<Respond<PagedList<ExportReport>>> GetAllExportReport(Search request);
+    Task<Respond<Export>> GetExportReportByID(string id);
+    Task<Respond<PagedList<Export>>> GetAllExportReport(Search request);
 
-    Task<MessageResult> CreateLiquidationReport(LiquidationReport request);
-    Task<MessageResult> UpdateLiquidationReport(string id, ImportReport request);
+    Task<MessageResult> CreateLiquidationReport(Liquidation request);
+    Task<MessageResult> UpdateLiquidationReport(string id, Import request);
     Task<MessageResult> DeleteLiquidationReport(string id);
-    Task<Respond<LiquidationReport>> GetLiquidationReportByID(string id);
-    Task<Respond<PagedList<LiquidationReport>>> GetAllLiquidationReport(Search request);
+    Task<Respond<Liquidation>> GetLiquidationReportByID(string id);
+    Task<Respond<PagedList<Liquidation>>> GetAllLiquidationReport(Search request);
 }

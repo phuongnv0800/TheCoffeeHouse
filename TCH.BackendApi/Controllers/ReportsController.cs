@@ -35,7 +35,7 @@ public class ReportsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -54,7 +54,7 @@ public class ReportsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -73,7 +73,7 @@ public class ReportsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -92,7 +92,7 @@ public class ReportsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -111,7 +111,7 @@ public class ReportsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -130,13 +130,13 @@ public class ReportsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
     [HttpPost("import")]
-    public async Task<IActionResult> CreateImport([FromBody] ImportReport search)
+    public async Task<IActionResult> CreateImport([FromBody] Import search)
     {
         try
         {
@@ -149,13 +149,13 @@ public class ReportsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
     [HttpPost("export")]
-    public async Task<IActionResult> CreateExport([FromBody] ExportReport search)
+    public async Task<IActionResult> CreateExport([FromBody] Export search)
     {
         try
         {
@@ -168,13 +168,13 @@ public class ReportsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
     [HttpPost("liquidation")]
-    public async Task<IActionResult> CreateLiquidation([FromBody] LiquidationReport search)
+    public async Task<IActionResult> CreateLiquidation([FromBody] Liquidation search)
     {
         try
         {
@@ -187,7 +187,7 @@ public class ReportsController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+            
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }

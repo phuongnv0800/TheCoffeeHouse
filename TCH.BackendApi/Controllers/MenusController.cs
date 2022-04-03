@@ -18,6 +18,7 @@ public class MenusController : ControllerBase
         _repository = repository;
         _logger = logger;
     }
+    [AllowAnonymous]
     [HttpGet("{branchID}")]
     public async Task<IActionResult> GetAll(string branchID)
     {
@@ -114,7 +115,6 @@ public class MenusController : ControllerBase
         }
         catch (Exception e)
         {
-            //SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -133,7 +133,6 @@ public class MenusController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }

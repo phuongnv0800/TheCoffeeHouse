@@ -4,9 +4,9 @@ using TCH.BackendApi.Entities;
 
 namespace TCH.BackendApi.Configuration
 {
-    public class ImportReportConfiguration : IEntityTypeConfiguration<ImportReport>
+    public class ImportConfig : IEntityTypeConfiguration<Import>
     {
-        public void Configure(EntityTypeBuilder<ImportReport> builder)
+        public void Configure(EntityTypeBuilder<Import> builder)
         {
             builder.ToTable("ImportReports");
             builder.HasKey(x =>x.ID);

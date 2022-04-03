@@ -4,7 +4,7 @@ using TCH.BackendApi.Entities;
 
 namespace TCH.BackendApi.Configuration
 {
-    public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
+    public class CustomerConfig : IEntityTypeConfiguration<Customer>
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
@@ -18,7 +18,6 @@ namespace TCH.BackendApi.Configuration
             builder.Property(x => x.Point).HasDefaultValue(0);
 
             builder.HasOne(x => x.MemberType).WithMany(x => x.Customers).HasForeignKey(z => z.MemberTypeID);
-            builder.HasMany(x => x.Addresses).WithOne(x => x.Customer).HasForeignKey(z => z.CustomerID);
             builder.HasMany(x => x.Orders).WithOne(x => x.Customer).HasForeignKey(z => z.CustomerID);
 
         }

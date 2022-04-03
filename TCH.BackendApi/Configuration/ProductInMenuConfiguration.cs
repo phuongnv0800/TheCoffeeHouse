@@ -11,7 +11,6 @@ namespace TCH.BackendApi.Configuration
             builder.ToTable("ProductInMenus");
             builder.HasKey(x => new { x.ProductID, x.MenuID});
             builder.HasOne(x => x.Product).WithMany(x => x.ProductInMenus).HasForeignKey(x => x.ProductID);
-            builder.HasOne(x => x.Menu).WithMany(x => x.ProductInMenus).HasForeignKey(x => x.MenuID);
         }
     }
 }

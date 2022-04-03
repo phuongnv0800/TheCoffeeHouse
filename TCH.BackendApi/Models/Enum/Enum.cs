@@ -27,9 +27,11 @@
     }
     public enum OrderStatus
     {
-        Cancel,
-        Pending,
-        Finish,
+        Canceled = 0,
+        Open = 1,
+        Pending = 2,
+        Finished = 3,
+        Paid = 4,
     }
     public enum SizeType
     {
@@ -50,7 +52,8 @@
     }
     public enum OrderType
     {
-        CarriedAway,
-        ForTopicalUse,
+        InPlace,//Tại chỗ
+        BringBack,// Mang về
+        Shipping, // Vận chuyển
     }
 }

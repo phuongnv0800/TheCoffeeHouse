@@ -24,12 +24,11 @@ public class ReportManager : IReportRepository
         _httpContextAccessor = httpContextAccessor;
         UserID = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
     }
-    public async Task<MessageResult> CreateExportReport(ExportReport request)
+    public async Task<MessageResult> CreateExportReport(Export request)
     {
-        var export = new ExportReport()
+        var export = new Export()
         {
             ID = Guid.NewGuid().ToString(),
-            UserCreateID = UserID,
             CreateDate = DateTime.Now,
             Supplier = request.Supplier,
             StockName = request.StockName,
@@ -38,7 +37,7 @@ public class ReportManager : IReportRepository
             Code = request.Code,
             Description = request.Description
         };
-        _context.ExportReports.Add(export);
+        _context.Exports.Add(export);
         foreach (var item in request.ExportMaterials)
         {
             var exportMaterial = new ExportMaterial()
@@ -61,9 +60,9 @@ public class ReportManager : IReportRepository
         };
     }
 
-    public async Task<MessageResult> CreateImportReport(ImportReport request)
+    public async Task<MessageResult> CreateImportReport(Import request)
     {
-        var import = new ImportReport()
+        var import = new Import()
         {
             ID = Guid.NewGuid().ToString(),
             UserCreateID = UserID,
@@ -75,7 +74,7 @@ public class ReportManager : IReportRepository
             Code = request.Code,
             Description = request.Description
         };
-        _context.ImportReports.Add(import);
+        _context.Imports.Add(import);
         foreach (var item in request.ImportMaterials)
         {
             var exportMaterial = new ImportMaterial()
@@ -98,9 +97,9 @@ public class ReportManager : IReportRepository
         };
     }
 
-    public async Task<MessageResult> CreateLiquidationReport(LiquidationReport request)
+    public async Task<MessageResult> CreateLiquidationReport(Liquidation request)
     {
-        var import = new LiquidationReport()
+        var import = new Liquidation()
         {
             ID = Guid.NewGuid().ToString(),
             Name = request.Name,
@@ -116,7 +115,7 @@ public class ReportManager : IReportRepository
             LiquidationRole = request.LiquidationRole,
             Description = request.Description,
         };
-        _context.LiquidationReports.Add(import);
+        _context.Liquidations.Add(import);
         foreach (var item in request.LiquidationMaterials)
         {
             var exportMaterial = new LiquidationMaterial()
@@ -141,8 +140,8 @@ public class ReportManager : IReportRepository
 
     public async Task<MessageResult> DeleteExportReport(string id)
     {
-        var exportReports = await _context.ExportReports.FindAsync(id);
-        if (exportReports == null)
+        var exports = await _context.Exports.FindAsync(id);
+        if (exports == null)
         {
             return new MessageResult()
             {
@@ -152,7 +151,7 @@ public class ReportManager : IReportRepository
         }
         var exportMaterials = await _context.ExportMaterials.Where(x => x.ExportID == id).ToListAsync();
         _context.ExportMaterials.RemoveRange(exportMaterials);
-        _context.ExportReports.Remove(exportReports);
+        _context.Exports.Remove(exports);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -163,7 +162,7 @@ public class ReportManager : IReportRepository
 
     public async Task<MessageResult> DeleteImportReport(string id)
     {
-        var report = await _context.ImportReports.FindAsync(id);
+        var report = await _context.Imports.FindAsync(id);
         if (report == null)
         {
             return new MessageResult()
@@ -174,7 +173,7 @@ public class ReportManager : IReportRepository
         }
         var materials = await _context.ImportMaterials.Where(x => x.ImportID == id).ToListAsync();
         _context.ImportMaterials.RemoveRange(materials);
-        _context.ImportReports.Remove(report);
+        _context.Imports.Remove(report);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -185,7 +184,7 @@ public class ReportManager : IReportRepository
 
     public async Task<MessageResult> DeleteLiquidationReport(string id)
     {
-        var report = await _context.LiquidationReports.FindAsync(id);
+        var report = await _context.Liquidations.FindAsync(id);
         if (report == null)
         {
             return new MessageResult()
@@ -196,7 +195,7 @@ public class ReportManager : IReportRepository
         }
         var materials = await _context.LiquidationMaterials.Where(x => x.LiquidationID == id).ToListAsync();
         _context.LiquidationMaterials.RemoveRange(materials);
-        _context.LiquidationReports.Remove(report);
+        _context.Liquidations.Remove(report);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -205,9 +204,9 @@ public class ReportManager : IReportRepository
         };
     }
 
-    public async Task<Respond<PagedList<ExportReport>>> GetAllExportReport(Search request)
+    public async Task<Respond<PagedList<Export>>> GetAllExportReport(Search request)
     {
-        var query = from c in _context.ExportReports select c;
+        var query = from c in _context.Exports select c;
         if (!string.IsNullOrEmpty(request.Name))
         {
             query = query.Where(x => x.Code.Contains(request.Name));
@@ -222,7 +221,7 @@ public class ReportManager : IReportRepository
             .Take(request.PageSize)
             .ToListAsync();
             // select
-            var pagedResult = new PagedList<ExportReport>()
+            var pagedResult = new PagedList<Export>()
             {
                 TotalRecord = totalRow,
                 PageSize = request.PageSize,
@@ -230,7 +229,7 @@ public class ReportManager : IReportRepository
                 TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
                 Items = data,
             };
-            return new Respond<PagedList<ExportReport>>()
+            return new Respond<PagedList<Export>>()
             {
                 Data = pagedResult,
                 Result = 1,
@@ -243,7 +242,7 @@ public class ReportManager : IReportRepository
             .Select(x => x)
             .ToListAsync();
             // select
-            var pagedResult = new PagedList<ExportReport>()
+            var pagedResult = new PagedList<Export>()
             {
                 TotalRecord = totalRow,
                 PageSize = totalRow,
@@ -251,7 +250,7 @@ public class ReportManager : IReportRepository
                 TotalPages = 1,
                 Items = data,
             };
-            return new Respond<PagedList<ExportReport>>()
+            return new Respond<PagedList<Export>>()
             {
                 Data = pagedResult,
                 Result = 1,
@@ -260,9 +259,9 @@ public class ReportManager : IReportRepository
         }
     }
 
-    public async Task<Respond<PagedList<ImportReport>>> GetAllImportReport(Search request)
+    public async Task<Respond<PagedList<Import>>> GetAllImportReport(Search request)
     {
-        var query = from c in _context.ImportReports select c;
+        var query = from c in _context.Imports select c;
         if (!string.IsNullOrEmpty(request.Name))
         {
             query = query.Where(x => x.Code.Contains(request.Name));
@@ -277,7 +276,7 @@ public class ReportManager : IReportRepository
             .Take(request.PageSize)
             .ToListAsync();
             // select
-            var pagedResult = new PagedList<ImportReport>()
+            var pagedResult = new PagedList<Import>()
             {
                 TotalRecord = totalRow,
                 PageSize = request.PageSize,
@@ -285,7 +284,7 @@ public class ReportManager : IReportRepository
                 TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
                 Items = data,
             };
-            return new Respond<PagedList<ImportReport>>()
+            return new Respond<PagedList<Import>>()
             {
                 Data = pagedResult,
                 Result = 1,
@@ -298,7 +297,7 @@ public class ReportManager : IReportRepository
             .Select(x => x)
             .ToListAsync();
             // select
-            var pagedResult = new PagedList<ImportReport>()
+            var pagedResult = new PagedList<Import>()
             {
                 TotalRecord = totalRow,
                 PageSize = totalRow,
@@ -306,7 +305,7 @@ public class ReportManager : IReportRepository
                 TotalPages = 1,
                 Items = data,
             };
-            return new Respond<PagedList<ImportReport>>()
+            return new Respond<PagedList<Import>>()
             {
                 Data = pagedResult,
                 Result = 1,
@@ -315,9 +314,9 @@ public class ReportManager : IReportRepository
         }
     }
 
-    public async Task<Respond<PagedList<LiquidationReport>>> GetAllLiquidationReport(Search request)
+    public async Task<Respond<PagedList<Liquidation>>> GetAllLiquidationReport(Search request)
     {
-        var query = from c in _context.LiquidationReports select c;
+        var query = from c in _context.Liquidations select c;
         if (!string.IsNullOrEmpty(request.Name))
         {
             query = query.Where(x => x.Name.Contains(request.Name));
@@ -332,7 +331,7 @@ public class ReportManager : IReportRepository
             .Take(request.PageSize)
             .ToListAsync();
             // select
-            var pagedResult = new PagedList<LiquidationReport>()
+            var pagedResult = new PagedList<Liquidation>()
             {
                 TotalRecord = totalRow,
                 PageSize = request.PageSize,
@@ -340,7 +339,7 @@ public class ReportManager : IReportRepository
                 TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
                 Items = data,
             };
-            return new Respond<PagedList<LiquidationReport>>()
+            return new Respond<PagedList<Liquidation>>()
             {
                 Data = pagedResult,
                 Result = 1,
@@ -353,7 +352,7 @@ public class ReportManager : IReportRepository
             .Select(x => x)
             .ToListAsync();
             // select
-            var pagedResult = new PagedList<LiquidationReport>()
+            var pagedResult = new PagedList<Liquidation>()
             {
                 TotalRecord = totalRow,
                 PageSize = totalRow,
@@ -361,7 +360,7 @@ public class ReportManager : IReportRepository
                 TotalPages = 1,
                 Items = data,
             };
-            return new Respond<PagedList<LiquidationReport>>()
+            return new Respond<PagedList<Liquidation>>()
             {
                 Data = pagedResult,
                 Result = 1,
@@ -370,17 +369,17 @@ public class ReportManager : IReportRepository
         }
     }
 
-    public async Task<Respond<ExportReport>> GetExportReportByID(string id)
+    public async Task<Respond<Export>> GetExportReportByID(string id)
     {
-        var result = await _context.ExportReports.FirstOrDefaultAsync(x => x.ID == id);
+        var result = await _context.Exports.FirstOrDefaultAsync(x => x.ID == id);
         if (result == null)
-            return new Respond<ExportReport>()
+            return new Respond<Export>()
             {
                 Result = -1,
                 Message = "Không tìm thấy",
             };
 
-        return new Respond<ExportReport>()
+        return new Respond<Export>()
         {
             Result = 1,
             Message = "Thành công",
@@ -388,17 +387,17 @@ public class ReportManager : IReportRepository
         };
     }
 
-    public async Task<Respond<ImportReport>> GetImportReportByID(string id)
+    public async Task<Respond<Import>> GetImportReportByID(string id)
     {
-        var result = await _context.ImportReports.FirstOrDefaultAsync(x => x.ID == id);
+        var result = await _context.Imports.FirstOrDefaultAsync(x => x.ID == id);
         if (result == null)
-            return new Respond<ImportReport>()
+            return new Respond<Import>()
             {
                 Result = -1,
                 Message = "Không tìm thấy",
             };
 
-        return new Respond<ImportReport>()
+        return new Respond<Import>()
         {
             Result = 1,
             Message = "Thành công",
@@ -406,17 +405,17 @@ public class ReportManager : IReportRepository
         };
     }
 
-    public async Task<Respond<LiquidationReport>> GetLiquidationReportByID(string id)
+    public async Task<Respond<Liquidation>> GetLiquidationReportByID(string id)
     {
-        var result = await _context.LiquidationReports.FirstOrDefaultAsync(x => x.ID == id);
+        var result = await _context.Liquidations.FirstOrDefaultAsync(x => x.ID == id);
         if (result == null)
-            return new Respond<LiquidationReport>()
+            return new Respond<Liquidation>()
             {
                 Result = -1,
                 Message = "Không tìm thấy",
             };
 
-        return new Respond<LiquidationReport>()
+        return new Respond<Liquidation>()
         {
             Result = 1,
             Message = "Thành công",
@@ -424,17 +423,17 @@ public class ReportManager : IReportRepository
         };
     }
 
-    public Task<MessageResult> UpdateExportReport(string id, ExportReport request)
+    public Task<MessageResult> UpdateExportReport(string id, Export request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<MessageResult> UpdateImportReport(string id, ImportReport request)
+    public Task<MessageResult> UpdateImportReport(string id, Import request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<MessageResult> UpdateLiquidationReport(string id, ImportReport request)
+    public Task<MessageResult> UpdateLiquidationReport(string id, Import request)
     {
         throw new NotImplementedException();
     }

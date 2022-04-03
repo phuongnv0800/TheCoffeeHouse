@@ -40,7 +40,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+           
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -65,7 +65,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+           
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -87,7 +87,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+           
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -114,7 +114,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+           
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -134,7 +134,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+           
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -153,7 +153,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+           
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -173,7 +173,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+           
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -200,7 +200,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+           
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -223,7 +223,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-            SQLExceptionFilter.AddFileCheckSQL(e);
+           
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }

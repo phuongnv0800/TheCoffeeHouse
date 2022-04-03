@@ -2,7 +2,6 @@
 
 public class StockMaterial
 {
-
     public string StockID { get; set; }
     public Stock Stock { get; set; }
     public string MaterialID { get; set; }
