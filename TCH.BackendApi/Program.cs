@@ -25,14 +25,15 @@ builder.Services.AddDbContext<APIContext>(options =>
 {
     options.UseLoggerFactory(LoggerFactory.Create(builder => { builder.AddConsole(); }));
     options.EnableSensitiveDataLogging();
-    if (environment.IsProduction())
-    {
-        options.UseSqlServer(config.GetConnectionString("Prod"));
-    }
-    else
-    {
-        options.UseSqlServer(config.GetConnectionString("Dev"));
-    }
+    options.UseSqlServer(config.GetConnectionString("Prod"));
+    //if (environment.IsProduction())
+    //{
+    //    options.UseSqlServer(config.GetConnectionString("Prod"));
+    //}
+    //else
+    //{
+    //    options.UseSqlServer(config.GetConnectionString("Dev"));
+    //}
     //options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Program));
@@ -46,7 +47,8 @@ builder.Services.AddScoped<IRoleRepository, RoleManager>();
 builder.Services.AddScoped<IMaterialRepository, MaterialManager>();
 builder.Services.AddScoped<IBranchRepository, BranchManager>();
 builder.Services.AddScoped<IMenuRepository, MenuManager>();
-//builder.Services.AddScoped<IOrderRepository, OrderManager>();
+builder.Services.AddScoped<IOrderRepository, OrderManager>();
+builder.Services.AddScoped<ICustomerRepository, CustomerManager>();
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IStorageService, FileStorageService>();

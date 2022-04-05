@@ -1,4 +1,5 @@
-﻿using TCH.BackendApi.Models.DataRepository;
+﻿using Microsoft.Net.Http.Headers;
+using TCH.BackendApi.Models.DataRepository;
 
 namespace TCH.BackendApi.Models.DataManager;
 
@@ -13,7 +14,6 @@ public class FileStorageService : IStorageService
         //_userContentFolder = Path.Combine(webHostEnvironment.WebRootPath, USER_CONTENT_FOLDER_NAME);
         _userContentFolder = Path.Combine(Directory.GetCurrentDirectory(), USER_CONTENT_FOLDER_NAME);
     }
-
     public string GetFileUrl(string fileName)
     {
         return $"/{USER_CONTENT_FOLDER_NAME}/{fileName}";

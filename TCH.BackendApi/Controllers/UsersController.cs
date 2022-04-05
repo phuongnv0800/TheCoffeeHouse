@@ -48,7 +48,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+    public async Task<IActionResult> Register([FromForm] RegisterRequest request)
     {
         try
         {
@@ -71,7 +71,30 @@ public class UsersController : ControllerBase
         }
 
     }
+    [HttpPost("lock/{id}")]
+    public async Task<IActionResult> Lock(string id)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.LockUser(id:id);
+            if (result.Result != 1)
+                return BadRequest(result);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+           
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
 
+    }
     //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
     [HttpGet("paging")]
     public async Task<IActionResult> GetAllPaging([FromQuery] Search request)

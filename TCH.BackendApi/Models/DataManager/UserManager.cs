@@ -14,6 +14,7 @@ using TCH.BackendApi.ViewModels;
 using TCH.BackendApi.Config;
 using TCH.BackendApi.EF;
 using System.Text.Json;
+using TCH.BackendApi.Models.Enum;
 
 namespace TCH.BackendApi.Models.DataManager;
 
@@ -65,17 +66,15 @@ public class UserManager : IUserRepository, IDisposable
         }
 
         var roles = await _userManager.GetRolesAsync(user);
-        var branchs = await _context.UserBranches.Include(x=>x.Branch).Where(x=>x.UserId == user.Id).ToListAsync();
-        var branchIDs = branchs.Select(x=>x.BranchID).ToList();
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.Email, user.Email ?? ""),
-            new Claim(ClaimTypes.GivenName, user.FirstName ?? "" + " " + user.LastName ?? ""),
+            new Claim(ClaimTypes.GivenName, user.FirstName ?? "" + " " + user.LastName),
             new Claim(ClaimTypes.Role, string.Join(";", roles)),
             new Claim(ClaimTypes.Name, request.UserName),
             new Claim(ClaimValue.Displayname, user.LastName ?? ""),
-            new Claim(ClaimValue.BranhID,JsonSerializer.Serialize(branchIDs)),
+            new Claim(ClaimValue.BranhID,user.BranchID ?? ""),
             new Claim(ClaimValue.ID, user.Id),
             new Claim(ClaimValue.Role, JsonSerializer.Serialize(roles)),
         };
@@ -100,7 +99,7 @@ public class UserManager : IUserRepository, IDisposable
 
     public async Task<MessageResult> Delete(string id)
     {
-        var user = await _userManager.FindByIdAsync(id.ToString());
+        var user = await _userManager.FindByIdAsync(id);
         if (user == null)
             return new MessageResult()
             {
@@ -124,28 +123,29 @@ public class UserManager : IUserRepository, IDisposable
 
     public async Task<Respond<UserVm>> GetById(string id)
     {
-        var user = await _userManager.FindByIdAsync(id.ToString());
+        var user = await _userManager.FindByIdAsync(id);
         if (user == null)
             return new Respond<UserVm>()
             {
                 Result = -1,
                 Message = "Tài khoản không tồn tại",
-                Data = null,
+                Data = new UserVm(),
             };
 
         var roles = await _userManager.GetRolesAsync(user);
         var userVm = new UserVm()
         {
             Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
+            FirstName = user.FirstName ?? "",
+            LastName = user.LastName ?? "",
             Id = user.Id,
             DateOfBirth = user.DateOfBirth,
             PhoneNumber = user.PhoneNumber,
             UserName = user.UserName,
             Gender = user.Gender,
-            Address = user.Address,
-            //Avatar = SystemConstants.BaseUrlImage + USER_CONTENT_FOLDER_NAME + "/" + user.Avatar,
+            Address = user.Address ?? "",
+            Status = user.Status,
+            Avatar = USER_CONTENT_FOLDER_NAME + "/" + user.Avatar,
             Roles = roles,
         };
         return new Respond<UserVm>()
@@ -164,22 +164,23 @@ public class UserManager : IUserRepository, IDisposable
             {
                 Result = 0,
                 Message = "Tài khoản không tồn tại",
-                Data = null,
+                Data = new UserVm(),
             };
 
         var roles = await _userManager.GetRolesAsync(user);
         var userVm = new UserVm()
         {
             Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
+            FirstName = user.FirstName ?? "",
+            LastName = user.LastName ?? "",
             Id = user.Id,
             DateOfBirth = user.DateOfBirth,
             PhoneNumber = user.PhoneNumber,
             UserName = user.UserName,
             Gender = user.Gender,
-            Address = user.Address,
-            //Avatar = SystemConstants.BaseUrlImage + USER_CONTENT_FOLDER_NAME + "/" + user.Avatar,
+            Address = user.Address ?? "",
+            Status = user.Status,
+            Avatar = USER_CONTENT_FOLDER_NAME + "/" + user.Avatar,
             Roles = roles,
         };
         return new Respond<UserVm>()
@@ -199,92 +200,72 @@ public class UserManager : IUserRepository, IDisposable
         }
         //paging
         int totalRow = await query.CountAsync();
-        if (request.IsPging == true)
-        {
-            var data = await query
-            .Select(
-                x => new UserVm()
-                {
-                    Email = x.Email,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    UserName = x.UserName,
-                    Id = x.Id,
-                    PhoneNumber = x.PhoneNumber,
-                    DateOfBirth = x.DateOfBirth,
-                    Gender = x.Gender,
-                    Address = x.Address,
-                    //Avatar = SystemConstants.BaseUrlImage + USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
-                }
-            )
-            //.OrderBy(x => x.Id)
-            .Skip((request.PageNumber - 1) * request.PageSize)
-            .Take(request.PageSize)
-            .ToListAsync();
-            // select
-            var pagedResult = new PagedList<UserVm>()
-            {
-                TotalRecord = totalRow,
-                PageSize = request.PageSize,
-                CurrentPage = request.PageNumber,
-                TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
-                Items = data,
-            };
-            return pagedResult;
-        }
+        var data = new List<UserVm>();
+        if (request.IsPging)
+            data = await query
+                .Select(
+                    x => new UserVm()
+                    {
+                        Email = x.Email,
+                        FirstName = x.FirstName ?? "",
+                        LastName = x.LastName ?? "",
+                        UserName = x.UserName,
+                        Id = x.Id,
+                        PhoneNumber = x.PhoneNumber,
+                        DateOfBirth = x.DateOfBirth,
+                        Gender = x.Gender,
+                        Status = x.Status,
+                        Address = x.Address ?? "",
+                        Avatar = USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
+                    }
+                )
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync();
         else
+            data = await query
+                .Select(
+                    x => new UserVm()
+                    {
+                        Email = x.Email,
+                        FirstName = x.FirstName ?? "",
+                        LastName = x.LastName ?? "",
+                        UserName = x.UserName,
+                        Id = x.Id,
+                        PhoneNumber = x.PhoneNumber,
+                        DateOfBirth = x.DateOfBirth,
+                        Gender = x.Gender,
+                        Status = x.Status,
+                        Address = x.Address ?? "",
+                        Avatar = USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
+                    }
+                ).ToListAsync();
+        var pagedResult = new PagedList<UserVm>()
         {
-            var data = await query
-            .Select(
-                x => new UserVm()
-                {
-                    Email = x.Email,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    UserName = x.UserName,
-                    Id = x.Id,
-                    PhoneNumber = x.PhoneNumber,
-                    DateOfBirth = x.DateOfBirth,
-                    Gender = x.Gender,
-                    Address = x.Address,
-                    //Avatar = SystemConstants.BaseUrlImage + USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
-                }
-            )
-            //.OrderBy(x => x.Id)
-            .ToListAsync();
-            // select
-            var pagedResult = new PagedList<UserVm>()
-            {
-                TotalRecord = totalRow,
-                PageSize = totalRow,
-                CurrentPage = 1,
-                TotalPages = 1,
-                Items = data,
-            };
-            return pagedResult;
-        }
-
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return pagedResult;
     }
 
     public async Task<MessageResult> Register(RegisterRequest request)
     {
         var user = await _userManager.FindByNameAsync(request.UserName);
         if (user != null)
-        {
             return new MessageResult()
             {
                 Message = "Tài khoản đã tồn tại",
                 Result = -1,
             };
-        }
         if (await _userManager.FindByEmailAsync(request.Email) != null)
-        {
             return new MessageResult()
             {
                 Message = "Email đã được sử dụng",
                 Result = 0,
             };
-        }
 
         user = new AppUser()
         {
@@ -295,20 +276,20 @@ public class UserManager : IUserRepository, IDisposable
             UserName = request.UserName,
             PhoneNumber = request.PhoneNumber,
             Gender = request.Gender,
-            Address = request.Address
+            Address = request.Address,
+            BranchID =request.branchID,
+            Status = Status.Active,
         };
         if (request.AvatarFile != null)
             user.Avatar = await SaveFileIFormFile(request.AvatarFile);
 
         var result = await _userManager.CreateAsync(user, request.Password);
         if (result.Succeeded)
-        {
             return new MessageResult()
             {
                 Message = "Tạo tài khoản thành công",
                 Result = 1,
             };
-        }
         return new MessageResult()
         {
             Message = "Tạo tài khoản thất bại",
@@ -318,7 +299,7 @@ public class UserManager : IUserRepository, IDisposable
 
     public async Task<MessageResult> RoleAssign(string id, RoleAssignRequest request)
     {
-        var user = await _userManager.FindByIdAsync(id.ToString());
+        var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
             return new MessageResult()
@@ -387,7 +368,25 @@ public class UserManager : IUserRepository, IDisposable
             Message = "Không thể cập nhật thông tin",
         };
     }
-
+    public async Task<MessageResult> LockUser(string id)
+    {
+        if (await _userManager.Users.AnyAsync(x => x.Id != id))
+        {
+            return new MessageResult()
+            {
+                Result = 0,
+                Message = "Không tồn tại tài khoản"
+            };
+        }
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        user.Status = Status.Deactive;
+        await _userManager.UpdateAsync(user);
+        return new MessageResult()
+        {
+            Result = 0,
+            Message = "Khoá tài khoản thành công",
+        };
+    }
     public async Task<MessageResult> ChangePasword(ChangePassword req)
     {
         if (await _userManager.FindByNameAsync(req.UserName) == null)

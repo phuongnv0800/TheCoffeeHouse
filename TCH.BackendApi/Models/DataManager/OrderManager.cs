@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TCH.BackendApi.Config;
 using TCH.BackendApi.EF;
 using TCH.BackendApi.Entities;
@@ -18,7 +19,7 @@ public class OrderManager : IOrderRepository, IDisposable
     private readonly string? UserID;
     private readonly string _accessToken;
     private readonly IMapper _mapper;
-    public OrderManager(APIContext context, HttpContextAccessor httpContext, IMapper mapper)
+    public OrderManager(APIContext context, IHttpContextAccessor httpContext, IMapper mapper)
     {
         _context = context;
         _httpContextAccessor = httpContext;
@@ -26,195 +27,119 @@ public class OrderManager : IOrderRepository, IDisposable
         UserID = httpContext != null ? httpContext?.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value : "";
         _accessToken = httpContext?.HttpContext != null ? httpContext.HttpContext.Request.Headers["Authorization"] : "";
     }
-    public void Dispose()
-    {
-        GC.Collect(2, GCCollectionMode.Forced, true);
-        GC.WaitForPendingFinalizers();
-        GC.SuppressFinalize(this);
-    }
-    //    public async Task<bool> Create(OrderRequest request)
-    //    {
-    //        var orderRe = new Order()
-    //        {
-    //            DateCreated = DateTime.Now,
-    //            ShipPhone = request.ShipPhone,
-    //            ShipAddress = request.ShipAddress,
-    //            ShipName = request.ShipName,
-    //            Status = OrderStatus.InProgress,
-    //            UserId = request.UserId
-    //        };
-    //        _context.Orders.Add(orderRe);
-    //        await _context.SaveChangesAsync();
-    //        var order = await _context.Orders
-    //            .Where(x => x.UserId == orderRe.UserId && x.DateCreated == orderRe.DateCreated)
-    //            .FirstOrDefaultAsync();
-    //        var query = from c in _context.Carts where c.UserId == request.UserId select new { c };
-    //        var orderDetails = await _context.Carts.Where(x => x.UserId == request.UserId).Select(x => new OrderDetail()
-    //        {
-    //            ProductId = x.ProductId,
-    //            Price = x.Price,
-    //            SubTotal = x.SubTotal,
-    //            Quantity = x.Quantity,
-    //            OrderId = order.Id
-    //        }).ToListAsync();
-    //        order.OrderDetails = orderDetails;
-    //        _context.Orders.Update(order);
-    //        var carts = await _context.Carts.Where(x => x.UserId == request.UserId).ToListAsync();
-    //        _context.Carts.RemoveRange(carts);
-    //        await _context.SaveChangesAsync();
-    //        return true;
-    //    }
-    //    public async Task<bool> Update(OrderRequest request)
-    //    {
-    //        var order = await _context.Orders.FindAsync(request.Id);
-    //        if (!string.IsNullOrWhiteSpace(request.ShipAddress))
-    //            order.ShipAddress = request.ShipAddress;
-    //        if (!string.IsNullOrWhiteSpace(request.ShipName))
-    //            order.ShipName = request.ShipName;
-    //        if (!string.IsNullOrWhiteSpace(request.ShipPhone))
-    //            order.ShipPhone = request.ShipPhone;
-    //        order.Status = request.Status;
-    //        await _context.SaveChangesAsync();
-    //        return true;
-    //    }
-    //    public async Task<PagedList<OrderVm>> GetAllPaging(PagingRequest request)
-    //    {
-    //        var query = from order in _context.Orders select new { order };
-    //        if (!string.IsNullOrEmpty(request.Keyword))
-    //            query = query.Where(x => x.order.ShipName.Contains(request.Keyword));
-    //        int totalRow = await query.CountAsync();
-    //        var data = await query
-    //            .Select(x => new OrderVm()
-    //            {
-    //                Id = x.order.Id,
-    //                ShipAddress = x.order.ShipAddress,
-    //                ShipName = x.order.ShipName,
-    //                ShipPhone = x.order.ShipPhone,
-    //                Status = x.order.Status,
-    //                DateCreated = x.order.DateCreated,
-    //            })
-    //            .OrderBy(x => x.Id)
-    //            .Skip((request.PageNumber - 1) * request.PageSize)
-    //            .Take(request.PageSize)
-    //            .ToListAsync();
-    //        select
-    //        var pagedResult = new PagedList<OrderVm>()
-    //        {
-    //            MetaData = new MetaData()
-    //            {
-    //                TotalRecord = totalRow,
-    //                PageSize = request.PageSize,
-    //                CurrentPage = request.PageNumber,
-    //                TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
-    //            },
-    //            Items = data,
-    //        };
-    //        return pagedResult;
-    //    }
-    //    public async Task<PagedList<OrderVm>> GetByUser(Guid userId, PagingRequest request)
-    //    {
-    //        var query = from order in _context.Orders where order.UserId == userId  select new { order };
-    //        if (!string.IsNullOrEmpty(request.Keyword))
-    //            query = query.Where(x => x.order.ShipName.Contains(request.Keyword));
-    //        int totalRow = await query.CountAsync();
-    //        var data = await query.Select(x => new OrderVm()
-    //            {
-    //                Id = x.order.Id,
-    //                ShipAddress = x.order.ShipAddress,
-    //                ShipName = x.order.ShipName,
-    //                ShipPhone = x.order.ShipPhone,
-    //                Status = x.order.Status,
-    //                DateCreated = x.order.DateCreated,
-    //            })
-    //            .OrderBy(x => x.Id)
-    //            .Skip((request.PageNumber - 1) * request.PageSize)
-    //            .Take(request.PageSize)
-    //            .ToListAsync();
-    //        select
-    //        var pagedResult = new PagedList<OrderVm>()
-    //        {
-    //            MetaData = new MetaData()
-    //            {
-    //                TotalRecord = totalRow,
-    //                PageSize = request.PageSize,
-    //                CurrentPage = request.PageNumber,
-    //                TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
-    //            },
-    //            Items = data,
-    //        };
-    //        return pagedResult;
-    //    }
-    //    public async Task<OrderVm> GetById(int orderId)
-    //    {
-    //        var order = await _context.Orders.FindAsync(orderId);
-    //        if (order == null)
-    //            throw new TCHException("order not found");
-
-    //        var query = from o in _context.Orders
-    //                    join od in _context.OrderDetails on o.Id equals od.OrderId
-    //                    join p in _context.Products on od.ProductId equals p.Id
-    //                    select new { od, o, p };
-    //        var orderList = await query.Select(x => new OrderList()
-    //        {
-    //            ProductId = x.od.ProductId,
-    //            Price = x.od.Price,
-    //            SubTotal = x.od.SubTotal,
-    //            Quantity = x.od.Quantity,
-    //            OrderId = order.Id,
-    //            Name = x.p.Name,
-    //            ImagePath = x.p.ImagePath
-    //        }).ToListAsync();
-    //        var orderVm = new OrderVm()
-    //        {
-    //            Id = order.Id,
-    //            ShipAddress = order.ShipAddress,
-    //            ShipName = order.ShipName,
-    //            ShipPhone = order.ShipPhone,
-    //            Status = order.Status,
-    //            DateCreated = order.DateCreated,
-    //            OrderLists = orderList
-    //        };
-    //        return orderVm;
-    //    }
-
     public async Task<MessageResult> Create(OrderRequest request)
     {
         var branch = await _context.Branches.FindAsync(request.BranchID);
         if( branch == null)
-        {
             return new MessageResult()
             {
                 Result = 0,
                 Message = "Không có thông tin nhánh",
             };
+        double subTotal = 0;
+        foreach (var item in request.OrderItems)
+        {
+            //check số lượng
+            if (item.Toppings.Count > 2)
+                return new MessageResult()
+                {
+                    Result = 0,
+                    Message = "Só lượng topping là 2.",
+                };
+            int quantity = 0;
+            foreach (var topping in item.Toppings)
+            {
+                quantity += topping.Quantity;
+            }
+            if (quantity > 2)
+            {
+                return new MessageResult()
+                {
+                    Result = 0,
+                    Message = "Só lượng topping là 2.",
+                };
+            }
+            //
+            subTotal += (item.PriceProduct + item.PriceSize) * item.Quantity;
+            foreach (var topping in item.Toppings)
+            {
+                subTotal += topping.SubPrice * topping.Quantity;
+            }
         }
-
         var orderRe = new Order()
         {
             ID = Guid.NewGuid().ToString(),
+            TableNum = request.TableNum,
+            Cashier = request.Cashier,
             Code = "",
-            SubAmount = 0,
-            TotalAmount =0,
+            SubAmount = subTotal,
+            TotalAmount = subTotal - (request.ReducePromotion + request.ReduceAmount),
+            Status = request.OrderType == OrderType.Shipping ? OrderStatus.Open : OrderStatus.Finished,
             OrderType = request.OrderType,
             ReducePromotion = request.ReducePromotion,
             ReduceAmount = request.ReduceAmount,
-            CustomerPut = request.CustomerPut,
-            CustomerReceive = request.CustomerReceive, 
+            CustomerPut = request.CustomerPut ,
+            CustomerReceive = request.CustomerPut - (subTotal - request.ReducePromotion - request.ReduceAmount), 
             ShippingFee = request.ShippingFee,
             CreateDate = DateTime.Now,
             Description  = request.Description,
-            CancellationReason  = "",
+            CancellationReason  = null,
             UserCreateID = UserID,
             PaymentType = request.PaymentType,
             CustomerID = request.CustomerID,
             BranchID = request.BranchID,
         };
         _context.Orders.Add(orderRe);
+        var orderDetails = new List<OrderDetail>();
+        foreach (var item in request.OrderItems)
+        {
+            if (item.Toppings.Count > 0)
+            {
+                orderDetails.Add(new OrderDetail()
+                {
+                    OrderID = orderRe.ID,
+                    Quantity = item.Quantity,
+                    PriceProduct = item.PriceProduct,
+                    Description = item.Description,
+                    SugarType = item.SugarType,
+                    PriceSize = item.PriceSize,
+                    SizeID = item.SizeID,
+                    ProductID = item.ProductID,
+                    ToppingID1 = item.Toppings[0].ID,
+                    Topping1Name = null,
+                    PriceToppping1 = item.Toppings[0].SubPrice,
+                    ToppingID2 = item.Toppings[1] != null ? item.Toppings[1]?.ID : "",
+                    Topping2Name  = null,
+                    PriceToppping2 = item.Toppings[1] != null ? item.Toppings[1].SubPrice : 0,
+                });
+            }
+            else
+            {
+                orderDetails.Add(new OrderDetail()
+                {
+                    OrderID = orderRe.ID,
+                    Quantity = item.Quantity,
+                    PriceProduct = item.PriceProduct,
+                    Description = item.Description,
+                    SugarType = item.SugarType,
+                    PriceSize = item.PriceSize,
+                    SizeID = item.SizeID,
+                    ProductID = item.ProductID,
+                    ToppingID1 = null,
+                    Topping1Name = null,
+                    PriceToppping1 = 0,
+                    ToppingID2 = null,
+                    Topping2Name = null,
+                    PriceToppping2 =0,
+                });
+            }
+        }
+        _context.OrderDetails.AddRange(orderDetails);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
             Result = 1,
-            Message = ""
+            Message = "Tạo thành công"
         };
     }
 
@@ -223,33 +148,162 @@ public class OrderManager : IOrderRepository, IDisposable
         throw new NotImplementedException();
     }
 
-    public Task<MessageResult> Delete(OrderRequest request)
+    public async Task<Respond<PagedList<Order>>> GetByBranhID(string branhID, Search request)
     {
-        throw new NotImplementedException();
+        var query = from c in _context.Orders where c.BranchID == branhID select c;
+        if (!string.IsNullOrEmpty(request.Name))
+            query = query.Where(x => x.Code.Contains(request.Name));
+        //paging
+        int totalRow = await query.CountAsync();
+        var data = new List<Order>();
+        if (request.IsPging)
+        {
+            data = await query
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToListAsync();
+        }
+        else
+            data = await query.ToListAsync();
+        var pagedResult = new PagedList<Order>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<Order>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+    public async Task<Respond<PagedList<Order>>> GetByUser(string userID, Search request)
+    {
+        var query = from c in _context.Orders where c.UserCreateID == userID select c;
+        if (!string.IsNullOrEmpty(request.Name))
+            query = query.Where(x => x.Code.Contains(request.Name));
+        //paging
+        int totalRow = await query.CountAsync();
+        var data = new List<Order>();
+        if (request.IsPging)
+        {
+            data = await query
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToListAsync();
+        }
+        else
+            data = await query.ToListAsync();
+        var pagedResult = new PagedList<Order>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<Order>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+    public async Task<Respond<PagedList<Order>>> GetAll(Search request)
+    {
+        var query = from c in _context.Orders select c;
+        if (!string.IsNullOrEmpty(request.Name))
+            query = query.Where(x => x.Code.Contains(request.Name));
+        //paging
+        int totalRow = await query.CountAsync();
+        var data = new List<Order>();
+        if (request.IsPging)
+        {
+            data = await query
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToListAsync();
+        }
+        else
+            data = await query.ToListAsync();
+        var pagedResult = new PagedList<Order>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<Order>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
     }
 
-    public Task<Respond<PagedList<OrderVm>>> GetByBranhID(string branhID, Search request)
+    public async Task<Respond<Order>> GetById(string orderID)
     {
-        throw new NotImplementedException();
+        var order = await _context.Orders
+            .Include(x=>x.OrderDetails)
+            .FirstOrDefaultAsync(x=>x.ID==orderID);
+        if (order == null)
+            return new Respond<Order>()
+            {
+                Message = "Không tồn tại hoá đơn",
+                Result = 0,
+                Data = null,
+            };
+        return new Respond<Order>()
+        {
+            Message = "Thành công",
+            Result = 1,
+            Data = order,
+        };
     }
-
-    public Task<Respond<PagedList<OrderVm>>> GetAll(Search request)
+    
+    public async Task<MessageResult> UpdateStatus(string orderID, OrderStatus status)
     {
-        throw new NotImplementedException();
+        var order = await _context.Orders
+            .FirstOrDefaultAsync(x=>x.ID==orderID);
+        if (order == null)
+            return new MessageResult()
+            {
+                Message = "Không tồn tại hoá đơn",
+                Result = 0,
+            };
+        order.Status = status;
+        _context.Orders.Update(order);
+        await _context.SaveChangesAsync();
+        return new MessageResult()
+        {
+            Message = "Thành công",
+            Result = 1,
+        };
     }
-
-    public Task<OrderVm> GetById(string orderID)
+    public async Task<MessageResult> Delete(string orderID)
     {
-        throw new NotImplementedException();
+        var order = await _context.Orders
+            .Include(x=>x.OrderDetails)
+            .FirstOrDefaultAsync(x=>x.ID==orderID);
+        if (order == null)
+            return new MessageResult()
+            {
+                Message = "Không tồn tại hoá đơn",
+                Result = 0,
+            };
+        _context.Orders.Remove(order);
+        await _context.SaveChangesAsync();
+        return new MessageResult()
+        {
+            Message = "Thành công",
+            Result = 1,
+        };
     }
-
-    public Task<Respond<PagedList<OrderVm>>> GetByUser(Guid userID, Search request)
+    public void Dispose()
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<MessageResult> Delete(string orderID)
-    {
-        throw new NotImplementedException();
+        GC.Collect(2, GCCollectionMode.Forced, true);
+        GC.WaitForPendingFinalizers();
+        GC.SuppressFinalize(this);
     }
 }

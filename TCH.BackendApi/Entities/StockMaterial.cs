@@ -10,4 +10,5 @@ public class StockMaterial
     public DateTime BeginDate { get; set; }
     public DateTime ExpriyDate { get; set; }
     public int Status { get; set; }
+    public double PriceOfUnit { get; set; }
 }

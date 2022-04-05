@@ -11,7 +11,7 @@ using TCH.BackendApi.ViewModels;
 
 namespace TCH.BackendApi.Models.DataManager;
 
-public class MaterialManager : IMaterialRepository
+public class MaterialManager : IMaterialRepository, IDisposable
 {
     private readonly APIContext _context;
     private readonly IMapper _mapper;
@@ -34,10 +34,6 @@ public class MaterialManager : IMaterialRepository
             Description = request.Description,
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
-            PriceOfUnit = request.PriceOfUnit,
-            Supplier = request.Supplier,
-            Unit = request.Unit,
-            Quantity = request.Quantity,
             MaterialTypeID = request.MaterialTypeID,
         };
         _context.Materials.Add(material);
@@ -75,7 +71,7 @@ public class MaterialManager : IMaterialRepository
         {
             return new MessageResult()
             {
-                Result = 1,
+                Result = 0,
                 Message = "Không tìm thấy",
             };
         }
@@ -95,7 +91,7 @@ public class MaterialManager : IMaterialRepository
         {
             return new MessageResult()
             {
-                Result = 1,
+                Result = 0,
                 Message = "Không tìm thấy",
             };
         }
@@ -224,7 +220,7 @@ public class MaterialManager : IMaterialRepository
         if (product == null)
             return new Respond<Material>()
             {
-                Result = -1,
+                Result = 0,
                 Message = "Không tìm thấy",
             };
 
@@ -267,8 +263,6 @@ public class MaterialManager : IMaterialRepository
         material.Description = request.Description;
         material.UpdateDate = DateTime.Now;
         material.Description = request.Description;
-        material.Unit = request.Unit;
-        material.Supplier = request.Supplier;
         material.MaterialTypeID = request.MaterialTypeID;
         _context.Materials.Update(material);
         await _context.SaveChangesAsync();
@@ -298,5 +292,12 @@ public class MaterialManager : IMaterialRepository
             Result = 1,
             Message = "Cập nhật thành công",
         };
+    }
+    
+    public void Dispose()
+    {
+        GC.Collect(2, GCCollectionMode.Forced, true);
+        GC.WaitForPendingFinalizers();
+        GC.SuppressFinalize(this);
     }
 }

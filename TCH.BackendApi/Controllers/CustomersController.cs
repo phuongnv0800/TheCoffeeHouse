@@ -6,21 +6,19 @@ using TCH.BackendApi.Models.Searchs;
 using TCH.BackendApi.ViewModels;
 
 namespace TCH.BackendApi.Controllers;
-
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class BranchsController: ControllerBase
+public class CustomersController : ControllerBase
 {
-    private readonly IBranchRepository _repository;
-    private readonly ILogger<BranchsController> _logger;
+    private readonly ICustomerRepository _repository;
+    private readonly ILogger<CustomersController> _logger;
 
-    public BranchsController(IBranchRepository repository, ILogger<BranchsController> logger)
+    public CustomersController(ICustomerRepository repository, ILogger<CustomersController> logger)
     {
         _repository = repository;
         _logger = logger;
     }
-    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] Search search)
     {
@@ -41,75 +39,14 @@ public class BranchsController: ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [AllowAnonymous]
-    [HttpGet("{branchID}")]
-    public async Task<IActionResult> GetByID(string branchID)
-    {
-        try
-        {
-            var result = await _repository.GetByID(branchID);
-            return Ok(result);
-        }
-        catch (CustomException e)
-        {
-            return BadRequest(new { result = -1, message = e.Message });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
-        }
-    }
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] BranchRequest request)
+    public async Task<IActionResult> Create([FromForm] CustomerRequest request)
     {
         try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var result = await _repository.Create(request);
-            if (result.Result != 1)
-                BadRequest();
-            return Ok(result);
-        }
-        catch (CustomException e)
-        {
-            return BadRequest(new { result = -1, message = e.Message });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
-        }
-    }
-    [HttpPost("add-user/{branchID}/{userID}")]
-    public async Task<IActionResult> AddUserToBranch(string branchID,string userID)
-    {
-        try
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var result = await _repository.AddUserToBranch(userID, branchID);
-            return Ok(result);
-        }
-        catch (CustomException e)
-        {
-            return BadRequest(new { result = -1, message = e.Message });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
-        }
-    }
-    [HttpPost("remove-user/{branchID}/{userID}")]
-    public async Task<IActionResult> RemoveUserToBranch(string branchID,string userID)
-    {
-        try
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var result = await _repository.RemoveUserToBranch(userID, branchID);
             return Ok(result);
         }
         catch (CustomException e)
@@ -123,15 +60,13 @@ public class BranchsController: ControllerBase
         }
     }
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(string id, [FromBody] BranchRequest name)
+    public async Task<IActionResult> Update(string id, [FromBody] CustomerRequest request)
     {
         try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _repository.Update(id, name);
-            if (result.Result != 1)
-                BadRequest();
+            var result = await _repository.Update(id, request);
             return Ok(result);
         }
         catch (CustomException e)
@@ -150,8 +85,84 @@ public class BranchsController: ControllerBase
         try
         {
             var result = await _repository.Delete(id);
-            if (result.Result != 1)
-                BadRequest();
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [HttpGet("member-type")]
+    public async Task<IActionResult> GetMemberTypeAll([FromQuery] Search search)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.GetAllMemberType(search);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [HttpPost("member-type")]
+    public async Task<IActionResult> CreateMemberType([FromBody] MemberTypeRequest request)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.CreateMemberType(request);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [HttpPut("member-type/{id}")]
+    public async Task<IActionResult> UpdateMemberType(string id, [FromBody] MemberTypeRequest request)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.UpdateMemberType(id, request);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [HttpDelete("member-type/{id}")]
+    public async Task<IActionResult> DeleteMemberType(string id)
+    {
+        try
+        {
+            var result = await _repository.DeleteMemberType(id);
             return Ok(result);
         }
         catch (CustomException e)

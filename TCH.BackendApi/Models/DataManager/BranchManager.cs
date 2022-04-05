@@ -13,7 +13,6 @@ namespace TCH.BackendApi.Models.DataManager;
 
 public class BranchManager : IDisposable, IBranchRepository
 {
-
     private readonly APIContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly string? UserID;
@@ -69,29 +68,21 @@ public class BranchManager : IDisposable, IBranchRepository
         var entity = await _context.Branches.FindAsync(branchID);
         var user = await _context.Users.FindAsync(userID);
         if (user == null)
-        {
             return new MessageResult()
             {
                 Result = 0,
                 Message = "User không tồn tại",
             };
-        }
+        
         if (entity == null)
-        {
             return new MessageResult()
             {
                 Result = 0,
                 Message = "Chi nhánh không tồn tại",
             };
-        }
-        var userBranch = new UserBranch()
-        {
-            User = user,
-            UserId = userID,
-            Branch = entity,
-            BranchID = branchID,
-        };
-        _context.UserBranches.Add(userBranch);
+        user.BranchID = entity.ID;
+        user.Branch = entity;
+        _context.Users.Update(user);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -101,17 +92,31 @@ public class BranchManager : IDisposable, IBranchRepository
     }
     public async Task<MessageResult> RemoveUserToBranch(string userID, string branchID)
     {
-        var entity = await _context.UserBranches.FirstOrDefaultAsync(x => x.BranchID == branchID && x.UserId == userID);
+        var entity = await _context.Branches.FindAsync(branchID);
+        var user = await _context.Users.FindAsync(userID);
+        if (user == null)
+            return new MessageResult()
+            {
+                Result = 0,
+                Message = "User không tồn tại",
+            };
+        
         if (entity == null)
+            return new MessageResult()
+            {
+                Result = 0,
+                Message = "Chi nhánh không tồn tại",
+            };
+        if ((user.BranchID ?? "") != entity.ID)
         {
             return new MessageResult()
             {
                 Result = 0,
-                Message = "Tài khoản hoặc chi nhánh không tồn tại",
+                Message = "Tài khoản không trong chi nhánh",
             };
         }
-
-        _context.UserBranches.Remove(entity);
+        user.BranchID = null;
+        _context.Users.Update(user);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {

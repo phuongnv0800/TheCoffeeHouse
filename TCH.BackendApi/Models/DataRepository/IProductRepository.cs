@@ -9,7 +9,7 @@ namespace TCH.BackendApi.Models.DataRepository;
 public interface IProductRepository
 {
     Task<Respond<PagedList<ProductVm>>> GetAllByBranchID(string branchID, Search request);
-    Task<Respond<PagedList<Product>>> GetAll(Search request);
+    Task<Respond<PagedList<ProductVm>>> GetAll(Search request);
     Task<MessageResult> Create(ProductRequest request);
     Task<MessageResult> Delete(string productId);
     Task<MessageResult> Update(string productID, ProductVm request);

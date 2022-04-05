@@ -6,7 +6,6 @@ namespace TCH.BackendApi.Entities;
 
 public class AppUser : IdentityUser
 {
-    public string? Code { get; set; }
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
@@ -20,8 +19,13 @@ public class AppUser : IdentityUser
     public string? Avatar { get; set; }
 
     public DateTime? UpdateDate { get; set; }
+
     public DateTime CreateDate { get; set; }
-    //public RoleGroup RoleGroup { get; set; }
+    
+    public Status Status { get; set; }
+    public string? BranchID { get; set; }
+    
+    public Branch Branch { get; set; }
+
     public ICollection<Order> Orders { get; set; }
-    public ICollection<UserBranch> UserBranches { get; set; }
 }

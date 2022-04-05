@@ -17,7 +17,8 @@ namespace TCH.BackendApi.Configuration
             builder.Property(x => x.District).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Email).IsRequired().HasMaxLength(255);
             builder.HasMany(x=>x.Orders).WithOne(z=>z.Branch).HasForeignKey(x=>x.BranchID);
-            builder.HasMany(x => x.UserBranches).WithOne(x => x.Branch).HasForeignKey(x => x.BranchID);
+            builder.HasMany(x => x.Users).WithOne(x => x.Branch).HasForeignKey(x => x.BranchID);
+            builder.HasMany(x => x.Menus).WithOne(x => x.Branch).HasForeignKey(x => x.BranchID);
 
         }
     }

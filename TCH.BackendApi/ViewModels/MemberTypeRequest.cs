@@ -1,8 +1,7 @@
-﻿namespace TCH.BackendApi.Entities;
+﻿namespace TCH.BackendApi.ViewModels;
 
-public class MemberType
+public class MemberTypeRequest
 {
-    public string ID { get; set; }
     public string Name { get; set; }
     public int MinPoint { get; set; }
     public int MaxPoint { get; set; }
@@ -10,8 +9,4 @@ public class MemberType
     public int ConversationPoint { get; set; }
     public string? ConversionForm { get; set; }
     public string? Description { get; set; }
-    public DateTime CreateDate { get; set; }
-    public DateTime UpdateDate { get; set; }
-
-    public virtual ICollection<Customer> Customers { get; set; }
 }

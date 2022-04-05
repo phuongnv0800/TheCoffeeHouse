@@ -8,6 +8,8 @@ public class Topping
     public string? Description { get; set; }
     public DateTime? CreateDate { get; set; }
     public DateTime? UpdateDate { get; set; }
+    public ICollection<ToppingInProduct> ToppingInProducts { get; set; }
+    public ICollection<ProductDetail> ProductDetails { get; set; }
 
-    public ICollection<OrderDetailTopping> OrderDetailToppings { get; set; }
+    public ICollection<OrderDetail> OrderDetails { get; set; }
 }

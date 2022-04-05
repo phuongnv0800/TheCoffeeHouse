@@ -10,8 +10,8 @@ public class Branch
     public string Adderss { get; set; }
     public DateTime CreateDate { get; set; }
     public DateTime UpdateDate { get; set; }
-    public Menu Menu { get; set; }
+    public ICollection<Menu> Menus { get; set; }
     public ICollection<Order> Orders { get; set; }
-    public ICollection<UserBranch> UserBranches { get; set; }
+    public ICollection<AppUser> Users { get; set; }
     public Stock Stock { get; set; }
 }

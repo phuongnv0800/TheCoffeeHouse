@@ -1,5 +1,10 @@
 ﻿namespace TCH.BackendApi.Models.Enum
 {
+    public enum Status
+    {
+        Deactive,
+        Active,
+    }
     public enum Gender
     {
         Male,

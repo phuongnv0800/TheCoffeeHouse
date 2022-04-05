@@ -30,7 +30,9 @@ namespace TCH.BackendApi.ViewModels
         public string Address { get; set; }
 
         public IFormFile AvatarFile { get; set; }
-
+        
+        public string branchID { get; set; }
+        
         [Display(Name = "Tên tài khoản")]
         [Required(ErrorMessage = "Tên tài khoản không được để trống")]
         public string UserName { get; set; }

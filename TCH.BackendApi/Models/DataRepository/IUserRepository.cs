@@ -16,6 +16,7 @@ public interface IUserRepository
     Task<PagedList<UserVm>> GetAll(Search request);
 
     Task<MessageResult> Register(RegisterRequest request);
+    Task<MessageResult> LockUser(string id);
 
     Task<MessageResult> Update(string id, UserUpdateRequest request);
 

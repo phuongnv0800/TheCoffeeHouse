@@ -8,6 +8,8 @@ public class Order
     public string ID { get; set; }
 
     public string Code { get; set; }
+    
+    public int TableNum { get; set; }
 
     public string Cashier { get; set; }
 

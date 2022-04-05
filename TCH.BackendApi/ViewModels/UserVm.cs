@@ -21,6 +21,7 @@ public class UserVm
     public string Address { get; set; }
     public Gender Gender { get; set; }
     public string Avatar { get; set; }
+    public Status Status { get; set; }
 
     public string Email { get; set; }
 

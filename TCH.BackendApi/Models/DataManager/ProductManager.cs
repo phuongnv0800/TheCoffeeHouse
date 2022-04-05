@@ -66,7 +66,6 @@ public class ProductManager : IProductRepository, IDisposable
                 IsSale = x.p.IsSale,
                 PriceSale = x.p.PriceSale,
                 IsAvailable = x.p.IsAvailable,
-                Formula = x.p.Formula,
                 Price = x.p.Price,
                 Description = x.p.Description,
                 LinkImage = x.p.LinkImage,
@@ -87,7 +86,6 @@ public class ProductManager : IProductRepository, IDisposable
                 IsSale = x.p.IsSale,
                 PriceSale = x.p.PriceSale,
                 IsAvailable = x.p.IsAvailable,
-                Formula = x.p.Formula,
                 Price = x.p.Price,
                 Description = x.p.Description,
                 LinkImage = x.p.LinkImage,
@@ -109,7 +107,90 @@ public class ProductManager : IProductRepository, IDisposable
             Message = "Thành công",
         };
     }
-    public async Task<Respond<PagedList<Product>>> GetAll(Search request)
+    public async Task<Respond<PagedList<ProductVm>>> GetAll(Search request)
+    {
+        var query = from c in _context.Products select c;
+        if (!string.IsNullOrEmpty(request.Name))
+            query = query.Where(x => x.Name.Contains(request.Name));
+        //paging
+        int totalRow = await query.CountAsync();
+        var data = new List<ProductVm>();
+        var item1 = from sp in _context.SizeInProducts
+            join s in _context.Sizes on sp.SizeID equals s.ID
+            select new { s, sp,};
+        var item2 = from tp in _context.ToppingInProducts
+            join t in _context.Toppings on tp.ToppingID equals t.ID
+            select new { t, tp,};
+        if (request.IsPging)
+        {
+            data = await query.Select(x => new ProductVm()
+                {
+                    ID = x.ID,
+                    Name = x.Name,
+                    ProductType = x.ProductType,
+                    CreateDate = x.CreateDate,
+                    UpdateDate = x.UpdateDate,
+                    IsSale = x.IsSale,
+                    PriceSale = x.PriceSale,
+                    IsAvailable = x.IsAvailable,
+                    Price = x.Price,
+                    Description = x.Description,
+                    LinkImage = x.LinkImage,
+                    CategoryID = x.CategoryID,
+                    IsActive = true,
+                })
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToListAsync();
+            foreach (var item in data)
+            {
+                var sizes = await item1.Where(x=>x.sp.ProductID == item.ID).Select(x => x.s).ToListAsync();
+                var toppings = await item2.Where(x=>x.tp.ProductID == item.ID).Select(x => x.t).ToListAsync();
+                item.Sizes = sizes;
+                item.Toppings = toppings;
+            }
+        }
+        else
+        {
+            data = await query.Select(x => new ProductVm()
+            {
+                ID = x.ID,
+                Name = x.Name,
+                ProductType = x.ProductType,
+                CreateDate = x.CreateDate,
+                UpdateDate = x.UpdateDate,
+                IsSale = x.IsSale,
+                PriceSale = x.PriceSale,
+                IsAvailable = x.IsAvailable,
+                Price = x.Price,
+                Description = x.Description,
+                LinkImage = x.LinkImage,
+                CategoryID = x.CategoryID,
+                IsActive = true,
+            }).ToListAsync();
+            foreach (var item in data)
+            {
+                var sizes = await item1.Where(x=>x.sp.ProductID == item.ID).Select(x => x.s).ToListAsync();
+                var toppings = await item2.Where(x=>x.tp.ProductID == item.ID).Select(x => x.t).ToListAsync();
+                item.Sizes = sizes;
+                item.Toppings = toppings;
+            }
+        }
+        var pagedResult = new PagedList<ProductVm>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<ProductVm>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+    public async Task<Respond<PagedList<Product>>> GetAll1(Search request)
     {
         var query = from c in _context.Products select c;
         if (!string.IsNullOrEmpty(request.Name))
@@ -117,7 +198,7 @@ public class ProductManager : IProductRepository, IDisposable
         //paging
         int totalRow = await query.CountAsync();
         var data = new List<Product>();
-        if (request.IsPging == true)
+        if (request.IsPging)
         {
             data = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)
@@ -204,7 +285,6 @@ public class ProductManager : IProductRepository, IDisposable
         product.Description = request.Description;
         product.Price = request.Price;
         product.UpdateDate = DateTime.Now;
-        product.Formula = request.Formula;
         product.ProductType = request.ProductType;
         product.Description = request.Description;
         _context.Products.Update(product);

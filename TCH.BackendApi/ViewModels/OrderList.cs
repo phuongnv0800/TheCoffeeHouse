@@ -4,7 +4,6 @@ namespace TCH.BackendApi.ViewModels;
 
 public class OrderList
 {
-    public string ID { get; set; }
     public int Quantity { get; set; }
     public double PriceProduct { get; set; }
     public double PriceSize { get; set; }

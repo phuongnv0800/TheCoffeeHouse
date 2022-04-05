@@ -10,7 +10,6 @@ namespace TCH.BackendApi.Configuration
         {
             builder.ToTable("Toppings");
             builder.HasKey(x => x.ID);
-            builder.HasMany(x => x.OrderDetailToppings).WithOne(x => x.Topping).HasForeignKey(x => x.ToppingID);
             builder.Property(x => x.SubPrice).IsRequired().HasColumnType("decimal(18,2)");
         }
     }

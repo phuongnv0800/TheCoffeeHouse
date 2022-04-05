@@ -5,7 +5,7 @@ namespace TCH.BackendApi.ViewModels;
 
 public class UserUpdateRequest
 {
-    public Guid Id { get; set; }
+    public string ID { get; set; }
     [Display(Name = "Tên")]
     public string FirstName { get; set; }
     [Display(Name = "Họ")]

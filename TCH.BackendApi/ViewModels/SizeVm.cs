@@ -7,6 +7,5 @@ namespace TCH.BackendApi.ViewModels
         public string ID { get; set; }
         public string Name { get; set; }
         public double SubPrice { get; set; }
-        public SizeType SizeType { get; set; }
     }
 }
