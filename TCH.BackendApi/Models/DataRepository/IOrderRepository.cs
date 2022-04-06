@@ -17,5 +17,6 @@ namespace TCH.BackendApi.Models.DataRepository
         Task<Respond<Order>> GetById(string orderID);
         Task<MessageResult> UpdateStatus(string orderID, OrderStatus status);
         Task<Respond<PagedList<Order>>> GetByUser(string userID, Search request);
+        Task<string> PrintInvoicePaymented(string invoiceID);
     }
 }

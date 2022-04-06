@@ -12,6 +12,11 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
     }
+
+    public APIContext()
+    {
+    }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfiguration(new BranchConfig());
@@ -37,6 +42,7 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
         builder.ApplyConfiguration(new StockConfiguration());
         builder.ApplyConfiguration(new StockMaterialConfiguration());
         builder.ApplyConfiguration(new ToppingConfiguration());
+        builder.Entity<RecipeMaterial>().HasKey(x => new {x.MaterialID, x.RecipeID});
         builder.Entity<SizeInProduct>().HasKey(x => new {x.ProductID, x.SizeID});
         builder.Entity<ToppingInProduct>().HasKey(x => new {x.ProductID, x.ToppingID});
         base.OnModelCreating(builder);
@@ -57,7 +63,10 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
     public DbSet<MemberType> MemberTypes { get; set; }
     public DbSet<Menu> Menus { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<InvoiceLayout> InvoiceLayouts { get; set; }
     public DbSet<OrderDetail> OrderDetails { get; set; }
+    public DbSet<Recipe> Recipes { get; set; }
+    public DbSet<RecipeMaterial> RecipeMaterials { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductImage> ProductImages { get; set; }
     public DbSet<ProductInMenu> ProductInMenus { get; set; }

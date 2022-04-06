@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="191c77f9-5d53-4063-94c3-bd80c27e9843_20191119143042.xslt"?>
+<Invoice>
+  <Restaurant>
+    <Name></Name>
+    <Address>136 Trần Phú, Ngô Quyền, Hải Phòng</Address>
+    <Phone>02253.353.213</Phone>
+    <Description></Description>
+  </Restaurant>
+  <InvoiceName>HÓA ĐƠN THANH TOÁN</InvoiceName>
+  <InvoiceCode>INVOICE_191113_No.1</InvoiceCode>
+  <DinnerTable>Bàn 1</DinnerTable>
+  <CreateDate>13/11/2019</CreateDate>
+  <UserCreate>Thu ngân</UserCreate>
+  <Detail>
+    <InvoiceDetail>
+      <FoodName>Món A</FoodName>
+      <Unit>Đĩa</Unit>
+      <Quantity>1</Quantity>
+      <Price>20000</Price>
+      <Amount>20000</Amount>
+    </InvoiceDetail>
+    <InvoiceDetail>
+      <FoodName>Món B</FoodName>
+      <Unit>Đĩa</Unit>
+      <Quantity>2</Quantity>
+      <Price>50000</Price>
+      <Amount>100000</Amount>
+    </InvoiceDetail>
+    <InvoiceDetail>
+      <FoodName>Món C</FoodName>
+      <Unit>Tô</Unit>
+      <Quantity>2</Quantity>
+      <Price>30000</Price>
+      <Amount>60000</Amount>
+    </InvoiceDetail>
+  </Detail>
+  <SumAmount>180000</SumAmount>
+  <Payment>180000</Payment>
+  <GuestPut>200000</GuestPut>
+  <GuestReceive>20000</GuestReceive>
+</Invoice>

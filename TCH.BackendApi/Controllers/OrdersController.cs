@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Text;
+using CoreHtmlToImage;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TCH.BackendApi.Models.DataRepository;
 using TCH.BackendApi.Models.Enum;
 using TCH.BackendApi.Models.Error;
 using TCH.BackendApi.Models.Roles;
 using TCH.BackendApi.Models.Searchs;
+using TCH.BackendApi.Models.SubModels;
 using TCH.BackendApi.ViewModels;
 
 namespace TCH.BackendApi.Controllers;
@@ -94,6 +97,48 @@ public class OrdersController : ControllerBase
         {
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [HttpGet("print/{ID}")]
+    public async Task<IActionResult> Print(string ID)
+    {
+        try
+        {
+            string invoiceHtml = await _repository.PrintInvoicePaymented(ID);
+            if (string.IsNullOrEmpty(invoiceHtml))
+            {
+                return BadRequest(new Respond<string> { Result = 0, Message = "Failed", Data = "Không tìm thấy dữ liệu" });
+            }
+            return base.Content(invoiceHtml, "text/html", Encoding.UTF8);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new Respond<string> { Result = -1, Message = "Failed", Data = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new Respond<string> { Result = -2, Message = "Failed", Data = e.Message });
+        }
+    }
+    [HttpGet("print-img/{ID}")]
+    public async Task<IActionResult> PrintImg(string ID)
+    {
+        try
+        {
+            string invoiceHtml = await _repository.PrintInvoicePaymented(ID);
+            if (string.IsNullOrEmpty(invoiceHtml))
+            {
+                return BadRequest(new Respond<string> { Result = 0, Message = "Failed", Data = "Không tìm thấy dữ liệu" });
+            }
+            HtmlConverter converter = new HtmlConverter();
+            var bytes = converter.FromHtmlString(invoiceHtml, 500);          
+            return Ok(Convert.ToBase64String(bytes));
+            //return File(bytes, "image/png");
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new Respond<string> { Result = -1, Message = "Failed", Data = e.Message });
         }
     }
     [HttpPost]

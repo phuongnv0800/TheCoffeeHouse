@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="DefaultTemplate.xslt"?>
+<KitchenTicket>
+  
+  <Restaurant>
+    <DinnerTableName></DinnerTableName>
+    <OrderCode></OrderCode>
+    <UserName></UserName>
+    <UpdateDate></UpdateDate>
+  </Restaurant>
+  
+  <Title>CHẾ BIẾN</Title>
+ 
+  <Detail>
+  </Detail>
+</KitchenTicket>

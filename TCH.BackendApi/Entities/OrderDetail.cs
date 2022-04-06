@@ -19,9 +19,9 @@ public class OrderDetail
     public string ProductID { get; set; }
     public Product Product { get; set; }
     public string? ToppingID1 { get; set; }
-    public string Topping1Name { get; set; }
+    public string? Topping1Name { get; set; }
     public double PriceToppping1 { get; set; }
     public string? ToppingID2 { get; set; }
-    public string Topping2Name { get; set; }
+    public string? Topping2Name { get; set; }
     public double PriceToppping2 { get; set; }
 }

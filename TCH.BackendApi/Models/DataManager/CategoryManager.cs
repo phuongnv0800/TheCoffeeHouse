@@ -30,56 +30,32 @@ public class CategoryManager : ICategoryRepository, IDisposable
         }
         //paging
         int totalRow = await query.CountAsync();
-        if (request.IsPging == true)
+        var data = new List<CategoryVm>();
+        if (request.IsPging)
         {
-            var data = await query
-            .Select(
-                 x => _mapper.Map<CategoryVm>(x)
-            )
-            .Skip((request.PageNumber - 1) * request.PageSize)
-            .Take(request.PageSize)
-            //.OrderBy(x=>x.Name)
-            .ToListAsync();
-            // select
-            var pagedResult = new PagedList<CategoryVm>()
+            data = await query
+                .Select(x => _mapper.Map<CategoryVm>(x))
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync();
+        }
+        else
+        {
+            data = await query.Select(x => _mapper.Map<CategoryVm>(x)).ToListAsync();
+        }
+        return new Respond<PagedList<CategoryVm>>()
+        {
+            Result = 1,
+            Message = "Thành công",
+            Data = new PagedList<CategoryVm>()
             {
                 TotalRecord = totalRow,
                 PageSize = request.PageSize,
                 CurrentPage = request.PageNumber,
                 TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
                 Items = data,
-            };
-            return new Respond<PagedList<CategoryVm>>()
-            {
-                Data = pagedResult,
-                Result = 1,
-                Message = "Thành công",
-            };
-        }
-        else
-        {
-            var data = await query
-            .Select(
-                x => _mapper.Map<CategoryVm>(x)
-            )
-            //.OrderBy(x => x.Name)
-            .ToListAsync();
-            // select
-            var pagedResult = new PagedList<CategoryVm>()
-            {
-                TotalRecord = totalRow,
-                PageSize = totalRow,
-                CurrentPage = 1,
-                TotalPages = 1,
-                Items = data,
-            };
-            return new Respond<PagedList<CategoryVm>>()
-            {
-                Data = pagedResult,
-                Result = 1,
-                Message = "Thành công",
-            };
-        }
+            },
+        };
     }
 
     public async Task<MessageResult> Create(CategoryVm request)
