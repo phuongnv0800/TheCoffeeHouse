@@ -62,6 +62,19 @@
                   </xsl:attribute>
                 </img>
             </div>
+              <div>
+                  <p style="font-size: 55px">
+                      <b>
+                          <xsl:value-of select="Title"/>
+                      </b>
+                  </p>
+                  <p class="text-center" style="font-size: 40px">
+                      <xsl:value-of select="InvoiceCode"/>
+                  </p>
+              </div>
+              <div class="box-b" style="width: 50%; margin: 10 auto">
+                  <span></span>
+              </div>
             <div>
               <p id="Resname">
                 <b>
@@ -76,19 +89,6 @@
               </p>
               <p style="font-size: 40px">
                 <xsl:value-of select="Restaurant/Headercontent"/>
-              </p>
-            </div>
-            <div class="box-b" style="width: 50%; margin: 10 auto">
-              <span></span>
-            </div>
-            <div>
-              <p style="font-size: 55px">
-                <b>
-                  <xsl:value-of select="Title"/>
-                </b>
-              </p>
-			  <p class="text-center" style="font-size: 40px">
-                <xsl:value-of select="InvoiceCode"/>
               </p>
             </div>
           </div>
@@ -113,7 +113,7 @@
             <div style="margin: 40px 0" >
               <table class="table-invoice">
                 <tr>
-                  <td class="text-left bold" style="font-size: 40px; border-bottom: 1px solid black; width: 4%">Tên món</td>
+                  <td class="text-left bold" style="font-size: 40px; border-bottom: 1px solid black; width: 40%">Tên món</td>
                   <td class="bold" style="font-size: 40px; text-align: center; border-bottom: 1px solid black">SL</td>
                   <td class="bold" style="font-size: 40px; text-align: right; border-bottom: 1px solid black">Đơn giá</td>
                   <td class="bold" style="font-size: 40px; text-align: right; border-bottom: 1px solid black;">Thành tiền</td>
@@ -122,7 +122,7 @@
 					<xsl:choose>
 						<xsl:when test="DecimalFactor &gt; 1">
 							<tr>
-								<td id="FoodName" style="font-size: 40px; text-align: left; width: 100px">
+								<td id="FoodName" style="font-size: 40px; text-align: left; width: 40%">
 								  <xsl:variable name="i" select="position()" />
 								  <xsl:value-of select="$i"/>
 								  .<xsl:value-of select="FoodName"/>
@@ -246,6 +246,10 @@
                 </tr>
               </table>
             </div>
+          </div>
+
+          <div class="box-b">
+            <span></span>
           </div>
           <div id="footer">
             <div id="footer_4" class="text-center">

@@ -132,7 +132,7 @@ public class OrdersController : ControllerBase
                 return BadRequest(new Respond<string> { Result = 0, Message = "Failed", Data = "Không tìm thấy dữ liệu" });
             }
             HtmlConverter converter = new HtmlConverter();
-            var bytes = converter.FromHtmlString(invoiceHtml, 500);          
+            var bytes = converter.FromHtmlString(invoiceHtml.ToString());          
             return Ok(Convert.ToBase64String(bytes));
             //return File(bytes, "image/png");
         }

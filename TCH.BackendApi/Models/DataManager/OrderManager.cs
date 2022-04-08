@@ -159,7 +159,7 @@ public class OrderManager : IOrderRepository, IDisposable
             CreateDate = DateTime.Now,
             UserCreateID = UserID,
             Headercontent = null,
-            Footercontent = null,
+            Footercontent = "Giá sản phẩm đã bao gồm phí VAT 10%|Password wifi: thecoffeehouse|Miễn phí giao hàng hoá đơn trên 50.000 VNĐ|Đặt hàng tại www.thecoffeehouse.com hoặc gọi 1800 6936",
             LayoutType = 0,
             LogoInvoice = null,
             Phone = "0702264274",
@@ -179,6 +179,7 @@ public class OrderManager : IOrderRepository, IDisposable
     {
         //Invoice invoice = await _context.Invoices.Include(e => e.InvoiceDetails).FirstOrDefaultAsync(e => e.ID == invoiceID);
         Order invoice = await _context.Orders.FirstOrDefaultAsync(x => x.ID == invoiceID);
+        var branch = await _context.Branches.FirstOrDefaultAsync(x => x.ID == invoice.BranchID);
         if (invoice == null) throw new CustomException("Không tìm thấy thông tin hóa đơn");
 
         //await this.CheckMappingBranch(invoice.BranchID);
@@ -220,13 +221,13 @@ public class OrderManager : IOrderRepository, IDisposable
         }
         InvoiceRestaurantLogo.InnerText = invoiceLayout.LogoInvoice;
         XmlElement InvoiceRestaurantName = (XmlElement)doc.SelectSingleNode("/Invoice/Restaurant/Name");
-        InvoiceRestaurantName.InnerText = invoiceLayout.RestaurantName;
+        InvoiceRestaurantName.InnerText = branch.Name;
         XmlElement InvoiceRestaurantAddress = (XmlElement)doc.SelectSingleNode("/Invoice/Restaurant/Address");
-        InvoiceRestaurantAddress.InnerText = invoiceLayout.Address;
+        InvoiceRestaurantAddress.InnerText = branch.Adderss;
         XmlElement InvoiceRestaurantPhone = (XmlElement)doc.SelectSingleNode("/Invoice/Restaurant/Phone");
         InvoiceRestaurantPhone.InnerText = invoiceLayout.Phone;
         XmlElement InvoiceRestaurantHeadercontent = (XmlElement)doc.SelectSingleNode("/Invoice/Restaurant/Headercontent");
-        InvoiceRestaurantHeadercontent.InnerText = invoiceLayout.Headercontent;
+        InvoiceRestaurantHeadercontent.InnerText = "www.thecoffeehouse.com";
 
         XmlElement InvoiceCodeElement = (XmlElement)doc.SelectSingleNode("/Invoice/InvoiceCode");
         InvoiceCodeElement.InnerText = invoice.Code;
