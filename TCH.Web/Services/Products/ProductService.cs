@@ -47,7 +47,9 @@ namespace TCH.Web.Services.Products
             try
             {
                 List<Product> Products;
-                var response = await _httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Product>>>("/api/Products?IsPging=true&PageNumber=1&PageSize=12");
+                _httpClient.DefaultRequestHeaders.Accept.Clear();
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await _httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Product>>>("/api/Products");
                 if (response.Result != 1)
                 {
                     return null;
