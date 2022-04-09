@@ -47,7 +47,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
             DateOfBirth  = request.DateOfBirth,
             MemberID = "",
             Point  = 0,
-            MemberTypeID = request.MemberTypeID,
+            BeanID = request.MemberTypeID,
         };
         if (request.File != null)
         {
@@ -112,7 +112,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
         result.Address = request.Address ?? result.Address;
         result.Gender = request.Gender;
         result.DateOfBirth = request.DateOfBirth;
-        result.MemberTypeID = request.MemberTypeID;
+        result.BeanID = request.MemberTypeID;
         _context.Customers.Update(result);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -157,7 +157,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
     }
     public async Task<MessageResult> CreateMemberType(MemberTypeRequest request)
     {
-        var customer = new MemberType()
+        var customer = new Bean()
         {
             ID = Guid.NewGuid().ToString(),
             CreateDate = DateTime.Now,
@@ -170,7 +170,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
             ConversionForm = request.ConversionForm,
             Description = request.Description,
         };
-        _context.MemberTypes.Add(customer);
+        _context.Beans.Add(customer);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -180,7 +180,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
     }
     public async Task<MessageResult> DeleteMemberType(string id)
     {
-        var category = await _context.MemberTypes.FindAsync(id);
+        var category = await _context.Beans.FindAsync(id);
         if (category == null)
         {
             return new MessageResult()
@@ -189,7 +189,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
                 Message = "Không tìm thấy",
             };
         }
-        _context.MemberTypes.Remove(category);
+        _context.Beans.Remove(category);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -197,17 +197,17 @@ public class CustomerManager : IDisposable, ICustomerRepository
             Message = "Xoá thành công",
         };
     }
-    public async Task<Respond<MemberType>> GetMemberTypeByID(string id)
+    public async Task<Respond<Bean>> GetMemberTypeByID(string id)
     {
-        var result = await _context.MemberTypes.FirstOrDefaultAsync(x => x.ID == id);
+        var result = await _context.Beans.FirstOrDefaultAsync(x => x.ID == id);
         if (result == null)
-            return new Respond<MemberType>()
+            return new Respond<Bean>()
             {
                 Result = 0,
                 Message = "Không tìm thấy",
             };
 
-        return new Respond<MemberType>()
+        return new Respond<Bean>()
         {
             Result = 1,
             Message = "Thành công",
@@ -216,7 +216,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
     }
     public async Task<MessageResult> UpdateMemberType(string id, MemberTypeRequest request)
     {
-        var result = await _context.MemberTypes.FindAsync(id);
+        var result = await _context.Beans.FindAsync(id);
         if (result == null)
             return new MessageResult()
             {
@@ -231,7 +231,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
         result.ConversationPoint = request.ConversationPoint;
         result.ConversionForm = request.ConversionForm;
         result.Description = request.Description;
-        _context.MemberTypes.Update(result);
+        _context.Beans.Update(result);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -239,16 +239,16 @@ public class CustomerManager : IDisposable, ICustomerRepository
             Message = "Cập nhật thành công",
         };
     }
-    public async Task<Respond<PagedList<MemberType>>> GetAllMemberType(Search request)
+    public async Task<Respond<PagedList<Bean>>> GetAllMemberType(Search request)
     {
-        var query = from c in _context.MemberTypes select c;
+        var query = from c in _context.Beans select c;
         if (!string.IsNullOrEmpty(request.Name))
         {
             query = query.Where(x => x.Name.Contains(request.Name));
         }
         //paging
         int totalRow = await query.CountAsync();
-        var data = new List<MemberType>();
+        var data = new List<Bean>();
         if (request.IsPging)
             data = await query
                 .Select(x => x)
@@ -258,7 +258,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
         else
              data = await query.Select(x => x).ToListAsync();
             
-        var pagedResult = new PagedList<MemberType>()
+        var pagedResult = new PagedList<Bean>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
@@ -266,7 +266,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
             TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
             Items = data,
         };
-        return new Respond<PagedList<MemberType>>()
+        return new Respond<PagedList<Bean>>()
         {
             Data = pagedResult,
             Result = 1,

@@ -4,9 +4,9 @@ namespace TCH.BackendApi.Entities;
 
 public class SizeInProduct
 {
-    [ForeignKey("Products")]
+    [ForeignKey("ProductID")]
     public string ProductID { get; set; }
-    [ForeignKey("Sizes")]
+    [ForeignKey("SizeID")]
     public string SizeID { get; set; }
     public Product Product { get; set; }
     public Size Size { get; set; }

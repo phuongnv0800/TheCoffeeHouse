@@ -1,6 +1,6 @@
 ﻿namespace TCH.BackendApi.Entities;
 
-public class MemberType
+public class Bean
 {
     public string ID { get; set; }
     public string Name { get; set; }

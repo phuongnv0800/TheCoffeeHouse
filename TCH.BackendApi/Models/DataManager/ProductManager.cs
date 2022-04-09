@@ -19,8 +19,8 @@ public class ProductManager : IProductRepository, IDisposable
     private readonly IStorageService _storageService;
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly string? UserID;
-    private const string USER_CONTENT_FOLDER_NAME = "products";
+    private readonly string? _userID;
+    private const string Upload = "products";
 
     public ProductManager(APIContext context, 
         IHttpContextAccessor httpContextAccessor, 
@@ -31,7 +31,7 @@ public class ProductManager : IProductRepository, IDisposable
         _storageService = storageService;
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
-        UserID = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
+        _userID = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
         //_accessToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
     }
     public async Task<Respond<PagedList<ProductVm>>> GetAllByBranchID(string branchID, Search request)
@@ -72,8 +72,8 @@ public class ProductManager : IProductRepository, IDisposable
                 CategoryID = x.p.CategoryID,
                 IsActive = x.pm.IsActive,
             })
-                .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToListAsync();
+            .Skip((request.PageNumber - 1) * request.PageSize)
+            .Take(request.PageSize).ToListAsync();
         }
         else
             data = await query.Select(x => new ProductVm()
@@ -275,7 +275,6 @@ public class ProductManager : IProductRepository, IDisposable
     {
         var product = await _context.Products.FindAsync(productID);
         if (product == null)
-            //    throw new CustomException($"Can't not find product with Id: {request.Id}");
             return new MessageResult()
             {
                 Result = -1,
@@ -369,7 +368,7 @@ public class ProductManager : IProductRepository, IDisposable
         var nameFile = await SaveFileIFormFile(request.ImageFile);
         if (request.ImageFile != null)
         {
-            productImage.ImagePath = USER_CONTENT_FOLDER_NAME + "/" + nameFile;
+            productImage.ImagePath = Upload + "/" + nameFile;
             productImage.Size = request.ImageFile.Length;
             productImage.Name = nameFile;
         }
@@ -454,7 +453,7 @@ public class ProductManager : IProductRepository, IDisposable
         if (request.ImageFile != null)
         {
             productImage.Name = namefile;
-            productImage.ImagePath = USER_CONTENT_FOLDER_NAME + "/" + namefile;
+            productImage.ImagePath = Upload + "/" + namefile;
             productImage.Size = request.ImageFile.Length;
             productImage.IsShowHome = request.IsShowHome;
             productImage.Caption = request.Caption;
@@ -644,7 +643,7 @@ public class ProductManager : IProductRepository, IDisposable
     {
         var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
-        await _storageService.SaveFileAsync(file.OpenReadStream(), USER_CONTENT_FOLDER_NAME + "/" + fileName);
+        await _storageService.SaveFileAsync(file.OpenReadStream(), Upload + "/" + fileName);
         return fileName;
     }
 

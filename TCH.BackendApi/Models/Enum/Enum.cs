@@ -2,8 +2,15 @@
 {
     public enum Status
     {
-        Deactive,
+        Deactivate,
         Active,
+    }
+
+    public enum ReportType
+    {
+        Import = 0,
+        Export = 1,
+        Liquidation = 2,
     }
     public enum Gender
     {

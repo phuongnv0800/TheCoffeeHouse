@@ -17,8 +17,8 @@ namespace TCH.BackendApi.ViewModels
             CreateMap<Size, SizeVm>();
             CreateMap<SizeVm, Size>();
             
-            CreateMap<Topping, ToppingVm>();
-            CreateMap<ToppingVm, Topping>();
+            // CreateMap<Topping, ToppingVm>();
+            // CreateMap<ToppingVm, Topping>();
 
             CreateMap<BranchRequest, Branch>();
         }

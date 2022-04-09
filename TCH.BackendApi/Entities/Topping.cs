@@ -9,7 +9,6 @@ public class Topping
     public DateTime? CreateDate { get; set; }
     public DateTime? UpdateDate { get; set; }
     public ICollection<ToppingInProduct> ToppingInProducts { get; set; }
-    public ICollection<ProductDetail> ProductDetails { get; set; }
 
     public ICollection<OrderDetail> OrderDetails { get; set; }
 }

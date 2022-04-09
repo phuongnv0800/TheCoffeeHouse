@@ -26,7 +26,7 @@ public class Customer
     public string? ConversionRate { get; set; }
     public string? Avatar { get; set; }
 
-    public string MemberTypeID { get; set; }
-    public MemberType MemberType { get; set; }
+    public string BeanID { get; set; }
+    public Bean Bean { get; set; }
     public ICollection<Order> Orders { get; set; }
 }

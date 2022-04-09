@@ -4,10 +4,10 @@ namespace TCH.BackendApi.Entities;
 
 public class ToppingInProduct
 {
-    [ForeignKey("Products")]
+    [ForeignKey("ProductID")]
     public string ProductID { get; set; }
-    [ForeignKey("Toppings")]
-    public string ToppingID { get; set; }
     public Product Product { get; set; }
+    [ForeignKey("ToppingID")]
+    public string ToppingID { get; set; }
     public Topping Topping { get; set; }
 }

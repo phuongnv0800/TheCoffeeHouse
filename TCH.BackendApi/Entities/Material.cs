@@ -10,8 +10,6 @@ public class Material
     public string MaterialTypeID { get; set; }
     public MaterialType MaterialType { get; set; }
     public ICollection<StockMaterial> StockMaterials { get; set; }
-    public ICollection<RecipeMaterial> RecipeMaterials { get; set; }
-    public ICollection<ExportMaterial> ExportMaterials { get; set; }
-    public ICollection<ImportMaterial> ImportMaterials { get; set; }
-    public ICollection<LiquidationMaterial> LiquidationMaterials { get; set; }
+    public ICollection<RecipeDetail> RecipeDetails { get; set; }
+    public ICollection<ReportDetail> ReportDetails { get; set; }
 }

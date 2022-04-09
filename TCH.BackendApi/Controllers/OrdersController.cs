@@ -26,6 +26,7 @@ public class OrdersController : ControllerBase
         _logger = logger;
     }
     
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery]Search request)
     {
@@ -45,6 +46,7 @@ public class OrdersController : ControllerBase
         }
     }
     
+    [AllowAnonymous]
     [HttpGet("{orderId}")]
     public async Task<IActionResult> GetById(string orderId)
     {
@@ -63,6 +65,8 @@ public class OrdersController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    
+    [AllowAnonymous]
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetByUserID(string userId, [FromQuery] Search request)
     {
@@ -81,6 +85,8 @@ public class OrdersController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    
+    [AllowAnonymous]
     [HttpGet("branch/{userId}")]
     public async Task<IActionResult> GetByBranchID(string branchID, [FromQuery] Search request)
     {
@@ -99,6 +105,8 @@ public class OrdersController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    
+    [AllowAnonymous]
     [HttpGet("print/{ID}")]
     public async Task<IActionResult> Print(string ID)
     {
@@ -121,6 +129,8 @@ public class OrdersController : ControllerBase
             return BadRequest(new Respond<string> { Result = -2, Message = "Failed", Data = e.Message });
         }
     }
+    
+    [AllowAnonymous]
     [HttpGet("print-img/{ID}")]
     public async Task<IActionResult> PrintImg(string ID)
     {

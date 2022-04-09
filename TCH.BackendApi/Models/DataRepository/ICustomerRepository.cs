@@ -15,8 +15,8 @@ public interface ICustomerRepository
     Task<Respond<PagedList<Customer>>> GetAll(Search request);
     Task<MessageResult> CreateMemberType(MemberTypeRequest request);
     Task<MessageResult> DeleteMemberType(string id);
-    Task<Respond<MemberType>> GetMemberTypeByID(string id);
+    Task<Respond<Bean>> GetMemberTypeByID(string id);
     Task<MessageResult> UpdateMemberType(string id, MemberTypeRequest request);
-    Task<Respond<PagedList<MemberType>>> GetAllMemberType(Search request);
+    Task<Respond<PagedList<Bean>>> GetAllMemberType(Search request);
 
 }

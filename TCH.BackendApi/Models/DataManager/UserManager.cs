@@ -379,7 +379,7 @@ public class UserManager : IUserRepository, IDisposable
             };
         }
         var user = await _userManager.FindByIdAsync(id.ToString());
-        user.Status = Status.Deactive;
+        user.Status = Status.Deactivate;
         await _userManager.UpdateAsync(user);
         return new MessageResult()
         {

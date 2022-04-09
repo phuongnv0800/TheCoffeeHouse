@@ -17,7 +17,7 @@ namespace TCH.BackendApi.Configuration
             builder.HasMany(x=>x.ProductImages).WithOne(x=>x.Product).HasForeignKey(x=>x.ProductId);
             builder.HasMany(x => x.PromotionGifts).WithOne(g => g.Product).HasForeignKey(y => y.ProductID);
             builder.HasMany(x => x.OrderDetails).WithOne(g => g.Product).HasForeignKey(y => y.ProductID);
-            builder.HasMany(x => x.ProductDetails).WithOne(g => g.Product).HasForeignKey(y => y.ProductID);
+            // builder.HasMany(x => x.ProductDetails).WithOne(g => g.Product).HasForeignKey(y => y.ProductID);
         }
     }
 }

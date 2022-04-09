@@ -22,12 +22,6 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
         builder.ApplyConfiguration(new BranchConfig());
         builder.ApplyConfiguration(new CategoryConfig());
         builder.ApplyConfiguration(new CustomerConfig());
-        builder.ApplyConfiguration(new ExportMaterialConfig());
-        builder.ApplyConfiguration(new ExportConfig());
-        builder.ApplyConfiguration(new ImportMaterialConfig());
-        builder.ApplyConfiguration(new ImportConfig());
-        builder.ApplyConfiguration(new LiquidationMaterialConfig());
-        builder.ApplyConfiguration(new LiquidationConfig());
         builder.ApplyConfiguration(new MaterialConfig());
         builder.ApplyConfiguration(new MaterialTypeConfig());
         builder.ApplyConfiguration(new MemberTypeConfiguration());
@@ -38,11 +32,10 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
         builder.ApplyConfiguration(new ProductInMenuConfiguration());
         builder.ApplyConfiguration(new PromotionConfiguration());
         builder.ApplyConfiguration(new PromotionGiftConfiguration());
-        builder.ApplyConfiguration(new SizeConfiguration());
-        builder.ApplyConfiguration(new StockConfiguration());
+        builder.ApplyConfiguration(new ReportDetailConfig());
         builder.ApplyConfiguration(new StockMaterialConfiguration());
         builder.ApplyConfiguration(new ToppingConfiguration());
-        builder.Entity<RecipeMaterial>().HasKey(x => new {x.MaterialID, x.RecipeID});
+        builder.Entity<RecipeDetail>().HasKey(x => new {x.MaterialID, x.ProductID, x.SizeID });
         builder.Entity<SizeInProduct>().HasKey(x => new {x.ProductID, x.SizeID});
         builder.Entity<ToppingInProduct>().HasKey(x => new {x.ProductID, x.ToppingID});
         base.OnModelCreating(builder);
@@ -52,31 +45,22 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
     public DbSet<Branch> Branches { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Customer> Customers { get; set; }
-    public DbSet<Export> Exports { get; set; }
-    public DbSet<ExportMaterial> ExportMaterials { get; set; }
-    public DbSet<Import> Imports { get; set; }
-    public DbSet<ImportMaterial> ImportMaterials { get; set; }
-    public DbSet<Liquidation> Liquidations { get; set; }
-    public DbSet<LiquidationMaterial> LiquidationMaterials { get; set; }
     public DbSet<Material> Materials { get; set; }
     public DbSet<MaterialType> MaterialTypes { get; set; }
-    public DbSet<MemberType> MemberTypes { get; set; }
+    public DbSet<Bean> Beans { get; set; }
     public DbSet<Menu> Menus { get; set; }
     public DbSet<Order> Orders { get; set; }
-    public DbSet<InvoiceLayout> InvoiceLayouts { get; set; }
+    //public DbSet<InvoiceLayout> InvoiceLayouts { get; set; }
     public DbSet<OrderDetail> OrderDetails { get; set; }
-    public DbSet<Recipe> Recipes { get; set; }
-    public DbSet<RecipeMaterial> RecipeMaterials { get; set; }
+    public DbSet<RecipeDetail> RecipeDetails { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductImage> ProductImages { get; set; }
     public DbSet<ProductInMenu> ProductInMenus { get; set; }
     public DbSet<SizeInProduct> SizeInProducts { get; set; }
     public DbSet<ToppingInProduct> ToppingInProducts { get; set; }
-    public DbSet<ProductDetail> ProductDetails { get; set; }
     public DbSet<Promition> Promotions { get; set; }
     public DbSet<PromotionGift> PromotionGifts { get; set; }
     public DbSet<Size> Sizes { get; set; }
-    public DbSet<Stock> Stocks { get; set; }
     public DbSet<StockMaterial> StockMaterials { get; set; }
     public DbSet<Topping> Toppings { get; set; }
 }

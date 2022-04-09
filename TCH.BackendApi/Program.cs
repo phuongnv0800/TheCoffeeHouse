@@ -134,7 +134,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<APIContext>();
-        DbInitializer.Initialize(context);
+        Seed.Initialize(context);
     }
     catch (Exception ex)
     {

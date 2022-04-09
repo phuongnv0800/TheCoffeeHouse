@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1e8cffe7-b007-4b8e-bed7-ba02f24ea24d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/SizeInProduct.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/ToppingInProduct.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/AutoMapper/AutoMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/AutoMapper/AutoMapping.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/AppUserConfig.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/BranchConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/BranchConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MaterialConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MaterialConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/OrderConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/OrderConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/OrderDetailConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/OrderDetailConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/OrderDetailToppingConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ToppingConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ToppingConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/UserBranchConfiguration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/BranchsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/BranchsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/UsersController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/EF/APIContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/EF/APIContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/EF/DbInitializer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/EF/DbInitializer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/AppUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/AppUser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Branch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Branch.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Material.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Material.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/MemberType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/MemberType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Order.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Order.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/OrderDetail.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/OrderDetail.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/OrderDetailTopping.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Product.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Product.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/ProductSizeTopping.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/RoleGroup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Size.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Size.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/StockMaterial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/StockMaterial.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Topping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Topping.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/UserBranch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/APIContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Migrations/APIContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/BranchManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/BranchManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/MaterialManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/MaterialManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/OrderManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/OrderManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/ProductManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/ProductManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/UserManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/UserManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataRepository/IProductRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataRepository/IProductRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataRepository/IUserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataRepository/IUserRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/Enum/Enum.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/Enum/Enum.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/OrderList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/OrderList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/OrderListTopping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/OrderListTopping.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/OrderRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/OrderRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/ProductVm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/ProductVm.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/RegisterRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/RegisterRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/SizeVm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/SizeVm.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/UserUpdateRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/UserUpdateRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/UserVm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/ViewModels/UserVm.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="27Np5OzhOX38xd6Hg7gvIBa95f3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1e8cffe7-b007-4b8e-bed7-ba02f24ea24d" name="Changes" comment="" />
+      <created>1649170220729</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1649170220729</updated>
+      <workItem from="1649170226947" duration="91000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
