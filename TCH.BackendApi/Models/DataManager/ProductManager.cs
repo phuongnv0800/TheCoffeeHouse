@@ -141,13 +141,6 @@ public class ProductManager : IProductRepository, IDisposable
                 })
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
-            foreach (var item in data)
-            {
-                var sizes = await item1.Where(x=>x.sp.ProductID == item.ID).Select(x => x.s).ToListAsync();
-                var toppings = await item2.Where(x=>x.tp.ProductID == item.ID).Select(x => x.t).ToListAsync();
-                item.Sizes = sizes;
-                item.Toppings = toppings;
-            }
         }
         else
         {
@@ -167,13 +160,13 @@ public class ProductManager : IProductRepository, IDisposable
                 CategoryID = x.CategoryID,
                 IsActive = true,
             }).ToListAsync();
-            foreach (var item in data)
-            {
-                var sizes = await item1.Where(x=>x.sp.ProductID == item.ID).Select(x => x.s).ToListAsync();
-                var toppings = await item2.Where(x=>x.tp.ProductID == item.ID).Select(x => x.t).ToListAsync();
-                item.Sizes = sizes;
-                item.Toppings = toppings;
-            }
+        }
+        foreach (var item in data)
+        {
+            var sizes = await item1.Where(x=>x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
+            var toppings = await item2.Where(x=>x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
+            item.Sizes = sizes;
+            item.Toppings = toppings;
         }
         var pagedResult = new PagedList<ProductVm>()
         {
@@ -192,20 +185,23 @@ public class ProductManager : IProductRepository, IDisposable
     }
     public async Task<Respond<PagedList<Product>>> GetAll1(Search request)
     {
-        var query = from c in _context.Products select c;
-        if (!string.IsNullOrEmpty(request.Name))
-            query = query.Where(x => x.Name.Contains(request.Name));
+        var query =await _context.Products
+            .Include(x=>x.ToppingInProducts)
+            .ThenInclude(x=>x.Topping)
+            .Include(x=>x.SizeInProducts).ToListAsync();
+        // if (!string.IsNullOrEmpty(request.Name))
+        //     query = query.Where(x => x.Name.Contains(request.Name));
         //paging
-        int totalRow = await query.CountAsync();
+        int totalRow = query.Count;
         var data = new List<Product>();
         if (request.IsPging)
         {
-            data = await query
+            data = query
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToListAsync();
+                .Take(request.PageSize).ToList();
         }
         else
-            data = await query.ToListAsync();
+            data = query.ToList();
         var pagedResult = new PagedList<Product>()
         {
             TotalRecord = totalRow,

@@ -10,73 +10,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Report.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/ReportDetail.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/AutoMapper/AutoMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/AutoMapper/AutoMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/BranchConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/BranchConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/CategoryConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/CategoryConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/CustomerConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/CustomerConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ExportConfig.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ExportMaterialConfig.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ImportConfig.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ImportMaterialConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ReportDetailConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/LiquidationConfig.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/LiquidationMaterialConfig.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MaterialConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MaterialConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MaterialTypeConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MaterialTypeConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MemberTypeConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MemberTypeConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/OrderConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/OrderConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/OrderDetailConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/OrderDetailConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductImageConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductImageConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductInMenuConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductInMenuConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/PromotionConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/PromotionConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/PromotionGiftConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/PromotionGiftConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/SizeConfiguration.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/StockConfiguration.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/StockMaterialConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/StockMaterialConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ToppingConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ToppingConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/ReportsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/ReportsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/EF/APIContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/EF/APIContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/EF/DbInitializer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/EF/DbInitializer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/AppRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/AppRole.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Branch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Branch.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Customer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Customer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Export.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/ExportMaterial.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Import.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/ImportMaterial.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Liquidation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/LiquidationMaterial.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Material.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Material.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/MemberType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Bean.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/OrderDetail.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/OrderDetail.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Product.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Product.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/ProductInMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/ProductInMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Recipe.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/RecipeMaterial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/RecipeDetail.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Size.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Size.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/SizeInProduct.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/SizeInProduct.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Stock.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/StockMaterial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/StockMaterial.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Topping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Topping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/ToppingInProduct.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/ToppingInProduct.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/LayoutInvoice/Type5/DefaultTemplate.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/LayoutInvoice/Type5/DefaultTemplate.xslt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/LayoutInvoice/Type6/DefaultTemplate.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/LayoutInvoice/Type6/DefaultTemplate.xslt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/LayoutInvoice/TypeDefault/DefaultTemplate.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/LayoutInvoice/TypeDefault/DefaultTemplate.xslt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/LayoutInvoice/TypeDefault/DefaultTemplate_1.xslt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/APIContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Migrations/APIContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/CustomerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/CustomerManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/OrderManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/OrderManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/InvoiceLayout.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Report.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Report.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/ReportDetail.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/ReportDetail.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220320123358_init.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220320123358_init.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220323042035_m1.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220323042035_m1.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328055443_update-entities.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328055443_update-entities.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328062506_update-entities2.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328062506_update-entities2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328154007_app1.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328154007_app1.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220408152525_updateb.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220408152525_updateb.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/APIContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/FileStorageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/FileStorageService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/ProductManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/ProductManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/ReportManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/ReportManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/UserManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/UserManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataRepository/IReportRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataRepository/IReportRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/Enum/Enum.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/Enum/Enum.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/SubModels/MessageResult.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/SubModels/MessageResult.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/SubModels/Respond.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/SubModels/Respond.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,6 +171,9 @@
       <workItem from="1649514398937" duration="3000" />
       <workItem from="1649516850302" duration="654000" />
       <workItem from="1649518400806" duration="483000" />
+      <workItem from="1649521481616" duration="504000" />
+      <workItem from="1649591693999" duration="2142000" />
+      <workItem from="1649681132928" duration="610000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -269,13 +228,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/TCH.BackendApi/Program.cs</url>
-          <line>140</line>
+          <line>131</line>
           <properties documentPath="D:\Tốt nghiệp\TheCoffeeHouse\TCH.BackendApi\Program.cs" initialLine="139" containingFunctionPresentation="">
             <startOffsets>
-              <option value="5332" />
+              <option value="5030" />
             </startOffsets>
             <endOffsets>
-              <option value="5393" />
+              <option value="5091" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />

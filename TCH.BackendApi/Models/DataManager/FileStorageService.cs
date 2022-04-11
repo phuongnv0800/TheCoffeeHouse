@@ -6,17 +6,15 @@ namespace TCH.BackendApi.Models.DataManager;
 public class FileStorageService : IStorageService
 {
     private readonly string _userContentFolder;
-    private const string USER_CONTENT_FOLDER_NAME = "Uploads";
+    private const string UserContentFolderName = "Uploads";
 
     public FileStorageService(IWebHostEnvironment webHostEnvironment)
     {
-        //fix webHostEnvironment.WebRootPath = null ??
-        //_userContentFolder = Path.Combine(webHostEnvironment.WebRootPath, USER_CONTENT_FOLDER_NAME);
-        _userContentFolder = Path.Combine(Directory.GetCurrentDirectory(), USER_CONTENT_FOLDER_NAME);
+        _userContentFolder = Path.Combine(Directory.GetCurrentDirectory(), UserContentFolderName);
     }
     public string GetFileUrl(string fileName)
     {
-        return $"/{USER_CONTENT_FOLDER_NAME}/{fileName}";
+        return $"/{UserContentFolderName}/{fileName}";
     }
 
     public async Task SaveFileAsync(Stream mediaBinaryStream, string fileName)

@@ -13,11 +13,9 @@ public class Report
     public string Reason { get; set; }
     public DateTime CreateDate { get; set; }
     public ReportType ReportType { get; set; }
-    public string Description { get; set; }
     public double Depreciation { get; set; }
-    public double LiquidationCost { get; set; }
-    public string Conclude { get; set; }
     public double RecoveryValue { get; set; }
+    public string Conclude { get; set; }
     public string LiquidationName { get; set; }
     public string LiquidationRole { get; set; }
     public string Supplier { get; set; }
@@ -29,6 +27,6 @@ public class Report
     public string BranchID { get; set; }
     public Branch Branch { get; set; }
     [ForeignKey("UserCreateID")]
-    public string UserCreateID { get; set; }
+    public string? UserCreateID { get; set; }
     public ICollection<ReportDetail> ReportDetails { get; set; }
 }

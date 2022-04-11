@@ -50,7 +50,6 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
     public DbSet<Bean> Beans { get; set; }
     public DbSet<Menu> Menus { get; set; }
     public DbSet<Order> Orders { get; set; }
-    //public DbSet<InvoiceLayout> InvoiceLayouts { get; set; }
     public DbSet<OrderDetail> OrderDetails { get; set; }
     public DbSet<RecipeDetail> RecipeDetails { get; set; }
     public DbSet<Product> Products { get; set; }
@@ -58,6 +57,8 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
     public DbSet<ProductInMenu> ProductInMenus { get; set; }
     public DbSet<SizeInProduct> SizeInProducts { get; set; }
     public DbSet<ToppingInProduct> ToppingInProducts { get; set; }
+    public DbSet<Report> Reports { get; set; }
+    public DbSet<ReportDetail> ReportDetails { get; set; }
     public DbSet<Promition> Promotions { get; set; }
     public DbSet<PromotionGift> PromotionGifts { get; set; }
     public DbSet<Size> Sizes { get; set; }
