@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataRepository;
-using TCH.BackendApi.Models.Error;
-using TCH.BackendApi.Models.Searchs;
-using TCH.BackendApi.ViewModels;
+using TCH.Utilities.Error;
+using TCH.Utilities.Searchs;
+using TCH.ViewModel.SubModels;
 
 namespace TCH.BackendApi.Controllers;
 
@@ -151,14 +151,14 @@ public class ProductsController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("{id}/categories")]
-    public async Task<IActionResult> CategoryAssign(string id, [FromBody] string categoryId)
+    [HttpPut("add-product-to-category/{productID}/{categoryId}")]
+    public async Task<IActionResult> CategoryAssign(string productID, string categoryId)
     {
         try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _productRepository.CategoryAssign(id, categoryId);
+            var result = await _productRepository.CategoryAssign(productID, categoryId);
             return Ok(result);
         }
         catch (CustomException e)

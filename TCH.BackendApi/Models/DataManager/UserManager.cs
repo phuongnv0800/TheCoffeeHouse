@@ -7,14 +7,14 @@ using System.Security.Claims;
 using System.Text;
 using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataRepository;
-using TCH.BackendApi.Models.SubModels;
-using TCH.BackendApi.Models.Searchs;
-using TCH.BackendApi.Models.Paginations;
-using TCH.BackendApi.ViewModels;
+using TCH.Utilities.SubModels;
+using TCH.Utilities.Searchs;
+using TCH.Utilities.Paginations;
+using TCH.ViewModel.SubModels;
 using TCH.BackendApi.Config;
 using TCH.BackendApi.EF;
 using System.Text.Json;
-using TCH.BackendApi.Models.Enum;
+using TCH.Utilities.Enum;
 
 namespace TCH.BackendApi.Models.DataManager;
 

@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TCH.BackendApi.Entities;
 using System.Net.Http.Headers;
-using TCH.BackendApi.Models.Error;
+using TCH.Utilities.Error;
 using TCH.BackendApi.EF;
 using TCH.BackendApi.Models.DataRepository;
-using TCH.BackendApi.Models.SubModels;
-using TCH.BackendApi.Models.Paginations;
-using TCH.BackendApi.ViewModels;
-using TCH.BackendApi.Models.Searchs;
+using TCH.Utilities.SubModels;
+using TCH.Utilities.Paginations;
+using TCH.ViewModel.SubModels;
+using TCH.Utilities.Searchs;
 using AutoMapper;
 using TCH.BackendApi.Config;
 
@@ -52,6 +52,12 @@ public class ProductManager : IProductRepository, IDisposable
             query = query.Where(x => x.p.Name.Contains(request.Name));
         //paging
         int totalRow = await query.CountAsync();
+        var item1 = from sp in _context.SizeInProducts
+                    join s in _context.Sizes on sp.SizeID equals s.ID
+                    select new { s, sp, };
+        var item2 = from tp in _context.ToppingInProducts
+                    join t in _context.Toppings on tp.ToppingID equals t.ID
+                    select new { t, tp, };
         //var products = await _context.Products.Include(x=>x.ProductInMenus).ToListAsync();
         var data = new List<ProductVm>();
         if (request.IsPging == true)
@@ -92,6 +98,13 @@ public class ProductManager : IProductRepository, IDisposable
                 CategoryID = x.p.CategoryID,
                 IsActive = x.pm.IsActive,
             }).ToListAsync();
+        foreach (var item in data)
+        {
+            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
+            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
+            item.Sizes =sizes.Select(x=> _mapper.Map<SizeVm>(x)).ToList();
+            item.Toppings = toppings.Select(x=>_mapper.Map<ToppingVm>(x)).ToList();
+        }
         var pagedResult = new PagedList<ProductVm>()
         {
             TotalRecord = totalRow,
@@ -158,15 +171,15 @@ public class ProductManager : IProductRepository, IDisposable
                 Description = x.Description,
                 LinkImage = x.LinkImage,
                 CategoryID = x.CategoryID,
-                IsActive = true,
+                IsActive = true, 
             }).ToListAsync();
         }
         foreach (var item in data)
         {
             var sizes = await item1.Where(x=>x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
             var toppings = await item2.Where(x=>x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-            item.Sizes = sizes;
-            item.Toppings = toppings;
+            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
+            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).ToList();
         }
         var pagedResult = new PagedList<ProductVm>()
         {

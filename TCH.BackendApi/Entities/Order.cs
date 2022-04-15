@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using TCH.BackendApi.Models.Enum;
+using TCH.Utilities.Enum;
 
 namespace TCH.BackendApi.Entities;
 

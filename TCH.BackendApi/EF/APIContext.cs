@@ -59,7 +59,7 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
     public DbSet<ToppingInProduct> ToppingInProducts { get; set; }
     public DbSet<Report> Reports { get; set; }
     public DbSet<ReportDetail> ReportDetails { get; set; }
-    public DbSet<Promition> Promotions { get; set; }
+    public DbSet<Promotion> Promotions { get; set; }
     public DbSet<PromotionGift> PromotionGifts { get; set; }
     public DbSet<Size> Sizes { get; set; }
     public DbSet<StockMaterial> StockMaterials { get; set; }

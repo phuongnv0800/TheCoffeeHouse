@@ -1,0 +1,13 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TCH.ViewModel.SubModels;
+
+public class LoginRequest
+{
+    [Required(ErrorMessage = "Tài khoản không được để trống")]
+    public string UserName { get; set; }
+
+    [Required(ErrorMessage = "Mật khẩu không được để trống")]
+    [MinLength(6, ErrorMessage = "Mật khẩu dài hơn 6 kí tự")]
+    public string Password { get; set; }
+}

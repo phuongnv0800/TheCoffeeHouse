@@ -4,9 +4,9 @@ using TCH.BackendApi.Entities;
 
 namespace TCH.BackendApi.Configuration;
 
-public class PromotionConfiguration : IEntityTypeConfiguration<Promition>
+public class PromotionConfiguration : IEntityTypeConfiguration<Promotion>
 {
-    public void Configure(EntityTypeBuilder<Promition> builder)
+    public void Configure(EntityTypeBuilder<Promotion> builder)
     {
         builder.ToTable("Promotions");
         builder.HasKey(x => x.ID);

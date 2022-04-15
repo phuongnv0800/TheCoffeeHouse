@@ -1,8 +1,8 @@
 ﻿using TCH.BackendApi.Entities;
-using TCH.BackendApi.Models.Paginations;
-using TCH.BackendApi.Models.Searchs;
-using TCH.BackendApi.Models.SubModels;
-using TCH.BackendApi.ViewModels;
+using TCH.Utilities.Paginations;
+using TCH.Utilities.Searchs;
+using TCH.Utilities.SubModels;
+using TCH.ViewModel.SubModels;
 
 namespace TCH.BackendApi.Models.DataRepository
 {

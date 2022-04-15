@@ -4,11 +4,11 @@ using TCH.BackendApi.Config;
 using TCH.BackendApi.EF;
 using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataRepository;
-using TCH.BackendApi.Models.Enum;
-using TCH.BackendApi.Models.Paginations;
-using TCH.BackendApi.Models.Searchs;
-using TCH.BackendApi.Models.SubModels;
-using TCH.BackendApi.ViewModels;
+using TCH.Utilities.Enum;
+using TCH.Utilities.Paginations;
+using TCH.Utilities.Searchs;
+using TCH.Utilities.SubModels;
+using TCH.ViewModel.SubModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Xsl;
-using TCH.BackendApi.Models.Error;
+using TCH.Utilities.Error;
 
 namespace TCH.BackendApi.Models.DataManager;
 

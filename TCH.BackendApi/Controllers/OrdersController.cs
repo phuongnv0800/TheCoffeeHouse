@@ -3,12 +3,13 @@ using CoreHtmlToImage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TCH.BackendApi.Models.DataRepository;
-using TCH.BackendApi.Models.Enum;
-using TCH.BackendApi.Models.Error;
-using TCH.BackendApi.Models.Roles;
-using TCH.BackendApi.Models.Searchs;
-using TCH.BackendApi.Models.SubModels;
-using TCH.BackendApi.ViewModels;
+using TCH.Utilities.Enum;
+using TCH.Utilities.Error;
+using TCH.Utilities.Roles;
+using TCH.Utilities.Searchs;
+using TCH.Utilities.SubModels;
+using TCH.ViewModel.SubModels;
+
 
 namespace TCH.BackendApi.Controllers;
 

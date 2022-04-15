@@ -2,10 +2,10 @@
 using TCH.BackendApi.EF;
 using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataRepository;
-using TCH.BackendApi.Models.SubModels;
-using TCH.BackendApi.Models.Searchs;
-using TCH.BackendApi.Models.Paginations;
-using TCH.BackendApi.ViewModels;
+using TCH.Utilities.SubModels;
+using TCH.Utilities.Searchs;
+using TCH.Utilities.Paginations;
+using TCH.ViewModel.SubModels;
 using AutoMapper;
 
 namespace TCH.BackendApi.Models.DataManager;

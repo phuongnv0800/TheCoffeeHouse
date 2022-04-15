@@ -10,8 +10,7 @@ using TCH.BackendApi.EF;
 using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataManager;
 using TCH.BackendApi.Models.DataRepository;
-using TCH.BackendApi.ViewModels;
-using System.Text.Json;
+using TCH.BackendApi.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config = builder.Configuration;
@@ -133,12 +132,6 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred creating the DB!..");
     }
 }
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseResponseCaching();

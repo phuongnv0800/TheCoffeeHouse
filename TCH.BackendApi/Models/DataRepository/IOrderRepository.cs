@@ -1,9 +1,9 @@
 ﻿using TCH.BackendApi.Entities;
-using TCH.BackendApi.Models.Enum;
-using TCH.BackendApi.Models.Paginations;
-using TCH.BackendApi.Models.Searchs;
-using TCH.BackendApi.ViewModels;
-using TCH.BackendApi.Models.SubModels;
+using TCH.Utilities.Enum;
+using TCH.Utilities.Paginations;
+using TCH.Utilities.Searchs;
+using TCH.ViewModel.SubModels;
+using TCH.Utilities.SubModels;
 
 namespace TCH.BackendApi.Models.DataRepository
 {

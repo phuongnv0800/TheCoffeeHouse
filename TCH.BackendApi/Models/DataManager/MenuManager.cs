@@ -4,8 +4,8 @@ using TCH.BackendApi.Config;
 using TCH.BackendApi.EF;
 using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataRepository;
-using TCH.BackendApi.Models.SubModels;
-using TCH.BackendApi.ViewModels;
+using TCH.Utilities.SubModels;
+using TCH.ViewModel.SubModels;
 
 namespace TCH.BackendApi.Models.DataManager;
 
