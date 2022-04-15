@@ -1,4 +1,4 @@
-﻿namespace TCH.BackendApi.Config;
+﻿namespace TCH.Utilities.Claims;
 
 public static class ClaimValue
 {

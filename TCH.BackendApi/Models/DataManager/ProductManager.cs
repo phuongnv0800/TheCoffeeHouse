@@ -9,7 +9,7 @@ using TCH.Utilities.Paginations;
 using TCH.ViewModel.SubModels;
 using TCH.Utilities.Searchs;
 using AutoMapper;
-using TCH.BackendApi.Config;
+using TCH.Utilities.Claims;
 
 namespace TCH.BackendApi.Models.DataManager;
 

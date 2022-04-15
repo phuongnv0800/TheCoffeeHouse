@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using TCH.BackendApi.Config;
 using TCH.BackendApi.EF;
 using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataRepository;
@@ -8,6 +7,7 @@ using TCH.ViewModel.SubModels;
 using TCH.Utilities.Paginations;
 using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;
+using TCH.Utilities.Claims;
 
 namespace TCH.BackendApi.Models.DataManager;
 

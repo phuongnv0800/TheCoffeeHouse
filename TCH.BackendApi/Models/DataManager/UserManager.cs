@@ -11,10 +11,10 @@ using TCH.Utilities.SubModels;
 using TCH.Utilities.Searchs;
 using TCH.Utilities.Paginations;
 using TCH.ViewModel.SubModels;
-using TCH.BackendApi.Config;
 using TCH.BackendApi.EF;
 using System.Text.Json;
 using TCH.Utilities.Enum;
+using TCH.Utilities.Claims;
 
 namespace TCH.BackendApi.Models.DataManager;
 

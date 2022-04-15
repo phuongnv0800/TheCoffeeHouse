@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using TCH.BackendApi.Config;
 using TCH.BackendApi.EF;
 using TCH.BackendApi.Entities;
 using TCH.BackendApi.Models.DataRepository;
+using TCH.Utilities.Claims;
 using TCH.Utilities.Paginations;
 using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;

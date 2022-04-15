@@ -41,6 +41,7 @@ public class RoleManager : IRoleRepository, IDisposable
                 {
                     ID = x.Id,
                     Name = x.Name,
+                    Description = x.Description ?? "",
                 }
             )
             //.OrderBy(x => x.Id)
@@ -71,6 +72,7 @@ public class RoleManager : IRoleRepository, IDisposable
                 {
                     ID = x.Id,
                     Name = x.Name,
+                    Description = x.Description ?? "",
                 }
             )
             //.OrderBy(x => x.Id)
