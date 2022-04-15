@@ -235,7 +235,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/latte-tao-le-que-nong.webp",
+                LinkImage = "/products/latte-tao-le-que-nong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -254,7 +254,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/latte-tao-le-que-da.webp",
+                LinkImage = "/products/latte-tao-le-que-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -273,7 +273,7 @@ public static class Seed
                 Price = 107000,
                 Description = "",
 
-                LinkImage = "/images/latte-tao-le-que-chai-fresh-500ml.webp",
+                LinkImage = "/products/latte-tao-le-que-chai-fresh-500ml.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -292,7 +292,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/ mochanong.webp",
+                LinkImage = "/products/ mochanong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -311,7 +311,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/mocha-da.webp",
+                LinkImage = "/products/mocha-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -330,7 +330,7 @@ public static class Seed
                 Price = 40000,
                 Description = "",
 
-                LinkImage = "/images/espressonong.webp",
+                LinkImage = "/products/espressonong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -349,7 +349,7 @@ public static class Seed
                 Price = 45000,
                 Description = "",
 
-                LinkImage = "/images/cfdenda-espressoda.webp",
+                LinkImage = "/products/cfdenda-espressoda.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -368,7 +368,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/cappuccino.webp",
+                LinkImage = "/products/cappuccino.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -383,7 +383,7 @@ public static class Seed
                 IsAvailable = true,
                 Price = 49000,
                 Description = "",
-                LinkImage = "/images/mocha-da.webp",
+                LinkImage = "/products/mocha-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -398,7 +398,7 @@ public static class Seed
                 IsAvailable = true,
                 Price = 40000,
                 Description = "",
-                LinkImage = "/images/americano-nong.webp",
+                LinkImage = "/products/americano-nong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -417,7 +417,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/latte-da.webp",
+                LinkImage = "/products/latte-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -436,7 +436,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/caramel-macchiato-nong.webp",
+                LinkImage = "/products/caramel-macchiato-nong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -455,7 +455,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/caramel-macchiato-da.webp",
+                LinkImage = "/products/caramel-macchiato-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -474,7 +474,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/latte.webp",
+                LinkImage = "/products/latte.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -493,7 +493,7 @@ public static class Seed
                 Price = 40000,
                 Description = "",
 
-                LinkImage = "/images/latte.webp",
+                LinkImage = "/products/latte.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -512,7 +512,7 @@ public static class Seed
                 Price = 29000,
                 Description = "",
 
-                LinkImage = "/images/bac-siu-da.webp ",
+                LinkImage = "/products/bac-siu-da.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
@@ -531,7 +531,7 @@ public static class Seed
                 Price = 35000,
                 Description = "",
 
-                LinkImage = "/images/bac-siu-nong.webp ",
+                LinkImage = "/products/bac-siu-nong.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
@@ -550,7 +550,7 @@ public static class Seed
                 Price = 29000,
                 Description = "",
 
-                LinkImage = "/images/cfdenda-espressoda.webp ",
+                LinkImage = "/products/cfdenda-espressoda.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
@@ -569,7 +569,7 @@ public static class Seed
                 Price = 35000,
                 Description = "",
 
-                LinkImage = "/images/ca-phe-den-nong.webp",
+                LinkImage = "/products/ca-phe-den-nong.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
@@ -588,7 +588,7 @@ public static class Seed
                 Price = 29000,
                 Description = "",
 
-                LinkImage = "/images/ca-phe-sua-da.webp",
+                LinkImage = "/products/ca-phe-sua-da.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
@@ -607,7 +607,7 @@ public static class Seed
                 Price = 78000,
                 Description = "",
 
-                LinkImage = "/images/bottlecfsd.webp",
+                LinkImage = "/products/bottlecfsd.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
@@ -626,7 +626,7 @@ public static class Seed
                 Price = 78000,
                 Description = "",
 
-                LinkImage = "/images/ca-phe-sua-nong.webp",
+                LinkImage = "/products/ca-phe-sua-nong.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
@@ -645,7 +645,7 @@ public static class Seed
                 Price = 45000,
                 Description = "",
 
-                LinkImage = "/images/cold-brew-sua-tuoi.webp",
+                LinkImage = "/products/cold-brew-sua-tuoi.webp",
                 CategoryID = "0e91fcb8-fa59-4a86-9af9-e608d3175caa ",
             },
             new Product()
@@ -664,7 +664,7 @@ public static class Seed
                 Price = 45000,
                 Description = "",
 
-                LinkImage = "/images/classic-cold-brew.webp",
+                LinkImage = "/products/classic-cold-brew.webp",
                 CategoryID = "0e91fcb8-fa59-4a86-9af9-e608d3175caa ",
             },
             new Product()
@@ -683,7 +683,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/tra-dao-dua-luoi.webp",
+                LinkImage = "/products/tra-dao-dua-luoi.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
@@ -702,7 +702,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/tra-sen-nhan.webp",
+                LinkImage = "/products/tra-sen-nhan.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
@@ -721,7 +721,7 @@ public static class Seed
                 Price = 45000,
                 Description = "",
 
-                LinkImage = "/images/tra-nhan-da.webp ",
+                LinkImage = "/products/tra-nhan-da.webp ",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
@@ -740,7 +740,7 @@ public static class Seed
                 Price = 51000,
                 Description = "",
 
-                LinkImage = "/images/nhan-hat-chia--nong.webp",
+                LinkImage = "/products/nhan-hat-chia--nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
@@ -759,7 +759,7 @@ public static class Seed
                 Price = 45000,
                 Description = "",
 
-                LinkImage = "/images/tra-sen.webp",
+                LinkImage = "/products/tra-sen.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
@@ -778,7 +778,7 @@ public static class Seed
                 Price = 51000,
                 Description = "",
 
-                LinkImage = "/images/tra-sen-nong.webp",
+                LinkImage = "/products/tra-sen-nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
@@ -797,7 +797,7 @@ public static class Seed
                 Price = 45000,
                 Description = "",
 
-                LinkImage = "/images/ tra-dao-cam-xa.webp",
+                LinkImage = "/products/ tra-dao-cam-xa.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
@@ -816,7 +816,7 @@ public static class Seed
                 Price = 52000,
                 Description = "",
 
-                LinkImage = "/images/tdcs-nong.webp",
+                LinkImage = "/products/tdcs-nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
@@ -835,7 +835,7 @@ public static class Seed
                 Price = 107000,
                 Description = "",
 
-                LinkImage = "/images/bottle_tradao.webp",
+                LinkImage = "/products/bottle_tradao.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
@@ -854,7 +854,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/caramel-macchiato-da.webp",
+                LinkImage = "/products/caramel-macchiato-da.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -873,7 +873,7 @@ public static class Seed
                 Price = 54000,
                 Description = "",
 
-                LinkImage = "/images/hong-tra-latte.webp",
+                LinkImage = "/products/hong-tra-latte.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -892,7 +892,7 @@ public static class Seed
                 Price = 54000,
                 Description = "",
 
-                LinkImage = "/images/hong-tra-sua-nong.webp",
+                LinkImage = "/products/hong-tra-sua-nong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -911,7 +911,7 @@ public static class Seed
                 Price = 54000,
                 Description = "",
 
-                LinkImage = "/images/hong-tra-sua-tran-chau.webp",
+                LinkImage = "/products/hong-tra-sua-tran-chau.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -930,7 +930,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/latte-tao-le-que-da.webp",
+                LinkImage = "/products/latte-tao-le-que-da.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -949,7 +949,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/tra-den-matchiato.webp",
+                LinkImage = "/products/tra-den-matchiato.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -968,7 +968,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/tra-sua-mac-ca.webp",
+                LinkImage = "/products/tra-sua-mac-ca.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -987,7 +987,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/tra-sua-masala-chai-nong.webp",
+                LinkImage = "/products/tra-sua-masala-chai-nong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -1006,7 +1006,7 @@ public static class Seed
                 Price = 107000,
                 Description = "",
 
-                LinkImage = "/images/tra-sua-masala-chai-tran-chau-chai-fresh-500ml.webp",
+                LinkImage = "/products/tra-sua-masala-chai-tran-chau-chai-fresh-500ml.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -1025,7 +1025,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/ masala-chai-tran-chau-lanh.webp",
+                LinkImage = "/products/ masala-chai-tran-chau-lanh.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -1044,7 +1044,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/oolong-nuong-nong.webp",
+                LinkImage = "/products/oolong-nuong-nong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -1063,7 +1063,7 @@ public static class Seed
                 Price = 54000,
                 Description = "",
 
-                LinkImage = "/images/olong-nuong-tran-chau.webp",
+                LinkImage = "/products/olong-nuong-tran-chau.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -1082,7 +1082,7 @@ public static class Seed
                 Price = 97000,
                 Description = "",
 
-                LinkImage = "/images/bottle_oolong.webp",
+                LinkImage = "/products/bottle_oolong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -1101,7 +1101,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/ cf-da-xay.webp",
+                LinkImage = "/products/cf-da-xay.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
             new Product()
@@ -1115,50 +1115,39 @@ public static class Seed
                 IsSale = false,
                 PriceSale = 49000,
                 IsAvailable = true,
-
-
                 Price = 49000,
                 Description = "",
-
-                LinkImage = "/images/chanh-sa-da-xay.webp",
+                LinkImage = "/products/chanh-sa-da-xay.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = " Chocolate Đá Xay",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 58000,
                 IsAvailable = true,
-
-
                 Price = 58000,
                 Description = "",
-
-                LinkImage = "/images/chocolate-ice-blended.webp",
+                LinkImage = "/products/chocolate-ice-blended.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = " Cookie Đá Xay",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 58000,
                 IsAvailable = true,
-
-
                 Price = 58000,
                 Description = "",
-
-                LinkImage = "/images/cookies_da_xay.webp",
+                LinkImage = "/products/cookies_da_xay.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
             new Product()
@@ -1172,69 +1161,54 @@ public static class Seed
                 IsSale = false,
                 PriceSale = 58000,
                 IsAvailable = true,
-
-
                 Price = 58000,
                 Description = "",
-
-                LinkImage = "/images/daovietquat.webp",
+                LinkImage = "/products/daovietquat.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = " Matcha Đá Xay",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 58000,
                 IsAvailable = true,
-
-
                 Price = 58000,
                 Description = "",
-
-                LinkImage = "/images/matchadaxa.webp",
+                LinkImage = "/products/matchadaxa.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = " Sinh Tố Việt Quất",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 58000,
                 IsAvailable = true,
-
-
                 Price = 58000,
                 Description = "",
-
-                LinkImage = "/images/sinh-to-viet-quat.webp",
+                LinkImage = "/products/sinh-to-viet-quat.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = " Chocolate Đá",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 58000,
                 IsAvailable = true,
-
-
                 Price = 58000,
                 Description = "",
-
-                LinkImage = "/images/chocolate-da.webp",
+                LinkImage = "/products/chocolate-da.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
             },
             new Product()
@@ -1253,7 +1227,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/chocolate-ice-blended.webp",
+                LinkImage = "/products/chocolate-ice-blended.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
             },
             new Product()
@@ -1272,7 +1246,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/chocolatenong.webp",
+                LinkImage = "/products/chocolatenong.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
             },
             new Product()
@@ -1291,7 +1265,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/matcha-latte-da.webp",
+                LinkImage = "/products/matcha-latte-da.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
             },
             new Product()
@@ -1310,7 +1284,7 @@ public static class Seed
                 Price = 58000,
                 Description = "",
 
-                LinkImage = "/images/matcha-latte.webp",
+                LinkImage = "/products/matcha-latte.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
             },
             new Product()
@@ -1329,7 +1303,7 @@ public static class Seed
                 Price = 12000,
                 Description = "",
 
-                LinkImage = "/images/banhmique.webp",
+                LinkImage = "/products/banhmique.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
             },
             new Product()
@@ -1348,7 +1322,7 @@ public static class Seed
                 Price = 12000,
                 Description = "",
 
-                LinkImage = "/images/banhmiquecay.webp",
+                LinkImage = "/products/banhmiquecay.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
             },
             new Product()
@@ -1367,7 +1341,7 @@ public static class Seed
                 Price = 29000,
                 Description = "",
 
-                LinkImage = "/images/banh-mi-vn-thit-nguoi.webp",
+                LinkImage = "/products/banh-mi-vn-thit-nguoi.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
             },
             new Product()
@@ -1386,7 +1360,7 @@ public static class Seed
                 Price = 32000,
                 Description = "",
 
-                LinkImage = "/images/cha-bong-pho-mai.webp",
+                LinkImage = "/products/cha-bong-pho-mai.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
             },
             new Product()
@@ -1405,7 +1379,7 @@ public static class Seed
                 Price = 35000,
                 Description = "",
 
-                LinkImage = "/images/croissant-trung-muoi.webp",
+                LinkImage = "/products/croissant-trung-muoi.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
             },
             new Product()
@@ -1424,7 +1398,7 @@ public static class Seed
                 Price = 19000,
                 Description = "",
 
-                LinkImage = "/images/mochi-kem-chocolate.webp",
+                LinkImage = "/products/mochi-kem-chocolate.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1443,7 +1417,7 @@ public static class Seed
                 Price = 19000,
                 Description = "",
 
-                LinkImage = "/images/mochi-kem-dua-dua.webp",
+                LinkImage = "/products/mochi-kem-dua-dua.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1462,7 +1436,7 @@ public static class Seed
                 Price = 19000,
                 Description = "",
 
-                LinkImage = "/images/mochi-kem-matcha.webp",
+                LinkImage = "/products/mochi-kem-matcha.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1481,7 +1455,7 @@ public static class Seed
                 Price = 19000,
                 Description = "",
 
-                LinkImage = "/images/mochi-kem-viet-quat.webp",
+                LinkImage = "/products/mochi-kem-viet-quat.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1500,7 +1474,7 @@ public static class Seed
                 Price = 19000,
                 Description = "",
 
-                LinkImage = "/images/mochi-kem-xoai.webp",
+                LinkImage = "/products/mochi-kem-xoai.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1519,7 +1493,7 @@ public static class Seed
                 Price = 19000,
                 Description = "",
 
-                LinkImage = "/images/mochi-kem-phuc-bon-tu.webp",
+                LinkImage = "/products/mochi-kem-phuc-bon-tu.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1538,7 +1512,7 @@ public static class Seed
                 Price = 39000,
                 Description = "",
 
-                LinkImage = "/images/mousse-gau-chocolate.webp",
+                LinkImage = "/products/mousse-gau-chocolate.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1557,7 +1531,7 @@ public static class Seed
                 Price = 29000,
                 Description = "",
 
-                LinkImage = "/images/chanh-day.webp",
+                LinkImage = "/products/chanh-day.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1576,7 +1550,7 @@ public static class Seed
                 Price = 29000,
                 Description = "",
 
-                LinkImage = "/images/mousse-red-velvet.webp",
+                LinkImage = "/products/mousse-red-velvet.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1595,7 +1569,7 @@ public static class Seed
                 Price = 32000,
                 Description = "",
 
-                LinkImage = "/images/ mousse-tiramisu.webp",
+                LinkImage = "/products/ mousse-tiramisu.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1614,7 +1588,7 @@ public static class Seed
                 Price = 20000,
                 Description = "",
 
-                LinkImage = "/images/mit-say.webp",
+                LinkImage = "/products/mit-say.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1633,7 +1607,7 @@ public static class Seed
                 Price = 230000,
                 Description = "",
 
-                LinkImage = "/images/ori-1-1kg.webp",
+                LinkImage = "/products/ori-1-1kg.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1652,7 +1626,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/ca-phe-rang-xay-original.webp",
+                LinkImage = "/products/ca-phe-rang-xay-original.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1671,7 +1645,7 @@ public static class Seed
                 Price = 79000,
                 Description = "",
 
-                LinkImage = "/images/ca-phe-dam-vi-viet_tui_new.webp",
+                LinkImage = "/products/ca-phe-dam-vi-viet_tui_new.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1690,7 +1664,7 @@ public static class Seed
                 Price = 39000,
                 Description = "",
 
-                LinkImage = "/images/cpsd-3in1.webp",
+                LinkImage = "/products/cpsd-3in1.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1709,7 +1683,7 @@ public static class Seed
                 Price = 39000,
                 Description = "",
 
-                LinkImage = "/images/ca-phe-sua-da-hoa-tan-dam-vi.webp",
+                LinkImage = "/products/ca-phe-sua-da-hoa-tan-dam-vi.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1728,7 +1702,7 @@ public static class Seed
                 Price = 79000,
                 Description = "",
 
-                LinkImage = "/images/ca-phe-sua-da-hoa-tan-tui.webp",
+                LinkImage = "/products/ca-phe-sua-da-hoa-tan-tui.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1747,7 +1721,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/rich-finish-nopromo.webp",
+                LinkImage = "/products/rich-finish-nopromo.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1766,7 +1740,7 @@ public static class Seed
                 Price = 49000,
                 Description = "",
 
-                LinkImage = "/images/peak-plavor-nopromo.webp",
+                LinkImage = "/products/peak-plavor-nopromo.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1785,7 +1759,7 @@ public static class Seed
                 Price = 98000,
                 Description = "",
 
-                LinkImage = "/images/arabica.webp",
+                LinkImage = "/products/arabica.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1804,7 +1778,7 @@ public static class Seed
                 Price = 69000,
                 Description = "",
 
-                LinkImage = "/images/p6-lon-3in1.webp",
+                LinkImage = "/products/p6-lon-3in1.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1823,7 +1797,7 @@ public static class Seed
                 Price = 269000,
                 Description = "",
 
-                LinkImage = "/images/24-lon-cpsd.webp",
+                LinkImage = "/products/24-lon-cpsd.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1842,7 +1816,7 @@ public static class Seed
                 Price = 109000,
                 Description = "",
 
-                LinkImage = "/images/combo-3-hop-ca-phe-sua-da-hoa-tan-dam.webp",
+                LinkImage = "/products/combo-3-hop-ca-phe-sua-da-hoa-tan-dam.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1861,7 +1835,7 @@ public static class Seed
                 Price = 109000,
                 Description = "",
 
-                LinkImage = "/images/combo-3cfsd-nopromo.webp",
+                LinkImage = "/products/combo-3cfsd-nopromo.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1880,7 +1854,7 @@ public static class Seed
                 Price = 109000,
                 Description = "",
 
-                LinkImage = "/images/2combo2-cforiginal.webp",
+                LinkImage = "/products/2combo2-cforiginal.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
             new Product()
@@ -1899,7 +1873,7 @@ public static class Seed
                 Price = 169000,
                 Description = "",
 
-                LinkImage = "/images/giftset-tra-tearoma.webp",
+                LinkImage = "/products/giftset-tra-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -1918,7 +1892,7 @@ public static class Seed
                 Price = 69000,
                 Description = "",
 
-                LinkImage = "/images/combo-3-hop-tra-lai-tui-loc-tearoma.webp",
+                LinkImage = "/products/combo-3-hop-tra-lai-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -1937,7 +1911,7 @@ public static class Seed
                 Price = 69000,
                 Description = "",
 
-                LinkImage = "/images/combo-3-hop-tra-oolong-tui-loc-tearoma1.webp",
+                LinkImage = "/products/combo-3-hop-tra-oolong-tui-loc-tearoma1.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -1956,7 +1930,7 @@ public static class Seed
                 Price = 69000,
                 Description = "",
 
-                LinkImage = "/images/combo-3-hop-tra-dao-tui-loc-tearoma.webp",
+                LinkImage = "/products/combo-3-hop-tra-dao-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -1975,7 +1949,7 @@ public static class Seed
                 Price = 69000,
                 Description = "",
 
-                LinkImage = "/images/combo-3-hop-tra-sen-tui-loc-tearoma1.webp",
+                LinkImage = "/products/combo-3-hop-tra-sen-tui-loc-tearoma1.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -1994,7 +1968,7 @@ public static class Seed
                 Price = 28000,
                 Description = "",
 
-                LinkImage = "/images/tra-dao-tui-loc-tearoma.webp",
+                LinkImage = "/products/tra-dao-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -2013,7 +1987,7 @@ public static class Seed
                 Price = 28000,
                 Description = "",
 
-                LinkImage = "/images/tra-lai-tui-loc-tearoma.webp",
+                LinkImage = "/products/tra-lai-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -2032,7 +2006,7 @@ public static class Seed
                 Price = 28000,
                 Description = "",
 
-                LinkImage = "/images/tra-oolong-tui-loc-tearoma.webp",
+                LinkImage = "/products/tra-oolong-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -2051,7 +2025,7 @@ public static class Seed
                 Price = 28000,
                 Description = "",
 
-                LinkImage = "/images/tra-sen-tui-loc-tearoma.webp",
+                LinkImage = "/products/tra-sen-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -2070,7 +2044,7 @@ public static class Seed
                 Price = 74000,
                 Description = "",
 
-                LinkImage = "/images/tra-xanh-la-tearoma.webp",
+                LinkImage = "/products/tra-xanh-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -2089,7 +2063,7 @@ public static class Seed
                 Price = 74000,
                 Description = "",
 
-                LinkImage = "/images/tra-sen-la-tearoma.webp",
+                LinkImage = "/products/tra-sen-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -2108,7 +2082,7 @@ public static class Seed
                 Price = 74000,
                 Description = "",
 
-                LinkImage = "/images/tra-oolong-la-tearoma.webp",
+                LinkImage = "/products/tra-oolong-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -2127,7 +2101,7 @@ public static class Seed
                 Price = 74000,
                 Description = "",
 
-                LinkImage = "/images/tra-lai-la-tearoma.webp",
+                LinkImage = "/products/tra-lai-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
             new Product()
@@ -2146,7 +2120,7 @@ public static class Seed
                 Price = 250000,
                 Description = "",
 
-                LinkImage = "/images/binh-giu-nhiet-inox-trang-den.webp",
+                LinkImage = "/products/binh-giu-nhiet-inox-trang-den.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2165,7 +2139,7 @@ public static class Seed
                 Price = 250000,
                 Description = "",
 
-                LinkImage = "/images/bình giữ nhiệt inox xám cam 473ml.webp",
+                LinkImage = "/products/bình giữ nhiệt inox xám cam 473ml.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2184,7 +2158,7 @@ public static class Seed
                 Price = 79000,
                 Description = "",
 
-                LinkImage = "/images/bộ ống hút inox.webp",
+                LinkImage = "/products/bộ ống hút inox.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2203,7 +2177,7 @@ public static class Seed
                 Price = 100000,
                 Description = "",
 
-                LinkImage = "/images/cốc sứ the coffee house gợn sóng.webp",
+                LinkImage = "/products/cốc sứ the coffee house gợn sóng.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2222,7 +2196,7 @@ public static class Seed
                 Price = 100000,
                 Description = "",
 
-                LinkImage = "/images/cốc sứ the coffee house sọc ngang.webp",
+                LinkImage = "/products/cốc sứ the coffee house sọc ngang.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2241,7 +2215,7 @@ public static class Seed
                 Price = 79000,
                 Description = "",
 
-                LinkImage = "/images/túi canvans đà nãng.webp",
+                LinkImage = "/products/túi canvans đà nãng.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2260,7 +2234,7 @@ public static class Seed
                 Price = 79000,
                 Description = "",
 
-                LinkImage = "/images/túi canvans hà nội.webp",
+                LinkImage = "/products/túi canvans hà nội.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2279,7 +2253,7 @@ public static class Seed
                 Price = 79000,
                 Description = "",
 
-                LinkImage = "/images/túi canvans trăng nhà sung túc.webp",
+                LinkImage = "/products/túi canvans trăng nhà sung túc.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             }
         };

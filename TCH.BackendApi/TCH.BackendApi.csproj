@@ -30,8 +30,6 @@
   <ItemGroup>
     <Folder Include="Uploads\customers" />
     <Folder Include="Uploads\users\" />
-    <Folder Include="Uploads\products\" />
-    <Folder Include="Uploads\products\" />
     <Folder Include="Uploads\users\" />
   </ItemGroup>
 
