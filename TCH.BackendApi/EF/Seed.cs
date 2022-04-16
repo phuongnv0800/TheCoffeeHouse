@@ -9,8 +9,8 @@ public static class Seed
 {
     public static void Initialize(APIContext context)
     {
-        context.Database.EnsureCreated();
-        if (context.Categories.Any())
+        
+        if (context.Database.EnsureCreated())
         {
             return; // DB has been seeded
         }
@@ -2250,8 +2250,6 @@ public static class Seed
             }
         };
 
-        // var productDetails = new List<ProductDetail>();
-
         foreach (var item in products)
         {
             context.Products.Add(item);
@@ -2275,37 +2273,16 @@ public static class Seed
                 }
                 foreach (var topping in toppings)
                 {
-                     context.ToppingInProducts.Add(new ToppingInProduct()
+                    context.ToppingInProducts.Add(new ToppingInProduct()
                     {
                         ProductID = item.ID,
                         ToppingID = topping.ID, 
                     });
-                }
-                
+                } 
             }
-            // //
-            // foreach (var topping in toppings)
-            // {
-            //     foreach (var size in sizes)
-            //     {
-            //         productDetails.Add(new ProductDetail()
-            //         {
-            //             ID = Guid.NewGuid().ToString(),
-            //             ProductID = item.ID,
-            //             ToppingID = topping.ID,
-            //             SizeID = size.ID,
-            //             Name = item.Name + "("+ size.Name +")",
-            //             ToppingName = topping.Name,
-            //             Price = item.Price + topping.SubPrice + size.SubPrice,
-            //         });
-            //     }
-            // }
         }
 
-        // foreach (var productDetail in productDetails)
-        // {
-        //     context.ProductDetails.Add(productDetail);
-        // }
+       
         var branches = new Branch[]
         {
             new Branch()
@@ -2715,7 +2692,7 @@ public static class Seed
             context.UserRoles.Add(new IdentityUserRole<string>()
             {
                 UserId = userAdd.Id,
-                RoleId = i % 2 ==0 ? roleAdmin.Id : roleBranch.Id,
+                RoleId = i % 2 == 0 ? roleAdmin.Id : roleBranch.Id,
             });
         }
         context.SaveChanges();

@@ -1,5 +1,4 @@
-﻿using TCH.ViewModel.SubModels;
-using TCH.Utilities.Enum;
+﻿using TCH.Utilities.Enum;
 
 namespace TCH.ViewModel.SubModels;
 
