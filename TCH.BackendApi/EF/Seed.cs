@@ -2282,7 +2282,6 @@ public static class Seed
             }
         }
 
-       
         var branches = new Branch[]
         {
             new Branch()
