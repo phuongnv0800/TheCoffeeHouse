@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TCH.BackendApi.Configuration;
-using TCH.BackendApi.Entities;
+using TCH.Data.Entities;
 
 namespace TCH.BackendApi.EF;
 

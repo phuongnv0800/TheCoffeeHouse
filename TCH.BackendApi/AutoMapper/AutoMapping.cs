@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TCH.BackendApi.Entities;
+using TCH.Data.Entities;
 using TCH.ViewModel.SubModels;
 
 namespace TCH.BackendApi.AutoMapper;
@@ -22,5 +22,6 @@ public class AutoMapping : Profile
         CreateMap<ToppingVm, Topping>();
 
         CreateMap<BranchRequest, Branch>();
+        CreateMap<PromotionRequest, Promotion>();
     }
 }

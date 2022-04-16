@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TCH.BackendApi.Models.DataRepository;
+using TCH.BackendApi.Repositories.DataRepository;
 using TCH.Utilities.Error;
+using TCH.Utilities.Roles;
 using TCH.Utilities.Searchs;
 using TCH.ViewModel.SubModels;
 
@@ -9,7 +10,6 @@ namespace TCH.BackendApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class BranchsController: ControllerBase
 {
     private readonly IBranchRepository _repository;
@@ -61,6 +61,7 @@ public class BranchsController: ControllerBase
         }
     }
     [HttpPost]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Create([FromBody] BranchRequest request)
     {
         try
@@ -68,8 +69,6 @@ public class BranchsController: ControllerBase
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var result = await _repository.Create(request);
-            if (result.Result != 1)
-                BadRequest();
             return Ok(result);
         }
         catch (CustomException e)
@@ -82,13 +81,13 @@ public class BranchsController: ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+
     [HttpPost("add-user/{branchID}/{userID}")]
+    [Authorize]
     public async Task<IActionResult> AddUserToBranch(string branchID,string userID)
     {
         try
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             var result = await _repository.AddUserToBranch(userID, branchID);
             return Ok(result);
         }
@@ -102,7 +101,9 @@ public class BranchsController: ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+
     [HttpPost("remove-user/{branchID}/{userID}")]
+    [Authorize]
     public async Task<IActionResult> RemoveUserToBranch(string branchID,string userID)
     {
         try
@@ -122,7 +123,9 @@ public class BranchsController: ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+
     [HttpPut("{id}")]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Update(string id, [FromBody] BranchRequest name)
     {
         try
@@ -130,8 +133,6 @@ public class BranchsController: ControllerBase
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var result = await _repository.Update(id, name);
-            if (result.Result != 1)
-                BadRequest();
             return Ok(result);
         }
         catch (CustomException e)
@@ -144,14 +145,14 @@ public class BranchsController: ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+
     [HttpDelete("{id}")]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Delete(string id)
     {
         try
         {
             var result = await _repository.Delete(id);
-            if (result.Result != 1)
-                BadRequest();
             return Ok(result);
         }
         catch (CustomException e)

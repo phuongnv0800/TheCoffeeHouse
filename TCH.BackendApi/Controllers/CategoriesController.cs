@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TCH.BackendApi.Models.DataRepository;
+using TCH.BackendApi.Repositories.DataRepository;
 using TCH.Utilities.Error;
+using TCH.Utilities.Roles;
 using TCH.Utilities.Searchs;
 using TCH.ViewModel.SubModels;
 
@@ -9,7 +10,6 @@ namespace TCH.BackendApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class CategoriesController : ControllerBase
 {
     private readonly ICategoryRepository _category;
@@ -42,6 +42,7 @@ public class CategoriesController : ControllerBase
         }
     }
     [HttpPost]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Create([FromBody] CategoryVm name)
     {
         try
@@ -62,6 +63,7 @@ public class CategoriesController : ControllerBase
         }
     }
     [HttpPut("{id}")]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Update(string id, [FromBody] CategoryVm name)
     {
         try
@@ -82,6 +84,7 @@ public class CategoriesController : ControllerBase
         }
     }
     [HttpDelete("{id}")]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Delete(string id)
     {
         try

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TCH.Utilities.Error;
 using TCH.Utilities.Searchs;
-using TCH.BackendApi.Models.DataRepository;
+using TCH.BackendApi.Repositories.DataRepository;
 
 namespace TCH.BackendApi.Controllers;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TCH.BackendApi.Models.DataRepository;
+using TCH.BackendApi.Repositories.DataRepository;
 using TCH.Utilities.Error;
 using TCH.Utilities.Searchs;
 using TCH.ViewModel.SubModels;

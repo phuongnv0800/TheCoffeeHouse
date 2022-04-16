@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TCH.Utilities.Error;
 using TCH.Utilities.Searchs;
-using TCH.BackendApi.Models.DataRepository;
-using TCH.BackendApi.Entities;
+using TCH.BackendApi.Repositories.DataRepository;
+using TCH.Data.Entities;
 
 namespace TCH.BackendApi.Controllers;
 

@@ -7,10 +7,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using TCH.BackendApi.EF;
-using TCH.BackendApi.Entities;
-using TCH.BackendApi.Models.DataManager;
-using TCH.BackendApi.Models.DataRepository;
+using TCH.Data.Entities;
+using TCH.BackendApi.Repositories.DataManager;
+using TCH.BackendApi.Repositories.DataRepository;
 using TCH.BackendApi.AutoMapper;
+using TCH.BackendApi.Repositories.DataRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config = builder.Configuration;
@@ -39,6 +40,7 @@ builder.Services.AddScoped<IBranchRepository, BranchManager>();
 builder.Services.AddScoped<IMenuRepository, MenuManager>();
 builder.Services.AddScoped<IOrderRepository, OrderManager>();
 builder.Services.AddScoped<ICustomerRepository, CustomerManager>();
+builder.Services.AddScoped<IPromotionRepository, PromotionManager>();
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IStorageService, FileStorageService>();
