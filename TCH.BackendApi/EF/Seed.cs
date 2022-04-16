@@ -1880,18 +1880,14 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Combo 3 hộp trà Lài túi lọc Tearoma",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 69000,
                 IsAvailable = true,
-
-
                 Price = 69000,
                 Description = "",
-
                 LinkImage = "/products/combo-3-hop-tra-lai-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
@@ -1899,18 +1895,14 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Combo 3 hộp trà Oolong túi lọc Tearoma",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 69000,
                 IsAvailable = true,
-
-
                 Price = 69000,
                 Description = "",
-
                 LinkImage = "/products/combo-3-hop-tra-oolong-tui-loc-tearoma1.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
@@ -2699,6 +2691,33 @@ public static class Seed
             UserId = user.Id,
             RoleId = roleStaff.Id,
         });
+        for (var i =0; i < 100; i++)
+        {
+            var userAdd = new AppUser()
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = $"user{i}",
+                NormalizedUserName = $"USER{i}",
+                Email = $"userng08{i}@gmail.com",
+                NormalizedEmail = $"USERNG08{i}@GMAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = hasher.HashPassword(null, "123123aA@"),
+                SecurityStamp = Guid.NewGuid().ToString(),
+                FirstName = "Người dùng",
+                LastName = i.ToString(),
+                DateOfBirth = new DateTime(1900 + i, 1, 1),
+                BranchID = branches[(new Random()).Next(0, 7)].ID,
+                Status = Status.Active,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+            };
+            context.AppUsers.Add(userAdd);
+            context.UserRoles.Add(new IdentityUserRole<string>()
+            {
+                UserId = userAdd.Id,
+                RoleId = i % 2 ==0 ? roleAdmin.Id : roleBranch.Id,
+            });
+        }
         context.SaveChanges();
     }
 }
