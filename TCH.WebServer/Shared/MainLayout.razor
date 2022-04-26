@@ -1,0 +1,14 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>TCH.WebServer</PageTitle>
+
+<div class="page">
+    <main>
+        <article class="content" style="padding:0 !important">
+            @Body
+        </article>
+    </main>
+</div>
+@code{
+    public bool login = GbParameter.GbParameter.IsLogin;
+}

@@ -11,8 +11,11 @@
 <PageTitle>The Coffee House</PageTitle>
 
 
+
 @code{
     private string? token;
+    public HttpClient client = new HttpClient();
+    
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         var authToken = await localStorage.GetItemAsync<string>("authToken");
