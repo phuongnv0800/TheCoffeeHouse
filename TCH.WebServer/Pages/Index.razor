@@ -1,0 +1,15 @@
+﻿@page "/"
+@using Blazored.LocalStorage
+@using Newtonsoft.Json
+@using TCH.WebServer.Models
+@using TCH.WebServer.Services
+
+@inject ILocalStorageService localStorage
+@inject IAuthService authServices
+@inject NavigationManager navigationManager
+
+<PageTitle>The Coffee House</PageTitle>
+<TCH.WebServer.Pages.Authentication.Login></TCH.WebServer.Pages.Authentication.Login>
+@code{
+
+}

@@ -1,0 +1,261 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\AdminDashBoard\CategoriesTable.razor" />
+    <Content Remove="wwwroot\images\1640270462_combo-qua-tet.webp" />
+    <Content Remove="wwwroot\images\24-lon-cpsd.webp" />
+    <Content Remove="wwwroot\images\2combo2-cforiginal.webp" />
+    <Content Remove="wwwroot\images\a.png" />
+    <Content Remove="wwwroot\images\americano-nong.webp" />
+    <Content Remove="wwwroot\images\arabica.webp" />
+    <Content Remove="wwwroot\images\bac-siu-da.webp" />
+    <Content Remove="wwwroot\images\bac-xiu-nong.webp" />
+    <Content Remove="wwwroot\images\banh-mi-vn-thit-nguoi.webp" />
+    <Content Remove="wwwroot\images\banhmique.webp" />
+    <Content Remove="wwwroot\images\banhmiquecay.webp" />
+    <Content Remove="wwwroot\images\binh-giu-nhiet-inox-trang-den.webp" />
+    <Content Remove="wwwroot\images\bottlecfsd.webp" />
+    <Content Remove="wwwroot\images\bottle_oolong.webp" />
+    <Content Remove="wwwroot\images\bottle_tradao.webp" />
+    <Content Remove="wwwroot\images\bình giữ nhiệt inox xám cam 473ml.webp" />
+    <Content Remove="wwwroot\images\bộ ống hút inox.webp" />
+    <Content Remove="wwwroot\images\ca-phe-dam-vi-viet_tui_new.webp" />
+    <Content Remove="wwwroot\images\ca-phe-den-nong.webp" />
+    <Content Remove="wwwroot\images\ca-phe-rang-xay-original.webp" />
+    <Content Remove="wwwroot\images\ca-phe-sua-da-hoa-tan-dam-vi.webp" />
+    <Content Remove="wwwroot\images\ca-phe-sua-da-hoa-tan-tui.webp" />
+    <Content Remove="wwwroot\images\ca-phe-sua-da.webp" />
+    <Content Remove="wwwroot\images\ca-phe-sua-nong.webp" />
+    <Content Remove="wwwroot\images\cappuccino.webp" />
+    <Content Remove="wwwroot\images\caramel-macchiato-da.webp" />
+    <Content Remove="wwwroot\images\caramel-macchiato-da_.webp" />
+    <Content Remove="wwwroot\images\caramel-macchiato-nong.webp" />
+    <Content Remove="wwwroot\images\cf-da-xay.webp" />
+    <Content Remove="wwwroot\images\cfdenda-espressoda.webp" />
+    <Content Remove="wwwroot\images\cha-bong-pho-mai.webp" />
+    <Content Remove="wwwroot\images\chanh-day.webp" />
+    <Content Remove="wwwroot\images\chanh-sa-da-xay.webp" />
+    <Content Remove="wwwroot\images\chocolate-da.webp" />
+    <Content Remove="wwwroot\images\chocolate-ice-blended.webp" />
+    <Content Remove="wwwroot\images\chocolatenong.webp" />
+    <Content Remove="wwwroot\images\classic-cold-brew.webp" />
+    <Content Remove="wwwroot\images\cold-brew-sua-tuoi.webp" />
+    <Content Remove="wwwroot\images\combo-3-hop-ca-phe-sua-da-hoa-tan-dam.webp" />
+    <Content Remove="wwwroot\images\combo-3-hop-tra-dao-tui-loc-tearoma1_9db99464a0d14cc791b858d21ab33c22_large.webp" />
+    <Content Remove="wwwroot\images\combo-3-hop-tra-lai-tui-loc-tearoma.webp" />
+    <Content Remove="wwwroot\images\combo-3-hop-tra-oolong-tui-loc-tearoma1.webp" />
+    <Content Remove="wwwroot\images\combo-3-hop-tra-sen-tui-loc-tearoma1.webp" />
+    <Content Remove="wwwroot\images\combo-3cfsd-nopromo.webp" />
+    <Content Remove="wwwroot\images\cookies_da_xay.webp" />
+    <Content Remove="wwwroot\images\cpsd-3in1.webp" />
+    <Content Remove="wwwroot\images\croissant-trung-muoi.webp" />
+    <Content Remove="wwwroot\images\cốc sứ the coffee house gợn sóng.webp" />
+    <Content Remove="wwwroot\images\cốc sứ the coffee house sọc ngang.webp" />
+    <Content Remove="wwwroot\images\daovietquat.webp" />
+    <Content Remove="wwwroot\images\espressonong.webp" />
+    <Content Remove="wwwroot\images\giftset-tra-tearoma.webp" />
+    <Content Remove="wwwroot\images\hong-tra-latte.webp" />
+    <Content Remove="wwwroot\images\hong-tra-latte_.webp" />
+    <Content Remove="wwwroot\images\hong-tra-sua-nong.webp" />
+    <Content Remove="wwwroot\images\hong-tra-sua-tran-chau.webp" />
+    <Content Remove="wwwroot\images\latte-da.webp" />
+    <Content Remove="wwwroot\images\latte-tao-le-que-chai-fresh-500ml.webp" />
+    <Content Remove="wwwroot\images\latte-tao-le-que-da.webp" />
+    <Content Remove="wwwroot\images\latte-tao-le-que-nong.webp" />
+    <Content Remove="wwwroot\images\latte.webp" />
+    <Content Remove="wwwroot\images\masala-chai-tran-chau-lan.webp" />
+    <Content Remove="wwwroot\images\masala-chai-tran-chau-lanh.webp" />
+    <Content Remove="wwwroot\images\matcha-latte-da.webp" />
+    <Content Remove="wwwroot\images\matcha-latte.webp" />
+    <Content Remove="wwwroot\images\matchadaxa.webp" />
+    <Content Remove="wwwroot\images\mit-say.webp" />
+    <Content Remove="wwwroot\images\mocha-da.webp" />
+    <Content Remove="wwwroot\images\mochanong.webp" />
+    <Content Remove="wwwroot\images\mochi-kem-chocolate.webp" />
+    <Content Remove="wwwroot\images\mochi-kem-dua-dua.webp" />
+    <Content Remove="wwwroot\images\mochi-kem-matcha.webp" />
+    <Content Remove="wwwroot\images\mochi-kem-phuc-bon-tu.webp" />
+    <Content Remove="wwwroot\images\mochi-kem-viet-quat.webp" />
+    <Content Remove="wwwroot\images\mochi-kem-xoai.webp" />
+    <Content Remove="wwwroot\images\mousse-gau-chocolate.webp" />
+    <Content Remove="wwwroot\images\mousse-red-velvet.webp" />
+    <Content Remove="wwwroot\images\mousse-tiramisu.webp" />
+    <Content Remove="wwwroot\images\nhan-hat-chia--nong.webp" />
+    <Content Remove="wwwroot\images\olong-nuong-tran-chau.webp" />
+    <Content Remove="wwwroot\images\oolong-nuong-nong.webp" />
+    <Content Remove="wwwroot\images\ori-1-1kg.webp" />
+    <Content Remove="wwwroot\images\p6-lon-3in1.webp" />
+    <Content Remove="wwwroot\images\peak-plavor-nopromo.webp" />
+    <Content Remove="wwwroot\images\rich-finish-nopromo.webp" />
+    <Content Remove="wwwroot\images\sinh-to-viet-quat.webp" />
+    <Content Remove="wwwroot\images\tdcs-nong.webp" />
+    <Content Remove="wwwroot\images\tra-dao-cam-xa.webp" />
+    <Content Remove="wwwroot\images\tra-dao-dua-luoi.webp" />
+    <Content Remove="wwwroot\images\tra-dao-tui-loc-tearoma.webp" />
+    <Content Remove="wwwroot\images\tra-den-matchiato.webp" />
+    <Content Remove="wwwroot\images\tra-lai-la-tearoma.webp" />
+    <Content Remove="wwwroot\images\tra-lai-tui-loc-tearoma.webp" />
+    <Content Remove="wwwroot\images\tra-nhan-da.webp" />
+    <Content Remove="wwwroot\images\tra-oolong-la-tearoma.webp" />
+    <Content Remove="wwwroot\images\tra-oolong-tui-loc-tearoma.webp" />
+    <Content Remove="wwwroot\images\tra-sen-la-tearoma.webp" />
+    <Content Remove="wwwroot\images\tra-sen-nhan.webp" />
+    <Content Remove="wwwroot\images\tra-sen-nong.webp" />
+    <Content Remove="wwwroot\images\tra-sen-tui-loc-tearoma.webp" />
+    <Content Remove="wwwroot\images\tra-sen.webp" />
+    <Content Remove="wwwroot\images\tra-sua-mac-ca.webp" />
+    <Content Remove="wwwroot\images\tra-sua-masala-chai-nong.webp" />
+    <Content Remove="wwwroot\images\tra-sua-masala-chai-tran-chau-chai-fresh-500ml.webp" />
+    <Content Remove="wwwroot\images\tra-xanh-la-tearoma.webp" />
+    <Content Remove="wwwroot\images\túi canvans hà nội.webp" />
+    <Content Remove="wwwroot\images\túi canvans trăng nhà sung túc.webp" />
+    <Content Remove="wwwroot\images\túi canvans đà nãng.webp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\AdminDashBoard\CategoriesTable.razor" />
+    <None Include="wwwroot\images\1640270462_combo-qua-tet.webp" />
+    <None Include="wwwroot\images\24-lon-cpsd.webp" />
+    <None Include="wwwroot\images\2combo2-cforiginal.webp" />
+    <None Include="wwwroot\images\a.png" />
+    <None Include="wwwroot\images\americano-nong.webp" />
+    <None Include="wwwroot\images\arabica.webp" />
+    <None Include="wwwroot\images\bac-siu-da.webp" />
+    <None Include="wwwroot\images\bac-xiu-nong.webp" />
+    <None Include="wwwroot\images\banh-mi-vn-thit-nguoi.webp" />
+    <None Include="wwwroot\images\banhmique.webp" />
+    <None Include="wwwroot\images\banhmiquecay.webp" />
+    <None Include="wwwroot\images\binh-giu-nhiet-inox-trang-den.webp" />
+    <None Include="wwwroot\images\bottlecfsd.webp" />
+    <None Include="wwwroot\images\bottle_oolong.webp" />
+    <None Include="wwwroot\images\bottle_tradao.webp" />
+    <None Include="wwwroot\images\bình giữ nhiệt inox xám cam 473ml.webp" />
+    <None Include="wwwroot\images\bộ ống hút inox.webp" />
+    <None Include="wwwroot\images\ca-phe-dam-vi-viet_tui_new.webp" />
+    <None Include="wwwroot\images\ca-phe-den-nong.webp" />
+    <None Include="wwwroot\images\ca-phe-rang-xay-original.webp" />
+    <None Include="wwwroot\images\ca-phe-sua-da-hoa-tan-dam-vi.webp" />
+    <None Include="wwwroot\images\ca-phe-sua-da-hoa-tan-tui.webp" />
+    <None Include="wwwroot\images\ca-phe-sua-da.webp" />
+    <None Include="wwwroot\images\ca-phe-sua-nong.webp" />
+    <None Include="wwwroot\images\cappuccino.webp" />
+    <None Include="wwwroot\images\caramel-macchiato-da.webp" />
+    <None Include="wwwroot\images\caramel-macchiato-da_.webp" />
+    <None Include="wwwroot\images\caramel-macchiato-nong.webp" />
+    <None Include="wwwroot\images\cf-da-xay.webp" />
+    <None Include="wwwroot\images\cfdenda-espressoda.webp" />
+    <None Include="wwwroot\images\cha-bong-pho-mai.webp" />
+    <None Include="wwwroot\images\chanh-day.webp" />
+    <None Include="wwwroot\images\chanh-sa-da-xay.webp" />
+    <None Include="wwwroot\images\chocolate-da.webp" />
+    <None Include="wwwroot\images\chocolate-ice-blended.webp" />
+    <None Include="wwwroot\images\chocolatenong.webp" />
+    <None Include="wwwroot\images\classic-cold-brew.webp" />
+    <None Include="wwwroot\images\cold-brew-sua-tuoi.webp" />
+    <None Include="wwwroot\images\combo-3-hop-ca-phe-sua-da-hoa-tan-dam.webp" />
+    <None Include="wwwroot\images\combo-3-hop-tra-dao-tui-loc-tearoma1_9db99464a0d14cc791b858d21ab33c22_large.webp" />
+    <None Include="wwwroot\images\combo-3-hop-tra-lai-tui-loc-tearoma.webp" />
+    <None Include="wwwroot\images\combo-3-hop-tra-oolong-tui-loc-tearoma1.webp" />
+    <None Include="wwwroot\images\combo-3-hop-tra-sen-tui-loc-tearoma1.webp" />
+    <None Include="wwwroot\images\combo-3cfsd-nopromo.webp" />
+    <None Include="wwwroot\images\cookies_da_xay.webp" />
+    <None Include="wwwroot\images\cpsd-3in1.webp" />
+    <None Include="wwwroot\images\croissant-trung-muoi.webp" />
+    <None Include="wwwroot\images\cốc sứ the coffee house gợn sóng.webp" />
+    <None Include="wwwroot\images\cốc sứ the coffee house sọc ngang.webp" />
+    <None Include="wwwroot\images\daovietquat.webp" />
+    <None Include="wwwroot\images\espressonong.webp" />
+    <None Include="wwwroot\images\giftset-tra-tearoma.webp" />
+    <None Include="wwwroot\images\hong-tra-latte.webp" />
+    <None Include="wwwroot\images\hong-tra-latte_.webp" />
+    <None Include="wwwroot\images\hong-tra-sua-nong.webp" />
+    <None Include="wwwroot\images\hong-tra-sua-tran-chau.webp" />
+    <None Include="wwwroot\images\latte-da.webp" />
+    <None Include="wwwroot\images\latte-tao-le-que-chai-fresh-500ml.webp" />
+    <None Include="wwwroot\images\latte-tao-le-que-da.webp" />
+    <None Include="wwwroot\images\latte-tao-le-que-nong.webp" />
+    <None Include="wwwroot\images\latte.webp" />
+    <None Include="wwwroot\images\masala-chai-tran-chau-lan.webp" />
+    <None Include="wwwroot\images\masala-chai-tran-chau-lanh.webp" />
+    <None Include="wwwroot\images\matcha-latte-da.webp" />
+    <None Include="wwwroot\images\matcha-latte.webp" />
+    <None Include="wwwroot\images\matchadaxa.webp" />
+    <None Include="wwwroot\images\mit-say.webp" />
+    <None Include="wwwroot\images\mocha-da.webp" />
+    <None Include="wwwroot\images\mochanong.webp" />
+    <None Include="wwwroot\images\mochi-kem-chocolate.webp" />
+    <None Include="wwwroot\images\mochi-kem-dua-dua.webp" />
+    <None Include="wwwroot\images\mochi-kem-matcha.webp" />
+    <None Include="wwwroot\images\mochi-kem-phuc-bon-tu.webp" />
+    <None Include="wwwroot\images\mochi-kem-viet-quat.webp" />
+    <None Include="wwwroot\images\mochi-kem-xoai.webp" />
+    <None Include="wwwroot\images\mousse-gau-chocolate.webp" />
+    <None Include="wwwroot\images\mousse-red-velvet.webp" />
+    <None Include="wwwroot\images\mousse-tiramisu.webp" />
+    <None Include="wwwroot\images\nhan-hat-chia--nong.webp" />
+    <None Include="wwwroot\images\olong-nuong-tran-chau.webp" />
+    <None Include="wwwroot\images\oolong-nuong-nong.webp" />
+    <None Include="wwwroot\images\ori-1-1kg.webp" />
+    <None Include="wwwroot\images\p6-lon-3in1.webp" />
+    <None Include="wwwroot\images\peak-plavor-nopromo.webp" />
+    <None Include="wwwroot\images\rich-finish-nopromo.webp" />
+    <None Include="wwwroot\images\sinh-to-viet-quat.webp" />
+    <None Include="wwwroot\images\tdcs-nong.webp" />
+    <None Include="wwwroot\images\tra-dao-cam-xa.webp" />
+    <None Include="wwwroot\images\tra-dao-dua-luoi.webp" />
+    <None Include="wwwroot\images\tra-dao-tui-loc-tearoma.webp" />
+    <None Include="wwwroot\images\tra-den-matchiato.webp" />
+    <None Include="wwwroot\images\tra-lai-la-tearoma.webp" />
+    <None Include="wwwroot\images\tra-lai-tui-loc-tearoma.webp" />
+    <None Include="wwwroot\images\tra-nhan-da.webp" />
+    <None Include="wwwroot\images\tra-oolong-la-tearoma.webp" />
+    <None Include="wwwroot\images\tra-oolong-tui-loc-tearoma.webp" />
+    <None Include="wwwroot\images\tra-sen-la-tearoma.webp" />
+    <None Include="wwwroot\images\tra-sen-nhan.webp" />
+    <None Include="wwwroot\images\tra-sen-nong.webp" />
+    <None Include="wwwroot\images\tra-sen-tui-loc-tearoma.webp" />
+    <None Include="wwwroot\images\tra-sen.webp" />
+    <None Include="wwwroot\images\tra-sua-mac-ca.webp" />
+    <None Include="wwwroot\images\tra-sua-masala-chai-nong.webp" />
+    <None Include="wwwroot\images\tra-sua-masala-chai-tran-chau-chai-fresh-500ml.webp" />
+    <None Include="wwwroot\images\tra-xanh-la-tearoma.webp" />
+    <None Include="wwwroot\images\túi canvans hà nội.webp" />
+    <None Include="wwwroot\images\túi canvans trăng nhà sung túc.webp" />
+    <None Include="wwwroot\images\túi canvans đà nãng.webp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.3.0-preview.1" />
+    <PackageReference Include="Blazored.Modal" Version="6.0.1" />
+    <PackageReference Include="Blazored.Toast" Version="3.2.2" />
+    <PackageReference Include="Microsoft.Net.Http.Headers" Version="2.2.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Services\Products\ProductService.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\AdminDashBoard\CategoriesTable.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\AdminDashBoard\CategoriesTable.razor" />
+  </ItemGroup>
+
+</Project>
