@@ -416,6 +416,9 @@ public class OrderManager : IOrderRepository, IDisposable
         var query = from c in _context.Orders select c;
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.Code.Contains(request.Name));
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => DateTime.Compare(x.CreateDate, (DateTime)request.StartDate) < 0 && DateTime.Compare(x.CreateDate, (DateTime)request.StartDate) > 0);
+
         //paging
         int totalRow = await query.CountAsync();
         var data = new List<Order>();

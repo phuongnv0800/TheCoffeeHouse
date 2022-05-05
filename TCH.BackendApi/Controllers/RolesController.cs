@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TCH.Utilities.Error;
 using TCH.Utilities.Searchs;
 using TCH.BackendApi.Repositories.DataRepository;
+using TCH.Utilities.Roles;
 
 namespace TCH.BackendApi.Controllers;
 
@@ -20,6 +21,9 @@ public class RolesController : ControllerBase
         _logger = logger;
     }
 
+    [Authorize(Roles = Permission.Admin)]
+    [Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Manage)]
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] Search search)
     {

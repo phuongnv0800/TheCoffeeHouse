@@ -120,6 +120,7 @@ public class ProductManager : IProductRepository, IDisposable
             Message = "Thành công",
         };
     }
+    
     public async Task<Respond<PagedList<ProductVm>>> GetAll(Search request)
     {
         var query = from c in _context.Products select c;
@@ -196,6 +197,83 @@ public class ProductManager : IProductRepository, IDisposable
             Message = "Thành công",
         };
     }
+    public async Task<Respond<PagedList<ProductVm>>> GetProductByCategoryID(string categoryID, Search request)
+    {
+        var query = from c in _context.Products where c.CategoryID == categoryID select c;
+        if (!string.IsNullOrEmpty(request.Name))
+            query = query.Where(x => x.Name.Contains(request.Name));
+        //paging
+        int totalRow = await query.CountAsync();
+        var data = new List<ProductVm>();
+        var item1 = from sp in _context.SizeInProducts
+                    join s in _context.Sizes on sp.SizeID equals s.ID
+                    select new { s, sp, };
+        var item2 = from tp in _context.ToppingInProducts
+                    join t in _context.Toppings on tp.ToppingID equals t.ID
+                    select new { t, tp, };
+        if (request.IsPging)
+        {
+            data = await query.Select(x => new ProductVm()
+            {
+                ID = x.ID,
+                Name = x.Name,
+                ProductType = x.ProductType,
+                CreateDate = x.CreateDate,
+                UpdateDate = x.UpdateDate,
+                IsSale = x.IsSale,
+                PriceSale = x.PriceSale,
+                IsAvailable = x.IsAvailable,
+                Price = x.Price,
+                Description = x.Description,
+                LinkImage = x.LinkImage,
+                CategoryID = x.CategoryID,
+                IsActive = true,
+            })
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToListAsync();
+        }
+        else
+        {
+            data = await query.Select(x => new ProductVm()
+            {
+                ID = x.ID,
+                Name = x.Name,
+                ProductType = x.ProductType,
+                CreateDate = x.CreateDate,
+                UpdateDate = x.UpdateDate,
+                IsSale = x.IsSale,
+                PriceSale = x.PriceSale,
+                IsAvailable = x.IsAvailable,
+                Price = x.Price,
+                Description = x.Description,
+                LinkImage = x.LinkImage,
+                CategoryID = x.CategoryID,
+                IsActive = true,
+            }).ToListAsync();
+        }
+        foreach (var item in data)
+        {
+            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
+            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
+            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
+            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).ToList();
+        }
+        var pagedResult = new PagedList<ProductVm>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<ProductVm>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+
     public async Task<Respond<PagedList<Product>>> GetAll1(Search request)
     {
         var query =await _context.Products
@@ -247,11 +325,24 @@ public class ProductManager : IProductRepository, IDisposable
         product.CreateDate = DateTime.Now;
         product.UpdateDate = DateTime.Now;
 
+        if (request.File != null)
+        {
+            try
+            {
+                var nameFile = await SaveFileIFormFile(request.File);
+                product.LinkImage = Upload + "/" + nameFile;
+            }
+            catch (Exception e)
+            {
+                throw new CustomException("Save File Create Error: "+e.Message);
+            }
+            
+        }
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
-            Message = "Taọ sản phẩm thành công",
+            Message = "Tạo sản phẩm thành công",
             Result = 1,
         };
     }
@@ -265,6 +356,16 @@ public class ProductManager : IProductRepository, IDisposable
                 Message = "Sản phẩm không tồn tại",
                 Result = -1,
             };
+        if(product.LinkImage != null)
+        {
+            try
+            {
+                await _storageService.DeleteFileAsync(product.LinkImage);
+            }
+           catch {
+                throw new CustomException("Failed delete file");
+            }
+        }
         var productImages = await _context.ProductImages.Where(x => x.ProductId == productId).ToListAsync();
         foreach (var item in productImages)
         {
@@ -280,7 +381,7 @@ public class ProductManager : IProductRepository, IDisposable
         };
     }
 
-    public async Task<MessageResult> Update(string productID, ProductVm request)
+    public async Task<MessageResult> Update(string productID, ProductRequest request)
     {
         var product = await _context.Products.FindAsync(productID);
         if (product == null)
@@ -295,6 +396,22 @@ public class ProductManager : IProductRepository, IDisposable
         product.UpdateDate = DateTime.Now;
         product.ProductType = request.ProductType;
         product.Description = request.Description;
+        if(request.File != null)
+        {
+            try
+            {
+                if (product.LinkImage != null)
+                {
+                    await _storageService.DeleteFileAsync(product.LinkImage);
+                }
+                var nameFile = await SaveFileIFormFile(request.File);
+                product.LinkImage = Upload + "/" + nameFile;
+            }
+            catch (Exception e)
+            {
+                throw new CustomException("Save File Create Error: " + e.Message);
+            }
+        }
         _context.Products.Update(product);
         await _context.SaveChangesAsync();
         return new MessageResult()

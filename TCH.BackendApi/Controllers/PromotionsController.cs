@@ -82,7 +82,6 @@ public class PromotionsController : ControllerBase
     }
     [HttpPost]
     [Consumes("multipart/form-data")]
-    [Authorize]
     [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Create([FromForm] PromotionRequest request)
     {

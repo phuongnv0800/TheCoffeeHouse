@@ -1766,18 +1766,14 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Cà phê sữa đá pack 6 lon",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 69000,
                 IsAvailable = true,
-
-
                 Price = 69000,
                 Description = "",
-
                 LinkImage = "/products/p6-lon-3in1.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
@@ -1785,18 +1781,14 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Thùng 24 Lon Cà Phê Sữa Đá",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 269000,
                 IsAvailable = true,
-
-
                 Price = 269000,
                 Description = "",
-
                 LinkImage = "/products/24-lon-cpsd.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
@@ -1804,7 +1796,6 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Combo 3 Hộp Cà Phê Sữa Đá Hòa Tan Đậm Vị Hộp 18 gói x 16gr",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,

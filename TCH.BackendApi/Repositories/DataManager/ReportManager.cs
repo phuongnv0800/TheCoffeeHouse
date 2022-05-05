@@ -8,6 +8,7 @@ using TCH.Utilities.Enum;
 using TCH.Utilities.Paginations;
 using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;
+using TCH.ViewModel.SubModels;
 
 namespace TCH.BackendApi.Repositories.DataManager;
 
@@ -25,7 +26,7 @@ public class ReportManager : IReportRepository
         _httpContextAccessor = httpContextAccessor;
         _userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
     }
-    public async Task<MessageResult> CreateExportReport(Report request)
+    public async Task<MessageResult> CreateExportReport(ExportRequest request)
     {
         var export = new Report()
         {
@@ -47,9 +48,22 @@ public class ReportManager : IReportRepository
             BranchID = request.BranchID,
             UserCreateID = _userId,
         };
-        _context.Reports.Add(export);
+        await _context.Reports.AddAsync(export);
+        var stockDetails = await _context.StockMaterials.Where(x => x.BranchID == request.BranchID).ToListAsync();
         foreach (var item in request.ReportDetails)
         {
+            foreach (var stock in stockDetails)
+            {
+                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
+                {
+                    stock.Quantity -= item.Quantity;
+                    if(stock.Quantity < 0)
+                    {
+                        stock.Quantity = 0;
+                    }
+                    break;
+                }
+            }
             var exportMaterial = new ReportDetail()
             {
                 ReportID = export.ID,
@@ -61,7 +75,7 @@ public class ReportManager : IReportRepository
                 Unit = item.Unit,
                 Status = item.Status,
             };
-            _context.ReportDetails.Add(exportMaterial);
+            await _context.ReportDetails.AddAsync(exportMaterial);
         }
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -71,7 +85,7 @@ public class ReportManager : IReportRepository
         };
     }
 
-    public async Task<MessageResult> CreateImportReport(Report request)
+    public async Task<MessageResult> CreateImportReport(ImportRequest request)
     {
         var report = new Report()
         {
@@ -94,8 +108,36 @@ public class ReportManager : IReportRepository
             UserCreateID = _userId,
         };
         _context.Reports.Add(report);
+        var stockDetails = await _context.StockMaterials.Where(x=>x.BranchID == request.BranchID).ToListAsync();
+
         foreach (var item in request.ReportDetails)
         {
+            bool isAddStock = true;
+            foreach (var stock in stockDetails)
+            {
+                if(item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
+                {
+                    isAddStock = false;
+                    stock.Quantity += item.Quantity;
+                    break;
+                }
+            }
+            if (isAddStock)
+            {
+                var stockMaterial = new StockMaterial()
+                {
+                    BranchID = request.BranchID,
+                    MaterialID = item.MaterialID,
+                    BeginDate = item.BeginDate,
+                    ExpirationDate = item.ExpirationDate,
+                    PriceOfUnit = item.PriceOfUnit,
+                    Quantity = item.Quantity,
+                    Unit = item.Unit,
+                    Status = item.Status,
+                    StandardUnit = item.Unit,
+                };
+                _context.StockMaterials.Add(stockMaterial);
+            }
             var exportMaterial = new ReportDetail()
             {
                 ReportID = report.ID,
@@ -117,7 +159,7 @@ public class ReportManager : IReportRepository
         };
     }
 
-    public async Task<MessageResult> CreateLiquidationReport(Report request)
+    public async Task<MessageResult> CreateLiquidationReport(ImportRequest request)
     {
         var report = new Report()
         {
@@ -140,8 +182,22 @@ public class ReportManager : IReportRepository
             UserCreateID = _userId,
         };
         _context.Reports.Add(report);
+
+        var stockDetails = await _context.StockMaterials.Where(x => x.BranchID == request.BranchID).ToListAsync();
         foreach (var item in request.ReportDetails)
         {
+            foreach (var stock in stockDetails)
+            {
+                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
+                {
+                    stock.Quantity -= item.Quantity;
+                    if (stock.Quantity < 0)
+                    {
+                        stock.Quantity = 0;
+                    }
+                    break;
+                }
+            }
             var exportMaterial = new ReportDetail()
             {
                 ReportID = report.ID,
@@ -231,10 +287,13 @@ public class ReportManager : IReportRepository
 
     public async Task<Respond<PagedList<Report>>> GetAllExportReport(Search request)
     {
-        var query =await _context.Reports
+        var query = await _context.Reports
             .Include(x=>x.ReportDetails)
-            .Where(x=>request.Name.Contains(x.Code) && x.ReportType == ReportType.Export)
             .ToListAsync();
+        if(request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Export).ToList();
+        }
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -261,10 +320,13 @@ public class ReportManager : IReportRepository
 
     public async Task<Respond<PagedList<Report>>> GetAllImportReport(Search request)
     {
-        var query =await _context.Reports
-            .Include(x=>x.ReportDetails)
-            .Where(x=>request.Name.Contains(x.Code) && x.ReportType == ReportType.Import)
+        var query = await _context.Reports
+            .Include(x => x.ReportDetails)
             .ToListAsync();
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Import).ToList();
+        }
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -291,10 +353,13 @@ public class ReportManager : IReportRepository
 
     public async Task<Respond<PagedList<Report>>> GetAllLiquidationReport(Search request)
     {
-        var query =await _context.Reports
-            .Include(x=>x.ReportDetails)
-            .Where(x=>request.Name.Contains(x.Code) && x.ReportType == ReportType.Liquidation)
-            .ToListAsync();
+        var query = await _context.Reports
+             .Include(x => x.ReportDetails)
+             .ToListAsync();
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Liquidation).ToList();
+        }
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -378,7 +443,7 @@ public class ReportManager : IReportRepository
         throw new NotImplementedException();
     }
 
-    public Task<MessageResult> UpdateImportReport(string id, Report request)
+    public Task<MessageResult> UpdateImportReport(string id, ImportRequest request)
     {
         throw new NotImplementedException();
     }

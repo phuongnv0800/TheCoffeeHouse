@@ -11,7 +11,6 @@ using TCH.Data.Entities;
 using TCH.BackendApi.Repositories.DataManager;
 using TCH.BackendApi.Repositories.DataRepository;
 using TCH.BackendApi.AutoMapper;
-using TCH.BackendApi.Repositories.DataRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config = builder.Configuration;
@@ -144,7 +143,7 @@ app.UseStaticFiles(new StaticFileOptions
            Path.Combine(builder.Environment.ContentRootPath, "Uploads")),
     RequestPath = "/Uploads"
 });
-app.UseStaticFiles();
+//app.UseStaticFiles();
 app.UseCors("CorsPolicy");
 app.UseRouting();
 
