@@ -22,6 +22,7 @@ public class ProductsController : ControllerBase
         this._logger = logger;
     }
     [HttpGet("branch/{branchID}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllByBranchID(string branchID, [FromQuery] Search request)
     {
         try
@@ -39,13 +40,13 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [HttpGet]
+    [HttpGet("category/{categoryID}")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetAll([FromQuery] Search request)
+    public async Task<IActionResult> GetAll(string categoryID, [FromQuery] Search request)
     {
         try
         {
-            var products = await _productRepository.GetAll(request);
+            var products = await _productRepository.GetProductByCategoryID(categoryID: categoryID,request: request);
             return Ok(products);
         }
         catch (CustomException e)

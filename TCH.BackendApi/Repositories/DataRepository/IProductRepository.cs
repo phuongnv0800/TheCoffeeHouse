@@ -12,6 +12,8 @@ public interface IProductRepository
 
     Task<Respond<PagedList<ProductVm>>> GetAll(Search request);
 
+    Task<Respond<PagedList<ProductVm>>> GetProductByCategoryID(string categoryID, Search request);
+
     Task<MessageResult> Create(ProductRequest request);
 
     Task<MessageResult> Delete(string productId);
