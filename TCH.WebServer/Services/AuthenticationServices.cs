@@ -25,7 +25,7 @@ namespace TCH.WebServer.Services
         {
             try
             {
-                string host = "http://a5e2-125-212-156-93.ngrok.io/api/Users/authenticate";
+                string host = "https://localhost:8001/api/Users/authenticate";
                 var client = clientFactory.CreateClient();
                 var request = new HttpRequestMessage(HttpMethod.Post, host);
                 var httpContent = new StringContent(JsonConvert.SerializeObject(requestLogin), Encoding.UTF8, "application/json");

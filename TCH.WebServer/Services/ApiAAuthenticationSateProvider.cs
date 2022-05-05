@@ -51,11 +51,14 @@ namespace TCH.WebServer.Services
 
         public IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
         {
+            GbParameter.GbParameter.Token = jwt;
             var claims = new List<Claim>();
             var payload = jwt.Split('.')[1];
             var jsonBytes = ParseBase64WithoutPadding(payload);
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
 
+            keyValuePairs.TryGetValue(ClaimTypes.NameIdentifier, out object id);
+            GbParameter.GbParameter.UserId = id.ToString();
             keyValuePairs.TryGetValue(ClaimTypes.Role, out object roles);
 
             if (roles != null)

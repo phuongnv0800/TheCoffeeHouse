@@ -1,712 +1,182 @@
 ﻿@page "/add-product"
+@using TCH.WebServer.Models
+@using TCH.WebServer.Services.Categories
+@using TCH.WebServer.Services.Products
+@inject IProductService _productService
+@inject ICategoryService _categoryService
 
-<TCH.WebServer.Shared.Header.Header></TCH.WebServer.Shared.Header.Header>
-<div class="content d-flex flex-column flex-column-fluid " id="kt_content">
-						
-						<!--begin::Post-->
-						<div class="post d-flex flex-column-fluid" id="kt_post">
-							<!--begin::Container-->
-							<div id="kt_content_container" class="container-xxl pt-2">
-								<!--begin::Form-->
-								<form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework" data-kt-redirect="../../demo1/dist/apps/ecommerce/catalog/products.html">
-									<!--begin::Aside column-->
-									<div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
-										<!--begin::Thumbnail settings-->
-										<div class="card card-flush py-4">
-											<!--begin::Card header-->
-											<div class="card-header">
-												<!--begin::Card title-->
-												<div class="card-title">
-													<h2>Ảnh đại diện</h2>
-												</div>
-												<!--end::Card title-->
-											</div>
-											<!--end::Card header-->
-											<!--begin::Card body-->
-											<div class="card-body text-center pt-0">
-												<!--begin::Image input-->
-												<div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true" style="background-image: url(assets/media/svg/files/blank-image.svg)">
-													<!--begin::Preview existing avatar-->
-													<div class="image-input-wrapper w-150px h-150px"></div>
-													<!--end::Preview existing avatar-->
-													<!--begin::Label-->
-													<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="" data-bs-original-title="Change avatar">
-														<i class="bi bi-pencil-fill fs-7"></i>
-														<!--begin::Inputs-->
-														<input type="file" name="avatar" accept=".png, .jpg, .jpeg">
-														<input type="hidden" name="avatar_remove">
-														<!--end::Inputs-->
-													</label>
-													<!--end::Label-->
-													<!--begin::Cancel-->
-													<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="" data-bs-original-title="Cancel avatar">
-														<i class="bi bi-x fs-2"></i>
-													</span>
-													<!--end::Cancel-->
-													<!--begin::Remove-->
-													<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="" data-bs-original-title="Remove avatar">
-														<i class="bi bi-x fs-2"></i>
-													</span>
-													<!--end::Remove-->
-												</div>
-												<!--end::Image input-->
-												<!--begin::Description-->
-												<div class="text-muted fs-7">Cài đặt ảnh đại diện. Chỉ chấp nhận file *.png, *.jpg and *.jpeg </div>
-												<!--end::Description-->
-											</div>
-											<!--end::Card body-->
-										</div>
-										<!--end::Thumbnail settings-->
-										<!--begin::Status-->
-										<div class="card card-flush py-4">
-											<!--begin::Card header-->
-											<div class="card-header">
-												<!--begin::Card title-->
-												<div class="card-title">
-													<h2>Trạng thái</h2>
-												</div>
-												<!--end::Card title-->
-												<!--begin::Card toolbar-->
-												<div class="card-toolbar">
-													<div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_product_status"></div>
-												</div>
-												<!--begin::Card toolbar-->
-											</div>
-											<!--end::Card header-->
-											<!--begin::Card body-->
-											<div class="card-body pt-0">
-												<!--begin::Select2-->
-												<select class="form-select mb-2 select2-hidden-accessible" data-control="select2" data-hide-search="true" data-placeholder="Select an option" id="kt_ecommerce_add_product_status_select" data-select2-id="select2-data-kt_ecommerce_add_product_status_select" tabindex="-1" aria-hidden="true">
-													<option></option>
-													<option value="published" selected="selected" data-select2-id="select2-data-11-m2gk">Published</option>
-													<option value="draft">Draft</option>
-													<option value="scheduled">Scheduled</option>
-													<option value="inactive">Inactive</option>
-												</select>
-												<!--end::Select2-->
-												<!--begin::Description-->
-												<div class="text-muted fs-7">Cài đặt trạng thái sản phẩm</div>
-												<!--end::Description-->
-												<!--begin::Datepicker-->
-												<div class="d-none mt-10">
-													<label for="kt_ecommerce_add_product_status_datepicker" class="form-label">Select publishing date and time</label>
-													<input class="form-control flatpickr-input" id="kt_ecommerce_add_product_status_datepicker" placeholder="Pick date &amp; time" type="text" readonly="readonly">
-												</div>
-												<!--end::Datepicker-->
-											</div>
-											<!--end::Card body-->
-										</div>
-										<!--end::Status-->
-										<!--begin::Category & tags-->
-										<div class="card card-flush py-4">
-											<!--begin::Card header-->
-											<div class="card-header">
-												<!--begin::Card title-->
-												<div class="card-title">
-													<h2>Chi tiết sản phẩm</h2>
-												</div>
-												<!--end::Card title-->
-											</div>
-											<!--end::Card header-->
-											<!--begin::Card body-->
-											<div class="card-body pt-0">
-												<!--begin::Input group-->
-												<!--begin::Label-->
-												<label class="form-label">Categories</label>
-												<!--end::Label-->
-												<!--begin::Select2-->
-												<select class="form-select mb-2 select2-hidden-accessible" data-control="select2" data-placeholder="Chọn..." data-allow-clear="true" multiple="" data-select2-id="select2-data-12-7ln0" tabindex="-1" aria-hidden="true">
-													<option></option>
-													<option value="Computers">Computers</option>
-													<option value="Watches">Watches</option>
-													<option value="Headphones">Headphones</option>
-													<option value="Footwear">Footwear</option>
-													<option value="Cameras">Cameras</option>
-													<option value="Shirts">Shirts</option>
-													<option value="Household">Household</option>
-													<option value="Handbags">Handbags</option>
-													<option value="Wines">Wines</option>
-													<option value="Sandals">Sandals</option>
-												</select>
-												<!--end::Select2-->
-												<!--begin::Description-->
-												<div class="text-muted fs-7 mb-7">Add product to a category.</div>
-												<!--end::Description-->
-												<!--end::Input group-->
-												<!--begin::Button-->
-												<a href="../../demo1/dist/apps/ecommerce/catalog/add-category.html" class="btn btn-light-primary btn-sm mb-10">
-												<!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
-												<span class="svg-icon svg-icon-2">
-													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-														<rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
-														<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
-													</svg>
-												</span>
-												<!--end::Svg Icon-->Tạo loại sản phẩm mới</a>
-												<!--end::Button-->
-												<!--begin::Input group-->
-												<!--begin::Label-->
-												<label class="form-label d-block">Tags</label>
-												<!--end::Label-->
-												<!--begin::Input-->
-												<tags class="tagify form-control mb-2 tagify--noTags tagify--empty" tabindex="-1">
-            <span contenteditable="" tabindex="0" data-placeholder="​" aria-placeholder="" class="tagify__input" role="textbox" aria-autocomplete="both" aria-multiline="false"></span>
-                ​
-        </tags><input id="kt_ecommerce_add_product_tags" name="kt_ecommerce_add_product_tags" class="form-control mb-2" value="">
-												<!--end::Input-->
-												<!--begin::Description-->
-												<div class="text-muted fs-7">Thêm Tags cho sản phẩm</div>
-												<!--end::Description-->
-												<!--end::Input group-->
-											</div>
-											<!--end::Card body-->
-										</div>
-										<!--end::Category & tags-->
-										
-									</div>
-									<!--end::Aside column-->
-									<!--begin::Main column-->
-									<div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
-										
-										<!--begin::Tab content-->
-										<div class="tab-content">
-											<!--begin::Tab pane-->
-											<div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
-												<div class="d-flex flex-column gap-7 gap-lg-10">
-													<!--begin::General options-->
-													<div class="card card-flush py-4">
-														<!--begin::Card header-->
-														<div class="card-header">
-															<div class="card-title">
-																<h2>General</h2>
-															</div>
-														</div>
-														<!--end::Card header-->
-														<!--begin::Card body-->
-														<div class="card-body pt-0">
-															<!--begin::Input group-->
-															<div class="mb-10 fv-row fv-plugins-icon-container">
-																<!--begin::Label-->
-																<label class="required form-label">Tên sản phẩm</label>
-																<!--end::Label-->
-																<!--begin::Input-->
-																<input type="text" name="product_name" class="form-control mb-2" placeholder="Tên sản phẩm" value="">
-																<!--end::Input-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Tên sản phẩm phải là duy nhất</div>
-																<!--end::Description-->
-															<div class="fv-plugins-message-container invalid-feedback"></div></div>
-															<!--end::Input group-->
-															<!--begin::Input group-->
-															<div>
-																<!--begin::Label-->
-																<label class="form-label">Mô tả</label>
-																<!--end::Label-->
-																<!--begin::Editor-->
-																<input type="text" name="category_name" class="form-control mb-2" placeholder="Tên loại sản phẩm" value="">
-																<!--end::Editor-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">*Phần thông tin mô tả chi tiết về sản phẩm*</div>
-																<!--end::Description-->
-															</div>
-															<!--end::Input group-->
-														</div>
-														<!--end::Card header-->
-													</div>
-													<!--end::General options-->
-													@*<!--begin::Media-->
-													<div class="card card-flush py-4">
-														<!--begin::Card header-->
-														<div class="card-header">
-															<div class="card-title">
-																<h2>Media</h2>
-															</div>
-														</div>
-														<!--end::Card header-->
-														<!--begin::Card body-->
-														<div class="card-body pt-0">
-															<!--begin::Input group-->
-															<div class="fv-row mb-2">
-																<!--begin::Dropzone-->
-																<div class="dropzone dz-clickable" id="kt_ecommerce_add_product_media">
-																	<!--begin::Message-->
-																	<div class="dz-message needsclick">
-																		<!--begin::Icon-->
-																		<i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
-																		<!--end::Icon-->
-																		<!--begin::Info-->
-																		<div class="ms-4">
-																			<h3 class="fs-5 fw-bolder text-gray-900 mb-1">Drop files here or click to upload.</h3>
-																			<span class="fs-7 fw-bold text-gray-400">Upload up to 10 files</span>
-																		</div>
-																		<!--end::Info-->
-																	</div>
-																</div>
-																<!--end::Dropzone-->
-															</div>
-															<!--end::Input group-->
-															<!--begin::Description-->
-															<div class="text-muted fs-7">Set the product media gallery.</div>
-															<!--end::Description-->
-														</div>
-														<!--end::Card header-->
-													</div>
-													<!--end::Media-->*@
-													<!--begin::Pricing-->
-													<div class="card card-flush py-4">
-														<!--begin::Card header-->
-														<div class="card-header">
-															<div class="card-title">
-																<h2>Pricing</h2>
-															</div>
-														</div>
-														<!--end::Card header-->
-														<!--begin::Card body-->
-														<div class="card-body pt-0">
-															<!--begin::Input group-->
-															<div class="mb-10 fv-row fv-plugins-icon-container">
-																<!--begin::Label-->
-																<label class="required form-label">Base Price</label>
-																<!--end::Label-->
-																<!--begin::Input-->
-																<input type="text" name="price" class="form-control mb-2" placeholder="Product price" value="">
-																<!--end::Input-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Set the product price.</div>
-																<!--end::Description-->
-															<div class="fv-plugins-message-container invalid-feedback"></div></div>
-															<!--end::Input group-->
-															<!--begin::Input group-->
-															<div class="fv-row mb-10">
-																<!--begin::Label-->
-																<label class="fs-6 fw-bold mb-2">Discount Type
-																<i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="Select a discount type that will be applied to this product" aria-label="Select a discount type that will be applied to this product"></i></label>
-																<!--End::Label-->
-																<!--begin::Row-->
-																<div class="row row-cols-1 row-cols-md-3 row-cols-lg-1 row-cols-xl-3 g-9" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button='true']">
-																	<!--begin::Col-->
-																	<div class="col">
-																		<!--begin::Option-->
-																		<label class="btn btn-outline btn-outline-dashed btn-outline-default active d-flex text-start p-6" data-kt-button="true">
-																			<!--begin::Radio-->
-																			<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-																				<input class="form-check-input" type="radio" name="discount_option" value="1" checked="checked">
-																			</span>
-																			<!--end::Radio-->
-																			<!--begin::Info-->
-																			<span class="ms-5">
-																				<span class="fs-4 fw-bolder text-gray-800 d-block">No Discount</span>
-																			</span>
-																			<!--end::Info-->
-																		</label>
-																		<!--end::Option-->
-																	</div>
-																	<!--end::Col-->
-																	<!--begin::Col-->
-																	<div class="col">
-																		<!--begin::Option-->
-																		<label class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6" data-kt-button="true">
-																			<!--begin::Radio-->
-																			<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-																				<input class="form-check-input" type="radio" name="discount_option" value="2">
-																			</span>
-																			<!--end::Radio-->
-																			<!--begin::Info-->
-																			<span class="ms-5">
-																				<span class="fs-4 fw-bolder text-gray-800 d-block">Percentage %</span>
-																			</span>
-																			<!--end::Info-->
-																		</label>
-																		<!--end::Option-->
-																	</div>
-																	<!--end::Col-->
-																	<!--begin::Col-->
-																	<div class="col">
-																		<!--begin::Option-->
-																		<label class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6" data-kt-button="true">
-																			<!--begin::Radio-->
-																			<span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-																				<input class="form-check-input" type="radio" name="discount_option" value="3">
-																			</span>
-																			<!--end::Radio-->
-																			<!--begin::Info-->
-																			<span class="ms-5">
-																				<span class="fs-4 fw-bolder text-gray-800 d-block">Fixed Price</span>
-																			</span>
-																			<!--end::Info-->
-																		</label>
-																		<!--end::Option-->
-																	</div>
-																	<!--end::Col-->
-																</div>
-																<!--end::Row-->
-															</div>
-															<!--end::Input group-->
-															<!--begin::Input group-->
-															<div class="d-none mb-10 fv-row" id="kt_ecommerce_add_product_discount_percentage">
-																<!--begin::Label-->
-																<label class="form-label">Set Discount Percentage</label>
-																<!--end::Label-->
-																<!--begin::Slider-->
-																<div class="d-flex flex-column text-center mb-5">
-																	<div class="d-flex align-items-start justify-content-center mb-7">
-																		<span class="fw-bolder fs-3x" id="kt_ecommerce_add_product_discount_label">10</span>
-																		<span class="fw-bolder fs-4 mt-1 ms-2">%</span>
-																	</div>
-																	<div id="kt_ecommerce_add_product_discount_slider" class="noUi-sm noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr"><div class="noUi-base"><div class="noUi-connects"></div><div class="noUi-origin" style="transform: translate(-90.9091%, 0px); z-index: 4;"><div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="1.0" aria-valuemax="100.0" aria-valuenow="10.0" aria-valuetext="10.00"><div class="noUi-touch-area"></div></div></div></div></div>
-																</div>
-																<!--end::Slider-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Set a percentage discount to be applied on this product.</div>
-																<!--end::Description-->
-															</div>
-															<!--end::Input group-->
-															<!--begin::Input group-->
-															<div class="d-none mb-10 fv-row" id="kt_ecommerce_add_product_discount_fixed">
-																<!--begin::Label-->
-																<label class="form-label">Fixed Discounted Price</label>
-																<!--end::Label-->
-																<!--begin::Input-->
-																<input type="text" name="dicsounted_price" class="form-control mb-2" placeholder="Discounted price">
-																<!--end::Input-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Set the discounted product price. The product will be reduced at the determined fixed price</div>
-																<!--end::Description-->
-															</div>
-															<!--end::Input group-->
-															<!--begin::Tax-->
-															<div class="d-flex flex-wrap gap-5">
-																<!--begin::Input group-->
-																<div class="fv-row w-100 flex-md-root fv-plugins-icon-container">
-																	<!--begin::Label-->
-																	<label class="required form-label">Tax Class</label>
-																	<!--end::Label-->
-																	<!--begin::Select2-->
-																	<select class="form-select mb-2 select2-hidden-accessible" name="tax" data-control="select2" data-hide-search="true" data-placeholder="Select an option" data-select2-id="select2-data-16-5s9f" tabindex="-1" aria-hidden="true">
-																		<option data-select2-id="select2-data-18-tt06"></option>
-																		<option value="0">Tax Free</option>
-																		<option value="1">Taxable Goods</option>
-																		<option value="2">Downloadable Product</option>
-																	</select><span class="select2 select2-container select2-container--bootstrap5" dir="ltr" data-select2-id="select2-data-17-iib1" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single form-select mb-2" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-tax-eo-container" aria-controls="select2-tax-eo-container"><span class="select2-selection__rendered" id="select2-tax-eo-container" role="textbox" aria-readonly="true" title="Select an option"><span class="select2-selection__placeholder">Select an option</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-																	<!--end::Select2-->
-																	<!--begin::Description-->
-																	<div class="text-muted fs-7">Set the product tax class.</div>
-																	<!--end::Description-->
-																<div class="fv-plugins-message-container invalid-feedback"></div></div>
-																<!--end::Input group-->
-																<!--begin::Input group-->
-																<div class="fv-row w-100 flex-md-root">
-																	<!--begin::Label-->
-																	<label class="form-label">VAT Amount (%)</label>
-																	<!--end::Label-->
-																	<!--begin::Input-->
-																	<input type="text" class="form-control mb-2" value="">
-																	<!--end::Input-->
-																	<!--begin::Description-->
-																	<div class="text-muted fs-7">Set the product VAT about.</div>
-																	<!--end::Description-->
-																</div>
-																<!--end::Input group-->
-															</div>
-															<!--end:Tax-->
-														</div>
-														<!--end::Card header-->
-													</div>
-													<!--end::Pricing-->
-												</div>
-											</div>
-											<!--end::Tab pane-->
-											<!--begin::Tab pane-->
-											<div class="tab-pane fade" id="kt_ecommerce_add_product_advanced" role="tab-panel">
-												<div class="d-flex flex-column gap-7 gap-lg-10">
-													<!--begin::Inventory-->
-													<div class="card card-flush py-4">
-														<!--begin::Card header-->
-														<div class="card-header">
-															<div class="card-title">
-																<h2>Inventory</h2>
-															</div>
-														</div>
-														<!--end::Card header-->
-														<!--begin::Card body-->
-														<div class="card-body pt-0">
-															<!--begin::Input group-->
-															<div class="mb-10 fv-row fv-plugins-icon-container">
-																<!--begin::Label-->
-																<label class="required form-label">SKU</label>
-																<!--end::Label-->
-																<!--begin::Input-->
-																<input type="text" name="sku" class="form-control mb-2" placeholder="SKU Number" value="">
-																<!--end::Input-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Enter the product SKU.</div>
-																<!--end::Description-->
-															<div class="fv-plugins-message-container invalid-feedback"></div></div>
-															<!--end::Input group-->
-															<!--begin::Input group-->
-															<div class="mb-10 fv-row fv-plugins-icon-container">
-																<!--begin::Label-->
-																<label class="required form-label">Barcode</label>
-																<!--end::Label-->
-																<!--begin::Input-->
-																<input type="text" name="sku" class="form-control mb-2" placeholder="Barcode Number" value="">
-																<!--end::Input-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Enter the product barcode number.</div>
-																<!--end::Description-->
-															<div class="fv-plugins-message-container invalid-feedback"></div></div>
-															<!--end::Input group-->
-															<!--begin::Input group-->
-															<div class="mb-10 fv-row fv-plugins-icon-container">
-																<!--begin::Label-->
-																<label class="required form-label">Quantity</label>
-																<!--end::Label-->
-																<!--begin::Input-->
-																<div class="d-flex gap-3">
-																	<input type="number" name="shelf" class="form-control mb-2" placeholder="On shelf" value="">
-																	<input type="number" name="warehouse" class="form-control mb-2" placeholder="In warehouse">
-																</div>
-																<!--end::Input-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Enter the product quantity.</div>
-																<!--end::Description-->
-															<div class="fv-plugins-message-container invalid-feedback"></div></div>
-															<!--end::Input group-->
-															<!--begin::Input group-->
-															<div class="fv-row">
-																<!--begin::Label-->
-																<label class="form-label">Allow Backorders</label>
-																<!--end::Label-->
-																<!--begin::Input-->
-																<div class="form-check form-check-custom form-check-solid mb-2">
-																	<input class="form-check-input" type="checkbox" value="">
-																	<label class="form-check-label">Yes</label>
-																</div>
-																<!--end::Input-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Allow customers to purchase products that are out of stock.</div>
-																<!--end::Description-->
-															</div>
-															<!--end::Input group-->
-														</div>
-														<!--end::Card header-->
-													</div>
-													<!--end::Inventory-->
-													<!--begin::Variations-->
-													<div class="card card-flush py-4">
-														<!--begin::Card header-->
-														<div class="card-header">
-															<div class="card-title">
-																<h2>Variations</h2>
-															</div>
-														</div>
-														<!--end::Card header-->
-														<!--begin::Card body-->
-														<div class="card-body pt-0">
-															<!--begin::Input group-->
-															<div class="" data-kt-ecommerce-catalog-add-product="auto-options">
-																<!--begin::Label-->
-																<label class="form-label">Add Product Variations</label>
-																<!--end::Label-->
-																<!--begin::Repeater-->
-																<div id="kt_ecommerce_add_product_options">
-																	<!--begin::Form group-->
-																	<div class="form-group">
-																		<div data-repeater-list="kt_ecommerce_add_product_options" class="d-flex flex-column gap-3">
-																			<div data-repeater-item="" class="form-group d-flex flex-wrap gap-5">
-																				<!--begin::Select2-->
-																				<div class="w-100 w-md-200px">
-																					<select class="form-select select2-hidden-accessible" name="kt_ecommerce_add_product_options[0][product_option]" data-placeholder="Select a variation" data-kt-ecommerce-catalog-add-product="product_option" data-select2-id="select2-data-127-k8ch" tabindex="-1" aria-hidden="true">
-																						<option data-select2-id="select2-data-129-kcac"></option>
-																						<option value="color">Color</option>
-																						<option value="size">Size</option>
-																						<option value="material">Material</option>
-																						<option value="style">Style</option>
-																					</select><span class="select2 select2-container select2-container--bootstrap5" dir="ltr" data-select2-id="select2-data-128-r46i" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single form-select" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-kt_ecommerce_add_product_options0product_option-g3-container" aria-controls="select2-kt_ecommerce_add_product_options0product_option-g3-container"><span class="select2-selection__rendered" id="select2-kt_ecommerce_add_product_options0product_option-g3-container" role="textbox" aria-readonly="true" title="Select a variation"><span class="select2-selection__placeholder">Select a variation</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-																				</div>
-																				<!--end::Select2-->
-																				<!--begin::Input-->
-																				<input type="text" class="form-control mw-100 w-200px" name="kt_ecommerce_add_product_options[0][product_option_value]" placeholder="Variation">
-																				<!--end::Input-->
-																				<button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
-																					<!--begin::Svg Icon | path: icons/duotune/arrows/arr088.svg-->
-																					<span class="svg-icon svg-icon-2">
-																						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																							<rect opacity="0.5" x="7.05025" y="15.5356" width="12" height="2" rx="1" transform="rotate(-45 7.05025 15.5356)" fill="black"></rect>
-																							<rect x="8.46447" y="7.05029" width="12" height="2" rx="1" transform="rotate(45 8.46447 7.05029)" fill="black"></rect>
-																						</svg>
-																					</span>
-																					<!--end::Svg Icon-->
-																				</button>
-																			</div>
-																		</div>
-																	</div>
-																	<!--end::Form group-->
-																	<!--begin::Form group-->
-																	<div class="form-group mt-5">
-																		<button type="button" data-repeater-create="" class="btn btn-sm btn-light-primary">
-																		<!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
-																		<span class="svg-icon svg-icon-2">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
-																				<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
-																			</svg>
-																		</span>
-																		<!--end::Svg Icon-->Add another variation</button>
-																	</div>
-																	<!--end::Form group-->
-																</div>
-																<!--end::Repeater-->
-															</div>
-															<!--end::Input group-->
-														</div>
-														<!--end::Card header-->
-													</div>
-													<!--end::Variations-->
-													<!--begin::Shipping-->
-													<div class="card card-flush py-4">
-														<!--begin::Card header-->
-														<div class="card-header">
-															<div class="card-title">
-																<h2>Shipping</h2>
-															</div>
-														</div>
-														<!--end::Card header-->
-														<!--begin::Card body-->
-														<div class="card-body pt-0">
-															<!--begin::Input group-->
-															<div class="fv-row">
-																<!--begin::Input-->
-																<div class="form-check form-check-custom form-check-solid mb-2">
-																	<input class="form-check-input" type="checkbox" id="kt_ecommerce_add_product_shipping_checkbox" value="1">
-																	<label class="form-check-label">This is a physical product</label>
-																</div>
-																<!--end::Input-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Set if the product is a physical or digital item. Physical products may require shipping.</div>
-																<!--end::Description-->
-															</div>
-															<!--end::Input group-->
-															<!--begin::Shipping form-->
-															<div id="kt_ecommerce_add_product_shipping" class="d-none mt-10">
-																<!--begin::Input group-->
-																<div class="mb-10 fv-row">
-																	<!--begin::Label-->
-																	<label class="form-label">Weight</label>
-																	<!--end::Label-->
-																	<!--begin::Editor-->
-																	<input type="text" name="weight" class="form-control mb-2" placeholder="Product weight" value="">
-																	<!--end::Editor-->
-																	<!--begin::Description-->
-																	<div class="text-muted fs-7">Set a product weight in kilograms (kg).</div>
-																	<!--end::Description-->
-																</div>
-																<!--end::Input group-->
-																<!--begin::Input group-->
-																<div class="fv-row">
-																	<!--begin::Label-->
-																	<label class="form-label">Dimension</label>
-																	<!--end::Label-->
-																	<!--begin::Input-->
-																	<div class="d-flex flex-wrap flex-sm-nowrap gap-3">
-																		<input type="number" name="width" class="form-control mb-2" placeholder="Width (w)" value="">
-																		<input type="number" name="height" class="form-control mb-2" placeholder="Height (h)" value="">
-																		<input type="number" name="length" class="form-control mb-2" placeholder="Lengtn (l)" value="">
-																	</div>
-																	<!--end::Input-->
-																	<!--begin::Description-->
-																	<div class="text-muted fs-7">Enter the product dimensions in centimeters (cm).</div>
-																	<!--end::Description-->
-																</div>
-																<!--end::Input group-->
-															</div>
-															<!--end::Shipping form-->
-														</div>
-														<!--end::Card header-->
-													</div>
-													<!--end::Shipping-->
-													<!--begin::Meta options-->
-													<div class="card card-flush py-4">
-														<!--begin::Card header-->
-														<div class="card-header">
-															<div class="card-title">
-																<h2>Meta Options</h2>
-															</div>
-														</div>
-														<!--end::Card header-->
-														<!--begin::Card body-->
-														<div class="card-body pt-0">
-															<!--begin::Input group-->
-															<div class="mb-10">
-																<!--begin::Label-->
-																<label class="form-label">Meta Tag Title</label>
-																<!--end::Label-->
-																<!--begin::Input-->
-																<input type="text" class="form-control mb-2" name="meta_title" placeholder="Meta tag name">
-																<!--end::Input-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Set a meta tag title. Recommended to be simple and precise keywords.</div>
-																<!--end::Description-->
-															</div>
-															<!--end::Input group-->
-															<!--begin::Input group-->
-															<div class="mb-10">
-																<!--begin::Label-->
-																<label class="form-label">Meta Tag Description</label>
-																<!--end::Label-->
-																<!--begin::Editor-->
-																<div class="ql-toolbar ql-snow"><span class="ql-formats"><span class="ql-header ql-picker"><span class="ql-picker-label" tabindex="0" role="button" aria-expanded="false" aria-controls="ql-picker-options-1"><svg viewBox="0 0 18 18"> <polygon class="ql-stroke" points="7 11 9 13 11 11 7 11"></polygon> <polygon class="ql-stroke" points="7 7 9 5 11 7 7 7"></polygon> </svg></span><span class="ql-picker-options" aria-hidden="true" tabindex="-1" id="ql-picker-options-1"><span tabindex="0" role="button" class="ql-picker-item" data-value="1"></span><span tabindex="0" role="button" class="ql-picker-item" data-value="2"></span><span tabindex="0" role="button" class="ql-picker-item ql-selected"></span></span></span><select class="ql-header" style="display: none;"><option value="1"></option><option value="2"></option><option selected="selected"></option></select></span><span class="ql-formats"><button type="button" class="ql-bold"><svg viewBox="0 0 18 18"> <path class="ql-stroke" d="M5,4H9.5A2.5,2.5,0,0,1,12,6.5v0A2.5,2.5,0,0,1,9.5,9H5A0,0,0,0,1,5,9V4A0,0,0,0,1,5,4Z"></path> <path class="ql-stroke" d="M5,9h5.5A2.5,2.5,0,0,1,13,11.5v0A2.5,2.5,0,0,1,10.5,14H5a0,0,0,0,1,0,0V9A0,0,0,0,1,5,9Z"></path> </svg></button><button type="button" class="ql-italic"><svg viewBox="0 0 18 18"> <line class="ql-stroke" x1="7" x2="13" y1="4" y2="4"></line> <line class="ql-stroke" x1="5" x2="11" y1="14" y2="14"></line> <line class="ql-stroke" x1="8" x2="10" y1="14" y2="4"></line> </svg></button><button type="button" class="ql-underline"><svg viewBox="0 0 18 18"> <path class="ql-stroke" d="M5,3V9a4.012,4.012,0,0,0,4,4H9a4.012,4.012,0,0,0,4-4V3"></path> <rect class="ql-fill" height="1" rx="0.5" ry="0.5" width="12" x="3" y="15"></rect> </svg></button></span><span class="ql-formats"><button type="button" class="ql-image"><svg viewBox="0 0 18 18"> <rect class="ql-stroke" height="10" width="12" x="3" y="4"></rect> <circle class="ql-fill" cx="6" cy="7" r="1"></circle> <polyline class="ql-even ql-fill" points="5 12 5 11 7 9 8 10 11 7 13 9 13 12 5 12"></polyline> </svg></button><button type="button" class="ql-code-block"><svg viewBox="0 0 18 18"> <polyline class="ql-even ql-stroke" points="5 7 3 9 5 11"></polyline> <polyline class="ql-even ql-stroke" points="13 7 15 9 13 11"></polyline> <line class="ql-stroke" x1="10" x2="8" y1="5" y2="13"></line> </svg></button></span></div><div id="kt_ecommerce_add_product_meta_description" name="kt_ecommerce_add_product_meta_description" class="min-h-100px mb-2 ql-container ql-snow"><div class="ql-editor ql-blank" data-gramm="false" contenteditable="true" data-placeholder="Type your text here..."><p><br></p></div><div class="ql-clipboard" contenteditable="true" tabindex="-1"></div><div class="ql-tooltip ql-hidden"><a class="ql-preview" rel="noopener noreferrer" target="_blank" href="about:blank"></a><input type="text" data-formula="e=mc^2" data-link="https://quilljs.com" data-video="Embed URL"><a class="ql-action"></a><a class="ql-remove"></a></div></div>
-																<!--end::Editor-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Set a meta tag description to the product for increased SEO ranking.</div>
-																<!--end::Description-->
-															</div>
-															<!--end::Input group-->
-															<!--begin::Input group-->
-															<div>
-																<!--begin::Label-->
-																<label class="form-label">Meta Tag Keywords</label>
-																<!--end::Label-->
-																<!--begin::Editor-->
-																<input id="kt_ecommerce_add_product_meta_keywords" name="kt_ecommerce_add_product_meta_keywords" class="form-control mb-2">
-																<!--end::Editor-->
-																<!--begin::Description-->
-																<div class="text-muted fs-7">Set a list of keywords that the product is related to. Separate the keywords by adding a comma
-																<code>,</code>between each keyword.</div>
-																<!--end::Description-->
-															</div>
-															<!--end::Input group-->
-														</div>
-														<!--end::Card header-->
-													</div>
-													<!--end::Meta options-->
-												</div>
-											</div>
-											<!--end::Tab pane-->
-										</div>
-										<!--end::Tab content-->
-										<div class="d-flex justify-content-end">
-											<!--begin::Button-->
-											<a href="../../demo1/dist/apps/ecommerce/catalog/products.html" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
-											<!--end::Button-->
-											<!--begin::Button-->
-											<button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
-												<span class="indicator-label">Save Changes</span>
-												<span class="indicator-progress">Please wait...
-												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-											</button>
-											<!--end::Button-->
-										</div>
-									</div>
-									<!--end::Main column-->
-								<div></div></form>
-								<!--end::Form-->
-							</div>
-							<!--end::Container-->
+<TCH.WebServer.Shared.Header.Header ></TCH.WebServer.Shared.Header.Header>
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="OnCancel"></div>
+    <div class="modal-dialog modal-dialog-centered mw-650px" style="z-index: 1050">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="fw-bolder">@Title</h5>
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" @onclick="OnCancel">
+                    <span class="svg-icon svg-icon-1">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+							<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+							<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+						</svg>
+					</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="scroll-y me-n7 pe-7">
+                    <EditForm Model="editProduct" OnValidSubmit="OnSubmit" class="form">
+                        <DataAnnotationsValidator />
+                        <div class="fv-row mb-7">
+							<label class="required fs-6 fw-bold mb-2">Tên sản phẩm</label>
+                            <InputText @bind-Value="editProduct.Name" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editProduct.Name)" />
+                            </div>
 						</div>
-						<!--end::Post-->
-					</div>
+
+                        <div class="fv-row mb-7">
+							<label class="fs-6 fw-bold mb-2 requied">Chọn loại sản phẩm</label>
+                            <InputSelect @bind-Value="editProduct.CategoryID" class="form-control">
+                                @if (categories != null)
+                                {
+                                    @foreach (var dept in categories)
+                                    {
+                                        <option value="@dept.ID">@dept.Name</option>
+                                    }
+                                }
+
+                            </InputSelect>
+						</div>
+
+                        <div class="fv-row mb-7">
+							<label class="required fs-6 fw-bold mb-2">đơn vị sản phẩm</label>
+                            <InputText @bind-Value="editProduct.Unit" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editProduct.Unit)" />
+                            </div>
+						</div>
+
+                        <div class="fv-row mb-7">
+							<label class="fs-6 fw-bold mb-2 requied">Mô tả</label>
+                            <InputText @bind-Value="editProduct.Description" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editProduct.Description)" />
+                            </div>
+						</div>
+
+                        <div class="fv-row mb-7">
+							<label class="fs-6 fw-bold mb-2">Giá</label>
+                            <InputNumber @bind-Value="editProduct.Price" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editProduct.Price)" />
+                            </div>
+						</div>
+
+                        <div class="fv-row mb-7">
+							<label class="fs-6 fw-bold mb-2 requied">Khuyến mãi</label>
+                            <InputSelect @bind-Value="editProduct.IsSale" class="form-control">
+                                <option value="true">Có</option>
+                                <option value="false">Không</option>
+                            </InputSelect>
+						</div>
+
+                        <div class="fv-row mb-7">
+							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
+                            <InputNumber @bind-Value="editProduct.PriceSale" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editProduct.PriceSale)" />
+                            </div>
+						</div>
+                        <div class="fv-row mb-7">
+							<label class="fs-6 fw-bold mb-2">Hình ảnh</label>
+                            <InputFile OnChange="HandleSelection"></InputFile>
+						</div>
+                        
+                        <div class="card-footer p-2">
+                            <button type="submit" class="btn btn-primary mr-2">Cập nhật</button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string? ProductId { get; set; }
 
+    private Product editProduct = null;
+    public List<Category> categories = new List<Category>();
+
+    protected override void OnInitialized()
+    {
+        editProduct = new Product();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var response = await _categoryService.GetAllCategories();
+        categories = response.Data.Items.ToList();
+        if (string.IsNullOrEmpty(ProductId))
+        {
+            editProduct = new Product();
+        }
+        else
+        {
+            var responseP = await _productService.GetProductById(ProductId);
+            var vesselDB = responseP.Data;
+            editProduct.CategoryID = vesselDB.CategoryID;
+            editProduct.Name = vesselDB.Name;
+            editProduct.Description = vesselDB.Description;
+            editProduct.Price = vesselDB.Price;
+            editProduct.PriceSale = vesselDB.PriceSale;
+            editProduct.IsSale = vesselDB.IsSale;
+            editProduct.Unit = vesselDB.Unit;
+        }
+    }
 }
+
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
+    private async Task OnCancel() => await BlazoredModal.CancelAsync();
+
+    private MultipartFormDataContent content = new MultipartFormDataContent();
+    private async Task OnSubmit()
+    {
+        ResponseLogin<Product> response = new ResponseLogin<Product>();
+        if (string.IsNullOrEmpty(ProductId))
+        {
+            response = await _productService.AddProduct(editProduct);
+        }
+        else
+        {
+            response = await _productService.UpdateProduct(editProduct);
+        }
+        if(response != null)
+        {
+            if(response.Result == 1)
+            {
+                
+            }
+        }
+    }
+    private async Task HandleSelection(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        long maxFileSize = 2048 * 512;
+        try
+        {
+            var fileContent = new StreamContent(file.OpenReadStream(maxFileSize));
+            content.Add(fileContent, "file", file.Name);
+            // _systemService.Download(content);
+            // editVessel.File = file.Name;
+        }
+        catch (Exception)
+        {
+            //Logger.LogError($"File: {file.Name} Error: {ex.Message}");
+        }
+    }
+}
+

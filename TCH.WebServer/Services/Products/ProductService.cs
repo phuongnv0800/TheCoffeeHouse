@@ -21,9 +21,29 @@ namespace TCH.WebServer.Services.Products
             _localStorage = localStorage;
         }
 
-        public Task<Product> AddProduct(Product product)
+        public async Task<ResponseLogin<Product>> AddProduct(Product product)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"/api/Products/", httpContent);
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<Product> respond = JsonConvert.DeserializeObject<ResponseLogin<Product>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public Task DeleteProduct(string id)
@@ -31,9 +51,27 @@ namespace TCH.WebServer.Services.Products
             throw new NotImplementedException();
         }
 
-        public Task<Product> GetProductById(string id)
+        public async Task<ResponseLogin<Product>> GetProductById(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var response = await _httpClient.GetAsync($"/api/Products/{id}");
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<Product> respond = JsonConvert.DeserializeObject<ResponseLogin<Product>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch {
+                throw;
+            }
         }
 
         public Task<Product> GetProductByName(string name)
@@ -41,7 +79,7 @@ namespace TCH.WebServer.Services.Products
             throw new NotImplementedException();
         }
 
-        public async Task<List<Product>> GetProducts(bool IsPaging, int pageSize, int pageNumber)
+        public async Task<ResponseLogin<PagedList<Product>>> GetProducts(bool IsPaging, int pageSize, int pageNumber)
         {
             try
             {
@@ -54,8 +92,7 @@ namespace TCH.WebServer.Services.Products
                 {
                     return null;
                 }
-                Products = response.Data.Items;
-                return Products;
+                return response;
             }
             catch (Exception ex)
             {
@@ -63,9 +100,29 @@ namespace TCH.WebServer.Services.Products
             }
         }
 
-        public Task<Product> UpdateProduct(string id)
+        public async Task<ResponseLogin<Product>> UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"/api/Products/", httpContent);
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<Product> respond = JsonConvert.DeserializeObject<ResponseLogin<Product>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

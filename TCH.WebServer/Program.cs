@@ -8,6 +8,7 @@ using TCH.WebServer.Services;
 using TCH.WebServer.Services.Products;
 using TCH.WebServer.Data;
 using TCH.WebServer.Services.Categories;
+using TCH.WebServer.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:8001") });
@@ -20,10 +21,12 @@ builder.Services.AddHttpClient();
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddBlazoredLocalStorage();
 var app = builder.Build();
