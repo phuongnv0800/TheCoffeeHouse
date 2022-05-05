@@ -14,9 +14,12 @@ public class ProductVm
     public bool IsAvailable { get; set; }
     public double Price { get; set; }
     public string? Description { get; set; }
-    public string LinkImage { get; set; }
+    public string? LinkImage { get; set; }
     public string CategoryID { get; set; }
     public bool IsActive { get; set; } = true;
-    public List<SizeVm> Sizes { get; set; }
-    public List<ToppingVm> Toppings { get; set; }
+    public List<SizeVm> Sizes { get; set; } = new List<SizeVm>();
+    public List<ToppingVm> Toppings { get; set; } = new List<ToppingVm>();
+    public ProductVm()
+    {
+    }
 }

@@ -4,6 +4,7 @@ using TCH.BackendApi.Repositories.DataRepository;
 using TCH.Utilities.Searchs;
 using TCH.Utilities.Error;
 using TCH.ViewModel.SubModels;
+using TCH.Utilities.Roles;
 
 namespace TCH.BackendApi.Controllers;
 
@@ -48,6 +49,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("create")]
+    [Authorize(Roles =Permission.Admin)]
+    [Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Manage)]
     public async Task<IActionResult> Register([FromForm] RegisterRequest request)
     {
         try
@@ -71,6 +75,10 @@ public class UsersController : ControllerBase
         }
 
     }
+
+    [Authorize(Roles = Permission.Admin)]
+    [Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Manage)]
     [HttpPost("lock/{id}")]
     public async Task<IActionResult> Lock(string id)
     {
@@ -95,6 +103,10 @@ public class UsersController : ControllerBase
         }
 
     }
+
+    [Authorize(Roles = Permission.Admin)]
+    [Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Manage)]
     //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
     [HttpGet("paging")]
     public async Task<IActionResult> GetAllPaging([FromQuery] Search request)
@@ -116,6 +128,8 @@ public class UsersController : ControllerBase
         }
     }
 
+    [Authorize(Roles = Permission.Admin)]
+    [Authorize(Roles = Permission.Branch)]
     //PUT: http://localhost/api/users/id
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(string id, [FromForm] UserUpdateRequest request)
@@ -143,6 +157,9 @@ public class UsersController : ControllerBase
         }
     }
 
+    [Authorize(Roles = Permission.Admin)]
+    [Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Manage)]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
     {
@@ -162,6 +179,10 @@ public class UsersController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+
+    [Authorize(Roles = Permission.Admin)]
+    [Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Manage)]
     [HttpGet("name/{userName}")]
     public async Task<IActionResult> GetByUserName(string userName)
     {
@@ -182,6 +203,8 @@ public class UsersController : ControllerBase
         }
     }
 
+    [Authorize(Roles = Permission.Admin)]
+    [Authorize(Roles = Permission.Branch)]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
@@ -202,6 +225,8 @@ public class UsersController : ControllerBase
         }
     }
 
+    [Authorize(Roles = Permission.Admin)]
+    [Authorize(Roles = Permission.Branch)]
     [HttpPut("assign-roles/{id}")]
     public async Task<IActionResult> RoleAssign(string id, [FromBody] RoleAssignRequest request)
     {
@@ -228,6 +253,7 @@ public class UsersController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    [AllowAnonymous]
     [HttpPut("password-change")]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePassword request)
     {

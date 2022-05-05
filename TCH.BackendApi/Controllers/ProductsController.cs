@@ -5,6 +5,7 @@ using TCH.BackendApi.Repositories.DataRepository;
 using TCH.Utilities.Error;
 using TCH.Utilities.Searchs;
 using TCH.ViewModel.SubModels;
+using TCH.Utilities.Roles;
 
 namespace TCH.BackendApi.Controllers;
 
@@ -80,7 +81,8 @@ public class ProductsController : ControllerBase
     }
 
     //https://localhost:port/product/1
-    [Authorize]
+    [Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Manage)]
     [HttpPost]
     [Consumes("multipart/form-data")]//nhận kiểu dữ liệu truyền lên là form data
     public async Task<IActionResult> Create([FromForm] ProductRequest request)
@@ -106,10 +108,9 @@ public class ProductsController : ControllerBase
         }
     }
 
-    [Authorize]
+    [Authorize(Roles = Permission.Branch)]
     [HttpPut("{productID}")]
-    public async Task<IActionResult> Update(string productID, [FromBody] ProductVm request)
-    {
+    public async Task<IActionResult> Update(string productID, [FromBody] ProductRequest request) {  
         try
         {
             if (!ModelState.IsValid)
@@ -129,7 +130,7 @@ public class ProductsController : ControllerBase
         }
     }
 
-    [Authorize]
+    [Authorize(Roles = Permission.Branch)]
     [HttpDelete("{productId}")]
     public async Task<IActionResult> Delete(string productId)
     {
@@ -150,7 +151,7 @@ public class ProductsController : ControllerBase
         }
     }
 
-    [Authorize]
+    [Authorize(Roles = Permission.Branch)]
     [HttpPut("add-product-to-category/{productID}/{categoryId}")]
     public async Task<IActionResult> CategoryAssign(string productID, string categoryId)
     {
@@ -218,7 +219,7 @@ public class ProductsController : ControllerBase
         }
     }
 
-    [Authorize]
+    [Authorize(Roles = Permission.Branch)]
     [HttpPost("{productID}/image")]
     [Consumes("multipart/form-data")]//nhận kiểu dữ liệu truyền lên là form data
     public async Task<IActionResult> CreateImage(string productID, [FromForm] ProductImageRequest request)
@@ -243,7 +244,8 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize]
+
+    [Authorize(Roles = Permission.Branch)]
     [HttpPut("{productID}/image")]
     [Consumes("multipart/form-data")]//nhận kiểu dữ liệu truyền lên là form data
     public async Task<IActionResult> UpdateImage(string productID, [FromForm] ProductImageRequest request)
@@ -268,7 +270,7 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize]
+    [Authorize(Roles = Permission.Branch)]
     [HttpDelete("image/{id}")]
     public async Task<IActionResult> DeleteImage(string id)
     {
@@ -289,6 +291,7 @@ public class ProductsController : ControllerBase
         }
     }
     [HttpGet("size")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllSize()
     {
         try
@@ -307,7 +310,7 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize]
+    [Authorize(Roles = Permission.Branch)]
     [HttpPost("size")]
     public async Task<IActionResult> CreateSize(Size request)
     {
@@ -327,7 +330,8 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize]
+
+    [Authorize(Roles = Permission.Branch)]
     [HttpPut("size/{id}")]
     public async Task<IActionResult> UpdateSize(string id, Size size)
     {
@@ -347,7 +351,8 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize]
+
+    [Authorize(Roles = Permission.Branch)]
     [HttpDelete("size/{id}")]
     public async Task<IActionResult> DeleteSize(string id)
     {
@@ -367,6 +372,8 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+
+    [AllowAnonymous]
     [HttpGet("topping")]
     public async Task<IActionResult> GetAllTopping(string id)
     {
@@ -386,7 +393,8 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize]
+
+    [Authorize(Roles = Permission.Branch)]
     [HttpPost("topping")]
     public async Task<IActionResult> CreateTopping(Topping request)
     {
@@ -406,7 +414,8 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize]
+
+    [Authorize(Roles = Permission.Branch)]
     [HttpPut("topping/{id}")]
     public async Task<IActionResult> UpdateTopping(string id, Topping size)
     {
@@ -426,7 +435,8 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize]
+
+    [Authorize(Roles = Permission.Branch)]
     [HttpDelete("topping/{id}")]
     public async Task<IActionResult> DeleteTopping(string id)
     {

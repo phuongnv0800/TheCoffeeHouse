@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TCH.BackendApi.Repositories.DataRepository;
 using TCH.Utilities.Error;
+using TCH.Utilities.Roles;
 using TCH.Utilities.Searchs;
 using TCH.ViewModel.SubModels;
 
@@ -9,7 +10,9 @@ namespace TCH.BackendApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+[Authorize(Roles = Permission.Admin)]
+[Authorize(Roles = Permission.Branch)]
+[Authorize(Roles = Permission.Manage)]
 public class MaterialsController : ControllerBase
 {
     private readonly IMaterialRepository _repository;

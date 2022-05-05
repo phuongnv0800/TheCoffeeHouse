@@ -120,6 +120,7 @@ public class ProductManager : IProductRepository, IDisposable
             Message = "Thành công",
         };
     }
+    
     public async Task<Respond<PagedList<ProductVm>>> GetAll(Search request)
     {
         var query = from c in _context.Products select c;
@@ -196,6 +197,7 @@ public class ProductManager : IProductRepository, IDisposable
             Message = "Thành công",
         };
     }
+    
     public async Task<Respond<PagedList<Product>>> GetAll1(Search request)
     {
         var query =await _context.Products
@@ -247,11 +249,24 @@ public class ProductManager : IProductRepository, IDisposable
         product.CreateDate = DateTime.Now;
         product.UpdateDate = DateTime.Now;
 
+        if (request.File != null)
+        {
+            try
+            {
+                var nameFile = await SaveFileIFormFile(request.File);
+                product.LinkImage = Upload + "/" + nameFile;
+            }
+            catch (Exception e)
+            {
+                throw new CustomException("Save File Create Error: "+e.Message);
+            }
+            
+        }
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
-            Message = "Taọ sản phẩm thành công",
+            Message = "Tạo sản phẩm thành công",
             Result = 1,
         };
     }
@@ -265,6 +280,16 @@ public class ProductManager : IProductRepository, IDisposable
                 Message = "Sản phẩm không tồn tại",
                 Result = -1,
             };
+        if(product.LinkImage != null)
+        {
+            try
+            {
+                await _storageService.DeleteFileAsync(product.LinkImage);
+            }
+           catch {
+                throw new CustomException("Failed delete file");
+            }
+        }
         var productImages = await _context.ProductImages.Where(x => x.ProductId == productId).ToListAsync();
         foreach (var item in productImages)
         {
@@ -280,7 +305,7 @@ public class ProductManager : IProductRepository, IDisposable
         };
     }
 
-    public async Task<MessageResult> Update(string productID, ProductVm request)
+    public async Task<MessageResult> Update(string productID, ProductRequest request)
     {
         var product = await _context.Products.FindAsync(productID);
         if (product == null)
@@ -295,6 +320,22 @@ public class ProductManager : IProductRepository, IDisposable
         product.UpdateDate = DateTime.Now;
         product.ProductType = request.ProductType;
         product.Description = request.Description;
+        if(request.File != null)
+        {
+            try
+            {
+                if (product.LinkImage != null)
+                {
+                    await _storageService.DeleteFileAsync(product.LinkImage);
+                }
+                var nameFile = await SaveFileIFormFile(request.File);
+                product.LinkImage = Upload + "/" + nameFile;
+            }
+            catch (Exception e)
+            {
+                throw new CustomException("Save File Create Error: " + e.Message);
+            }
+        }
         _context.Products.Update(product);
         await _context.SaveChangesAsync();
         return new MessageResult()

@@ -19,5 +19,5 @@ public class ProductRequest
     public string? LinkImage { get; set; }
     public string CategoryID { get; set; }
 
-    //public IFormFile ImagePath { get; set; }
+    public IFormFile? File { get; set; }
 }

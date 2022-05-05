@@ -9,8 +9,13 @@ public enum SortType
 public class Search : PagingParameterModel
 {
     // public string? BranchID { get; set; } 
+    public DateTime? StartDate { get; set; }
+
+    public DateTime? EndDate { get; set; }
+
     public string? Name { get; set; }
+
     public bool IsPging { get; set; } = false;
-    //public string? SortColumnName { get; set; }
+
     public SortType SortType { get; set; } = SortType.DESC;
 }

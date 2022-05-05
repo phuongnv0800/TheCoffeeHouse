@@ -4,12 +4,15 @@ using TCH.Utilities.Error;
 using TCH.Utilities.Searchs;
 using TCH.BackendApi.Repositories.DataRepository;
 using TCH.Data.Entities;
+using TCH.ViewModel.SubModels;
+using TCH.Utilities.Roles;
 
 namespace TCH.BackendApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+[Authorize(Roles = Permission.Branch)]
+[Authorize(Roles = Permission.Manage)]
 public class ReportsController : ControllerBase
 {
     private readonly IReportRepository _repository;
@@ -136,7 +139,7 @@ public class ReportsController : ControllerBase
         }
     }
     [HttpPost("import")]
-    public async Task<IActionResult> CreateImport([FromBody] Report search)
+    public async Task<IActionResult> CreateImport([FromBody] ImportRequest search)
     {
         try
         {
@@ -155,7 +158,7 @@ public class ReportsController : ControllerBase
         }
     }
     [HttpPost("export")]
-    public async Task<IActionResult> CreateExport([FromBody] Report search)
+    public async Task<IActionResult> CreateExport([FromBody] ExportRequest search)
     {
         try
         {
@@ -174,7 +177,7 @@ public class ReportsController : ControllerBase
         }
     }
     [HttpPost("liquidation")]
-    public async Task<IActionResult> CreateLiquidation([FromBody] Report search)
+    public async Task<IActionResult> CreateLiquidation([FromBody] ImportRequest search)
     {
         try
         {
