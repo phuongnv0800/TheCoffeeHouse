@@ -156,10 +156,6 @@ public class UsersController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-
-    [Authorize(Roles = Permission.Admin)]
-    [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
     {
@@ -179,10 +175,6 @@ public class UsersController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-
-    [Authorize(Roles = Permission.Admin)]
-    [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
     [HttpGet("name/{userName}")]
     public async Task<IActionResult> GetByUserName(string userName)
     {
