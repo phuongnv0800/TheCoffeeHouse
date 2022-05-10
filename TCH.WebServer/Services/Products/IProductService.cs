@@ -4,11 +4,11 @@ namespace TCH.WebServer.Services.Products
 {
     public interface IProductService
     {
-        Task<List<Product>> GetProducts(bool IsPaging, int pageSize, int pageNumber);
-        Task<Product> GetProductById(string id);
+        Task<ResponseLogin<PagedList<Product>>> GetProducts(bool IsPaging, int pageSize, int pageNumber);
+        Task<ResponseLogin<Product>> GetProductById(string id);
         Task<Product> GetProductByName(string name);
-        Task<Product> AddProduct(Product product);
-        Task<Product> UpdateProduct(string id);
+        Task<ResponseLogin<Product>> AddProduct(Product product);
+        Task<ResponseLogin<Product>> UpdateProduct(Product product);
         Task DeleteProduct(string id);
     }
 }

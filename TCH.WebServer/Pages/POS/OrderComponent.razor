@@ -253,14 +253,18 @@
 	public Product? Product = new Product();
 	public string Name;
 	private int pageSize = 10;
-	private int pageNumber = 3;
+	private int PageNumber = 1;
+	private int totalPage;
 	protected override async  Task OnParametersSetAsync()
 	{
 		await Get();
 		base.OnParametersSet();
 	}
 	public async Task Get(){
-		ProductsList = await productServices.GetProducts(true,  pageSize,  pageNumber);
+		var response = await productServices.GetProducts( true,  pageSize,  PageNumber);
+        PageNumber = response.Data.CurrentPage;
+        ProductsList = response.Data.Items.ToList();
+        totalPage = response.Data.TotalPages;
 		Product = ProductsList[0];
 	}
 }}

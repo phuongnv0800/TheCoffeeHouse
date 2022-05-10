@@ -4,11 +4,10 @@ namespace TCH.WebServer.Services.Categories
 {
     public interface ICategoryService
     {
-        Task<List<Category>> GetCategories(bool IsPaging, int pageSize, int pageNumber);
-        Task<Category> GetCategoryById(string id);
-        Task<Category> GetCategoryByName(string name);
-        Task<Category> AddCategory(Category product);
-        Task<Category> UpdateCategory(Category category);
+        Task<ResponseLogin<PagedList<Category>>> GetCategories(bool IsPaging, int pageSize, int pageNumber);
+        Task<ResponseLogin<PagedList<Category>>> GetAllCategories();
+        Task<ResponseLogin<Category>> AddCategory(Category product);
+        Task<ResponseLogin<Category>> UpdateCategory(Category category);
         Task DeleteCategory(string id);
     }
 }
