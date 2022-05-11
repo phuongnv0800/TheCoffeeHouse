@@ -9,7 +9,12 @@ public static class Seed
 {
     public static void Initialize(APIContext context)
     {
-        
+        if (context.Categories.Any())
+        {
+            return; // DB has been seeded
+        }
+
+
         if (context.Database.EnsureCreated())
         {
             return; // DB has been seeded

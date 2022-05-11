@@ -9,7 +9,7 @@ public class Material
     public string? Description { get; set; }
     public string MaterialTypeID { get; set; }
     public MaterialType MaterialType { get; set; }
-    public ICollection<StockMaterial> StockMaterials { get; set; }
-    public ICollection<RecipeDetail> RecipeDetails { get; set; }
-    public ICollection<ReportDetail> ReportDetails { get; set; }
+    public virtual ICollection<StockMaterial> StockMaterials { get; set; }
+    public virtual ICollection<RecipeDetail> RecipeDetails { get; set; }
+    public virtual ICollection<ReportDetail> ReportDetails { get; set; }
 }

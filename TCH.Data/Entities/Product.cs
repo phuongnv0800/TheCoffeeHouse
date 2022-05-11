@@ -19,12 +19,13 @@ public class Product
     public string LinkImage { get; set; }
     public string CategoryID { get; set; }
     public Category Category { get; set; }
-    public ICollection<ProductImage> ProductImages { get; set; }
-    public ICollection<ProductInMenu> ProductInMenus{ get; set; }
-    
-    public ICollection<SizeInProduct> SizeInProducts { get; set; }
-    
-    public ICollection<ToppingInProduct> ToppingInProducts { get; set; }
-    public ICollection<OrderDetail> OrderDetails { get; set; }
-    public ICollection<PromotionGift> PromotionGifts { get; set; }
+    public virtual ICollection<ProductImage> ProductImages { get; set; }
+    public virtual ICollection<ProductInMenu> ProductInMenus{ get; set; }
+
+    public virtual ICollection<SizeInProduct> SizeInProducts { get; set; }
+
+    public virtual ICollection<ToppingInProduct> ToppingInProducts { get; set; }
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+    public virtual ICollection<PromotionGift> PromotionGifts { get; set; }
+    public virtual ICollection<HistoryPriceUpdate> HistoryPriceUpdates { get; set; }
 }

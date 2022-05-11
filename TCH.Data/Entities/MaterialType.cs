@@ -7,5 +7,5 @@ public class MaterialType
     public string? Description { get; set; }
     public DateTime CreateDate { get; set; }
     public DateTime UpdateDate { get; set; }
-    public ICollection<Material> Materials { get; set; }
+    public virtual ICollection<Material> Materials { get; set; }
 }
