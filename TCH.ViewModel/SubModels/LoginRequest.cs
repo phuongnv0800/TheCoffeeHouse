@@ -10,4 +10,5 @@ public class LoginRequest
     [Required(ErrorMessage = "Mật khẩu không được để trống")]
     [MinLength(6, ErrorMessage = "Mật khẩu dài hơn 6 kí tự")]
     public string Password { get; set; }
+    public bool RememberMe { get; set; }
 }
