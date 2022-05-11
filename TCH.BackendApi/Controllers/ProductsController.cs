@@ -102,7 +102,6 @@ public class ProductsController : ControllerBase
 
     //https://localhost:port/product/1
     [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
     [HttpPost]
     [Consumes("multipart/form-data")]//nhận kiểu dữ liệu truyền lên là form data
     public async Task<IActionResult> Create([FromForm] ProductRequest request)

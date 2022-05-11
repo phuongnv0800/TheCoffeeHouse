@@ -43,6 +43,7 @@ public class MaterialsController : ControllerBase
         }
     }
     [HttpPost]
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> Create([FromBody] MaterialRequest request)
     {
         try
@@ -61,6 +62,7 @@ public class MaterialsController : ControllerBase
         }
     }
     [HttpPut("{id}")]
+    [Authorize(Roles =Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> Update(string id, [FromBody] MaterialRequest request)
     {
         try
@@ -79,6 +81,7 @@ public class MaterialsController : ControllerBase
         }
     }
     [HttpDelete("{id}")]
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> Delete(string id)
     {
         try
@@ -115,6 +118,7 @@ public class MaterialsController : ControllerBase
         }
     }
     [HttpPost("type")]
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> CreateType([FromBody] MaterialTypeRequest request)
     {
         try
@@ -133,6 +137,7 @@ public class MaterialsController : ControllerBase
         }
     }
     [HttpPut("type/{id}")]
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> UpdateType(string id, [FromBody] MaterialTypeRequest request)
     {
         try
@@ -151,6 +156,7 @@ public class MaterialsController : ControllerBase
         }
     }
     [HttpDelete("type/{id}")]
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> DeleteType(string id)
     {
         try
