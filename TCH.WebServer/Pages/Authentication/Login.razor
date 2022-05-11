@@ -62,15 +62,20 @@
             var claims = authService.GetClaims();
             if(claims != null)
             {
-                if(claims.First().Value == "Admin")
+                if(claims.First().Value.Contains("Admin"))
                 {
                     navigationManager.NavigateTo("/admin-dashboard", forceLoad: true);
+                    GbParameter.GbParameter.IsLogin = true;
+                    return;
+                }
+                else
+                {
+                    navigationManager.NavigateTo("/dashboard", forceLoad: true);
+                    GbParameter.GbParameter.IsLogin = true;
                     return;
                 }
             }
-            GbParameter.GbParameter.IsLogin = true;
-            navigationManager.NavigateTo("admin-dashboard", forceLoad: true);
-           
+            
         }
         else
         {

@@ -10,7 +10,13 @@
 @inject ICategoryService categoryService
 @inject IUserService userService
 
-<div class="fluid d-flex">
+@if (!GbParameter.GbParameter.IsLogin)
+{
+    <h3>Bạn chưa đăng nhập</h3>
+}
+else
+{
+    <div class="fluid d-flex">
     <div class="py-5 w-100 px-5 ">
         <TCH.WebServer.Shared.Header.Header User="@User"></TCH.WebServer.Shared.Header.Header>
 
@@ -149,9 +155,10 @@
         </div>
     </div>
 </div>
+}
 
 @code {
-	 public List<Category>? CategoryList = new List<Category>();
+    public List<Category>? CategoryList = new List<Category>();
     private string? token;
     public string Name;
     private Pagination pagination = new Pagination();

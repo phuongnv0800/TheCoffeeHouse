@@ -59,7 +59,25 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-
+    [HttpGet()]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetAllroduct( [FromQuery] Search request)
+    {
+        try
+        {
+            var products = await _productRepository.GetAll( request: request);
+            return Ok(products);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
     //https://localhost:port/product/1
     [HttpGet("{productId}")]
     [AllowAnonymous]

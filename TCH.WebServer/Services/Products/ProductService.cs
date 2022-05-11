@@ -51,6 +51,30 @@ namespace TCH.WebServer.Services.Products
             throw new NotImplementedException();
         }
 
+        public async Task<ResponseLogin<PagedList<Product>>> GetProductByCategoryId(string id)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var response = await _httpClient.GetAsync($"/api/Products/category/{id}");
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<PagedList<Product>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<Product>>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<ResponseLogin<Product>> GetProductById(string id)
         {
             try

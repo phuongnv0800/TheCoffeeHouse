@@ -157,9 +157,6 @@ public class UsersController : ControllerBase
         }
     }
 
-    [Authorize(Roles = Permission.Admin)]
-    [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
     {
