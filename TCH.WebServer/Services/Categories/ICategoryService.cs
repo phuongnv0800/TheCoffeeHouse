@@ -7,6 +7,7 @@ namespace TCH.WebServer.Services.Categories
         Task<ResponseLogin<PagedList<Category>>> GetCategories(bool IsPaging, int pageSize, int pageNumber);
         Task<ResponseLogin<PagedList<Category>>> GetAllCategories();
         Task<ResponseLogin<Category>> AddCategory(Category product);
+        Task<ResponseLogin<Category>> GetCategoryById(string id);
         Task<ResponseLogin<Category>> UpdateCategory(Category category);
         Task DeleteCategory(string id);
     }

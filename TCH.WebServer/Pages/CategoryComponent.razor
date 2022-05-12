@@ -3,7 +3,6 @@
 @using TCH.WebServer.Services.Categories
 @using TCH.WebServer.Services.Products
 
-@inject IProductService _productService
 @inject ICategoryService _categoryService
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -259,15 +258,15 @@
 											<!--begin::Card body-->
 											<div class="card-body pt-0">
 												<!--begin::Input group-->
-												<EditForm Model="@editProduct">
+												<EditForm Model="@editCategory">
 													<div class="mb-10 fv-row fv-plugins-icon-container">
 														<!--begin::Label-->
 														<label class="required form-label">Tên sản phẩm</label>
 														<!--end::Label-->
 														<!--begin::Input-->
-														<InputText @bind-Value="editProduct.Name" class="form-control form-control-solid col-sm-6" />
+														<InputText @bind-Value="editCategory.Name" class="form-control form-control-solid col-sm-6" />
 														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editProduct.Name)" />
+															<ValidationMessage For="@(() => editCategory.Name)" />
 														</div>
 														<!--end::Input-->
 														<!--begin::Description-->
@@ -280,95 +279,12 @@
 														<label class="required form-label">Tên sản phẩm</label>
 														<!--end::Label-->
 														<!--begin::Input-->
-														<InputSelect @bind-Value="editProduct.CategoryID" class="form-control">
-															@if (categories != null)
-															{
-																@foreach (var dept in categories)
-																{
-																	<option value="@dept.ID">@dept.Name</option>
-																}
-															}
+														<InputText @bind-Value="editCategory.Description" class="form-control form-control-solid col-sm-6" />
+														<div class="fv-plugins-message-container invalid-feedback">
+															<ValidationMessage For="@(() => editCategory.Description)" />
+														</div>
+														<!--end::Input-->
 
-														</InputSelect>
-														<!--end::Input-->
-														<!--begin::Description-->
-														<div class="text-muted fs-7">A category name is required and recommended to be unique.</div>
-														<!--end::Description-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Tên sản phẩm</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editProduct.Unit" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editProduct.Unit)" />
-														</div>
-														<!--end::Input-->
-														<!--begin::Description-->
-														<div class="text-muted fs-7">A category name is required and recommended to be unique.</div>
-														<!--end::Description-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Tên sản phẩm</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editProduct.Description" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editProduct.Description)" />
-														</div>
-														<!--end::Input-->
-														<!--begin::Description-->
-														<div class="text-muted fs-7">A category name is required and recommended to be unique.</div>
-														<!--end::Description-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Tên sản phẩm</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputNumber @bind-Value="editProduct.Price" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editProduct.Price)" />
-														</div>
-														<!--end::Input-->
-														<!--begin::Description-->
-														<div class="text-muted fs-7">A category name is required and recommended to be unique.</div>
-														<!--end::Description-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Tên sản phẩm</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputSelect @bind-Value="editProduct.IsSale" class="form-control">
-															<option value="true">Có</option>
-															<option value="false">Không</option>
-														</InputSelect>
-														<!--end::Input-->
-														<!--begin::Description-->
-														<div class="text-muted fs-7">A category name is required and recommended to be unique.</div>
-														<!--end::Description-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Tên sản phẩm</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputNumber @bind-Value="editProduct.PriceSale" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editProduct.PriceSale)" />
-														</div>
-														<!--end::Input-->
-														<!--begin::Description-->
-														<div class="text-muted fs-7">A category name is required and recommended to be unique.</div>
-														<!--end::Description-->
 													</div>
 													<!--end::Input group-->
 												</EditForm>
@@ -605,35 +521,27 @@
 
 @code {
     [Parameter] public string Title { get; set; }
-    [Parameter] public string? ProductId { get; set; }
+    [Parameter] public string? CategoryId { get; set; }
 
-    private Product editProduct = null;
-    public List<Category> categories = new List<Category>();
+    private Category editCategory = null;
 
     protected override void OnInitialized()
     {
-        editProduct = new Product();
+        editCategory = new Category();
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        var response = await _categoryService.GetAllCategories();
-        categories = response.Data.Items.ToList();
-        if (string.IsNullOrEmpty(ProductId))
+        if (string.IsNullOrEmpty(CategoryId))
         {
-            editProduct = new Product();
+            editCategory = new Category();
         }
         else
         {
-            var responseP = await _productService.GetProductById(ProductId);
+            var responseP = await _categoryService.GetCategoryById(CategoryId);
             var vesselDB = responseP.Data;
-            editProduct.CategoryID = vesselDB.CategoryID;
-            editProduct.Name = vesselDB.Name;
-            editProduct.Description = vesselDB.Description;
-            editProduct.Price = vesselDB.Price;
-            editProduct.PriceSale = vesselDB.PriceSale;
-            editProduct.IsSale = vesselDB.IsSale;
-            editProduct.Unit = vesselDB.Unit;
+            editCategory.Name = vesselDB.Name;
+            editCategory.Description = vesselDB.Description;
         }
     }
 }
@@ -643,14 +551,14 @@
     private MultipartFormDataContent content = new MultipartFormDataContent();
     private async Task OnSubmit()
     {
-        ResponseLogin<Product> response = new ResponseLogin<Product>();
-        if (string.IsNullOrEmpty(ProductId))
+        ResponseLogin<Category> response = new ResponseLogin<Category>();
+        if (string.IsNullOrEmpty(CategoryId))
         {
-            response = await _productService.AddProduct(editProduct);
+            response = await _categoryService.AddCategory(editCategory);
         }
         else
         {
-            response = await _productService.UpdateProduct(editProduct);
+            response = await _categoryService.UpdateCategory(editCategory);
         }
         if(response != null)
         {

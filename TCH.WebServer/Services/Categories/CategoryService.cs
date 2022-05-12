@@ -73,6 +73,30 @@ namespace TCH.WebServer.Services.Categories
             }
         }
 
+        public async Task<ResponseLogin<Category>> GetCategoryById(string id)
+        {
+            try
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var response = await httpClient.GetAsync($"/api/Categories/{id}");
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<Category> respond = JsonConvert.DeserializeObject<ResponseLogin<Category>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<ResponseLogin<Category>> UpdateCategory(Category category)
         {
             try
