@@ -12,6 +12,4 @@ public class Unit
     public DateTime UpdateDate { get; set; }
     public string? UserCreateID { get; set; }
     public string? UserUpdateID { get; set; }
-    public virtual ICollection<UnitConversion> SourceUnits { get; set; }
-    public virtual ICollection<UnitConversion> DestinationUnits { get; set; }
 }

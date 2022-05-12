@@ -12,8 +12,8 @@ using TCH.BackendApi.EF;
 namespace TCH.BackendApi.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20220511170619_update-history-price")]
-    partial class updatehistoryprice
+    [Migration("20220512160556_db3")]
+    partial class db3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -333,6 +333,9 @@ namespace TCH.BackendApi.Migrations
                     b.Property<int>("LayoutType")
                         .HasColumnType("int");
 
+                    b.Property<string>("LinkImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LogoInvoice")
                         .HasColumnType("nvarchar(max)");
 
@@ -527,6 +530,9 @@ namespace TCH.BackendApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MaterialTypeID")
@@ -1119,6 +1125,9 @@ namespace TCH.BackendApi.Migrations
                     b.Property<DateTime>("BeginDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
@@ -1191,6 +1200,63 @@ namespace TCH.BackendApi.Migrations
                     b.HasIndex("ToppingID");
 
                     b.ToTable("ToppingInProducts");
+                });
+
+            modelBuilder.Entity("TCH.Data.Entities.Unit", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserUpdateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("Units", (string)null);
+                });
+
+            modelBuilder.Entity("TCH.Data.Entities.UnitConversion", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("ConversionFactor")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DestinationUnitID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SourceUnitID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("UnitConversions", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TCH.BackendApi.Migrations
 {
-    public partial class init : Migration
+    public partial class db2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,6 +34,7 @@ namespace TCH.BackendApi.Migrations
                     District = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Adderss = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    LinkImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LogoInvoice = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RestaurantName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TitleInvoice = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -119,7 +120,9 @@ namespace TCH.BackendApi.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SubPrice = table.Column<double>(type: "float", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserCreateID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserUpdateID = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -135,11 +138,45 @@ namespace TCH.BackendApi.Migrations
                     SubPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserCreateID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserUpdateID = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Toppings", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UnitConversions",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SourceUnitID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DestinationUnitID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ConversionFactor = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UnitConversions", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Units",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserCreateID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserUpdateID = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Units", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -269,6 +306,7 @@ namespace TCH.BackendApi.Migrations
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LinkImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MaterialTypeID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -462,7 +500,8 @@ namespace TCH.BackendApi.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     PriceOfUnit = table.Column<double>(type: "float", nullable: false),
                     Unit = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StandardUnit = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    StandardUnit = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -554,6 +593,45 @@ namespace TCH.BackendApi.Migrations
                         principalTable: "Categories",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HistoryPriceUpdates",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HistoryType = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PriceOld = table.Column<double>(type: "float", nullable: false),
+                    PriceNew = table.Column<double>(type: "float", nullable: false),
+                    UserCreateID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SizeID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ToppingID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HistoryPriceUpdates", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_HistoryPriceUpdates_Products_ProductID",
+                        column: x => x.ProductID,
+                        principalTable: "Products",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_HistoryPriceUpdates_Sizes_SizeID",
+                        column: x => x.SizeID,
+                        principalTable: "Sizes",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_HistoryPriceUpdates_Toppings_ToppingID",
+                        column: x => x.ToppingID,
+                        principalTable: "Toppings",
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -819,6 +897,21 @@ namespace TCH.BackendApi.Migrations
                 column: "BeanID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_HistoryPriceUpdates_ProductID",
+                table: "HistoryPriceUpdates",
+                column: "ProductID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HistoryPriceUpdates_SizeID",
+                table: "HistoryPriceUpdates",
+                column: "SizeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HistoryPriceUpdates_ToppingID",
+                table: "HistoryPriceUpdates",
+                column: "ToppingID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Materials_MaterialTypeID",
                 table: "Materials",
                 column: "MaterialTypeID");
@@ -912,6 +1005,12 @@ namespace TCH.BackendApi.Migrations
                 name: "IX_ToppingInProducts_ToppingID",
                 table: "ToppingInProducts",
                 column: "ToppingID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Units_Code",
+                table: "Units",
+                column: "Code",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -930,6 +1029,9 @@ namespace TCH.BackendApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "HistoryPriceUpdates");
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");
@@ -957,6 +1059,12 @@ namespace TCH.BackendApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "ToppingInProducts");
+
+            migrationBuilder.DropTable(
+                name: "UnitConversions");
+
+            migrationBuilder.DropTable(
+                name: "Units");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

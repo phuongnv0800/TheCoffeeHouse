@@ -172,7 +172,7 @@ public class UnitManager : IDisposable, IUnitRepository
     }
     public async Task<Respond<List<UnitConversion>>> GetAllExchangeUnit()
     {
-        var data = await _context.UnitConversions.Include(x => x.SourceUnit).Include(x => x.DestinationUnit).ToListAsync();
+        var data = await _context.UnitConversions.ToListAsync();
         if (data == null)
         {
             return new Respond<List<UnitConversion>>()

@@ -81,34 +81,35 @@ public static class Seed
         {
             new UnitConversion()
             {
+                 ID = Guid.NewGuid().ToString(),
                 SourceUnitID = units[0].ID,
                 DestinationUnitID = units[4].ID,
                 ConversionFactor = 1000000,
                 Description = "Quy đổi từ Tấn sang gam"
             },
             new UnitConversion()
-            {
+            { ID = Guid.NewGuid().ToString(),
                 SourceUnitID = units[1].ID,
                 DestinationUnitID = units[4].ID,
                 ConversionFactor = 100000,
                 Description = "Quy đổi từ Tạ sang gam"
             },
             new UnitConversion()
-            {
+            { ID = Guid.NewGuid().ToString(),
                 SourceUnitID = units[2].ID,
                 DestinationUnitID = units[4].ID,
                 ConversionFactor = 10000,
                 Description = "Quy đổi từ Yến sang gam"
             },
             new UnitConversion()
-            {
+            { ID = Guid.NewGuid().ToString(),
                 SourceUnitID = units[3].ID,
                 DestinationUnitID = units[4].ID,
                 ConversionFactor = 1000,
                 Description = "Quy đổi từ Kilogam sang gam"
             },
             new UnitConversion()
-            {
+            { ID = Guid.NewGuid().ToString(),
                 SourceUnitID = units[5].ID,
                 DestinationUnitID = units[6].ID,
                 ConversionFactor = 1000,

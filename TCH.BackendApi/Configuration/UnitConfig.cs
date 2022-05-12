@@ -11,9 +11,6 @@ namespace TCH.BackendApi.Configuration
             builder.ToTable("Units");
             builder.HasKey(x => x.ID);
             builder.HasIndex(u => u.Code).IsUnique();
-
-            builder.HasMany(x => x.DestinationUnits).WithOne(x => x.DestinationUnit).HasForeignKey(x => x.DestinationUnitID);
-            builder.HasMany(x => x.SourceUnits).WithOne(x => x.SourceUnit).HasForeignKey(x => x.SourceUnitID);
         }
     }
 }

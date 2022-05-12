@@ -12,8 +12,8 @@ using TCH.BackendApi.EF;
 namespace TCH.BackendApi.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20220416024447_init")]
-    partial class init
+    [Migration("20220512160359_db2")]
+    partial class db2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -333,6 +333,9 @@ namespace TCH.BackendApi.Migrations
                     b.Property<int>("LayoutType")
                         .HasColumnType("int");
 
+                    b.Property<string>("LinkImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LogoInvoice")
                         .HasColumnType("nvarchar(max)");
 
@@ -463,6 +466,61 @@ namespace TCH.BackendApi.Migrations
                     b.ToTable("Customers", (string)null);
                 });
 
+            modelBuilder.Entity("TCH.Data.Entities.HistoryPriceUpdate", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HistoryType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("PriceNew")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PriceOld")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ProductID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SizeID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ToppingID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("SizeID");
+
+                    b.HasIndex("ToppingID");
+
+                    b.ToTable("HistoryPriceUpdates");
+                });
+
             modelBuilder.Entity("TCH.Data.Entities.Material", b =>
                 {
                     b.Property<string>("ID")
@@ -472,6 +530,9 @@ namespace TCH.BackendApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MaterialTypeID")
@@ -1027,6 +1088,12 @@ namespace TCH.BackendApi.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserUpdateID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
 
                     b.ToTable("Sizes");
@@ -1057,6 +1124,9 @@ namespace TCH.BackendApi.Migrations
 
                     b.Property<DateTime>("BeginDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
@@ -1106,6 +1176,12 @@ namespace TCH.BackendApi.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserUpdateID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
 
                     b.ToTable("Toppings", (string)null);
@@ -1124,6 +1200,63 @@ namespace TCH.BackendApi.Migrations
                     b.HasIndex("ToppingID");
 
                     b.ToTable("ToppingInProducts");
+                });
+
+            modelBuilder.Entity("TCH.Data.Entities.Unit", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserUpdateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("Units", (string)null);
+                });
+
+            modelBuilder.Entity("TCH.Data.Entities.UnitConversion", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("ConversionFactor")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DestinationUnitID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SourceUnitID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("UnitConversions", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1204,6 +1337,21 @@ namespace TCH.BackendApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Bean");
+                });
+
+            modelBuilder.Entity("TCH.Data.Entities.HistoryPriceUpdate", b =>
+                {
+                    b.HasOne("TCH.Data.Entities.Product", null)
+                        .WithMany("HistoryPriceUpdates")
+                        .HasForeignKey("ProductID");
+
+                    b.HasOne("TCH.Data.Entities.Size", null)
+                        .WithMany("HistoryPriceUpdates")
+                        .HasForeignKey("SizeID");
+
+                    b.HasOne("TCH.Data.Entities.Topping", null)
+                        .WithMany("HistoryPriceUpdates")
+                        .HasForeignKey("ToppingID");
                 });
 
             modelBuilder.Entity("TCH.Data.Entities.Material", b =>
@@ -1513,6 +1661,8 @@ namespace TCH.BackendApi.Migrations
 
             modelBuilder.Entity("TCH.Data.Entities.Product", b =>
                 {
+                    b.Navigation("HistoryPriceUpdates");
+
                     b.Navigation("OrderDetails");
 
                     b.Navigation("ProductImages");
@@ -1538,6 +1688,8 @@ namespace TCH.BackendApi.Migrations
 
             modelBuilder.Entity("TCH.Data.Entities.Size", b =>
                 {
+                    b.Navigation("HistoryPriceUpdates");
+
                     b.Navigation("OrderDetails");
 
                     b.Navigation("RecipeDetails");
@@ -1547,6 +1699,8 @@ namespace TCH.BackendApi.Migrations
 
             modelBuilder.Entity("TCH.Data.Entities.Topping", b =>
                 {
+                    b.Navigation("HistoryPriceUpdates");
+
                     b.Navigation("OrderDetails");
 
                     b.Navigation("ToppingInProducts");

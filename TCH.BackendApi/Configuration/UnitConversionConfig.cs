@@ -9,9 +9,7 @@ public class UnitConversionConfig : IEntityTypeConfiguration<UnitConversion>
     public void Configure(EntityTypeBuilder<UnitConversion> builder)
     {
         builder.ToTable("UnitConversions");
-        builder.HasKey(x => new { x.DestinationUnitID, x.SourceUnitID});
+        builder.HasKey(x => x.ID);
 
-        builder.HasOne(x => x.DestinationUnit).WithMany(x => x.DestinationUnits).HasForeignKey(x => x.DestinationUnitID);
-        builder.HasOne(x => x.SourceUnit).WithMany(x => x.SourceUnits).HasForeignKey(x => x.SourceUnitID);
     }
 }
