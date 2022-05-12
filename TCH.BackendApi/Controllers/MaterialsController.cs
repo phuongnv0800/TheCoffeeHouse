@@ -44,7 +44,7 @@ public class MaterialsController : ControllerBase
     }
     [HttpPost]
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
-    public async Task<IActionResult> Create([FromBody] MaterialRequest request)
+    public async Task<IActionResult> Create([FromForm] MaterialRequest request)
     {
         try
         {
@@ -63,7 +63,7 @@ public class MaterialsController : ControllerBase
     }
     [HttpPut("{id}")]
     [Authorize(Roles =Permission.Branch + "," + Permission.Manage)]
-    public async Task<IActionResult> Update(string id, [FromBody] MaterialRequest request)
+    public async Task<IActionResult> Update(string id, [FromForm] MaterialRequest request)
     {
         try
         {

@@ -7,6 +7,7 @@ public class Material
     public DateTime CreateDate { get; set; }
     public DateTime UpdateDate { get; set; }
     public string? Description { get; set; }
+    public string? LinkImage { get; set; }
     public string MaterialTypeID { get; set; }
     public MaterialType MaterialType { get; set; }
     public virtual ICollection<StockMaterial> StockMaterials { get; set; }

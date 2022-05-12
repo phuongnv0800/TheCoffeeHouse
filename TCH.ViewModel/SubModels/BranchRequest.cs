@@ -1,4 +1,6 @@
-﻿namespace TCH.ViewModel.SubModels;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace TCH.ViewModel.SubModels;
 
 public class BranchRequest
 {
@@ -8,4 +10,5 @@ public class BranchRequest
     public string? Email { get; set; }
     public string District { get; set; }
     public string Adderss { get; set; }
+    public IFormFile? ImageUpload { get; set; }
 }

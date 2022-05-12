@@ -1,4 +1,6 @@
-﻿namespace TCH.ViewModel.SubModels;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace TCH.ViewModel.SubModels;
 
 public class MaterialRequest
 {
@@ -9,4 +11,5 @@ public class MaterialRequest
     public string? Supplier { get; set; }
     public string Unit { get; set; }
     public string MaterialTypeID { get; set; }
+    public IFormFile? ImageUpload { get; set; }
 }

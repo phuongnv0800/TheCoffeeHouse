@@ -19,7 +19,7 @@ public class ProductsController : ControllerBase
     public ProductsController(IProductRepository productService, ILogger<ProductsController> logger)
     {
         _productRepository = productService;
-        this._logger = logger;
+        _logger = logger;
     }
     [HttpGet("branch/{branchID}")]
     [AllowAnonymous]
@@ -128,7 +128,7 @@ public class ProductsController : ControllerBase
 
     [Authorize(Roles = Permission.Branch)]
     [HttpPut("{productID}")]
-    public async Task<IActionResult> Update(string productID, [FromBody] ProductRequest request)
+    public async Task<IActionResult> Update(string productID, [FromForm] ProductRequest request)
     {
         try
         {
