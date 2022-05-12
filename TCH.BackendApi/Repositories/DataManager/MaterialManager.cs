@@ -8,6 +8,8 @@ using TCH.Utilities.Paginations;
 using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;
 using TCH.ViewModel.SubModels;
+using TCH.Utilities.Error;
+using System.Net.Http.Headers;
 
 namespace TCH.BackendApi.Repositories.DataRepository;
 
@@ -17,12 +19,14 @@ public class MaterialManager : IMaterialRepository, IDisposable
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly string? UserID;
-
-    public MaterialManager(APIContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+    private readonly IStorageService _storageService;
+    private const string Upload = "material";
+    public MaterialManager(APIContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, IStorageService storageService)
     {
         _context = context;
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
+        _storageService = storageService;
         UserID = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
     }
     public async Task<MessageResult> CreateMaterial(MaterialRequest request)
@@ -36,7 +40,19 @@ public class MaterialManager : IMaterialRepository, IDisposable
             UpdateDate = DateTime.Now,
             MaterialTypeID = request.MaterialTypeID,
         };
-        _context.Materials.Add(material);
+        if (request.ImageUpload != null)
+        {
+            try
+            {
+                var nameFile = await SaveFileIFormFile(request.ImageUpload);
+                material.LinkImage = Upload + "/" + nameFile;
+            }
+            catch (Exception e)
+            {
+                throw new CustomException("Save File Create Error: " + e.Message);
+            }
+        }
+        await _context.Materials.AddAsync(material);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -66,8 +82,8 @@ public class MaterialManager : IMaterialRepository, IDisposable
 
     public async Task<MessageResult> DeleteMaterial(string id)
     {
-        var category = await _context.Materials.FindAsync(id);
-        if (category == null)
+        var entity = await _context.Materials.FindAsync(id);
+        if (entity == null)
         {
             return new MessageResult()
             {
@@ -75,7 +91,18 @@ public class MaterialManager : IMaterialRepository, IDisposable
                 Message = "Không tìm thấy",
             };
         }
-        _context.Materials.Remove(category);
+        if (entity.LinkImage != null)
+        {
+            try
+            {
+                await _storageService.DeleteFileAsync(entity.LinkImage);
+            }
+            catch
+            {
+                throw new CustomException("Failed delete file");
+            }
+        }
+        _context.Materials.Remove(entity);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -263,7 +290,23 @@ public class MaterialManager : IMaterialRepository, IDisposable
         material.Description = request.Description;
         material.UpdateDate = DateTime.Now;
         material.Description = request.Description;
-        material.MaterialTypeID = request.MaterialTypeID;
+        material.MaterialTypeID = request.MaterialTypeID; 
+        if (request.ImageUpload != null)
+        {
+            try
+            {
+                if (material.LinkImage != null)
+                {
+                    await _storageService.DeleteFileAsync(material.LinkImage);
+                }
+                var nameFile = await SaveFileIFormFile(request.ImageUpload);
+                material.LinkImage = Upload + "/" + nameFile;
+            }
+            catch (Exception e)
+            {
+                throw new CustomException("Save File update Error: " + e.Message);
+            }
+        }
         _context.Materials.Update(material);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -293,7 +336,14 @@ public class MaterialManager : IMaterialRepository, IDisposable
             Message = "Cập nhật thành công",
         };
     }
-    
+    private async Task<string> SaveFileIFormFile(IFormFile file)
+    {
+        var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+        await _storageService.SaveFileAsync(file.OpenReadStream(), Upload + "/" + fileName);
+        return fileName;
+    }
+
     public void Dispose()
     {
         GC.Collect(2, GCCollectionMode.Forced, true);

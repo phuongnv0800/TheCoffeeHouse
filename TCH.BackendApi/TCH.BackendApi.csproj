@@ -29,6 +29,8 @@
 
   <ItemGroup>
     <Folder Include="Uploads\customers" />
+    <Folder Include="Uploads\branch\" />
+    <Folder Include="Uploads\material\" />
     <Folder Include="Uploads\users\" />
     <Folder Include="Uploads\users\" />
   </ItemGroup>

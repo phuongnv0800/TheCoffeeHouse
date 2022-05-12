@@ -62,7 +62,7 @@ public class BranchsController: ControllerBase
     }
     [HttpPost]
     [Authorize(Roles = Permission.Branch)]
-    public async Task<IActionResult> Create([FromBody] BranchRequest request)
+    public async Task<IActionResult> Create([FromForm] BranchRequest request)
     {
         try
         {
@@ -128,7 +128,7 @@ public class BranchsController: ControllerBase
 
     [HttpPut("{id}")]
     [Authorize(Roles = Permission.Branch)]
-    public async Task<IActionResult> Update(string id, [FromBody] BranchRequest name)
+    public async Task<IActionResult> Update(string id, [FromForm] BranchRequest name)
     {
         try
         {
