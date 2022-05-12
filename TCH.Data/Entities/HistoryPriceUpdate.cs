@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TCH.Utilities.Enum;
 
 namespace TCH.Data.Entities;
 
 public class HistoryPriceUpdate
 {
+    [Key]
     public string ID { get; set; }
     public string? Name { get; set; }
     public DateTime UpdateDate { get; set; }

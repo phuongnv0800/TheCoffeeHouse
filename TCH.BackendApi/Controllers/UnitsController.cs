@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TCH.BackendApi.Repositories.DataRepository;
 using TCH.Utilities.Error;
@@ -11,18 +10,18 @@ namespace TCH.BackendApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PromotionsController : ControllerBase
+public class UnitsController : ControllerBase
 {
-    private readonly IPromotionRepository _repository;
-    private readonly ILogger<PromotionsController> _logger;
+    private readonly IUnitRepository _repository;
+    private readonly ILogger<UnitsController> _logger;
 
-    public PromotionsController(IPromotionRepository repository, ILogger<PromotionsController> logger)
+    public UnitsController(IUnitRepository repository, ILogger<UnitsController> logger)
     {
         _repository = repository;
         _logger = logger;
     }
-    [AllowAnonymous]
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll([FromQuery] Search search)
     {
         try
@@ -42,32 +41,15 @@ public class PromotionsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    [HttpGet("unit-exchange")]
     [AllowAnonymous]
-    [HttpGet("{code}")]
-    public async Task<IActionResult> GetByCode(string code)
+    public async Task<IActionResult> GetAllUnitExchange()
     {
         try
         {
-            var result = await _repository.GetByCode(code);
-            return Ok(result);
-        }
-        catch (CustomException e)
-        {
-            return BadRequest(new { result = -1, message = e.Message });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
-        }
-    }
-    [AllowAnonymous]
-    [HttpPost("reduce-money/{code}")]
-    public async Task<IActionResult> ReduceMoney(string code, [FromBody]List<OrderItem> orderItems)
-    {
-        try
-        {
-            var result = await _repository.GetReduceMoney(code, orderItems: orderItems);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.GetAllExchangeUnit();
             return Ok(result);
         }
         catch (CustomException e)
@@ -81,13 +63,14 @@ public class PromotionsController : ControllerBase
         }
     }
     [HttpPost]
-    [Consumes("multipart/form-data")]
     [Authorize(Roles = Permission.Branch)]
-    public async Task<IActionResult> Create([FromForm] PromotionRequest request)
+    public async Task<IActionResult> Create([FromBody] UnitRequest name)
     {
         try
         {
-            var result = await _repository.Create(request);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.Create(name);
             return Ok(result);
         }
         catch (CustomException e)
@@ -100,17 +83,57 @@ public class PromotionsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-   
-    [HttpPut("{id}")]
-    [Authorize]
+    [HttpPost("exchange-unit")]
     [Authorize(Roles = Permission.Branch)]
-    public async Task<IActionResult> Update(string id, [FromForm] PromotionRequest request)
+    public async Task<IActionResult> CreateExchangeUnit([FromBody] ExchangeUnitRequest name)
     {
         try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _repository.Update(id, request);
+            var result = await _repository.CreateExchangeUnit(name);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [HttpPut("{id}")]
+    [Authorize(Roles = Permission.Branch)]
+    public async Task<IActionResult> Update(string id, [FromBody] UnitRequest name)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.Update(id, name);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [HttpPut("exchange-unit")]
+    [Authorize(Roles = Permission.Branch)]
+    public async Task<IActionResult> UpdateExchangeUnit([FromBody] ExchangeUnitRequest name)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.UpdateExchangeUnit(name);
             return Ok(result);
         }
         catch (CustomException e)

@@ -16,7 +16,7 @@ using System.Text.Json;
 using TCH.Utilities.Enum;
 using TCH.Utilities.Claims;
 
-namespace TCH.BackendApi.Repositories.DataManager;
+namespace TCH.BackendApi.Repositories.DataRepository;
 
 public class UserManager : IUserRepository, IDisposable
 {

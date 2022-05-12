@@ -21,6 +21,12 @@ public class AutoMapping : Profile
         CreateMap<Topping, ToppingVm>();
         CreateMap<ToppingVm, Topping>();
 
+        CreateMap<Unit, UnitVm>();
+        CreateMap<UnitVm, Unit>();
+
+        CreateMap<ExchangeUnitRequest, UnitConversion>();
+
+
         CreateMap<BranchRequest, Branch>();
         CreateMap<PromotionRequest, Promotion>();
     }

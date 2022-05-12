@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using TCH.BackendApi.EF;
 using TCH.Data.Entities;
-using TCH.BackendApi.Repositories.DataManager;
+using TCH.BackendApi.Repositories.DataRepository;
 using TCH.BackendApi.Repositories.DataRepository;
 using TCH.BackendApi.AutoMapper;
 

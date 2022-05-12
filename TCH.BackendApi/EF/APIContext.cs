@@ -35,6 +35,8 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
         builder.ApplyConfiguration(new ReportDetailConfig());
         builder.ApplyConfiguration(new StockMaterialConfiguration());
         builder.ApplyConfiguration(new ToppingConfiguration());
+        builder.ApplyConfiguration(new UnitConfig());
+        builder.ApplyConfiguration(new UnitConversionConfig());
         builder.Entity<RecipeDetail>().HasKey(x => new {x.MaterialID, x.ProductID, x.SizeID });
         builder.Entity<SizeInProduct>().HasKey(x => new {x.ProductID, x.SizeID});
         builder.Entity<ToppingInProduct>().HasKey(x => new {x.ProductID, x.ToppingID});
@@ -65,4 +67,6 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
     public DbSet<StockMaterial> StockMaterials { get; set; }
     public DbSet<Topping> Toppings { get; set; }
     public DbSet<HistoryPriceUpdate> HistoryPriceUpdates { get; set; }
+    public DbSet<Unit> Units { get; set; }
+    public DbSet<UnitConversion> UnitConversions{ get; set; }
 }

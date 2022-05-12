@@ -7,7 +7,7 @@ using TCH.Utilities.Claims;
 using TCH.Utilities.SubModels;
 using TCH.ViewModel.SubModels;
 
-namespace TCH.BackendApi.Repositories.DataManager;
+namespace TCH.BackendApi.Repositories.DataRepository;
 
 public class MenuManager : IDisposable, IMenuRepository
 {

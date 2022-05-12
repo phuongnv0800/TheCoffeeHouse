@@ -12,7 +12,7 @@ using AutoMapper;
 using TCH.Utilities.Claims;
 using TCH.Utilities.Enum;
 
-namespace TCH.BackendApi.Repositories.DataManager;
+namespace TCH.BackendApi.Repositories.DataRepository;
 
 public class ProductManager : IProductRepository, IDisposable
 {
@@ -848,17 +848,8 @@ public class ProductManager : IProductRepository, IDisposable
 
     public async Task<Respond<PagedList<HistoryPriceUpdate>>> GetHistoryPriceByID(string ID, Search request)
     {
-        var product = await _context.Products.FindAsync(ID);
-        if (product == null)
-        {
-            return new Respond<PagedList<HistoryPriceUpdate>>()
-            {
-                Message = "Sản phẩm không tồn tại",
-                Result = 0,
-                Data = null,
-            };
-        }
-        var query = from c in _context.HistoryPriceUpdates select c;
+        
+        var query = from c in _context.HistoryPriceUpdates where c.ProductID == ID || c.SizeID == ID || c.ToppingID == ID select c;
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.Name!.Contains(request.Name));
         //paging

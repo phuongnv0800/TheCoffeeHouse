@@ -9,17 +9,116 @@ public static class Seed
 {
     public static void Initialize(APIContext context)
     {
+        context.Database.EnsureCreated();
         if (context.Categories.Any())
         {
             return; // DB has been seeded
         }
-
-
-        if (context.Database.EnsureCreated())
+        var units = new Unit[]
         {
-            return; // DB has been seeded
+            new Unit()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Name = "Tấn",
+                UpdateDate = DateTime.Now,
+                CreateDate = DateTime.Now,
+                Code = "TAN"
+            },
+            new Unit()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Name = "Tạ",
+                UpdateDate = DateTime.Now,
+                CreateDate = DateTime.Now,
+                Code = "TA"
+            },
+            new Unit()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Name = "Yến",
+                UpdateDate = DateTime.Now,
+                CreateDate = DateTime.Now,
+                Code = "YEN"
+            },
+            new Unit()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Name = "Ki-lô-gam",
+                UpdateDate = DateTime.Now,
+                CreateDate = DateTime.Now,
+                Code = "KG"
+            },
+            new Unit()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Name = "Gam",
+                UpdateDate = DateTime.Now,
+                CreateDate = DateTime.Now,
+                Code = "G"
+            },
+            new Unit()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Name = "Lít",
+                UpdateDate = DateTime.Now,
+                CreateDate = DateTime.Now,
+                Code = "L"
+            },
+            new Unit()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Name = "Mi-li-lít",
+                UpdateDate = DateTime.Now,
+                CreateDate = DateTime.Now,
+                Code = "ML"
+            },
+        };
+        foreach (var item in units)
+        {
+            context.Units.Add(item);
         }
-
+        var unitConversion = new UnitConversion[]
+        {
+            new UnitConversion()
+            {
+                SourceUnitID = units[0].ID,
+                DestinationUnitID = units[4].ID,
+                ConversionFactor = 1000000,
+                Description = "Quy đổi từ Tấn sang gam"
+            },
+            new UnitConversion()
+            {
+                SourceUnitID = units[1].ID,
+                DestinationUnitID = units[4].ID,
+                ConversionFactor = 100000,
+                Description = "Quy đổi từ Tạ sang gam"
+            },
+            new UnitConversion()
+            {
+                SourceUnitID = units[2].ID,
+                DestinationUnitID = units[4].ID,
+                ConversionFactor = 10000,
+                Description = "Quy đổi từ Yến sang gam"
+            },
+            new UnitConversion()
+            {
+                SourceUnitID = units[3].ID,
+                DestinationUnitID = units[4].ID,
+                ConversionFactor = 1000,
+                Description = "Quy đổi từ Kilogam sang gam"
+            },
+            new UnitConversion()
+            {
+                SourceUnitID = units[5].ID,
+                DestinationUnitID = units[6].ID,
+                ConversionFactor = 1000,
+                Description = "Quy đổi từ Lít sang mi li lít"
+            },
+        };
+        foreach (var item in unitConversion)
+        {
+            context.UnitConversions.Add(item);
+        }
         var categories = new Category[]
         {
             new Category()
@@ -2252,19 +2351,19 @@ public static class Seed
             context.SizeInProducts.Add(new SizeInProduct()
             {
                 ProductID = item.ID,
-                SizeID = sizes[0].ID, 
+                SizeID = sizes[0].ID,
             });
             if (item.CategoryID == categories[3].ID
                 || item.CategoryID == categories[4].ID
                 || item.CategoryID == categories[5].ID
                 || item.CategoryID == categories[6].ID)
             {
-                for (var i = 1; i< sizes.Length ; i++)
+                for (var i = 1; i < sizes.Length; i++)
                 {
                     context.SizeInProducts.Add(new SizeInProduct()
                     {
                         ProductID = item.ID,
-                        SizeID = sizes[i].ID, 
+                        SizeID = sizes[i].ID,
                     });
                 }
                 foreach (var topping in toppings)
@@ -2272,9 +2371,9 @@ public static class Seed
                     context.ToppingInProducts.Add(new ToppingInProduct()
                     {
                         ProductID = item.ID,
-                        ToppingID = topping.ID, 
+                        ToppingID = topping.ID,
                     });
-                } 
+                }
             }
         }
 
@@ -2646,7 +2745,7 @@ public static class Seed
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
         };
-        context.AppUsers.Add(admin); 
+        context.AppUsers.Add(admin);
         context.AppUsers.Add(user);
         context.UserRoles.Add(new IdentityUserRole<string>()
         {
@@ -2663,7 +2762,7 @@ public static class Seed
             UserId = user.Id,
             RoleId = roleStaff.Id,
         });
-        for (var i =0; i < 100; i++)
+        for (var i = 0; i < 100; i++)
         {
             var userAdd = new AppUser()
             {

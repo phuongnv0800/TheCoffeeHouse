@@ -10,7 +10,7 @@ using TCH.Utilities.SubModels;
 using TCH.Utilities.Claims;
 using TCH.Utilities.Enum;
 
-namespace TCH.BackendApi.Repositories.DataManager;
+namespace TCH.BackendApi.Repositories.DataRepository;
 
 public class PromotionManager : IDisposable, IPromotionRepository
 {
