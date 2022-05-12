@@ -13,4 +13,5 @@ public class StockMaterial
     public double PriceOfUnit { get; set; }
     public string Unit { get; set; }
     public string StandardUnit { get; set; }
+    public string? Description { get; set; }
 }

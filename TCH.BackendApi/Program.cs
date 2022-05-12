@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using TCH.BackendApi.EF;
 using TCH.Data.Entities;
-using TCH.BackendApi.Repositories.DataManager;
+using TCH.BackendApi.Repositories.DataRepository;
 using TCH.BackendApi.Repositories.DataRepository;
 using TCH.BackendApi.AutoMapper;
 
@@ -24,7 +24,7 @@ builder.Services.AddDbContext<APIContext>(options =>
 {
     options.UseLoggerFactory(LoggerFactory.Create(builder => { builder.AddConsole(); }));
     options.EnableSensitiveDataLogging();
-    options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(config.GetConnectionString("Prod"));
 });
 builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Program));
 builder.Services.AddIdentity<AppUser, AppRole>()

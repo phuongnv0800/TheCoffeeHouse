@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TCH.BackendApi.Repositories.DataRepository;
 using TCH.Utilities.Error;
+using TCH.Utilities.Roles;
 using TCH.ViewModel.SubModels;
 
 namespace TCH.BackendApi.Controllers;
@@ -60,6 +61,7 @@ public class MenusController : ControllerBase
         }
     }
     [HttpPost("active-product/{menuID}/{productID}")]
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> ActiveProduct(string menuID, string productID)
     {
         try
@@ -80,6 +82,7 @@ public class MenusController : ControllerBase
         }
     }
     [HttpPost("deactive-product/{menuID}/{productID}")]
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> DeactiveProduct(string menuID, string productID)
     {
         try
@@ -100,6 +103,7 @@ public class MenusController : ControllerBase
         }
     }
     [HttpPut("{menuID}")]
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> Update(string menuID, [FromBody] MenuRequest name)
     {
         try
@@ -120,6 +124,7 @@ public class MenusController : ControllerBase
         }
     }
     [HttpDelete("{menuID}")]
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> Delete(string menuID)
     {
         try

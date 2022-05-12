@@ -27,7 +27,7 @@ public class ProductsController : ControllerBase
     {
         try
         {
-            var products = await _productRepository.GetAllByBranchID(branchID,request);
+            var products = await _productRepository.GetAllByBranchID(branchID, request);
             return Ok(products);
         }
         catch (CustomException e)
@@ -46,7 +46,7 @@ public class ProductsController : ControllerBase
     {
         try
         {
-            var products = await _productRepository.GetProductByCategoryID(categoryID: categoryID,request: request);
+            var products = await _productRepository.GetProductByCategoryID(categoryID: categoryID, request: request);
             return Ok(products);
         }
         catch (CustomException e)
@@ -101,7 +101,6 @@ public class ProductsController : ControllerBase
 
     //https://localhost:port/product/1
     [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
     [HttpPost]
     [Consumes("multipart/form-data")]//nhận kiểu dữ liệu truyền lên là form data
     public async Task<IActionResult> Create([FromForm] ProductRequest request)
@@ -121,7 +120,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -129,7 +128,8 @@ public class ProductsController : ControllerBase
 
     [Authorize(Roles = Permission.Branch)]
     [HttpPut("{productID}")]
-    public async Task<IActionResult> Update(string productID, [FromBody] ProductRequest request) {  
+    public async Task<IActionResult> Update(string productID, [FromBody] ProductRequest request)
+    {
         try
         {
             if (!ModelState.IsValid)
@@ -143,7 +143,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -164,7 +164,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -187,7 +187,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -210,7 +210,27 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [HttpGet("history/{id}")]
+    [AllowAnonymous]
+    public async Task<ActionResult> GetHistoryByID(string id, Search search)
+    {
+        try
+        {
+            var images = await _productRepository.GetHistoryPriceByID(id, search);
+            return Ok(images);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -232,7 +252,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -258,7 +278,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -284,7 +304,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -304,7 +324,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -324,7 +344,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -344,7 +364,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -365,7 +385,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -386,7 +406,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -407,7 +427,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -428,7 +448,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -449,7 +469,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
@@ -470,7 +490,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }

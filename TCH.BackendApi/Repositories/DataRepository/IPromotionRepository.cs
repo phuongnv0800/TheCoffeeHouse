@@ -4,7 +4,7 @@ using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;
 using TCH.ViewModel.SubModels;
 
-namespace TCH.BackendApi.Repositories.DataManager
+namespace TCH.BackendApi.Repositories.DataRepository
 {
     public interface IPromotionRepository
     {

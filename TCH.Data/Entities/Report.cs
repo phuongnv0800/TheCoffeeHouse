@@ -28,5 +28,5 @@ public class Report
     public Branch Branch { get; set; }
     [ForeignKey("UserCreateID")]
     public string? UserCreateID { get; set; }
-    public ICollection<ReportDetail> ReportDetails { get; set; }
+    public virtual ICollection<ReportDetail> ReportDetails { get; set; }
 }

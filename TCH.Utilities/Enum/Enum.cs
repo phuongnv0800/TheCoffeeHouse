@@ -45,6 +45,12 @@ public enum OrderStatus
     Finished = 3,
     Paid = 4,
 }
+public enum HistoryType
+{
+    Product = 1,
+    Size = 2,
+    Topping = 3,
+}
 public enum SizeType
 {
     S,

@@ -83,7 +83,8 @@ public class BranchsController: ControllerBase
     }
 
     [HttpPost("add-user/{branchID}/{userID}")]
-    [Authorize]
+    
+    [Authorize(Roles = Permission.Branch+","+ Permission.Manage)]
     public async Task<IActionResult> AddUserToBranch(string branchID,string userID)
     {
         try
@@ -103,7 +104,8 @@ public class BranchsController: ControllerBase
     }
 
     [HttpPost("remove-user/{branchID}/{userID}")]
-    [Authorize]
+
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> RemoveUserToBranch(string branchID,string userID)
     {
         try

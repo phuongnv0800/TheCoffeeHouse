@@ -28,13 +28,13 @@ public class Branch
     public string? UserCreateID { get; set; }
     public string? UserUpdateID { get; set; }
 
-    public ICollection<Menu> Menus { get; set; }
+    public virtual ICollection<Menu> Menus { get; set; }
 
-    public ICollection<Order> Orders { get; set; }
+    public virtual ICollection<Order> Orders { get; set; }
 
-    public ICollection<AppUser> Users { get; set; }
+    public virtual ICollection<AppUser> Users { get; set; }
 
-    public ICollection<Report> Reports { get; set; }
+    public virtual ICollection<Report> Reports { get; set; }
 
-    public ICollection<StockMaterial> StockMaterials{ get; set; }
+    public virtual ICollection<StockMaterial> StockMaterials{ get; set; }
 }

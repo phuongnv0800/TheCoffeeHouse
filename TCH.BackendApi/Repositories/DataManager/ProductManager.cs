@@ -10,8 +10,9 @@ using TCH.ViewModel.SubModels;
 using TCH.Utilities.Searchs;
 using AutoMapper;
 using TCH.Utilities.Claims;
+using TCH.Utilities.Enum;
 
-namespace TCH.BackendApi.Repositories.DataManager;
+namespace TCH.BackendApi.Repositories.DataRepository;
 
 public class ProductManager : IProductRepository, IDisposable
 {
@@ -22,9 +23,9 @@ public class ProductManager : IProductRepository, IDisposable
     private readonly string? _userID;
     private const string Upload = "products";
 
-    public ProductManager(APIContext context, 
-        IHttpContextAccessor httpContextAccessor, 
-        IStorageService storageService, 
+    public ProductManager(APIContext context,
+        IHttpContextAccessor httpContextAccessor,
+        IStorageService storageService,
         IMapper mapper)
     {
         _context = context;
@@ -36,8 +37,8 @@ public class ProductManager : IProductRepository, IDisposable
     }
     public async Task<Respond<PagedList<ProductVm>>> GetAllByBranchID(string branchID, Search request)
     {
-        var menu = await _context.Menus.FirstOrDefaultAsync(x=>x.BranchID == branchID);
-        if(menu == null)
+        var menu = await _context.Menus.FirstOrDefaultAsync(x => x.BranchID == branchID);
+        if (menu == null)
         {
             return new Respond<PagedList<ProductVm>>()
             {
@@ -46,8 +47,10 @@ public class ProductManager : IProductRepository, IDisposable
                 Data = null,
             };
         }
-        var query = from p in _context.Products join pm in _context.ProductInMenus on p.ID equals pm.ProductID 
-                    where pm.MenuID == menu.ID && pm.IsActive == true select new { p, pm };
+        var query = from p in _context.Products
+                    join pm in _context.ProductInMenus on p.ID equals pm.ProductID
+                    where pm.MenuID == menu.ID && pm.IsActive == true
+                    select new { p, pm };
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.p.Name.Contains(request.Name));
         //paging
@@ -66,7 +69,7 @@ public class ProductManager : IProductRepository, IDisposable
             {
                 ID = x.p.ID,
                 Name = x.p.Name,
-                ProductType= x.p.ProductType,
+                ProductType = x.p.ProductType,
                 CreateDate = x.p.CreateDate,
                 UpdateDate = x.p.UpdateDate,
                 IsSale = x.p.IsSale,
@@ -102,8 +105,8 @@ public class ProductManager : IProductRepository, IDisposable
         {
             var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
             var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-            item.Sizes =sizes.Select(x=> _mapper.Map<SizeVm>(x)).ToList();
-            item.Toppings = toppings.Select(x=>_mapper.Map<ToppingVm>(x)).ToList();
+            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
+            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).ToList();
         }
         var pagedResult = new PagedList<ProductVm>()
         {
@@ -120,7 +123,7 @@ public class ProductManager : IProductRepository, IDisposable
             Message = "Thành công",
         };
     }
-    
+
     public async Task<Respond<PagedList<ProductVm>>> GetAll(Search request)
     {
         var query = from c in _context.Products select c;
@@ -130,29 +133,29 @@ public class ProductManager : IProductRepository, IDisposable
         int totalRow = await query.CountAsync();
         var data = new List<ProductVm>();
         var item1 = from sp in _context.SizeInProducts
-            join s in _context.Sizes on sp.SizeID equals s.ID
-            select new { s, sp,};
+                    join s in _context.Sizes on sp.SizeID equals s.ID
+                    select new { s, sp, };
         var item2 = from tp in _context.ToppingInProducts
-            join t in _context.Toppings on tp.ToppingID equals t.ID
-            select new { t, tp,};
+                    join t in _context.Toppings on tp.ToppingID equals t.ID
+                    select new { t, tp, };
         if (request.IsPging)
         {
             data = await query.Select(x => new ProductVm()
-                {
-                    ID = x.ID,
-                    Name = x.Name,
-                    ProductType = x.ProductType,
-                    CreateDate = x.CreateDate,
-                    UpdateDate = x.UpdateDate,
-                    IsSale = x.IsSale,
-                    PriceSale = x.PriceSale,
-                    IsAvailable = x.IsAvailable,
-                    Price = x.Price,
-                    Description = x.Description,
-                    LinkImage = x.LinkImage,
-                    CategoryID = x.CategoryID,
-                    IsActive = true,
-                })
+            {
+                ID = x.ID,
+                Name = x.Name,
+                ProductType = x.ProductType,
+                CreateDate = x.CreateDate,
+                UpdateDate = x.UpdateDate,
+                IsSale = x.IsSale,
+                PriceSale = x.PriceSale,
+                IsAvailable = x.IsAvailable,
+                Price = x.Price,
+                Description = x.Description,
+                LinkImage = x.LinkImage,
+                CategoryID = x.CategoryID,
+                IsActive = true,
+            })
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
         }
@@ -172,13 +175,13 @@ public class ProductManager : IProductRepository, IDisposable
                 Description = x.Description,
                 LinkImage = x.LinkImage,
                 CategoryID = x.CategoryID,
-                IsActive = true, 
+                IsActive = true,
             }).ToListAsync();
         }
         foreach (var item in data)
         {
-            var sizes = await item1.Where(x=>x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
-            var toppings = await item2.Where(x=>x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
+            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
+            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
             item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
             item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).ToList();
         }
@@ -276,10 +279,10 @@ public class ProductManager : IProductRepository, IDisposable
 
     public async Task<Respond<PagedList<Product>>> GetAll1(Search request)
     {
-        var query =await _context.Products
-            .Include(x=>x.ToppingInProducts)
-            .ThenInclude(x=>x.Topping)
-            .Include(x=>x.SizeInProducts).ToListAsync();
+        var query = await _context.Products
+            .Include(x => x.ToppingInProducts)
+            .ThenInclude(x => x.Topping)
+            .Include(x => x.SizeInProducts).ToListAsync();
         // if (!string.IsNullOrEmpty(request.Name))
         //     query = query.Where(x => x.Name.Contains(request.Name));
         //paging
@@ -334,9 +337,9 @@ public class ProductManager : IProductRepository, IDisposable
             }
             catch (Exception e)
             {
-                throw new CustomException("Save File Create Error: "+e.Message);
+                throw new CustomException("Save File Create Error: " + e.Message);
             }
-            
+
         }
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
@@ -356,13 +359,14 @@ public class ProductManager : IProductRepository, IDisposable
                 Message = "Sản phẩm không tồn tại",
                 Result = -1,
             };
-        if(product.LinkImage != null)
+        if (product.LinkImage != null)
         {
             try
             {
                 await _storageService.DeleteFileAsync(product.LinkImage);
             }
-           catch {
+            catch
+            {
                 throw new CustomException("Failed delete file");
             }
         }
@@ -390,13 +394,34 @@ public class ProductManager : IProductRepository, IDisposable
                 Result = -1,
                 Message = "Không tìm thấy sản phẩm",
             };
+
+        if (request.Price != product.Price)
+        {
+            var history = new HistoryPriceUpdate()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Name = product.Name,
+                UpdateDate = product.UpdateDate,
+                CreateDate = DateTime.UtcNow,
+                StartDate = product.UpdateDate,//ngày cũ
+                EndDate = DateTime.Now,
+                Description = $"Cập nhật giá ngày: {product.UpdateDate} cho sản phẩm: {product.Name}",
+                PriceOld = product.Price,
+                PriceNew = request.Price,
+                UserCreateID = _userID,
+                HistoryType = HistoryType.Product,
+                ProductID = productID,
+            };
+            await _context.HistoryPriceUpdates.AddAsync(history);
+        }
+
         product.Name = request.Name;
         product.Description = request.Description;
         product.Price = request.Price;
         product.UpdateDate = DateTime.Now;
         product.ProductType = request.ProductType;
         product.Description = request.Description;
-        if(request.File != null)
+        if (request.File != null)
         {
             try
             {
@@ -413,6 +438,7 @@ public class ProductManager : IProductRepository, IDisposable
             }
         }
         _context.Products.Update(product);
+
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -632,9 +658,30 @@ public class ProductManager : IProductRepository, IDisposable
                 Result = -1,
                 Message = "Không tìm thấy topping",
             };
+        if (request.SubPrice != size.SubPrice)
+        {
+            var history = new HistoryPriceUpdate()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Name = request.Name,
+                UpdateDate = DateTime.Now,
+                CreateDate = DateTime.UtcNow,
+                StartDate = size.UpdateDate ?? DateTime.Now,//ngày cũ
+                EndDate = DateTime.Now,
+                Description = $"Cập nhật giá ngày: { DateTime.Now} cho kichs thuocw: {request.Name}",
+                PriceOld = size.SubPrice,
+                PriceNew = request.SubPrice,
+                UserCreateID = _userID,
+                HistoryType = HistoryType.Size,
+                SizeID = sizeID,
+            };
+            _context.HistoryPriceUpdates.Add(history);
+        }
+
         size.Name = request.Name;
         size.SubPrice = request.SubPrice;
         size.UpdateDate = DateTime.Now;
+        size.UserUpdateID = _userID;
         _context.Sizes.Update(size);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -649,6 +696,8 @@ public class ProductManager : IProductRepository, IDisposable
         size.ID = Guid.NewGuid().ToString();
         size.CreateDate = DateTime.Now;
         size.UpdateDate = DateTime.Now;
+        size.UserCreateID = _userID;
+        size.UserUpdateID = _userID;
         _context.Sizes.Add(size);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -713,10 +762,32 @@ public class ProductManager : IProductRepository, IDisposable
                 Result = -1,
                 Message = "Không tìm thấy topping",
             };
+        if (request.SubPrice != topping.SubPrice)
+        {
+            var history = new HistoryPriceUpdate()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Name = request.Name,
+                UpdateDate = DateTime.Now,
+                CreateDate = DateTime.UtcNow,
+                StartDate = topping.UpdateDate ?? DateTime.Now,//ngày cũ
+                EndDate = DateTime.Now,
+                Description = $"Cập nhật giá ngày: { DateTime.Now} cho topping: {request.Name}",
+                PriceOld = topping.SubPrice,
+                PriceNew = request.SubPrice,
+                UserCreateID = _userID,
+                HistoryType = HistoryType.Topping,
+                ToppingID = toppingID,
+            };
+            _context.HistoryPriceUpdates.Add(history);
+        }
+
         topping.Name = request.Name;
         topping.Description = request.Description;
         topping.SubPrice = request.SubPrice;
         topping.UpdateDate = DateTime.Now;
+        topping.UserCreateID = _userID;
+        topping.UserUpdateID = _userID;
         _context.Toppings.Update(topping);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -731,6 +802,8 @@ public class ProductManager : IProductRepository, IDisposable
         topping.ID = Guid.NewGuid().ToString();
         topping.CreateDate = DateTime.Now;
         topping.UpdateDate = DateTime.Now;
+        topping.UserCreateID = _userID;
+        topping.UserUpdateID = _userID;
         _context.Toppings.Add(topping);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -773,4 +846,39 @@ public class ProductManager : IProductRepository, IDisposable
         return fileName;
     }
 
+    public async Task<Respond<PagedList<HistoryPriceUpdate>>> GetHistoryPriceByID(string ID, Search request)
+    {
+        
+        var query = from c in _context.HistoryPriceUpdates where c.ProductID == ID || c.SizeID == ID || c.ToppingID == ID select c;
+        if (!string.IsNullOrEmpty(request.Name))
+            query = query.Where(x => x.Name!.Contains(request.Name));
+        //paging
+        int totalRow = await query.CountAsync();
+        var data = new List<HistoryPriceUpdate>();
+        if (request.IsPging)
+        {
+            data = await query.Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToListAsync();
+        }
+        else
+        {
+            data = await query.Select(x => x).ToListAsync();
+        }
+
+        var pagedResult = new PagedList<HistoryPriceUpdate>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<HistoryPriceUpdate>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
 }

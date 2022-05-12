@@ -9,7 +9,7 @@ using TCH.Utilities.SubModels;
 using TCH.ViewModel.SubModels;
 using TCH.BackendApi.Repositories.DataRepository;
 
-namespace TCH.BackendApi.Repositories.DataManager;
+namespace TCH.BackendApi.Repositories.DataRepository;
 
 public class BranchManager : IDisposable, IBranchRepository
 {

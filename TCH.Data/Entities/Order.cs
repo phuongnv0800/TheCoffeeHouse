@@ -50,5 +50,5 @@ public class Order
 
     public Branch Branch { get; set; }
 
-    public ICollection<OrderDetail> OrderDetails { get; set; }
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 }

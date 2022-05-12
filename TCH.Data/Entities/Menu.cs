@@ -16,7 +16,7 @@ public class Menu
     public string BranchID { get; set; }
     public Branch Branch { get; set; }
 
-    public IEnumerable<Category> Categories { get; set; }
+    public virtual IEnumerable<Category> Categories { get; set; }
     //public ICollection<ProductInMenu> ProductInMenus { get; set; }
     public DateTime CreateDate { get; set; }
     public DateTime? UpdateDate { get; set; }

@@ -10,7 +10,6 @@ namespace TCH.BackendApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize]
 public class UsersController : ControllerBase
 {
     private readonly IUserRepository _repository;
@@ -49,9 +48,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("create")]
-    [Authorize(Roles =Permission.Admin)]
-    [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
+    [Authorize(Roles = Permission.Admin + "," + Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> Register([FromForm] RegisterRequest request)
     {
         try
@@ -76,9 +73,7 @@ public class UsersController : ControllerBase
 
     }
 
-    [Authorize(Roles = Permission.Admin)]
-    [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
+    [Authorize(Roles = Permission.Admin + "," + Permission.Branch + "," + Permission.Manage)]
     [HttpPost("lock/{id}")]
     public async Task<IActionResult> Lock(string id)
     {
@@ -104,9 +99,7 @@ public class UsersController : ControllerBase
 
     }
 
-    [Authorize(Roles = Permission.Admin)]
-    [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
+    [Authorize(Roles = Permission.Admin + "," + Permission.Branch+","+ Permission.Manage)]
     //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
     [HttpGet("paging")]
     public async Task<IActionResult> GetAllPaging([FromQuery] Search request)
@@ -128,8 +121,7 @@ public class UsersController : ControllerBase
         }
     }
 
-    [Authorize(Roles = Permission.Admin)]
-    [Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Admin + "," + Permission.Branch)]
     //PUT: http://localhost/api/users/id
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(string id, [FromForm] UserUpdateRequest request)
@@ -195,8 +187,7 @@ public class UsersController : ControllerBase
         }
     }
 
-    [Authorize(Roles = Permission.Admin)]
-    [Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Admin+","+ Permission.Branch)]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
@@ -217,8 +208,7 @@ public class UsersController : ControllerBase
         }
     }
 
-    [Authorize(Roles = Permission.Admin)]
-    [Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Admin + "," + Permission.Branch)]
     [HttpPut("assign-roles/{id}")]
     public async Task<IActionResult> RoleAssign(string id, [FromBody] RoleAssignRequest request)
     {

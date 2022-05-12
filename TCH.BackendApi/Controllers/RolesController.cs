@@ -21,9 +21,6 @@ public class RolesController : ControllerBase
         _logger = logger;
     }
 
-    [Authorize(Roles = Permission.Admin)]
-    [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] Search search)
     {

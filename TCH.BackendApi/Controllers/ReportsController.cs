@@ -11,8 +11,7 @@ namespace TCH.BackendApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = Permission.Branch)]
-[Authorize(Roles = Permission.Manage)]
+[Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
 public class ReportsController : ControllerBase
 {
     private readonly IReportRepository _repository;

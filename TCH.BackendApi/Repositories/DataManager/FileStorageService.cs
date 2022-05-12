@@ -1,7 +1,7 @@
 ﻿using Microsoft.Net.Http.Headers;
 using TCH.BackendApi.Repositories.DataRepository;
 
-namespace TCH.BackendApi.Repositories.DataManager;
+namespace TCH.BackendApi.Repositories.DataRepository;
 
 public class FileStorageService : IStorageService
 {

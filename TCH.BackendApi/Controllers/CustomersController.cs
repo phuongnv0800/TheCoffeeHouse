@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TCH.BackendApi.Repositories.DataRepository;
 using TCH.Utilities.Error;
+using TCH.Utilities.Roles;
 using TCH.Utilities.Searchs;
 using TCH.ViewModel.SubModels;
 
@@ -117,6 +118,7 @@ public class CustomersController : ControllerBase
         }
     }
     [HttpPost("member-type")]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> CreateMemberType([FromBody] MemberTypeRequest request)
     {
         try
@@ -137,6 +139,7 @@ public class CustomersController : ControllerBase
         }
     }
     [HttpPut("member-type/{id}")]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> UpdateMemberType(string id, [FromBody] MemberTypeRequest request)
     {
         try
@@ -157,6 +160,7 @@ public class CustomersController : ControllerBase
         }
     }
     [HttpDelete("member-type/{id}")]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> DeleteMemberType(string id)
     {
         try

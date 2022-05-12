@@ -8,7 +8,10 @@ public class Topping
     public string? Description { get; set; }
     public DateTime? CreateDate { get; set; }
     public DateTime? UpdateDate { get; set; }
-    public ICollection<ToppingInProduct> ToppingInProducts { get; set; }
+    public string? UserCreateID { get; set; }
+    public string? UserUpdateID { get; set; }
+    public virtual ICollection<ToppingInProduct> ToppingInProducts { get; set; }
 
-    public ICollection<OrderDetail> OrderDetails { get; set; }
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+    public virtual ICollection<HistoryPriceUpdate> HistoryPriceUpdates { get; set; }
 }
