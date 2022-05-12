@@ -1,23 +1,23 @@
-﻿@page "/categories"
+﻿@page "/materials"
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Identity
+@using Newtonsoft.Json
+@using System.Net.Http.Headers
 
-@using TCH.WebServer.GbParameter
+@using System.Security.Claims
 @using TCH.WebServer.Models
 @using TCH.WebServer.Models.Pagination
-@using TCH.WebServer.Services.Categories
+@using TCH.WebServer.Services.Materials
 @using TCH.WebServer.Services.Users
-@using Blazored.Modal.Services
 
-@inject NavigationManager navigationManager
-@inject ICategoryService categoryService
-@inject IUserService userService
+@inject HttpClient httpClient
+@inject ILocalStorageService localStorage;
+@inject IMaterialService materialService;
+@inject IUserService userServices;
+@inject NavigationManager navigationManager;
+@inject IJSRuntime jsRuntime;
 
-@if (!GbParameter.IsLogin)
-{
-    <h3>Bạn chưa đăng nhập</h3>
-}
-else
-{
-    <div class="fluid d-flex">
+<div class="fluid d-flex">
     <div class="py-5 w-100 px-5 ">
         <TCH.WebServer.Shared.Header.Header User="@User"></TCH.WebServer.Shared.Header.Header>
 
@@ -36,7 +36,7 @@ else
                 </div>
                 <div class="card-toolbar">
 
-                    <a class="btn btn-primary" onclick="@(() => Add())">Thêm sản phẩm</a>
+                    <a class="btn btn-primary" onclick="@(() => Add())">Thêm nguyên liệu</a>
                 </div>
             </div>
             <div class="card-body pt-0">
@@ -52,10 +52,7 @@ else
                                         </div>
                                     </th>
                                     <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                        Sản phẩm
-                                    </th>
-                                    <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending" style="width: 159.297px;">
-                                        loại sản phẩm
+                                        Nguyên liệu
                                     </th>
                                     <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
                                         Thao tác
@@ -63,9 +60,9 @@ else
                                 </tr>
                             </thead>
                             <tbody class="fw-bold text-gray-600">
-                                @if (CategoryList.Count != 0)
+                                @if (ProductsList.Count != 0)
                                 {
-                                    foreach (var product in CategoryList)
+                                    foreach (var product in ProductsList)
                                     {
                                         <tr class="odd">
                                             <td>
@@ -76,7 +73,7 @@ else
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="ms-5">
-                                                        <a href="../../demo1/dist/apps/ecommerce/catalog/edit-category.html" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                        <a href="" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
                                                             @product.Name
                                                         </a>
                                                         <div class="text-muted fs-7 fw-bolder">@product.Description</div>
@@ -102,6 +99,11 @@ else
                                         </tr>
                                     }
                                 }
+                                @*else
+                                    {
+                                    <div class="spinner" ></div>
+                                    }*@
+
                             </tbody>
                         </table>
                     </div>
@@ -156,10 +158,10 @@ else
         </div>
     </div>
 </div>
-}
+
 
 @code {
-    public List<Category>? CategoryList = new List<Category>();
+    public List<Material>? ProductsList = new List<Material>();
     private string? token;
     public string Name;
     private Pagination pagination = new Pagination();
@@ -169,34 +171,34 @@ else
 
     protected override async  Task OnParametersSetAsync()
     {
-        navigationManager.NavigateTo("categories");
-        var response = await userService.GetUserInfo();
+        navigationManager.NavigateTo("materials");
+        var response = await userServices.GetUserInfo();
         User = response.Data;
         await Get(1);
         base.OnParametersSet();
     }
     public async Task Get(int pageNumber){
-        var response = await categoryService.GetCategories( true,  pagination.pageSize,  pageNumber);
+        var response = await materialService.GetMaterials( true,  pagination.pageSize,  pageNumber);
         pagination.PageNumber = response.Data.CurrentPage;
-        CategoryList = response.Data.Items.ToList();
+        ProductsList = response.Data.Items.ToList();
         pagination.totalPage = response.Data.TotalPages;
     }
     public async void Add()
     {
-        //Modal.Show<AddProduct>("Thêm sản phẩm");
+        //Modal.Show<AddProduct>("Thêm nguyên liệu");
         //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
     }
     public async void Update(string id)
     {
         //var parameters = new ModalParameters();
-        //parameters.Add(nameof(Product.ID), id);
+        //parameters.Add(nameof(AddProduct.ProductId), id);
         //Modal.Show<AddProduct>("Sửa sản phẩm", parameters);
         //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
     }
     public async void Delete()
     {
         //navigationManager.NavigateTo("/add-product");
-        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
+        //var response = await materialService.GetProducts(true,  pagination.pageSize,  1);
     }
     public async void Change(int link)
     {
