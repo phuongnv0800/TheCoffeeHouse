@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
+using TCH.Data.Entities;
+using TCH.Utilities.Paginations;
 using TCH.WebServer.Models;
 
 namespace TCH.WebServer.Services.Brands

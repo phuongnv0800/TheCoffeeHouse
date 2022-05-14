@@ -1,4 +1,5 @@
 ﻿@page "/add-product"
+@using TCH.Data.Entities
 @using TCH.WebServer.Models
 @using TCH.WebServer.Services.Categories
 @using TCH.WebServer.Services.Products
@@ -47,13 +48,13 @@
                             </InputSelect>
 						</div>
 
-                        <div class="fv-row mb-7">
+                        @*<div class="fv-row mb-7">
 							<label class="required fs-6 fw-bold mb-2">đơn vị sản phẩm</label>
                             <InputText @bind-Value="editProduct.Unit" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editProduct.Unit)" />
                             </div>
-						</div>
+						</div>*@
 
                         <div class="fv-row mb-7">
 							<label class="fs-6 fw-bold mb-2 requied">Mô tả</label>
@@ -131,7 +132,8 @@
             editProduct.Price = vesselDB.Price;
             editProduct.PriceSale = vesselDB.PriceSale;
             editProduct.IsSale = vesselDB.IsSale;
-            editProduct.Unit = vesselDB.Unit;
+            editProduct.LinkImage = vesselDB.LinkImage;
+            editProduct.IsAvailable = vesselDB.IsAvailable;
         }
     }
 }

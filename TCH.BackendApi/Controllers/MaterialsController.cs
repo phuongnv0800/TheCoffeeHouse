@@ -10,9 +10,6 @@ namespace TCH.BackendApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = Permission.Admin)]
-[Authorize(Roles = Permission.Branch)]
-[Authorize(Roles = Permission.Manage)]
 public class MaterialsController : ControllerBase
 {
     private readonly IMaterialRepository _repository;
