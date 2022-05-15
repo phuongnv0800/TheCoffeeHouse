@@ -9,7 +9,7 @@ using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;
 using TCH.ViewModel.SubModels;
 
-namespace TCH.BackendApi.Repositories.DataRepository;
+namespace TCH.BackendApi.Repositories.DataManager;
 
 public class UnitManager : IDisposable, IUnitRepository
 {
@@ -66,7 +66,7 @@ public class UnitManager : IDisposable, IUnitRepository
 
     public async Task<MessageResult> Create(UnitRequest request)
     {
-        var category = _mapper.Map<Unit>(request);
+        var category = _mapper.Map<Measure>(request);
         category.ID = Guid.NewGuid().ToString();
         category.UpdateDate = DateTime.Now;
         category.CreateDate = DateTime.Now;

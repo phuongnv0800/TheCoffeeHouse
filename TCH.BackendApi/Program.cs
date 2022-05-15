@@ -9,8 +9,8 @@ using System.Text;
 using TCH.BackendApi.EF;
 using TCH.Data.Entities;
 using TCH.BackendApi.Repositories.DataRepository;
-using TCH.BackendApi.Repositories.DataRepository;
 using TCH.BackendApi.AutoMapper;
+using TCH.BackendApi.Repositories.DataManager;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config = builder.Configuration;
@@ -28,6 +28,7 @@ builder.Services.AddDbContext<APIContext>(options =>
 });
 builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Program));
 builder.Services.AddIdentity<AppUser, AppRole>()
+    .AddRoles<AppRole>()
     .AddEntityFrameworkStores<APIContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddScoped<IProductRepository, ProductManager>();

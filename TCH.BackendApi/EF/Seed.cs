@@ -14,9 +14,9 @@ public static class Seed
         {
             return; // DB has been seeded
         }
-        var units = new Unit[]
+        var units = new Measure[]
         {
-            new Unit()
+            new Measure()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Tấn",
@@ -24,7 +24,7 @@ public static class Seed
                 CreateDate = DateTime.Now,
                 Code = "TAN"
             },
-            new Unit()
+            new Measure()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Tạ",
@@ -32,7 +32,7 @@ public static class Seed
                 CreateDate = DateTime.Now,
                 Code = "TA"
             },
-            new Unit()
+            new Measure()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Yến",
@@ -40,7 +40,7 @@ public static class Seed
                 CreateDate = DateTime.Now,
                 Code = "YEN"
             },
-            new Unit()
+            new Measure()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Ki-lô-gam",
@@ -48,7 +48,7 @@ public static class Seed
                 CreateDate = DateTime.Now,
                 Code = "KG"
             },
-            new Unit()
+            new Measure()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Gam",
@@ -56,7 +56,7 @@ public static class Seed
                 CreateDate = DateTime.Now,
                 Code = "G"
             },
-            new Unit()
+            new Measure()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Lít",
@@ -64,7 +64,7 @@ public static class Seed
                 CreateDate = DateTime.Now,
                 Code = "L"
             },
-            new Unit()
+            new Measure()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Mi-li-lít",
@@ -2765,6 +2765,16 @@ public static class Seed
         {
             UserId = admin.Id,
             RoleId = roleBranch.Id,
+        });
+        context.UserRoles.Add(new IdentityUserRole<string>()
+        {
+            UserId = admin.Id,
+            RoleId = roleManager.Id,
+        });
+        context.UserRoles.Add(new IdentityUserRole<string>()
+        {
+            UserId = admin.Id,
+            RoleId = roleStaff.Id,
         });
         context.UserRoles.Add(new IdentityUserRole<string>()
         {

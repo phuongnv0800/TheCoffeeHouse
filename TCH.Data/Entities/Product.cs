@@ -16,7 +16,7 @@ public class Product
     public double PriceSale { get; set; }
     public double Price { get; set; }
     public string? Description { get; set; }
-    public string LinkImage { get; set; }
+    public string? LinkImage { get; set; }
     public string CategoryID { get; set; }
     public Category Category { get; set; }
     public virtual ICollection<ProductImage> ProductImages { get; set; }

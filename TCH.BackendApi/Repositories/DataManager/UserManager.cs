@@ -16,7 +16,7 @@ using System.Text.Json;
 using TCH.Utilities.Enum;
 using TCH.Utilities.Claims;
 
-namespace TCH.BackendApi.Repositories.DataRepository;
+namespace TCH.BackendApi.Repositories.DataManager;
 
 public class UserManager : IUserRepository, IDisposable
 {
@@ -66,18 +66,27 @@ public class UserManager : IUserRepository, IDisposable
         }
 
         var roles = await _userManager.GetRolesAsync(user);
-        var claims = new[]
+        var claims = new List<Claim>();
+
+        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+        claims.Add(new Claim(ClaimTypes.Email, user.Email ?? ""));
+        claims.Add(new Claim(ClaimTypes.GivenName, user.FirstName ?? "" + " " + user.LastName));
+        //claims.Add( new Claim(ClaimTypes.Role, string.Join(";", roles)),
+        claims.Add(new Claim(ClaimTypes.Name, request.UserName));
+        claims.Add(new Claim(ClaimValue.Displayname, user.LastName ?? ""));
+        claims.Add(new Claim(ClaimValue.BranhID, user.BranchID ?? ""));
+        claims.Add(new Claim(ClaimValue.ID, user.Id));
+        //claims.Add(new Claim(ClaimValue.Role, JsonSerializer.Serialize(roles)),
+
+
+        if (roles != null && claims != null)
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Email, user.Email ?? ""),
-            new Claim(ClaimTypes.GivenName, user.FirstName ?? "" + " " + user.LastName),
-            new Claim(ClaimTypes.Role, string.Join(";", roles)),
-            new Claim(ClaimTypes.Name, request.UserName),
-            new Claim(ClaimValue.Displayname, user.LastName ?? ""),
-            new Claim(ClaimValue.BranhID,user.BranchID ?? ""),
-            new Claim(ClaimValue.ID, user.Id),
-            new Claim(ClaimValue.Role, JsonSerializer.Serialize(roles)),
-        };
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role ?? ""));
+            }
+        }
+
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var expiry = DateTime.Now.AddDays(Convert.ToInt32(_config["Jwt:ExpiryInDays"]));
@@ -277,7 +286,7 @@ public class UserManager : IUserRepository, IDisposable
             PhoneNumber = request.PhoneNumber,
             Gender = request.Gender,
             Address = request.Address,
-            BranchID =request.branchID,
+            BranchID = request.branchID,
             Status = Status.Active,
         };
         if (request.AvatarFile != null)

@@ -11,7 +11,7 @@ using TCH.ViewModel.SubModels;
 using TCH.Utilities.Error;
 using System.Net.Http.Headers;
 
-namespace TCH.BackendApi.Repositories.DataRepository;
+namespace TCH.BackendApi.Repositories.DataManager;
 
 public class MaterialManager : IMaterialRepository, IDisposable
 {

@@ -11,7 +11,7 @@ using TCH.BackendApi.Repositories.DataRepository;
 using System.Net.Http.Headers;
 using TCH.Utilities.Error;
 
-namespace TCH.BackendApi.Repositories.DataRepository;
+namespace TCH.BackendApi.Repositories.DataManager;
 
 public class BranchManager : IDisposable, IBranchRepository
 {
