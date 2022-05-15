@@ -1,11 +1,11 @@
-﻿using TCH.Data.Entities;
-using TCH.Utilities.Paginations;
+﻿using TCH.Utilities.Paginations;
 using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;
+using TCH.ViewModel.SubModels;
 
 namespace TCH.BackendApi.Repositories.DataRepository;
 
 public interface IStockRepository
 {
-    Task<Respond<PagedList<StockMaterial>>> GetAllStockByBranchID(string branchID, Search request);
+    Task<Respond<PagedList<StockVm>>> GetAllStockByBranchID(string branchID, Search request);
 }

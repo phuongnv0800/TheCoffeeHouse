@@ -102,7 +102,6 @@ public class PromotionsController : ControllerBase
     }
    
     [HttpPut("{id}")]
-    [Authorize]
     [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Update(string id, [FromForm] PromotionRequest request)
     {
@@ -130,6 +129,25 @@ public class PromotionsController : ControllerBase
         try
         {
             var result = await _repository.Delete(id);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [HttpDelete("code/{code}")]
+    [Authorize(Roles = Permission.Branch)]
+    public async Task<IActionResult> DeleteByCode(string code)
+    {
+        try
+        {
+            var result = await _repository.DeleteByCode(code);
             return Ok(result);
         }
         catch (CustomException e)

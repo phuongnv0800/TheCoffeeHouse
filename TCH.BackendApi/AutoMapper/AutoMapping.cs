@@ -20,6 +20,7 @@ public class AutoMapping : Profile
 
         CreateMap<Topping, ToppingVm>();
         CreateMap<ToppingVm, Topping>();
+        CreateMap<StockMaterial, StockVm>();
 
         CreateMap<Measure, UnitVm>();
         CreateMap<UnitVm, Measure>();

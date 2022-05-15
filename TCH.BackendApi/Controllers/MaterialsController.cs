@@ -39,6 +39,25 @@ public class MaterialsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    [AllowAnonymous]
+    [HttpGet("{materialId}")]
+    public async Task<IActionResult> GetByID(string materialId)
+    {
+        try
+        {
+            var result = await _repository.GetMaterialByID(materialId);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
     [HttpPost]
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> Create([FromForm] MaterialRequest request)
@@ -103,6 +122,25 @@ public class MaterialsController : ControllerBase
         {
             var respond = await _repository.GetAllMaterialType(search);
             return Ok(respond);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [AllowAnonymous]
+    [HttpGet("type/{materialId}")]
+    public async Task<IActionResult> GetTypeByID(string materialId)
+    {
+        try
+        {
+            var result = await _repository.GetMaterialTypeByID(materialId);
+            return Ok(result);
         }
         catch (CustomException e)
         {
