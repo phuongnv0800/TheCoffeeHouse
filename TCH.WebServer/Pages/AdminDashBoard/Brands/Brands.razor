@@ -54,10 +54,10 @@ else
                                         </div>
                                     </th>
                                     <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                        Sản phẩm
+                                        Cửa hàng
                                     </th>
                                     <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending" style="width: 159.297px;">
-                                        loại sản phẩm
+                                        
                                     </th>
                                     <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
                                         Thao tác
@@ -69,6 +69,8 @@ else
                                 {
                                     foreach (var branch in BranchList)
                                     {
+                                        string fileImage = "https://localhost:8001/uploads" + branch.LinkImage;
+                                        string href = "/branchs/" + branch.ID.ToString();
                                         <tr class="odd">
                                             <td>
                                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -77,8 +79,9 @@ else
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center">
+                                                    <img height="40" width="40" src = "@fileImage">
                                                     <div class="ms-5">
-                                                        <a href="../../demo1/dist/apps/ecommerce/catalog/edit-category.html" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                        <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
                                                             @branch.Name
                                                         </a>
                                                         <div class="text-muted fs-7 fw-bolder">@branch.Adderss </div>

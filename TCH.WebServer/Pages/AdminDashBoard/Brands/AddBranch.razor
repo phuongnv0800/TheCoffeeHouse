@@ -38,7 +38,7 @@
 
 
                         <div class="fv-row mb-7">
-							<label class="required fs-6 fw-bold mb-2">đơn vị sản phẩm</label>
+							<label class="required fs-6 fw-bold mb-2">Địa chỉ</label>
                             <InputText @bind-Value="editBranch.Adderss" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.Adderss)" />
@@ -46,7 +46,7 @@
 						</div>
 
                         <div class="fv-row mb-7">
-							<label class="fs-6 fw-bold mb-2 requied">Mô tả</label>
+							<label class="fs-6 fw-bold mb-2 requied">Thành phố</label>
                             <InputText @bind-Value="editBranch.City" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.City)" />
@@ -54,72 +54,72 @@
 						</div>
 
                         <div class="fv-row mb-7">
-							<label class="fs-6 fw-bold mb-2">Giá</label>
-                            <InputNumber @bind-Value="editBranch.District" class="form-control form-control-solid col-sm-6" />
+							<label class="fs-6 fw-bold mb-2">Huyện (Quận)</label>
+                            <InputText @bind-Value="editBranch.District" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.District)" />
                             </div>
 						</div>
 
                         <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
-                            <InputNumber @bind-Value="editBranch.Email" class="form-control form-control-solid col-sm-6" />
+							<label class=" fs-6 fw-bold mb-2">Email</label>
+                            <InputText @bind-Value="editBranch.Email" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.Email)" />
                             </div>
 						</div>
                         <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
-                            <InputNumber @bind-Value="editBranch.Footercontent" class="form-control form-control-solid col-sm-6" />
+							<label class=" fs-6 fw-bold mb-2">Nội dung footer</label>
+                            <InputText @bind-Value="editBranch.Footercontent" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.Footercontent)" />
                             </div>
 						</div>
                         <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
-                            <InputNumber @bind-Value="editBranch.Headercontent" class="form-control form-control-solid col-sm-6" />
+							<label class=" fs-6 fw-bold mb-2">Nội dung Header</label>
+                            <InputText @bind-Value="editBranch.Headercontent" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.Headercontent)" />
                             </div>
 						</div>
                         <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
+							<label class=" fs-6 fw-bold mb-2">Kiểu</label>
                             <InputNumber @bind-Value="editBranch.LayoutType" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.LayoutType)" />
                             </div>
 						</div>
                         <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
-                            <InputNumber @bind-Value="editBranch.LogoInvoice" class="form-control form-control-solid col-sm-6" />
+							<label class=" fs-6 fw-bold mb-2">logo</label>
+                            <InputText @bind-Value="editBranch.LogoInvoice" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.LogoInvoice)" />
                             </div>
 						</div>
                          <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
-                            <InputNumber @bind-Value="editBranch.Phone" class="form-control form-control-solid col-sm-6" />
+							<label class=" fs-6 fw-bold mb-2">Số điện thoại</label>
+                            <InputText @bind-Value="editBranch.Phone" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.Phone)" />
                             </div>
 						</div>
                          <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
-                            <InputNumber @bind-Value="editBranch.RestaurantName" class="form-control form-control-solid col-sm-6" />
+							<label class=" fs-6 fw-bold mb-2">Tên cửa hàng</label>
+                            <InputText @bind-Value="editBranch.RestaurantName" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.RestaurantName)" />
                             </div>
 						</div>
                          <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
-                            <InputNumber @bind-Value="editBranch.TitleInventory" class="form-control form-control-solid col-sm-6" />
+							<label class=" fs-6 fw-bold mb-2">Title Inventory</label>
+                            <InputText @bind-Value="editBranch.TitleInventory" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.TitleInventory)" />
                             </div>
 						</div>
                          <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
-                            <InputNumber @bind-Value="editBranch.TitleInvoice" class="form-control form-control-solid col-sm-6" />
+							<label class=" fs-6 fw-bold mb-2">Title Invoice</label>
+                            <InputText @bind-Value="editBranch.TitleInvoice" class="form-control form-control-solid col-sm-6" />
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => editBranch.TitleInvoice)" />
                             </div>
@@ -193,7 +193,7 @@
             content.Add(new StringContent(editBranch.Name), "Name");
             content.Add(new StringContent(editBranch.Adderss), "Address");
             content.Add(new StringContent(editBranch.City), "City");
-            content.Add(new StringContent(editBranch.District.ToString()), "Dítrict");
+            content.Add(new StringContent(editBranch.District.ToString()), "District");
             content.Add(new StringContent(editBranch.Email.ToString()), "Email");
             content.Add(new StringContent(editBranch.Footercontent.ToString()), "FooterContent");
             content.Add(new StringContent(editBranch.LinkImage.ToString()), "LinkImage");

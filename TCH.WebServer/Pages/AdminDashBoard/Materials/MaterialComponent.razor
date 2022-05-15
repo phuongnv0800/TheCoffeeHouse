@@ -1,12 +1,14 @@
-﻿@page "/branchs/{BranchId}"
+﻿@page "/materials/{MaterialId}"
 @using TCH.Data.Entities
+@using TCH.Utilities.Paginations
 @using TCH.WebServer.Models
 @using TCH.WebServer.Services.Brands
 @using TCH.WebServer.Services.Categories
 @using TCH.WebServer.Services.Products
 @using TCH.WebServer.Services.Users
+@using TCH.WebServer.Services.Materials
 
-@inject IBrandService _branchService
+@inject IMaterialService _materialService
 @inject ICategoryService _categoryService
 @inject IUserService userService
 @inject IToastService _toastService
@@ -175,11 +177,11 @@
 											<!--end::Card header-->
 											<!--begin::Card body-->
 											<div class="card-body text-center pt-0">
-												<EditForm Model="@editBranch">
+												<EditForm Model="@editMaterial">
 												<!--begin::Image input-->
 												<div class="image-input image-input-outline mb-3 image-input-changed" data-kt-image-input="true" style="background-image: url(assets/media/svg/files/blank-image.svg)">
 													<!--begin::Preview existing avatar-->
-													<div class="image-input-wrapper w-150px h-150px" style="background-image: url(@("https://localhost:8001/uploads" + editBranch.LinkImage))"></div>  @*assets/media/svg/files/blank-image.svg*@
+													<div class="image-input-wrapper w-150px h-150px" style="background-image: url(@("https://localhost:8001/uploads" + editMaterial.LinkImage))"></div>  @*assets/media/svg/files/blank-image.svg*@
 													<!--end::Preview existing avatar-->
 													<!--begin::Label-->
 													<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="" data-bs-original-title="Change avatar">
@@ -266,15 +268,15 @@
 											<!--begin::Card body-->
 											<div class="card-body pt-0">
 												<!--begin::Input group-->
-												<EditForm Model="@editBranch">
+												<EditForm Model="@editMaterial">
 													<div class="mb-10 fv-row fv-plugins-icon-container">
 														<!--begin::Label-->
-														<label class="required form-label">Tên sản phẩm</label>
+														<label class="required form-label">Tên nguyên liệu</label>
 														<!--end::Label-->
 														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.Name" class="form-control form-control-solid col-sm-6" />
+														<InputText @bind-Value="editMaterial.Name" class="form-control form-control-solid col-sm-6" />
 														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.Name)" />
+															<ValidationMessage For="@(() => editMaterial.Name)" />
 														</div>
 														<!--end::Input-->
 														<!--begin::Description-->
@@ -285,72 +287,12 @@
 													<!--end::Input group-->
 													<div class="mb-10 fv-row fv-plugins-icon-container">
 														<!--begin::Label-->
-														<label class="required form-label">Địa chỉ</label>
+														<label class="required form-label">Mô tả</label>
 														<!--end::Label-->
 														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.Adderss" class="form-control form-control-solid col-sm-6" />
+														<InputText @bind-Value="editMaterial.Description" class="form-control form-control-solid col-sm-6" />
 														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.Adderss)" />
-														</div>
-														<!--end::Input-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Thành phố</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.City" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.City)" />
-														</div>
-														<!--end::Input-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Huyện (Quận)</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.District" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.District)" />
-														</div>
-														<!--end::Input-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Email</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.Email" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.Email)" />
-														</div>
-														<!--end::Input-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Nội dung Footer</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.Footercontent" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.Footercontent)" />
-														</div>
-														<!--end::Input-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Nội dung Header</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.Headercontent" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.Headercontent)" />
+															<ValidationMessage For="@(() => editMaterial.Description)" />
 														</div>
 														<!--end::Input-->
 													</div>
@@ -360,76 +302,23 @@
 														<label class="required form-label">Kiểu</label>
 														<!--end::Label-->
 														<!--begin::Input-->
-														<InputNumber @bind-Value="editBranch.LayoutType" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.LayoutType)" />
-														</div>
+														<InputSelect @bind-Value="editMaterial.MaterialTypeID" class="form-control">
+															@if (types != null)
+															{
+																@foreach (var dept in types)
+																{
+																	<option value="@dept.ID">@dept.Name</option>
+																}
+															}
+
+														</InputSelect>
 														<!--end::Input-->
 													</div>
 													<!--end::Input group-->
+
 													<div class="mb-10 fv-row fv-plugins-icon-container">
 														<!--begin::Label-->
-														<label class="required form-label">Logo</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.LogoInvoice" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.LogoInvoice)" />
-														</div>
-														<!--end::Input-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Điện thoại</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.Phone" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.Phone)" />
-														</div>
-														<!--end::Input-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Tên cửa hàng</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.RestaurantName" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.RestaurantName)" />
-														</div>
-														<!--end::Input-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Title Inventory</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.TitleInventory" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.TitleInventory)" />
-														</div>
-														<!--end::Input-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Title Invoice</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editBranch.TitleInvoice" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editBranch.TitleInvoice)" />
-														</div>
-														<!--end::Input-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Giá sale</label>
+														<label class="required form-label">Hình ảnh</label>
 														<!--end::Label-->
 														<!--begin::Input-->
 														<InputFile OnChange="HandleSelection"></InputFile>
@@ -466,46 +355,39 @@
 
 @code {
     [Parameter] public string Title { get; set; }
-    [Parameter] public string? BranchId { get; set; }
+    [Parameter] public string? MaterialId { get; set; }
 
+    private List<MaterialType> types = new List<MaterialType>();
 	private ApplicationUser User;
-    private Branch editBranch = null;
+    private Material editMaterial = null;
 
-    protected async  override Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync()
     {
-        editBranch = new Branch();
+        editMaterial = new Material();
 		var response = await userService.GetUserInfo();
         User = response.Data;
+		var responseType = await _materialService.GetMaterialTypes();
+        types = responseType.Data.Items;
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        if (string.IsNullOrEmpty(BranchId))
+        if (string.IsNullOrEmpty(MaterialId))
         {
-            editBranch = new Branch();
+            editMaterial = new Material();
         }
         else
         {
-            var responseP = await _branchService.GetBranchById(BranchId);
+            var responseP = await _materialService.GetMaterialById(MaterialId);
             var vesselDB = responseP.Data;
-            editBranch.Name = vesselDB.Name;
-            editBranch.Adderss = vesselDB.Adderss;
-            editBranch.City = vesselDB.City;
-            editBranch.District = vesselDB.District;
-            editBranch.Email = vesselDB.Email;
-            editBranch.Footercontent = vesselDB.Footercontent;
-            editBranch.LinkImage = vesselDB.LinkImage;
-            editBranch.Headercontent = vesselDB.Headercontent;
-            editBranch.LayoutType = vesselDB.LayoutType;
-            editBranch.LogoInvoice = vesselDB.LogoInvoice;
-            editBranch.Phone = vesselDB.Phone;
-            editBranch.RestaurantName = vesselDB.RestaurantName;
-            editBranch.TitleInventory = vesselDB.TitleInventory;
-            editBranch.TitleInvoice = vesselDB.TitleInvoice;
+            editMaterial.Name = vesselDB.Name;
+            editMaterial.Description = vesselDB.Description;
+            editMaterial.LinkImage = vesselDB.LinkImage;
+            editMaterial.MaterialTypeID = vesselDB.MaterialTypeID;
+            editMaterial.MaterialType = vesselDB.MaterialType;
         }
     }
 }
-
 
 @code {
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
@@ -516,28 +398,19 @@
     private async Task OnSubmit()
     {
         try{
-            ResponseLogin<Branch> response = new ResponseLogin<Branch>();
-            content.Add(new StringContent(editBranch.Name), "Name");
-            content.Add(new StringContent(editBranch.Adderss), "Address");
-            content.Add(new StringContent(editBranch.City), "City");
-            content.Add(new StringContent(editBranch.District.ToString()), "District");
-            content.Add(new StringContent(editBranch.Email.ToString()), "Email");
-            content.Add(new StringContent(editBranch.Footercontent.ToString()), "FooterContent");
-            content.Add(new StringContent(editBranch.LinkImage.ToString()), "LinkImage");
-            content.Add(new StringContent(editBranch.Headercontent.ToString()), "Headercontent");
-            content.Add(new StringContent(editBranch.LayoutType.ToString()), "LayoutType");
-            content.Add(new StringContent(editBranch.LogoInvoice.ToString()), "LogoInvoice");
-            content.Add(new StringContent(editBranch.Phone.ToString()), "Phone");
-            content.Add(new StringContent(editBranch.RestaurantName.ToString()), "RestaurantName");
-            content.Add(new StringContent(editBranch.TitleInventory.ToString()), "TitleInventory");
-            content.Add(new StringContent(editBranch.TitleInvoice.ToString()), "TitleInvoice");
-            if (string.IsNullOrEmpty(BranchId))
+            ResponseLogin<Material> response = new ResponseLogin<Material>();
+            content.Add(new StringContent(editMaterial.Name), "Name");
+            content.Add(new StringContent(editMaterial.Description), "Description");
+            content.Add(new StringContent(editMaterial.MaterialTypeID), "MaterialTypeID");
+            content.Add(new StringContent(editMaterial.MaterialType.ToString()), "MaterialType");
+            
+            if (string.IsNullOrEmpty(MaterialId))
             {
-                response = await _branchService.AddBranch(content);
+                response = await _materialService.AddMaterial(content);
             }
             else
             {
-                response = await _branchService.Update(content);
+                response = await _materialService.UpdateMaterial(content);
             }
             if(response != null)
             {
