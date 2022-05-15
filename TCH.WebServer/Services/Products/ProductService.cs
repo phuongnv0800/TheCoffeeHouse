@@ -23,13 +23,13 @@ namespace TCH.WebServer.Services.Products
             _localStorage = localStorage;
         }
 
-        public async Task<ResponseLogin<Product>> AddProduct(Product product)
+        public async Task<ResponseLogin<Product>> AddProduct(MultipartFormDataContent product)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var httpContent = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync($"/api/Products/", httpContent);
+                //var httpContent = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"/api/Products/", product);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -143,13 +143,13 @@ namespace TCH.WebServer.Services.Products
             }
         }
 
-        public async Task<ResponseLogin<Product>> UpdateProduct(Product product)
+        public async Task<ResponseLogin<Product>> UpdateProduct(MultipartFormDataContent product)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var httpContent = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
-                var response = await _httpClient.PutAsync($"/api/Products/", httpContent);
+                //var httpContent = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"/api/Products/", product);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();

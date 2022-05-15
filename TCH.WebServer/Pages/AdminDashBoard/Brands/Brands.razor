@@ -11,6 +11,7 @@
 @inject NavigationManager navigationManager
 @inject IBrandService brandService
 @inject IUserService userService
+@inject IToastService toastService
 
 @if (!GbParameter.GbParameter.IsLogin)
 {
@@ -95,8 +96,8 @@ else
                                                         Thao tác
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" onclick = "@(() => Update(branch.ID))" >Sửa</a></li>
-                                                        <li><a class="dropdown-item" onclick = "@(() => Delete())">Xóa</a></li>
+                                                        <li><a class="dropdown-item" onclick = "@(() => Update(branch.ID.ToString()))" >Sửa</a></li>
+                                                        <li><a class="dropdown-item" onclick = "@(() => Delete(branch.ID.ToString()))">Xóa</a></li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -184,22 +185,31 @@ else
     }
     public async void Add()
     {
-        //Modal.Show<AddProduct>("Thêm sản phẩm");
-        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
+        var modal = Modal.Show<AddBranch>("Thêm cửa hàng");
+        var result = await modal.Result;
+        if (!result.Cancelled)
+        {
+            await Change(1);
+        }
     }
     public async void Update(string id)
     {
-        //var parameters = new ModalParameters();
-        //parameters.Add(nameof(Product.ID), id);
-        //Modal.Show<AddProduct>("Sửa sản phẩm", parameters);
-        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
+        navigationManager.NavigateTo($"branchs/{id}");
     }
-    public async void Delete()
+    public async void Delete(string id)
     {
-        //navigationManager.NavigateTo("/add-product");
-        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
+        try{
+            await brandService.DeleteBranch(id);
+            toastService.ShowSuccess("Xóa thành công");
+            await Change(1);
+        }
+        catch(Exception ex)
+        {
+            toastService.ShowError(ex.ToString());
+        }
+        var response = await brandService.GetAllBranchs();
     }
-    public async void Change(int link)
+    public async Task Change(int link)
     {
         pagination.PageNumber = link;
         await Get(link);

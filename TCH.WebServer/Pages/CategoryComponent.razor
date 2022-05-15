@@ -557,13 +557,15 @@
     private async Task OnSubmit()
     {
         ResponseLogin<Category> response = new ResponseLogin<Category>();
+		content.Add(new StringContent(editCategory.Name), "Name");
+            content.Add(new StringContent(editCategory.Description), "Description");
         if (string.IsNullOrEmpty(CategoryId))
         {
-            response = await _categoryService.AddCategory(editCategory);
+            response = await _categoryService.AddCategory(content);
         }
         else
         {
-            response = await _categoryService.UpdateCategory(editCategory);
+            response = await _categoryService.UpdateCategory(content);
         }
         if(response != null)
         {

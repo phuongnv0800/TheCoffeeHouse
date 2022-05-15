@@ -100,7 +100,7 @@ public class ProductsController : ControllerBase
     }
 
     //https://localhost:port/product/1
-    [Authorize(Roles = Permission.Branch)]
+    //[Authorize(Roles = Permission.Admin)]
     [HttpPost]
     [Consumes("multipart/form-data")]//nhận kiểu dữ liệu truyền lên là form data
     public async Task<IActionResult> Create([FromForm] ProductRequest request)
@@ -126,7 +126,7 @@ public class ProductsController : ControllerBase
         }
     }
 
-    [Authorize(Roles = Permission.Branch)]
+    //[Authorize(Roles = Permission.Admin)]
     [HttpPut("{productID}")]
     public async Task<IActionResult> Update(string productID, [FromForm] ProductRequest request)
     {
@@ -149,7 +149,7 @@ public class ProductsController : ControllerBase
         }
     }
 
-    [Authorize(Roles = Permission.Branch)]
+    //[Authorize(Roles = Permission.Admin)]
     [HttpDelete("{productId}")]
     public async Task<IActionResult> Delete(string productId)
     {

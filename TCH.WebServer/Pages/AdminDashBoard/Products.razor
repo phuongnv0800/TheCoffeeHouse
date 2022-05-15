@@ -17,6 +17,7 @@
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
 @inject IJSRuntime jsRuntime;
+@inject IToastService toastService;
 
 <div class="fluid d-flex">
     <div class="py-5 w-100 px-5 ">
@@ -98,8 +99,8 @@
                                                         Thao tác
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" onclick = "@(() => Update(product.ID))" >Sửa</a></li>
-                                                        <li><a class="dropdown-item" onclick = "@(() => Delete(product.ID))">Xóa</a></li>
+                                                        <li><a class="dropdown-item" onclick = "@(() => Update(product.ID.ToString()))" >Sửa</a></li>
+                                                        <li><a class="dropdown-item" onclick = "@(() => Delete(product.ID.ToString()))">Xóa</a></li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -192,28 +193,32 @@
     }
     public async void Add()
     {
-        Modal.Show<AddProduct>("Thêm sản phẩm");
+        var modal = Modal.Show<AddProduct>("Thêm sản phẩm");
+        var result = await modal.Result;
+        if (!result.Cancelled)
+        {
+            await Change(1);
+        }
         //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
     }
     public async void Update(string id)
     {
-        var parameters = new ModalParameters();
-        parameters.Add(nameof(AddProduct.ProductId), id);
-        Modal.Show<AddProduct>("Sửa sản phẩm", parameters);
-        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
+        navigationManager.NavigateTo($"categories/{id}");
     }
     public async void Delete(string id)
     {
         try{
             await productServices.DeleteProduct(id);
+            toastService.ShowSuccess("Xóa thành công");
+            await Change(1);
         }
-        catch
+        catch(Exception ex)
         {
-            
+            toastService.ShowError(ex.ToString());
         }
         var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
     }
-    public async void Change(int link)
+    public async Task Change(int link)
     {
         pagination.PageNumber = link;
         await Get(link);

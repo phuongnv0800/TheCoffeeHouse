@@ -1,0 +1,247 @@
+﻿@page "/add-branch"
+@using TCH.Data.Entities
+@using TCH.WebServer.Models
+@using TCH.WebServer.Services.Brands
+@using TCH.WebServer.Services.Categories
+
+@inject ICategoryService _categoryService
+@inject IBrandService _branchService
+@inject IToastService _toastService
+
+<TCH.WebServer.Shared.Header.Header ></TCH.WebServer.Shared.Header.Header>
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="OnCancel"></div>
+    <div class="modal-dialog modal-dialog-centered mw-650px" style="z-index: 1050">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="fw-bolder">@Title</h5>
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" @onclick="OnCancel">
+                    <span class="svg-icon svg-icon-1">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+							<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+							<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+						</svg>
+					</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="scroll-y me-n7 pe-7">
+                    <EditForm Model="editBranch" OnValidSubmit="OnSubmit" class="form">
+                        <DataAnnotationsValidator />
+                        <div class="fv-row mb-7">
+							<label class="required fs-6 fw-bold mb-2">Tên sản phẩm</label>
+                            <InputText @bind-Value="editBranch.Name" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.Name)" />
+                            </div>
+						</div>
+
+
+                        <div class="fv-row mb-7">
+							<label class="required fs-6 fw-bold mb-2">đơn vị sản phẩm</label>
+                            <InputText @bind-Value="editBranch.Adderss" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.Adderss)" />
+                            </div>
+						</div>
+
+                        <div class="fv-row mb-7">
+							<label class="fs-6 fw-bold mb-2 requied">Mô tả</label>
+                            <InputText @bind-Value="editBranch.City" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.City)" />
+                            </div>
+						</div>
+
+                        <div class="fv-row mb-7">
+							<label class="fs-6 fw-bold mb-2">Giá</label>
+                            <InputNumber @bind-Value="editBranch.District" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.District)" />
+                            </div>
+						</div>
+
+                        <div class="fv-row mb-7">
+							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
+                            <InputNumber @bind-Value="editBranch.Email" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.Email)" />
+                            </div>
+						</div>
+                        <div class="fv-row mb-7">
+							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
+                            <InputNumber @bind-Value="editBranch.Footercontent" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.Footercontent)" />
+                            </div>
+						</div>
+                        <div class="fv-row mb-7">
+							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
+                            <InputNumber @bind-Value="editBranch.Headercontent" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.Headercontent)" />
+                            </div>
+						</div>
+                        <div class="fv-row mb-7">
+							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
+                            <InputNumber @bind-Value="editBranch.LayoutType" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.LayoutType)" />
+                            </div>
+						</div>
+                        <div class="fv-row mb-7">
+							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
+                            <InputNumber @bind-Value="editBranch.LogoInvoice" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.LogoInvoice)" />
+                            </div>
+						</div>
+                         <div class="fv-row mb-7">
+							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
+                            <InputNumber @bind-Value="editBranch.Phone" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.Phone)" />
+                            </div>
+						</div>
+                         <div class="fv-row mb-7">
+							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
+                            <InputNumber @bind-Value="editBranch.RestaurantName" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.RestaurantName)" />
+                            </div>
+						</div>
+                         <div class="fv-row mb-7">
+							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
+                            <InputNumber @bind-Value="editBranch.TitleInventory" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.TitleInventory)" />
+                            </div>
+						</div>
+                         <div class="fv-row mb-7">
+							<label class=" fs-6 fw-bold mb-2">Giá khuyến mãi</label>
+                            <InputNumber @bind-Value="editBranch.TitleInvoice" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editBranch.TitleInvoice)" />
+                            </div>
+						</div>
+                        <div class="fv-row mb-7">
+							<label class="fs-6 fw-bold mb-2">Hình ảnh</label>
+                            <InputFile OnChange="HandleSelection"></InputFile>
+						</div>
+                        
+                        <div class="card-footer p-2">
+                            <button type="submit" class="btn btn-primary mr-2" onclick="@(()=>OnSubmit())">Cập nhật</button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string? BranchId { get; set; }
+
+    private Branch editBranch = null;
+
+    protected override void OnInitialized()
+    {
+        editBranch = new Branch();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var response = await _branchService.GetAllBranchs();
+        if (string.IsNullOrEmpty(BranchId))
+        {
+            editBranch = new Branch();
+        }
+        else
+        {
+            var responseP = await _branchService.GetBranchById(BranchId);
+            var vesselDB = responseP.Data;
+            editBranch.Name = vesselDB.Name;
+            editBranch.Adderss = vesselDB.Adderss;
+            editBranch.City = vesselDB.City;
+            editBranch.District = vesselDB.District;
+            editBranch.Email = vesselDB.Email;
+            editBranch.Footercontent = vesselDB.Footercontent;
+            editBranch.LinkImage = vesselDB.LinkImage;
+            editBranch.Headercontent = vesselDB.Headercontent;
+            editBranch.LayoutType = vesselDB.LayoutType;
+            editBranch.LogoInvoice = vesselDB.LogoInvoice;
+            editBranch.Phone = vesselDB.Phone;
+            editBranch.RestaurantName = vesselDB.RestaurantName;
+            editBranch.TitleInventory = vesselDB.TitleInventory;
+            editBranch.TitleInvoice = vesselDB.TitleInvoice;
+        }
+    }
+}
+
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
+    private async Task OnCancel() => await BlazoredModal.CancelAsync();
+
+    private MultipartFormDataContent content = new MultipartFormDataContent();
+    private async Task OnSubmit()
+    {
+        try{
+            ResponseLogin<Branch> response = new ResponseLogin<Branch>();
+            content.Add(new StringContent(editBranch.Name), "Name");
+            content.Add(new StringContent(editBranch.Adderss), "Address");
+            content.Add(new StringContent(editBranch.City), "City");
+            content.Add(new StringContent(editBranch.District.ToString()), "Dítrict");
+            content.Add(new StringContent(editBranch.Email.ToString()), "Email");
+            content.Add(new StringContent(editBranch.Footercontent.ToString()), "FooterContent");
+            content.Add(new StringContent(editBranch.LinkImage.ToString()), "LinkImage");
+            content.Add(new StringContent(editBranch.Headercontent.ToString()), "Headercontent");
+            content.Add(new StringContent(editBranch.LayoutType.ToString()), "LayoutType");
+            content.Add(new StringContent(editBranch.LogoInvoice.ToString()), "LogoInvoice");
+            content.Add(new StringContent(editBranch.Phone.ToString()), "Phone");
+            content.Add(new StringContent(editBranch.RestaurantName.ToString()), "RestaurantName");
+            content.Add(new StringContent(editBranch.TitleInventory.ToString()), "TitleInventory");
+            content.Add(new StringContent(editBranch.TitleInvoice.ToString()), "TitleInvoice");
+            if (string.IsNullOrEmpty(BranchId))
+            {
+                response = await _branchService.AddBranch(content);
+            }
+            else
+            {
+                response = await _branchService.Update(content);
+            }
+            if(response != null)
+            {
+                if(response.Result == 1)
+                {
+                    _toastService.ShowSuccess("Thêm thành công");
+                    await BlazoredModal.CloseAsync(ModalResult.Ok(true));
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            _toastService.ShowError(ex.ToString());
+        }
+    }
+    private async Task HandleSelection(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        long maxFileSize = 2048 * 512;
+        try
+        {
+            var fileContent = new StreamContent(file.OpenReadStream(maxFileSize));
+            content.Add(fileContent, "file", file.Name);
+            // _systemService.Download(content);
+            // editVessel.File = file.Name;
+            _toastService.ShowSuccess("Chọn ảnh thành công");
+        }
+        catch (Exception ex)
+        {
+            _toastService.ShowError(ex.ToString());
+        }
+    }
+}
+

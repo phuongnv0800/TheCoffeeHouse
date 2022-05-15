@@ -32,6 +32,7 @@ builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IBrandService, BrandService>();
 builder.Services.AddTransient<IMaterialService, MaterialService>();
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddBlazoredToast();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

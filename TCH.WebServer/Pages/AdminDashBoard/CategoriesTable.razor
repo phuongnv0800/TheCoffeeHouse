@@ -95,8 +95,8 @@ else
                                                         Thao tác
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" onclick = "@(() => Update(product.ID))" >Sửa</a></li>
-                                                        <li><a class="dropdown-item" onclick = "@(() => Delete())">Xóa</a></li>
+                                                        <li><a class="dropdown-item" onclick = "@(() => Update(product.ID.ToString()))" >Sửa</a></li>
+                                                        <li><a class="dropdown-item" onclick = "@(() => Delete(product.ID.ToString()))">Xóa</a></li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -189,15 +189,11 @@ else
     }
     public async void Update(string id)
     {
-        //var parameters = new ModalParameters();
-        //parameters.Add(nameof(Product.ID), id);
-        //Modal.Show<AddProduct>("Sửa sản phẩm", parameters);
-        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
+        navigationManager.NavigateTo($"categories/{id}");
     }
-    public async void Delete()
+    public async void Delete(string id)
     {
-        //navigationManager.NavigateTo("/add-product");
-        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
+        await categoryService.DeleteCategory(id);
     }
     public async void Change(int link)
     {

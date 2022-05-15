@@ -5,6 +5,7 @@
 @using TCH.WebServer.Services.Products
 @inject IProductService _productService
 @inject ICategoryService _categoryService
+@inject IToastService _toastService
 
 <TCH.WebServer.Shared.Header.Header ></TCH.WebServer.Shared.Header.Header>
 <div class="modal fade show d-block" tabindex="-1" role="dialog">
@@ -93,7 +94,7 @@
 						</div>
                         
                         <div class="card-footer p-2">
-                            <button type="submit" class="btn btn-primary mr-2">Cập nhật</button>
+                            <button type="submit" class="btn btn-primary mr-2" onclick="@(()=>OnSubmit())">Cập nhật</button>
                         </div>
                     </EditForm>
                 </div>
@@ -147,21 +148,35 @@
     private MultipartFormDataContent content = new MultipartFormDataContent();
     private async Task OnSubmit()
     {
-        ResponseLogin<Product> response = new ResponseLogin<Product>();
-        if (string.IsNullOrEmpty(ProductId))
-        {
-            response = await _productService.AddProduct(editProduct);
-        }
-        else
-        {
-            response = await _productService.UpdateProduct(editProduct);
-        }
-        if(response != null)
-        {
-            if(response.Result == 1)
+        try{
+            ResponseLogin<Product> response = new ResponseLogin<Product>();
+            content.Add(new StringContent(editProduct.CategoryID), "CategoryID");
+            content.Add(new StringContent(editProduct.Description), "Description");
+            //content.Add(new StringContent(editProduct.LinkImage), "Image");
+            content.Add(new StringContent(editProduct.Name), "Name");
+            content.Add(new StringContent(editProduct.Price.ToString()), "Price");
+            content.Add(new StringContent(editProduct.IsSale.ToString()), "IsSale");
+            content.Add(new StringContent(editProduct.PriceSale.ToString()), "PriceSale");
+            if (string.IsNullOrEmpty(ProductId))
             {
-                
+                response = await _productService.AddProduct(content);
             }
+            else
+            {
+                response = await _productService.UpdateProduct(content);
+            }
+            if(response != null)
+            {
+                if(response.Result == 1)
+                {
+                    _toastService.ShowSuccess("Thêm thành công");
+                    await BlazoredModal.CloseAsync(ModalResult.Ok(true));
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            _toastService.ShowError(ex.ToString());
         }
     }
     private async Task HandleSelection(InputFileChangeEventArgs e)
@@ -174,10 +189,11 @@
             content.Add(fileContent, "file", file.Name);
             // _systemService.Download(content);
             // editVessel.File = file.Name;
+            _toastService.ShowSuccess("Chọn ảnh thành công");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            //Logger.LogError($"File: {file.Name} Error: {ex.Message}");
+            _toastService.ShowError(ex.ToString());
         }
     }
 }

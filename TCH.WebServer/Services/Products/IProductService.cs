@@ -10,8 +10,8 @@ namespace TCH.WebServer.Services.Products
         Task<ResponseLogin<Product>> GetProductById(string id);
         Task<ResponseLogin<PagedList<Product>>> GetProductByCategoryId(string id);
         Task<Product> GetProductByName(string name);
-        Task<ResponseLogin<Product>> AddProduct(Product product);
-        Task<ResponseLogin<Product>> UpdateProduct(Product product);
+        Task<ResponseLogin<Product>> AddProduct(MultipartFormDataContent product);
+        Task<ResponseLogin<Product>> UpdateProduct(MultipartFormDataContent product);
         Task DeleteProduct(string id);
     }
 }
