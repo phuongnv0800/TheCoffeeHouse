@@ -4,9 +4,9 @@ using TCH.Data.Entities;
 
 namespace TCH.BackendApi.Configuration
 {
-    public class UnitConfig : IEntityTypeConfiguration<Unit>
+    public class UnitConfig : IEntityTypeConfiguration<Measure>
     {
-        public void Configure(EntityTypeBuilder<Unit> builder)
+        public void Configure(EntityTypeBuilder<Measure> builder)
         {
             builder.ToTable("Units");
             builder.HasKey(x => x.ID);

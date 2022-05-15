@@ -10,7 +10,7 @@ using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;
 using TCH.ViewModel.SubModels;
 
-namespace TCH.BackendApi.Repositories.DataRepository;
+namespace TCH.BackendApi.Repositories.DataManager;
 
 public class ReportManager : IReportRepository
 {

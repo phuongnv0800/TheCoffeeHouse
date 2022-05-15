@@ -1,8 +1,6 @@
-﻿using Microsoft.Net.Http.Headers;
-using TCH.BackendApi.Repositories.DataRepository;
+﻿using TCH.BackendApi.Repositories.DataRepository;
 
-namespace TCH.BackendApi.Repositories.DataRepository;
-
+namespace TCH.BackendApi.Repositories.DataManager;
 public class FileStorageService : IStorageService
 {
     private readonly string _userContentFolder;

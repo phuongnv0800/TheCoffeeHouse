@@ -59,7 +59,7 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [HttpGet("")]
+    [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> GetAllroduct( [FromQuery] Search request)
     {

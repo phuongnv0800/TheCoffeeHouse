@@ -8,7 +8,7 @@ using TCH.Utilities.Paginations;
 using TCH.ViewModel.SubModels;
 using AutoMapper;
 
-namespace TCH.BackendApi.Repositories.DataRepository;
+namespace TCH.BackendApi.Repositories.DataManager;
 
 public class CategoryManager : ICategoryRepository, IDisposable
 {

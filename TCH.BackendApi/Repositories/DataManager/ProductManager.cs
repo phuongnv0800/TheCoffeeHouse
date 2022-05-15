@@ -12,7 +12,7 @@ using AutoMapper;
 using TCH.Utilities.Claims;
 using TCH.Utilities.Enum;
 
-namespace TCH.BackendApi.Repositories.DataRepository;
+namespace TCH.BackendApi.Repositories.DataManager;
 
 public class ProductManager : IProductRepository, IDisposable
 {
@@ -327,7 +327,7 @@ public class ProductManager : IProductRepository, IDisposable
         product.ID = Guid.NewGuid().ToString();
         product.CreateDate = DateTime.Now;
         product.UpdateDate = DateTime.Now;
-
+        product.Description = request.Description ?? "Sản phẩm mới của chuỗi cửa hàng";
         if (request.File != null)
         {
             try
@@ -341,7 +341,7 @@ public class ProductManager : IProductRepository, IDisposable
             }
 
         }
-        _context.Products.Add(product);
+        await _context.Products.AddAsync(product);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -420,7 +420,7 @@ public class ProductManager : IProductRepository, IDisposable
         product.Price = request.Price;
         product.UpdateDate = DateTime.Now;
         product.ProductType = request.ProductType;
-        product.Description = request.Description;
+        product.Description = request.Description ?? product.Description;
         if (request.File != null)
         {
             try

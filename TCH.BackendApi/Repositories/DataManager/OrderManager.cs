@@ -19,7 +19,7 @@ using System.Xml.Xsl;
 using TCH.Utilities.Error;
 using TCH.Utilities.Claims;
 
-namespace TCH.BackendApi.Repositories.DataRepository;
+namespace TCH.BackendApi.Repositories.DataManager;
 
 public class OrderManager : IOrderRepository, IDisposable
 {

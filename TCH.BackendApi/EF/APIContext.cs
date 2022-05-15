@@ -67,6 +67,6 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
     public DbSet<StockMaterial> StockMaterials { get; set; }
     public DbSet<Topping> Toppings { get; set; }
     public DbSet<HistoryPriceUpdate> HistoryPriceUpdates { get; set; }
-    public DbSet<Unit> Units { get; set; }
+    public DbSet<Measure> Units { get; set; }
     public DbSet<UnitConversion> UnitConversions{ get; set; }
 }

@@ -2,7 +2,7 @@
 
 namespace TCH.Data.Entities;
 
-public class Unit
+public class Measure
 {
     [Key]
     public string ID { get; set; }
