@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using TCH.Data.Entities;
+using TCH.Utilities.Paginations;
 using TCH.WebServer.Models;
 
 namespace TCH.WebServer.Services.Products
@@ -46,9 +48,26 @@ namespace TCH.WebServer.Services.Products
             }
         }
 
-        public Task DeleteProduct(string id)
+        public async Task DeleteProduct(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var response = await _httpClient.DeleteAsync($"/api/Products/{id}");
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<PagedList<Product>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<Product>>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public async Task<ResponseLogin<PagedList<Product>>> GetProductByCategoryId(string id)

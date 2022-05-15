@@ -1,4 +1,6 @@
-﻿using TCH.WebServer.Models;
+﻿using TCH.Data.Entities;
+using TCH.Utilities.Paginations;
+using TCH.WebServer.Models;
 
 namespace TCH.WebServer.Services.Products
 {

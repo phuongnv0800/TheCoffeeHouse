@@ -1,11 +1,15 @@
 ﻿@page "/products/{ProductId}"
+@using TCH.Data.Entities
 @using TCH.WebServer.Models
 @using TCH.WebServer.Services.Categories
 @using TCH.WebServer.Services.Products
+@using TCH.WebServer.Services.Users
 
 @inject IProductService _productService
 @inject ICategoryService _categoryService
+@inject IUserService userService
 
+<TCH.WebServer.Shared.Header.Header User="@User"></TCH.WebServer.Shared.Header.Header>
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 						<!--begin::Toolbar-->
 						<div class="toolbar" id="kt_toolbar">
@@ -294,7 +298,7 @@
 														<!--end::Input-->
 													</div>
 													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
+													@*<div class="mb-10 fv-row fv-plugins-icon-container">
 														<!--begin::Label-->
 														<label class="required form-label">Đơn vị</label>
 														<!--end::Label-->
@@ -304,7 +308,7 @@
 															<ValidationMessage For="@(() => editProduct.Unit)" />
 														</div>
 														<!--end::Input-->
-													</div>
+													</div>*@
 													<!--end::Input group-->
 													<div class="mb-10 fv-row fv-plugins-icon-container">
 														<!--begin::Label-->
@@ -384,14 +388,16 @@
 
 @code {
     [Parameter] public string Title { get; set; }
-    [Parameter] public string? ProductId { get; set; }
-
+    [Parameter] public string ProductId { get; set; }
+	private ApplicationUser User;
     private Product editProduct = null;
     public List<Category> categories = new List<Category>();
 
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
         editProduct = new Product();
+		var response = await userService.GetUserInfo();
+        User = response.Data;
     }
 
     protected override async Task OnParametersSetAsync()
@@ -412,7 +418,8 @@
             editProduct.Price = vesselDB.Price;
             editProduct.PriceSale = vesselDB.PriceSale;
             editProduct.IsSale = vesselDB.IsSale;
-            editProduct.Unit = vesselDB.Unit;
+            editProduct.IsAvailable = vesselDB.IsAvailable;
+			editProduct.LinkImage = vesselDB.LinkImage;
         }
     }
 }
@@ -425,7 +432,7 @@
         ResponseLogin<Product> response = new ResponseLogin<Product>();
 		content.Add(new StringContent(editProduct.CategoryID), "CategoryID");
             content.Add(new StringContent(editProduct.Description), "Description");
-            content.Add(new StringContent(editProduct.Unit), "Unit");
+            content.Add(new StringContent(editProduct.LinkImage), "Unit");
             content.Add(new StringContent(editProduct.Name), "Name");
             content.Add(new StringContent(editProduct.Price.ToString()), "Price");
             content.Add(new StringContent(editProduct.IsSale.ToString()), "IsSale");

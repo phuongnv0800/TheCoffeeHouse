@@ -260,4 +260,10 @@
     <_ContentIncludedByDefault Remove="Pages\AdminDashBoard\CategoriesTable.razor" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TCH.Data\TCH.Data.csproj" />
+    <ProjectReference Include="..\TCH.Utilities\TCH.Utilities.csproj" />
+    <ProjectReference Include="..\TCH.ViewModel\TCH.ViewModel.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using TCH.WebServer.Services;
 using TCH.WebServer.Services.Products;
-using TCH.WebServer.Data;
 using TCH.WebServer.Services.Categories;
 using TCH.WebServer.Services.Users;
 using TCH.WebServer.Services.Brands;
@@ -24,7 +23,7 @@ builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddSingleton<WeatherForecastService>();
+
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
