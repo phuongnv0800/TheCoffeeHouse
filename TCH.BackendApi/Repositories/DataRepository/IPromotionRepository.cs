@@ -10,6 +10,7 @@ namespace TCH.BackendApi.Repositories.DataRepository
     {
         Task<MessageResult> Create(PromotionRequest request);
         Task<MessageResult> Delete(string promotionID);
+        Task<MessageResult> DeleteByCode(string code);
         Task<Respond<PagedList<Promotion>>> GetAll(Search request);
         Task<Respond<Promotion>> GetByCode(string code);
         Task<Respond<dynamic>> GetReduceMoney(string code, List<OrderItem> orderItems);

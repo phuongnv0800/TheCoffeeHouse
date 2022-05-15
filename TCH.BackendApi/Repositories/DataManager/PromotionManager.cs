@@ -256,6 +256,25 @@ public class PromotionManager : IDisposable, IPromotionRepository
             Result = 1,
         };
     }
+    public async Task<MessageResult> DeleteByCode(string code)
+    {
+        var result = await _context.Promotions
+            .Include(x => x.PromotionGifts)
+            .FirstOrDefaultAsync(x => x.Code == code);
+        if (result == null)
+            return new MessageResult()
+            {
+                Message = "Không tồn tại hoặc đã bị xoá",
+                Result = 0
+            };
+        _context.Promotions.Remove(result);
+        await _context.SaveChangesAsync();
+        return new MessageResult()
+        {
+            Message = "Xoá thành công",
+            Result = 1,
+        };
+    }
 
     public async Task<MessageResult> Update(string promotionID, PromotionRequest request)
     {
