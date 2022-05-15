@@ -1,4 +1,8 @@
 ﻿@page "/categories" 
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Identity
+@using Newtonsoft.Json
+@using System.Net.Http.Headers
 
 @using TCH.Data.Entities
 @using TCH.WebServer.GbParameter
@@ -37,7 +41,7 @@ else
                 </div>
                 <div class="card-toolbar">
 
-                    <a class="btn btn-primary" onclick="@(() => Add())">Thêm sản phẩm</a>
+                    <a class="btn btn-primary" onclick="@(() => Add())">Thêm Loại sản phẩm</a>
                 </div>
             </div>
             <div class="card-body pt-0">

@@ -62,7 +62,7 @@
             var claims = authService.GetClaims();
             if(claims != null)
             {
-                if(claims.First().Value.Contains("Admin"))
+                if(claims.Where(x => x.Value.Contains("Admin")) != null)
                 {
                     navigationManager.NavigateTo("/admin-dashboard", forceLoad: true);
                     GbParameter.GbParameter.IsLogin = true;
