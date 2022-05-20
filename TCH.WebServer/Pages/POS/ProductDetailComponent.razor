@@ -1,6 +1,8 @@
-﻿
+﻿@page "/product-detail/{ProductId}"
+
 <h3 class = "fw-bold"></h3>
 
 @code {
-
+    [Parameter]public string ProductId{ get; set; }
+    [Parameter] public string OrderId { get; set; }
 }

@@ -189,8 +189,8 @@
     }
     public async void Add()
     {
-        //Modal.Show<AddProduct>("Thêm nguyên liệu");
-        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
+        Modal.Show<AddMaterial>("Thêm nguyên liệu");
+        var response = await materialService.GetMaterials(true,  pagination.pageSize,  1);
     }
     public async void Update(string id)
     {

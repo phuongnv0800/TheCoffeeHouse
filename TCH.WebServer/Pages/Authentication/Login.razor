@@ -60,6 +60,7 @@
         if (result)
         {
             var claims = authService.GetClaims();
+            GbParameter.GbParameter.claims = claims;
             if(claims != null)
             {
                 if(claims.Where(x => x.Value.Contains("Admin")) != null)

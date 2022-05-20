@@ -1,0 +1,301 @@
+﻿@using TCH.WebServer.Models
+
+<div id="kt_header" class="header-fixed d-flex align-items-center align-items-stretch">
+    <!--begin::Container-->
+    <div class="container-fluid d-flex align-items-stretch justify-content-between">
+        <div class="header-menu align-items-stretch" >
+            <!--begin::Menu-->
+            <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
+                <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">
+                    <span class="menu-link py-3">
+                        <a href="/dashboard"><span class="menu-title" >Products</span></a>
+                        <span class="menu-arrow d-lg-none"></span>
+                    </span>
+                </div>
+                @*<div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">
+                    <span class="menu-link py-3">
+                        <a href="/categories"><span class="menu-title" >Categories</span></a>
+                        <span class="menu-arrow d-lg-none"></span>
+                    </span>
+                </div>
+                <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item here show menu-lg-down-accordion me-lg-1">
+                    <span class="menu-link py-3">
+                        <a href="/admin-dashboard"><span class="menu-title" >Products</span></a>
+                        <span class="menu-arrow d-lg-none"></span>
+                    </span>
+                </div>
+                <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">
+                    <span class="menu-link py-3">
+                        <a href="/materials"><span class="menu-title" >Materials</span></a>
+                        <span class="menu-arrow d-lg-none"></span>
+                    </span>
+                </div>*@
+            </div>
+            <!--end::Menu-->
+        </div>
+        <!--end::Navbar-->
+        <!--begin::Toolbar wrapper-->
+        <div class="d-flex align-items-stretch flex-shrink-0 align-right">
+            <!--begin::Search-->
+            <div class="d-flex align-items-stretch ms-1 ms-lg-3">
+                <!--begin::Search-->
+                <div id="kt_header_search" class="d-flex align-items-stretch" data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="menu" data-kt-menu-trigger="auto" data-kt-menu-overflow="false" data-kt-menu-permanent="true" data-kt-menu-placement="bottom-end" data-kt-search="true">
+                    <!--begin::Search toggle-->
+                    <div class="d-flex align-items-center" data-kt-search-element="toggle" id="kt_header_search_toggle">
+                        <div class="btn btn-icon btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                            <span class="svg-icon svg-icon-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </div>
+                    </div>
+                    <!--end::Search toggle-->
+                    <!--begin::Menu-->
+                    <div data-kt-search-element="content" class="menu menu-sub menu-sub-dropdown p-7 w-325px w-md-375px" data-kt-menu="true">
+
+                        <!--begin::Preferences-->
+                        <form data-kt-search-element="advanced-options-form" class="pt-1 d-none">
+                            <!--begin::Heading-->
+                            <h3 class="fw-bold text-dark mb-7">Advanced Search</h3>
+                            <!--end::Heading-->
+                            <!--begin::Input group-->
+                            <div class="mb-5">
+                                <input type="text" class="form-control form-control-sm form-control-solid" placeholder="Contains the word" name="query">
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-5">
+                                <!--begin::Radio group-->
+                                <div class="nav-group nav-group-fluid">
+                                    <!--begin::Option-->
+                                    <label>
+                                        <input type="radio" class="btn-check" name="type" value="has" checked="checked">
+                                        <span class="btn btn-sm btn-color-muted btn-active btn-active-primary">All</span>
+                                    </label>
+                                    <!--end::Option-->
+                                    <!--begin::Option-->
+                                    <label>
+                                        <input type="radio" class="btn-check" name="type" value="users">
+                                        <span class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4">Users</span>
+                                    </label>
+                                    <!--end::Option-->
+                                    <!--begin::Option-->
+                                    <label>
+                                        <input type="radio" class="btn-check" name="type" value="orders">
+                                        <span class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4">Orders</span>
+                                    </label>
+                                    <!--end::Option-->
+                                    <!--begin::Option-->
+                                    <label>
+                                        <input type="radio" class="btn-check" name="type" value="projects">
+                                        <span class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4">Projects</span>
+                                    </label>
+                                    <!--end::Option-->
+                                </div>
+                                <!--end::Radio group-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-5">
+                                <input type="text" name="assignedto" class="form-control form-control-sm form-control-solid" placeholder="Assigned to" value="">
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-5">
+                                <input type="text" name="collaborators" class="form-control form-control-sm form-control-solid" placeholder="Collaborators" value="">
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-5">
+                                <!--begin::Radio group-->
+                                <div class="nav-group nav-group-fluid">
+                                    <!--begin::Option-->
+                                    <label>
+                                        <input type="radio" class="btn-check" name="attachment" value="has" checked="checked">
+                                        <span class="btn btn-sm btn-color-muted btn-active btn-active-primary">Has attachment</span>
+                                    </label>
+                                    <!--end::Option-->
+                                    <!--begin::Option-->
+                                    <label>
+                                        <input type="radio" class="btn-check" name="attachment" value="any">
+                                        <span class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4">Any</span>
+                                    </label>
+                                    <!--end::Option-->
+                                </div>
+                                <!--end::Radio group-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-5">
+                                <select name="timezone" aria-label="Select a Timezone" data-control="select2" data-placeholder="date_period" class="form-select form-select-sm form-select-solid select2-hidden-accessible" data-select2-id="select2-data-1-jt64" tabindex="-1" aria-hidden="true">
+                                    <option value="next" data-select2-id="select2-data-3-tubw">Within the next</option>
+                                    <option value="last">Within the last</option>
+                                    <option value="between">Between</option>
+                                    <option value="on">On</option>
+                                </select><span class="select2 select2-container select2-container--bootstrap5" dir="ltr" data-select2-id="select2-data-2-9d7p" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single form-select form-select-sm form-select-solid" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-timezone-nt-container" aria-controls="select2-timezone-nt-container"><span class="select2-selection__rendered" id="select2-timezone-nt-container" role="textbox" aria-readonly="true" title="Within the next">Within the next</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="row mb-8">
+                                <!--begin::Col-->
+                                <div class="col-6">
+                                    <input type="number" name="date_number" class="form-control form-control-sm form-control-solid" placeholder="Lenght" value="">
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-6">
+                                    <select name="date_typer" aria-label="Select a Timezone" data-control="select2" data-placeholder="Period" class="form-select form-select-sm form-select-solid select2-hidden-accessible" data-select2-id="select2-data-4-qnt6" tabindex="-1" aria-hidden="true">
+                                        <option value="days" data-select2-id="select2-data-6-habc">Days</option>
+                                        <option value="weeks">Weeks</option>
+                                        <option value="months">Months</option>
+                                        <option value="years">Years</option>
+                                    </select><span class="select2 select2-container select2-container--bootstrap5" dir="ltr" data-select2-id="select2-data-5-7oho" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single form-select form-select-sm form-select-solid" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-date_typer-zo-container" aria-controls="select2-date_typer-zo-container"><span class="select2-selection__rendered" id="select2-date_typer-zo-container" role="textbox" aria-readonly="true" title="Days">Days</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Actions-->
+                            <div class="d-flex justify-content-end">
+                                <button type="reset" class="btn btn-sm btn-light fw-bolder btn-active-light-primary me-2" data-kt-search-element="advanced-options-form-cancel">Cancel</button>
+                                <a href="../../demo1/dist/pages/search/horizontal.html" class="btn btn-sm fw-bolder btn-primary" data-kt-search-element="advanced-options-form-search">Search</a>
+                            </div>
+                            <!--end::Actions-->
+                        </form>
+                        <!--end::Preferences-->
+                        <!--begin::Preferences-->
+                        <form data-kt-search-element="preferences" class="pt-1 d-none">
+                            <!--begin::Heading-->
+                            <h3 class="fw-bold text-dark mb-7">Search Preferences</h3>
+                            <!--end::Heading-->
+                            <!--begin::Input group-->
+                            <div class="pb-4 border-bottom">
+                                <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
+                                    <span class="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">Projects</span>
+                                    <input class="form-check-input" type="checkbox" value="1" checked="checked">
+                                </label>
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="py-4 border-bottom">
+                                <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
+                                    <span class="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">Targets</span>
+                                    <input class="form-check-input" type="checkbox" value="1" checked="checked">
+                                </label>
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="py-4 border-bottom">
+                                <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
+                                    <span class="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">Affiliate Programs</span>
+                                    <input class="form-check-input" type="checkbox" value="1">
+                                </label>
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="py-4 border-bottom">
+                                <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
+                                    <span class="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">Referrals</span>
+                                    <input class="form-check-input" type="checkbox" value="1" checked="checked">
+                                </label>
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="py-4 border-bottom">
+                                <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
+                                    <span class="form-check-label text-gray-700 fs-6 fw-bold ms-0 me-2">Users</span>
+                                    <input class="form-check-input" type="checkbox" value="1">
+                                </label>
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Actions-->
+                            <div class="d-flex justify-content-end pt-7">
+                                <button type="reset" class="btn btn-sm btn-light fw-bolder btn-active-light-primary me-2" data-kt-search-element="preferences-dismiss">Cancel</button>
+                                <button type="submit" class="btn btn-sm fw-bolder btn-primary">Save Changes</button>
+                            </div>
+                            <!--end::Actions-->
+                        </form>
+                        <!--end::Preferences-->
+                    </div>
+                    <!--end::Menu-->
+                </div>
+                <!--end::Search-->
+            </div>
+            <!--end::Search-->
+            <!--begin::Chat-->
+            <div class="d-flex align-items-center ms-1 ms-lg-3">
+                <!--begin::Menu wrapper-->
+                <div class="btn btn-icon btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px position-relative" id="kt_drawer_chat_toggle">
+                    <!--begin::Svg Icon | path: icons/duotune/communication/com012.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path opacity="0.3" d="M20 3H4C2.89543 3 2 3.89543 2 5V16C2 17.1046 2.89543 18 4 18H4.5C5.05228 18 5.5 18.4477 5.5 19V21.5052C5.5 22.1441 6.21212 22.5253 6.74376 22.1708L11.4885 19.0077C12.4741 18.3506 13.6321 18 14.8167 18H20C21.1046 18 22 17.1046 22 16V5C22 3.89543 21.1046 3 20 3Z" fill="black"></path>
+                            <rect x="6" y="12" width="7" height="2" rx="1" fill="black"></rect>
+                            <rect x="6" y="7" width="12" height="2" rx="1" fill="black"></rect>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+                </div>
+                <!--end::Menu wrapper-->
+            </div>
+            <!--end::Chat-->
+            <!--begin::Theme mode-->
+            <div class="d-flex align-items-center ms-1 ms-lg-3">
+                <!--begin::Theme mode docs-->
+                <a class="btn btn-icon btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px" href="../../demo1/dist/documentation/getting-started/dark-mode.html">
+                    <i class="fonticon-sun fs-2"></i>
+                </a>
+                <!--end::Theme mode docs-->
+            </div>
+            <!--end::Theme mode-->
+            <!--begin::User menu-->
+            <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+                <!--begin::Menu wrapper-->
+                <div class="cursor-pointer symbol symbol-30px symbol-md-40px me-2" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                    <img src="avatar/300-1.jpg" alt="user" width="45" height="45" class="rounded-50">
+                </div>
+                @if(User != null){
+                    <div class="">
+                        <div class="fw-bolder d-flex align-items-center fs-5">
+                            @User.LastName
+                            <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">@User.UserName</span>
+
+                        </div>
+                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">@User.Email</a>
+                    </div>
+                }
+                <!--end::Menu wrapper-->
+            </div>
+            <!--end::User menu-->
+            <!--begin::Header menu toggle-->
+            <div class="d-flex align-items-center d-lg-none ms-2 me-n3" title="Show header menu">
+                <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_header_menu_mobile_toggle">
+                    <!--begin::Svg Icon | path: icons/duotune/text/txt001.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z" fill="black"></path>
+                            <path opacity="0.3" d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM14 20V19C14 18.4 13.6 18 13 18H3C2.4 18 2 18.4 2 19V20C2 20.6 2.4 21 3 21H13C13.6 21 14 20.6 14 20Z" fill="black"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+            </div>
+            <!--end::Header menu toggle-->
+        </div>
+        <!--end::Toolbar wrapper-->
+    </div>
+    <!--end::Wrapper-->
+</div>
+<!--end::Container-->
+	
+
+@code {
+    [Parameter]
+    public ApplicationUser User { get; set; }
+    [Parameter]
+    public string NameHere { get; set; }
+}

@@ -9,390 +9,126 @@
 @inject IProductService productServices
 @inject IUserService userServices
 @inject ICategoryService categoryServices
+@inject NavigationManager NavManager
 
-<div class="fluid d-flex">
+<TCH.WebServer.Shared.Header.HeaderPOS User = "@User"></TCH.WebServer.Shared.Header.HeaderPOS>
+<div class="fluid d-flex" style = "margin-top: 100px;">
     <div class="row g-5 g-xl-8">
-        @if(categories != null){
-            foreach (var category in categories)
-            {
-                <div class="col-xl-6">
-            <!--begin::List Widget 7-->
-            <div class="card card-xl-stretch mb-xl-8">
-                <!--begin::Header-->
-                <div class="card-header align-items-center border-0 mt-4">
-                    <h3 class="card-title align-items-start flex-column">
-                        <span class="fw-bolder text-dark">Latest Media</span>
-                        <span class="text-muted mt-1 fw-bold fs-7">Articles and publications</span>
-                    </h3>
-                    <div class="card-toolbar">
-                        <!--begin::Menu-->
-                        <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <rect x="5" y="5" width="5" height="5" rx="1" fill="#000000"></rect>
-                                        <rect x="14" y="5" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
-                                        <rect x="5" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
-                                        <rect x="14" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
-                                    </g>
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </button>
-                        <!--begin::Menu 1-->
-                        <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_61de0c2580da3">
-                            <!--begin::Header-->
-                            <div class="px-7 py-5">
-                                <div class="fs-5 text-dark fw-bolder">Filter Options</div>
-                            </div>
-                            <!--end::Header-->
-                            <!--begin::Menu separator-->
-                            <div class="separator border-gray-200"></div>
-                            <!--end::Menu separator-->
-                            <!--begin::Form-->
-                            <div class="px-7 py-5">
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bold">Status:</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <div>
-                                        <select class="form-select form-select-solid select2-hidden-accessible" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_61de0c2580da3" data-allow-clear="true" data-select2-id="select2-data-16-gv4u" tabindex="-1" aria-hidden="true">
-                                            <option data-select2-id="select2-data-18-dxvc"></option>
-                                            <option value="1">Approved</option>
-                                            <option value="2">Pending</option>
-                                            <option value="2">In Process</option>
-                                            <option value="2">Rejected</option>
-                                        </select><span class="select2 select2-container select2-container--bootstrap5" dir="ltr" data-select2-id="select2-data-17-0a38" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single form-select form-select-solid" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-kirg-container" aria-controls="select2-kirg-container"><span class="select2-selection__rendered" id="select2-kirg-container" role="textbox" aria-readonly="true" title="Select option"><span class="select2-selection__placeholder">Select option</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bold">Member Type:</label>
-                                    <!--end::Label-->
-                                    <!--begin::Options-->
-                                    <div class="d-flex">
-                                        <!--begin::Options-->
-                                        <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                            <input class="form-check-input" type="checkbox" value="1">
-                                            <span class="form-check-label">Author</span>
-                                        </label>
-                                        <!--end::Options-->
-                                        <!--begin::Options-->
-                                        <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="2" checked="checked">
-                                            <span class="form-check-label">Customer</span>
-                                        </label>
-                                        <!--end::Options-->
-                                    </div>
-                                    <!--end::Options-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bold">Notifications:</label>
-                                    <!--end::Label-->
-                                    <!--begin::Switch-->
-                                    <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="checkbox" value="" name="notifications" checked="checked">
-                                        <label class="form-check-label">Enabled</label>
-                                    </div>
-                                    <!--end::Switch-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Actions-->
-                                <div class="d-flex justify-content-end">
-                                    <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-                                    <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
-                                </div>
-                                <!--end::Actions-->
-                            </div>
-                            <!--end::Form-->
-                        </div>
-                        <!--end::Menu 1-->
-                        <!--end::Menu-->
-                    </div>
-                </div>
-                <!--end::Header-->
-                <!--begin::Body-->
-                <div class="card-body pt-3">
-                            <ProductsOfCategory CategoryId="@category.ID"></ProductsOfCategory>
-                     
-                </div>
-                <!--end::Body-->
-            </div>
-            <!--end::List Widget 7-->
-        </div>
-            }
-        }
-        
-        <div class="col-xl-6">
-            <!--begin::List Widget 8-->
-            <div class="card card-xl-stretch mb-5 mb-xl-8">
-                <!--begin::Header-->
-                <div class="card-header align-items-center border-0 mt-4">
-                    <h3 class="card-title align-items-start flex-column">
-                        <span class="fw-bolder text-dark">Latest Products</span>
-                        <span class="text-muted mt-1 fw-bold fs-7">Gifts and more</span>
-                    </h3>
-                    <div class="card-toolbar">
-                        <!--begin::Menu-->
-                        <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <rect x="5" y="5" width="5" height="5" rx="1" fill="#000000"></rect>
-                                        <rect x="14" y="5" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
-                                        <rect x="5" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
-                                        <rect x="14" y="14" width="5" height="5" rx="1" fill="#000000" opacity="0.3"></rect>
-                                    </g>
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </button>
-                        <!--begin::Menu 3-->
-                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3" data-kt-menu="true">
-                            <!--begin::Heading-->
-                            <div class="menu-item px-3">
-                                <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">Payments</div>
-                            </div>
-                            <!--end::Heading-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3">Create Invoice</a>
-                            </div>
-                            <!--end::Menu item-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link flex-stack px-3">
-                                    Create Payment
-                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="Specify a target name for future usage and reference" aria-label="Specify a target name for future usage and reference"></i>
-                                </a>
-                            </div>
-                            <!--end::Menu item-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3">Generate Bill</a>
-                            </div>
-                            <!--end::Menu item-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-end">
-                                <a href="#" class="menu-link px-3">
-                                    <span class="menu-title">Subscription</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <!--begin::Menu sub-->
-                                <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">Plans</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">Billing</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">Statements</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu separator-->
-                                    <div class="separator my-2"></div>
-                                    <!--end::Menu separator-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <div class="menu-content px-3">
-                                            <!--begin::Switch-->
-                                            <label class="form-check form-switch form-check-custom form-check-solid">
-                                                <!--begin::Input-->
-                                                <input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked" name="notifications">
-                                                <!--end::Input-->
-                                                <!--end::Label-->
-                                                <span class="form-check-label text-muted fs-6">Recuring</span>
-                                                <!--end::Label-->
-                                            </label>
-                                            <!--end::Switch-->
+        <div class="col-md-8 col-12">
+            <div class="row">
+                @if(categories != null){
+                foreach (var product in ProductsList)
+                {
+                    <div class="col-md-4 p-5">
+                            <!--begin::Hot sales post-->
+                        <div class="card-xl-stretch me-md-6">
+                                    <!--begin::Overlay-->
+                            <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@("https://localhost:8001/uploads" + product.LinkImage)">
+                                        <!--begin::Image-->
+                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(@("https://localhost:8001/uploads" + product.LinkImage))"></div>
+                                        <!--end::Image-->
+                                        <!--begin::Action-->
+                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                            <i class="bi bi-eye-fill fs-2x text-white"></i>
                                         </div>
-                                    </div>
-                                    <!--end::Menu item-->
+                                        <!--end::Action-->
+                            </a>
+                                    <!--end::Overlay-->
+                                    <!--begin::Body-->
+                            <div class="mt-5">
+                                        <!--begin::Title-->
+                                <a href="/product-detail/{@product.ID}" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
+                                        <!--end::Title-->
+                                        <!--begin::Text-->
+                                <div class="fw-bold text-gray-600 text-dark mt-3">@product.Description</div>
+                                        <!--end::Text-->
+                                        <!--begin::Text-->
+                                <div class="fs-6 fw-bolder mt-5 d-flex flex-stack">
+                                            <!--begin::Label-->
+                                    <span class="badge border border-dashed text-primary p-2">
+                                                <span class="text-primary text-gray-400">$</span>@((product.IsSale) ? product.Price - product.PriceSale : product.Price)
+                                            </span>
+                                            <!--end::Label-->
+                                            <!--begin::Action-->
+                                    <button onclick="@(() => NavManager.NavigateTo($"/product-detail/{@product.ID}"))" class="btn btn-sm btn-primary">Purchase</button>
+                                            <!--end::Action-->
                                 </div>
-                                <!--end::Menu sub-->
+                                        <!--end::Text-->
                             </div>
-                            <!--end::Menu item-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-3 my-1">
-                                <a href="#" class="menu-link px-3">Settings</a>
-                            </div>
-                            <!--end::Menu item-->
+                                    <!--end::Body-->
                         </div>
-                        <!--end::Menu 3-->
-                        <!--end::Menu-->
+                                <!--end::Hot sales post-->
                     </div>
-                </div>
-                <!--end::Header-->
-                <!--begin::Body-->
-                <div class="card-body pt-3">
-                    <!--begin::Item-->
-                    <div class="d-flex align-items-sm-center mb-7">
-                        <!--begin::Symbol-->
-                        <div class="symbol symbol-60px symbol-2by3 me-4">
-                            <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-17.jpg')"></div>
-                        </div>
-                        <!--end::Symbol-->
-                        <!--begin::Content-->
-                        <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
-                            <!--begin::Title-->
-                            <div class="flex-grow-1 my-lg-0 my-2 me-2">
-                                <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">Cup &amp; Green</a>
-                                <span class="text-muted fw-bold d-block pt-1">Visually stunning</span>
-                            </div>
-                            <!--end::Title-->
-                            <!--begin::Section-->
-                            <div class="d-flex align-items-center">
-                                <div class="me-6">
-                                    <i class="fa fa-star-half-alt me-1 text-warning fs-5"></i>
-                                    <span class="text-gray-800 fw-bolder">4.2</span>
-                                </div>
-                                <a href="#" class="btn btn-icon btn-light btn-sm border-0">
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-                                    <span class="svg-icon svg-icon-2 svg-icon-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
-                                            <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                </a>
-                            </div>
-                            <!--end::Section-->
-                        </div>
-                        <!--end::Content-->
-                    </div>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <div class="d-flex align-items-sm-center mb-7">
-                        <!--begin::Symbol-->
-                        <div class="symbol symbol-60px symbol-2by3 me-4">
-                            <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-10.jpg')"></div>
-                        </div>
-                        <!--end::Symbol-->
-                        <!--begin::Content-->
-                        <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
-                            <!--begin::Title-->
-                            <div class="flex-grow-1 my-lg-0 my-2 me-2">
-                                <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">Pink Patterns</a>
-                                <span class="text-muted fw-bold d-block pt-1">Feminine all around</span>
-                            </div>
-                            <!--end::Title-->
-                            <!--begin::Section-->
-                            <div class="d-flex align-items-center">
-                                <div class="me-6">
-                                    <i class="fa fa-star-half-alt me-1 text-warning fs-5"></i>
-                                    <span class="text-gray-800 fw-bolder">5.0</span>
-                                </div>
-                                <a href="#" class="btn btn-icon btn-light btn-sm border-0">
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-                                    <span class="svg-icon svg-icon-2 svg-icon-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
-                                            <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                </a>
-                            </div>
-                            <!--end::Section-->
-                        </div>
-                        <!--end::Content-->
-                    </div>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <div class="d-flex align-items-sm-center mb-7">
-                        <!--begin::Symbol-->
-                        <div class="symbol symbol-60px symbol-2by3 me-4">
-                            <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-1.jpg')"></div>
-                        </div>
-                        <!--end::Symbol-->
-                        <!--begin::Content-->
-                        <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
-                            <!--begin::Title-->
-                            <div class="flex-grow-1 my-lg-0 my-2 me-2">
-                                <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">Abstract Art</a>
-                                <span class="text-muted fw-bold d-block pt-1">The will to capture readers</span>
-                            </div>
-                            <!--end::Title-->
-                            <!--begin::Section-->
-                            <div class="d-flex align-items-center">
-                                <div class="me-6">
-                                    <i class="fa fa-star-half-alt me-1 text-warning fs-5"></i>
-                                    <span class="text-gray-800 fw-bolder">5.7</span>
-                                </div>
-                                <a href="#" class="btn btn-icon btn-light btn-sm border-0">
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-                                    <span class="svg-icon svg-icon-2 svg-icon-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
-                                            <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                </a>
-                            </div>
-                            <!--end::Section-->
-                        </div>
-                        <!--end::Content-->
-                    </div>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <div class="d-flex align-items-sm-center">
-                        <!--begin::Symbol-->
-                        <div class="symbol symbol-60px symbol-2by3 me-4">
-                            <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-9.jpg')"></div>
-                        </div>
-                        <!--end::Symbol-->
-                        <!--begin::Content-->
-                        <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
-                            <!--begin::Title-->
-                            <div class="flex-grow-1 my-lg-0 my-2 me-2">
-                                <a href="#" class="text-gray-800 fw-bolder text-hover-primary fs-6">Desserts platter</a>
-                                <span class="text-muted fw-bold d-block pt-1">Food trends &amp; inspirations</span>
-                            </div>
-                            <!--end::Title-->
-                            <!--begin::Section-->
-                            <div class="d-flex align-items-center">
-                                <div class="me-6">
-                                    <i class="fa fa-star-half-alt me-1 text-warning fs-5"></i>
-                                    <span class="text-gray-800 fw-bolder">3.7</span>
-                                </div>
-                                <a href="#" class="btn btn-icon btn-light btn-sm border-0">
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-                                    <span class="svg-icon svg-icon-2 svg-icon-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black"></rect>
-                                            <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black"></path>
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                </a>
-                            </div>
-                            <!--end::Section-->
-                        </div>
-                        <!--end::Content-->
-                    </div>
-                    <!--end::Item-->
-                </div>
-                <!--end::Body-->
+                }
+            }
             </div>
-            <!--end::List Widget 8-->
+        </div>
+        <div class="col-md-4">
+            <div div class="card card-xl-stretch mb-xl-8">
+                <div class="card-header align-items-center d-flex border-0 mt-4">
+                    <h3 class="card-title align-items-center flex-column">
+                        <span class="fw-bolder text-dark">Thanh toán</span>
+                    </h3>
+                    <button onclick="" class="btn btn-primary right">
+                        Tạo mới
+                    </button>
+                </div>
+                <div class="card-body pt-5">
+                    <div class="tab-content">
+                        <!--begin::Tap pane-->
+                        <div class="tab-pane fade show active" id="kt_stats_widget_2_tab_4">
+                            <!--begin::Table container-->
+                            <div class="table-responsive">
+                                <!--begin::Table-->
+                                @if(order != null)
+                                {
+                                    foreach(var orderDetail in order.OrderDetails)
+                                    {
+                                        <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <tr class="fs-7 fw-bolder text-gray-500 border-bottom-0">
+                                                    <th class="ps-0 w-50px">ITEM</th>
+                                                    <th class="min-w-140px"></th>
+                                                    <th class="text-end min-w-140px">QTY</th>
+                                                    <th class="pe-0 text-end min-w-120px">PRICE</th>
+                                                    <th class="pe-0 text-end min-w-120px">TOTAL PRICE</th>
+                                                </tr>
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <img src="@("https://localhost:8001/uploads" + orderDetail.Product.LinkImage)" class="w-50px ms-n1" alt="">
+                                                    </td>
+                                                    <td class="ps-0">
+                                                        <a href="../../demo8/dist/apps/ecommerce/catalog/edit-product.html" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6 text-start pe-0">@orderDetail.Product.Name</a>
+                                                        <span class="text-gray-400 fw-bold fs-7 d-block text-start ps-0">Item: #XDG-1523</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-gray-800 fw-bolder d-block fs-6 ps-0 text-end">x@(orderDetail.Quantity)</span>
+                                                    </td>
+                                                    <td class="text-end pe-0">
+                                                        <span class="text-gray-800 fw-bolder d-block fs-6">$@orderDetail.PriceProduct</span>
+                                                    </td>
+                                                    <td class="text-end pe-0">
+                                                        <span class="text-gray-800 fw-bolder d-block fs-6">$@(orderDetail.Quantity * orderDetail.PriceProduct)</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                    }
+                                }
+                            </div>
+                            <!--end::Table-->
+                        </div>
+                        <!--end::Tap pane-->
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -454,25 +190,31 @@
     private Pagination pagination = new Pagination();
     private List<Category> categories = new List<Category>();
     private ApplicationUser User;
-	protected override async  Task OnParametersSetAsync()
-	{
+    private Order order;
+    protected override async  Task OnParametersSetAsync()
+    {
+        if (order == null) order = new Order();
         var response = await userServices.GetUserInfo();
         User = response.Data;
         await Get(1);
+        
         base.OnParametersSet();
-	}
-	public async Task Get(int pageNumber){
-		var response = await categoryServices.GetCategories( true,  pagination.pageSize,  pageNumber);
+    }
+    public async Task Get(int pageNumber){
+        var response = await productServices.GetProducts( true,  pagination.pageSize,  pageNumber);
         pagination.PageNumber = response.Data.CurrentPage;
-        categories = response.Data.Items.ToList();
+        ProductsList = response.Data.Items.ToList();
         pagination.totalPage = response.Data.TotalPages;
-	}
+    }
 
-	public async void Change(int link)
+    public async void Change(int link)
     {
         pagination.PageNumber = link;
         await Get(link);
         StateHasChanged();
     } 
-
+    public async void CreateOrder()
+    {
+        order = new Order();
+    }
 }
