@@ -12,14 +12,14 @@ using TCH.BackendApi.EF;
 namespace TCH.BackendApi.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20220512160556_db3")]
-    partial class db3
+    [Migration("20220520012843_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.2")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -576,6 +576,48 @@ namespace TCH.BackendApi.Migrations
                     b.ToTable("MaterialTypes", (string)null);
                 });
 
+            modelBuilder.Entity("TCH.Data.Entities.Measure", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("ConversionFactor")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MeasureType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserCreateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserUpdateID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("Measures", (string)null);
+                });
+
             modelBuilder.Entity("TCH.Data.Entities.Menu", b =>
                 {
                     b.Property<string>("ID")
@@ -700,6 +742,9 @@ namespace TCH.BackendApi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("IcedType")
+                        .HasColumnType("int");
+
                     b.Property<double>("PriceProduct")
                         .HasColumnType("float");
 
@@ -751,6 +796,35 @@ namespace TCH.BackendApi.Migrations
                     b.ToTable("OrderDetails", (string)null);
                 });
 
+            modelBuilder.Entity("TCH.Data.Entities.OrderToppingDetail", b =>
+                {
+                    b.Property<string>("OrderID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProductID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ToppingID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SubPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("OrderID", "ProductID", "ToppingID");
+
+                    b.HasIndex("ToppingID");
+
+                    b.HasIndex("ProductID", "OrderID");
+
+                    b.ToTable("OrderToppingDetails", (string)null);
+                });
+
             modelBuilder.Entity("TCH.Data.Entities.Product", b =>
                 {
                     b.Property<string>("ID")
@@ -764,7 +838,6 @@ namespace TCH.BackendApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAvailable")
@@ -774,7 +847,6 @@ namespace TCH.BackendApi.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LinkImage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -1047,14 +1119,33 @@ namespace TCH.BackendApi.Migrations
                     b.Property<DateTime>("BeginDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Mass")
+                        .HasColumnType("float");
+
+                    b.Property<string>("MeasureID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("MeasureType")
+                        .HasColumnType("int");
 
                     b.Property<double>("PriceOfUnit")
                         .HasColumnType("float");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<double>("StandardMass")
+                        .HasColumnType("float");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -1066,6 +1157,8 @@ namespace TCH.BackendApi.Migrations
                     b.HasKey("ReportID", "MaterialID");
 
                     b.HasIndex("MaterialID");
+
+                    b.HasIndex("MeasureID");
 
                     b.ToTable("ReportDetails", (string)null);
                 });
@@ -1131,26 +1224,36 @@ namespace TCH.BackendApi.Migrations
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Mass")
+                        .HasColumnType("float");
+
+                    b.Property<string>("MeasureID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("MeasureType")
+                        .HasColumnType("int");
+
                     b.Property<double>("PriceOfUnit")
                         .HasColumnType("float");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("StandardUnit")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("StandardMass")
+                        .HasColumnType("float");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("BranchID", "MaterialID");
 
                     b.HasIndex("MaterialID");
+
+                    b.HasIndex("MeasureID");
 
                     b.ToTable("StockMaterials", (string)null);
                 });
@@ -1200,39 +1303,6 @@ namespace TCH.BackendApi.Migrations
                     b.HasIndex("ToppingID");
 
                     b.ToTable("ToppingInProducts");
-                });
-
-            modelBuilder.Entity("TCH.Data.Entities.Unit", b =>
-                {
-                    b.Property<string>("ID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserCreateID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserUpdateID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("Code")
-                        .IsUnique();
-
-                    b.ToTable("Units", (string)null);
                 });
 
             modelBuilder.Entity("TCH.Data.Entities.UnitConversion", b =>
@@ -1428,6 +1498,25 @@ namespace TCH.BackendApi.Migrations
                     b.Navigation("Size");
                 });
 
+            modelBuilder.Entity("TCH.Data.Entities.OrderToppingDetail", b =>
+                {
+                    b.HasOne("TCH.Data.Entities.Topping", "Topping")
+                        .WithMany()
+                        .HasForeignKey("ToppingID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TCH.Data.Entities.OrderDetail", "OrderDetail")
+                        .WithMany("OrderToppingDetails")
+                        .HasForeignKey("ProductID", "OrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderDetail");
+
+                    b.Navigation("Topping");
+                });
+
             modelBuilder.Entity("TCH.Data.Entities.Product", b =>
                 {
                     b.HasOne("TCH.Data.Entities.Category", "Category")
@@ -1534,6 +1623,12 @@ namespace TCH.BackendApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TCH.Data.Entities.Measure", "Measure")
+                        .WithMany("ReportDetails")
+                        .HasForeignKey("MeasureID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TCH.Data.Entities.Report", "Report")
                         .WithMany("ReportDetails")
                         .HasForeignKey("ReportID")
@@ -1541,6 +1636,8 @@ namespace TCH.BackendApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Material");
+
+                    b.Navigation("Measure");
 
                     b.Navigation("Report");
                 });
@@ -1578,9 +1675,17 @@ namespace TCH.BackendApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TCH.Data.Entities.Measure", "Measure")
+                        .WithMany("StockMaterials")
+                        .HasForeignKey("MeasureID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Branch");
 
                     b.Navigation("Material");
+
+                    b.Navigation("Measure");
                 });
 
             modelBuilder.Entity("TCH.Data.Entities.ToppingInProduct", b =>
@@ -1649,6 +1754,13 @@ namespace TCH.BackendApi.Migrations
                     b.Navigation("Materials");
                 });
 
+            modelBuilder.Entity("TCH.Data.Entities.Measure", b =>
+                {
+                    b.Navigation("ReportDetails");
+
+                    b.Navigation("StockMaterials");
+                });
+
             modelBuilder.Entity("TCH.Data.Entities.Menu", b =>
                 {
                     b.Navigation("Categories");
@@ -1657,6 +1769,11 @@ namespace TCH.BackendApi.Migrations
             modelBuilder.Entity("TCH.Data.Entities.Order", b =>
                 {
                     b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("TCH.Data.Entities.OrderDetail", b =>
+                {
+                    b.Navigation("OrderToppingDetails");
                 });
 
             modelBuilder.Entity("TCH.Data.Entities.Product", b =>

@@ -1,4 +1,6 @@
-﻿namespace TCH.ViewModel.SubModels;
+﻿using TCH.Utilities.Enum;
+
+namespace TCH.ViewModel.SubModels;
 
 public class ImportDetail
 {
@@ -9,4 +11,9 @@ public class ImportDetail
     public DateTime BeginDate { get; set; }
     public int Status { get; set; }
     public double PriceOfUnit { get; set; }
+    public bool IsDelete { get; set; }
+    public double Mass { get; set; }//khối lượng người dùng nhập
+    public MeasureType MeasureType { get; set; }//loại hình tính: g, ml
+    public string? Description { get; set; }
+    public string MeasureID { get; set; }
 }

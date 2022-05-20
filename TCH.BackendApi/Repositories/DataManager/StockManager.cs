@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Net.Http.Headers;
 using TCH.BackendApi.EF;
 using TCH.BackendApi.Repositories.DataRepository;
-using TCH.Data.Entities;
 using TCH.Utilities.Claims;
 using TCH.Utilities.Paginations;
 using TCH.Utilities.Searchs;
@@ -36,8 +35,9 @@ public class StockManager : IDisposable, IStockRepository
         var query = from c in _context.StockMaterials
                     join b in _context.Branches on c.BranchID equals b.ID
                     join m in _context.Materials on c.MaterialID equals m.ID
+                    join mea in _context.Measures on c.MeasureID equals mea.ID
                     where c.BranchID == branchID
-                    select new { c, b, m };
+                    select new { c, b, m, mea };
         if (request.StartDate != null)
             query = query.Where(x => DateTime.Compare(x.c.BeginDate, (DateTime)request.StartDate) < 0);
 
@@ -49,6 +49,7 @@ public class StockManager : IDisposable, IStockRepository
             data = await query.Select(x =>
                  new StockVm()
                  {
+                     BranchID = branchID,
                      BranchName = x.c.Branch.Name,
                      MaterialName = x.m.Name,
                      Quantity = x.c.Quantity,
@@ -56,9 +57,14 @@ public class StockManager : IDisposable, IStockRepository
                      ExpirationDate = x.c.ExpirationDate,
                      Status = x.c.Status,
                      PriceOfUnit = x.c.PriceOfUnit,
-                     Unit = x.c.Unit,
-                     StandardUnit = x.c.StandardUnit,
+                     IsDelete = x.c.IsDelete,
+                     Mass = x.c.Mass,
+                     StandardMass = x.c.StandardMass,
+                     MeasureName = x.mea.Name,
+                     MeasureType = x.c.MeasureType,
                      Description = x.c.Description,
+                     MaterialID = x.c.MaterialID,
+                     MeasureID = x.c.MeasureID,
                  }
             )
            .Skip((request.PageNumber - 1) * request.PageSize)
@@ -69,6 +75,7 @@ public class StockManager : IDisposable, IStockRepository
             data = await query.Select(x =>
                  new StockVm()
                  {
+                     BranchID = branchID,
                      BranchName = x.c.Branch.Name,
                      MaterialName = x.m.Name,
                      Quantity = x.c.Quantity,
@@ -76,9 +83,14 @@ public class StockManager : IDisposable, IStockRepository
                      ExpirationDate = x.c.ExpirationDate,
                      Status = x.c.Status,
                      PriceOfUnit = x.c.PriceOfUnit,
-                     Unit = x.c.Unit,
-                     StandardUnit = x.c.StandardUnit,
+                     IsDelete = x.c.IsDelete,
+                     Mass = x.c.Mass,
+                     StandardMass = x.c.StandardMass,
+                     MeasureName = x.mea.Name,
+                     MeasureType = x.c.MeasureType,
                      Description = x.c.Description,
+                     MaterialID = x.c.MaterialID,
+                     MeasureID = x.c.MeasureID,
                  }
             ).ToListAsync();
 

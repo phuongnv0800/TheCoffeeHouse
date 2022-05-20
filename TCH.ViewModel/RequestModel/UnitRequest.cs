@@ -1,13 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using TCH.Utilities.Enum;
+﻿using TCH.Utilities.Enum;
 
-namespace TCH.Data.Entities;
+namespace TCH.ViewModel.SubModels;
 
-public class Measure
+public class UnitRequest
 {
-    [Key]
-    public string ID { get; set; }
-
     public string Code { get; set; }
 
     public string Name { get; set; }
@@ -25,7 +21,4 @@ public class Measure
     public string? UserCreateID { get; set; }
 
     public string? UserUpdateID { get; set; }
-
-    public virtual ICollection<StockMaterial> StockMaterials { get; set; }
-    public virtual ICollection<ReportDetail> ReportDetails { get; set; }
 }

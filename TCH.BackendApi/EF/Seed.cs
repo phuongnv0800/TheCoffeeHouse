@@ -22,7 +22,10 @@ public static class Seed
                 Name = "Tấn",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
-                Code = "TAN"
+                Code = "TAN", 
+                MeasureType = MeasureType.Mass,
+                ConversionFactor = 1000000,
+                Description = "Quy đổi từ Tấn sang gam"
             },
             new Measure()
             {
@@ -30,7 +33,10 @@ public static class Seed
                 Name = "Tạ",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
-                Code = "TA"
+                Code = "TA",
+                MeasureType = MeasureType.Mass,
+                ConversionFactor = 100000,
+                Description = "Quy đổi từ Tạ sang gam"
             },
             new Measure()
             {
@@ -38,7 +44,10 @@ public static class Seed
                 Name = "Yến",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
-                Code = "YEN"
+                Code = "YEN",
+                MeasureType = MeasureType.Mass,
+                ConversionFactor = 10000,
+                Description = "Quy đổi từ Yến sang gam"
             },
             new Measure()
             {
@@ -46,7 +55,10 @@ public static class Seed
                 Name = "Ki-lô-gam",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
-                Code = "KG"
+                Code = "KG",
+                MeasureType = MeasureType.Mass,
+                ConversionFactor = 1000,
+                Description = "Quy đổi từ Kilogam sang gam"
             },
             new Measure()
             {
@@ -54,7 +66,10 @@ public static class Seed
                 Name = "Gam",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
-                Code = "G"
+                Code = "G",
+                MeasureType = MeasureType.Mass,
+                ConversionFactor = 1,
+                Description = "Quy đổi từ Kilogam sang gam"
             },
             new Measure()
             {
@@ -62,7 +77,10 @@ public static class Seed
                 Name = "Lít",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
-                Code = "L"
+                Code = "L",
+                MeasureType = MeasureType.Volume,
+                ConversionFactor = 1000,
+                Description = "Quy đổi từ Lít sang mi li lít"
             },
             new Measure()
             {
@@ -70,56 +88,17 @@ public static class Seed
                 Name = "Mi-li-lít",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
-                Code = "ML"
+                Code = "ML",
+                MeasureType = MeasureType.Volume,
+                ConversionFactor = 1,
+                Description = "Quy đổi từ Lít sang mi li lít"
             },
         };
         foreach (var item in units)
         {
-            context.Units.Add(item);
+            context.Measures.Add(item);
         }
-        var unitConversion = new UnitConversion[]
-        {
-            new UnitConversion()
-            {
-                 ID = Guid.NewGuid().ToString(),
-                SourceUnitID = units[0].ID,
-                DestinationUnitID = units[4].ID,
-                ConversionFactor = 1000000,
-                Description = "Quy đổi từ Tấn sang gam"
-            },
-            new UnitConversion()
-            { ID = Guid.NewGuid().ToString(),
-                SourceUnitID = units[1].ID,
-                DestinationUnitID = units[4].ID,
-                ConversionFactor = 100000,
-                Description = "Quy đổi từ Tạ sang gam"
-            },
-            new UnitConversion()
-            { ID = Guid.NewGuid().ToString(),
-                SourceUnitID = units[2].ID,
-                DestinationUnitID = units[4].ID,
-                ConversionFactor = 10000,
-                Description = "Quy đổi từ Yến sang gam"
-            },
-            new UnitConversion()
-            { ID = Guid.NewGuid().ToString(),
-                SourceUnitID = units[3].ID,
-                DestinationUnitID = units[4].ID,
-                ConversionFactor = 1000,
-                Description = "Quy đổi từ Kilogam sang gam"
-            },
-            new UnitConversion()
-            { ID = Guid.NewGuid().ToString(),
-                SourceUnitID = units[5].ID,
-                DestinationUnitID = units[6].ID,
-                ConversionFactor = 1000,
-                Description = "Quy đổi từ Lít sang mi li lít"
-            },
-        };
-        foreach (var item in unitConversion)
-        {
-            context.UnitConversions.Add(item);
-        }
+        
         var categories = new Category[]
         {
             new Category()
@@ -338,7 +317,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/latte-tao-le-que-nong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -357,7 +336,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/latte-tao-le-que-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -376,7 +355,7 @@ public static class Seed
 
 
                 Price = 107000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/latte-tao-le-que-chai-fresh-500ml.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -395,7 +374,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ mochanong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -414,7 +393,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/mocha-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -433,7 +412,7 @@ public static class Seed
 
 
                 Price = 40000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/espressonong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -452,7 +431,7 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/cfdenda-espressoda.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -471,7 +450,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/cappuccino.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -487,7 +466,7 @@ public static class Seed
                 PriceSale = 49000,
                 IsAvailable = true,
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/mocha-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
@@ -502,7 +481,7 @@ public static class Seed
                 PriceSale = 40000,
                 IsAvailable = true,
                 Price = 40000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/americano-nong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
@@ -520,7 +499,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/latte-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -539,7 +518,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/caramel-macchiato-nong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -558,7 +537,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/caramel-macchiato-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -577,7 +556,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/latte.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -596,7 +575,7 @@ public static class Seed
 
 
                 Price = 40000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/latte.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -615,7 +594,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/bac-siu-da.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -634,7 +613,7 @@ public static class Seed
 
 
                 Price = 35000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/bac-siu-nong.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -653,7 +632,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/cfdenda-espressoda.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -672,7 +651,7 @@ public static class Seed
 
 
                 Price = 35000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ca-phe-den-nong.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -691,7 +670,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ca-phe-sua-da.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -710,7 +689,7 @@ public static class Seed
 
 
                 Price = 78000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/bottlecfsd.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -729,7 +708,7 @@ public static class Seed
 
 
                 Price = 78000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ca-phe-sua-nong.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -748,7 +727,7 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/cold-brew-sua-tuoi.webp",
                 CategoryID = "0e91fcb8-fa59-4a86-9af9-e608d3175caa ",
@@ -767,7 +746,7 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/classic-cold-brew.webp",
                 CategoryID = "0e91fcb8-fa59-4a86-9af9-e608d3175caa ",
@@ -786,7 +765,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-dao-dua-luoi.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -805,7 +784,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-sen-nhan.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -824,7 +803,7 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-nhan-da.webp ",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -843,7 +822,7 @@ public static class Seed
 
 
                 Price = 51000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/nhan-hat-chia--nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -862,7 +841,7 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-sen.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -881,7 +860,7 @@ public static class Seed
 
 
                 Price = 51000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-sen-nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -900,7 +879,7 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ tra-dao-cam-xa.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -919,7 +898,7 @@ public static class Seed
 
 
                 Price = 52000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tdcs-nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -938,7 +917,7 @@ public static class Seed
 
 
                 Price = 107000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/bottle_tradao.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -957,7 +936,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/caramel-macchiato-da.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -976,7 +955,7 @@ public static class Seed
 
 
                 Price = 54000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/hong-tra-latte.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -995,7 +974,7 @@ public static class Seed
 
 
                 Price = 54000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/hong-tra-sua-nong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1014,7 +993,7 @@ public static class Seed
 
 
                 Price = 54000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/hong-tra-sua-tran-chau.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1033,7 +1012,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/latte-tao-le-que-da.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1052,7 +1031,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-den-matchiato.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1071,7 +1050,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-sua-mac-ca.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1090,7 +1069,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-sua-masala-chai-nong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1109,7 +1088,7 @@ public static class Seed
 
 
                 Price = 107000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-sua-masala-chai-tran-chau-chai-fresh-500ml.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1128,7 +1107,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ masala-chai-tran-chau-lanh.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1147,7 +1126,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/oolong-nuong-nong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1166,7 +1145,7 @@ public static class Seed
 
 
                 Price = 54000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/olong-nuong-tran-chau.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1185,7 +1164,7 @@ public static class Seed
 
 
                 Price = 97000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/bottle_oolong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1204,7 +1183,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/cf-da-xay.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
@@ -1221,7 +1200,7 @@ public static class Seed
                 PriceSale = 49000,
                 IsAvailable = true,
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/chanh-sa-da-xay.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1236,7 +1215,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/chocolate-ice-blended.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1251,7 +1230,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/cookies_da_xay.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1267,7 +1246,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/daovietquat.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1282,7 +1261,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/matchadaxa.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1297,7 +1276,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/sinh-to-viet-quat.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1312,7 +1291,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/chocolate-da.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
             },
@@ -1330,7 +1309,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/chocolate-ice-blended.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
@@ -1349,7 +1328,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/chocolatenong.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
@@ -1368,7 +1347,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/matcha-latte-da.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
@@ -1387,7 +1366,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/matcha-latte.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
@@ -1406,7 +1385,7 @@ public static class Seed
 
 
                 Price = 12000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/banhmique.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
@@ -1425,7 +1404,7 @@ public static class Seed
 
 
                 Price = 12000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/banhmiquecay.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
@@ -1444,7 +1423,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/banh-mi-vn-thit-nguoi.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
@@ -1463,7 +1442,7 @@ public static class Seed
 
 
                 Price = 32000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/cha-bong-pho-mai.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
@@ -1482,7 +1461,7 @@ public static class Seed
 
 
                 Price = 35000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/croissant-trung-muoi.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
@@ -1501,7 +1480,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/mochi-kem-chocolate.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1520,7 +1499,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/mochi-kem-dua-dua.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1539,7 +1518,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/mochi-kem-matcha.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1558,7 +1537,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/mochi-kem-viet-quat.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1577,7 +1556,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/mochi-kem-xoai.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1596,7 +1575,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/mochi-kem-phuc-bon-tu.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1615,7 +1594,7 @@ public static class Seed
 
 
                 Price = 39000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/mousse-gau-chocolate.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1634,7 +1613,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/chanh-day.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1653,7 +1632,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/mousse-red-velvet.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1672,7 +1651,7 @@ public static class Seed
 
 
                 Price = 32000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ mousse-tiramisu.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1691,7 +1670,7 @@ public static class Seed
 
 
                 Price = 20000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/mit-say.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1710,7 +1689,7 @@ public static class Seed
 
 
                 Price = 230000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ori-1-1kg.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1729,7 +1708,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ca-phe-rang-xay-original.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1748,7 +1727,7 @@ public static class Seed
 
 
                 Price = 79000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ca-phe-dam-vi-viet_tui_new.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1767,7 +1746,7 @@ public static class Seed
 
 
                 Price = 39000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/cpsd-3in1.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1786,7 +1765,7 @@ public static class Seed
 
 
                 Price = 39000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ca-phe-sua-da-hoa-tan-dam-vi.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1805,7 +1784,7 @@ public static class Seed
 
 
                 Price = 79000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/ca-phe-sua-da-hoa-tan-tui.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1824,7 +1803,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/rich-finish-nopromo.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1843,7 +1822,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/peak-plavor-nopromo.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1862,7 +1841,7 @@ public static class Seed
 
 
                 Price = 98000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/arabica.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1878,7 +1857,7 @@ public static class Seed
                 PriceSale = 69000,
                 IsAvailable = true,
                 Price = 69000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/p6-lon-3in1.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
@@ -1893,7 +1872,7 @@ public static class Seed
                 PriceSale = 269000,
                 IsAvailable = true,
                 Price = 269000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/24-lon-cpsd.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
@@ -1910,7 +1889,7 @@ public static class Seed
 
 
                 Price = 109000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/combo-3-hop-ca-phe-sua-da-hoa-tan-dam.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1929,7 +1908,7 @@ public static class Seed
 
 
                 Price = 109000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/combo-3cfsd-nopromo.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1948,7 +1927,7 @@ public static class Seed
 
 
                 Price = 109000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/2combo2-cforiginal.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1967,7 +1946,7 @@ public static class Seed
 
 
                 Price = 169000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/giftset-tra-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -1983,7 +1962,7 @@ public static class Seed
                 PriceSale = 69000,
                 IsAvailable = true,
                 Price = 69000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/combo-3-hop-tra-lai-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
@@ -1998,7 +1977,7 @@ public static class Seed
                 PriceSale = 69000,
                 IsAvailable = true,
                 Price = 69000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/combo-3-hop-tra-oolong-tui-loc-tearoma1.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
@@ -2016,7 +1995,7 @@ public static class Seed
 
 
                 Price = 69000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/combo-3-hop-tra-dao-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2035,7 +2014,7 @@ public static class Seed
 
 
                 Price = 69000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/combo-3-hop-tra-sen-tui-loc-tearoma1.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2054,7 +2033,7 @@ public static class Seed
 
 
                 Price = 28000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-dao-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2073,7 +2052,7 @@ public static class Seed
 
 
                 Price = 28000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-lai-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2092,7 +2071,7 @@ public static class Seed
 
 
                 Price = 28000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-oolong-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2111,7 +2090,7 @@ public static class Seed
 
 
                 Price = 28000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-sen-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2130,7 +2109,7 @@ public static class Seed
 
 
                 Price = 74000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-xanh-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2149,7 +2128,7 @@ public static class Seed
 
 
                 Price = 74000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-sen-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2168,7 +2147,7 @@ public static class Seed
 
 
                 Price = 74000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-oolong-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2187,7 +2166,7 @@ public static class Seed
 
 
                 Price = 74000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/tra-lai-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2206,7 +2185,7 @@ public static class Seed
 
 
                 Price = 250000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/binh-giu-nhiet-inox-trang-den.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
@@ -2225,7 +2204,7 @@ public static class Seed
 
 
                 Price = 250000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/bình giữ nhiệt inox xám cam 473ml.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
@@ -2244,7 +2223,7 @@ public static class Seed
 
 
                 Price = 79000,
-                Description = "",
+                Description = "Mô tả sản phẩm của cửa hàng",
 
                 LinkImage = "/products/bộ ống hút inox.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
@@ -2253,18 +2232,14 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Cốc Sứ The Coffee House Gợn Sóng",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 100000,
                 IsAvailable = true,
-
-
                 Price = 100000,
-                Description = "",
-
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/cốc sứ the coffee house gợn sóng.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
@@ -2272,18 +2247,14 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Cốc Sứ The Coffee House Sọc Ngang",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 100000,
                 IsAvailable = true,
-
-
                 Price = 100000,
-                Description = "",
-
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/cốc sứ the coffee house sọc ngang.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
@@ -2291,18 +2262,14 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Túi Canvan Đà Nẵng",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 79000,
                 IsAvailable = true,
-
-
                 Price = 79000,
-                Description = "",
-
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/túi canvans đà nãng.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
@@ -2310,18 +2277,14 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Túi Canvan Hà Nội",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 79000,
                 IsAvailable = true,
-
-
                 Price = 79000,
-                Description = "",
-
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/túi canvans hà nội.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
@@ -2329,18 +2292,14 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Túi Canvan Trăng Nhà Sung Túc",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 79000,
                 IsAvailable = true,
-
-
                 Price = 79000,
-                Description = "",
-
+                Description = "Mô tả sản phẩm của cửa hàng",
                 LinkImage = "/products/túi canvans trăng nhà sung túc.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             }
@@ -2645,6 +2604,7 @@ public static class Seed
                 CreateDate = DateTime.Now,
                 Name = "Cốc thuỷ tinh",
                 UpdateDate = DateTime.Now,
+                LinkImage = "",
                 MaterialTypeID = materialTypes[0].ID,
             },
             new Material()
@@ -2654,6 +2614,7 @@ public static class Seed
                 CreateDate = DateTime.Now,
                 Name = "Thìa nhựa",
                 UpdateDate = DateTime.Now,
+                LinkImage = "",
                 MaterialTypeID = materialTypes[0].ID,
             },
             new Material()
@@ -2663,6 +2624,7 @@ public static class Seed
                 CreateDate = DateTime.Now,
                 Name = "Ống hút",
                 UpdateDate = DateTime.Now,
+                LinkImage = "",
                 MaterialTypeID = materialTypes[0].ID,
             },
             new Material()
@@ -2672,6 +2634,7 @@ public static class Seed
                 CreateDate = DateTime.Now,
                 Name = "Túi mang đi",
                 UpdateDate = DateTime.Now,
+                LinkImage = "",
                 MaterialTypeID = materialTypes[0].ID,
             },
             new Material()
@@ -2680,6 +2643,241 @@ public static class Seed
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Cà Phê Rang Xay Original",
+                UpdateDate = DateTime.Now,
+                LinkImage = "",
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Bột cafe",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Sữa đặc",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Đường",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Đá viên, Đá xay",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Sữa tươi không đường",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Trà lài",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Trà sen",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Kem béo",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Bột cacao",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Bột Onemix",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Bột socola",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Kem Rich",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Kem Base",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Kem Van",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Bột Matcha",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Sốt socola",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Sốt caramel",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Sữa chua không đườn",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Siro các vị đào",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Siro các vị việt quất",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Siro các vị dâu",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Siro các vị khoai môn",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Siro các vị táo xanh",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Siro các vị xoài",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Siro các vị nho đen",
+                UpdateDate = DateTime.Now,
+                MaterialTypeID = materialTypes[0].ID,
+            },
+            new Material()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Description = "Mặc định",
+                CreateDate = DateTime.Now,
+                Name = "Mứt đào",
                 UpdateDate = DateTime.Now,
                 MaterialTypeID = materialTypes[0].ID,
             },
@@ -2723,8 +2921,8 @@ public static class Seed
             Id = Guid.NewGuid().ToString(),
             UserName = "full",
             NormalizedUserName = "FULL",
-            Email = "owlsng08@gmail.com",
-            NormalizedEmail = "OWLSNG08@GMAIL.COM",
+            Email = "phuongnv0800@gmail.com",
+            NormalizedEmail = "PHUONGNV0800@GMAIL.COM",
             EmailConfirmed = true,
             PasswordHash = hasher.HashPassword(null, "123123aA@"),
             SecurityStamp = Guid.NewGuid().ToString(),
@@ -2779,7 +2977,7 @@ public static class Seed
         context.UserRoles.Add(new IdentityUserRole<string>()
         {
             UserId = user.Id,
-            RoleId = roleStaff.Id,
+            RoleId = roleBranch.Id,
         });
         for (var i = 0; i < 100; i++)
         {
@@ -2788,7 +2986,7 @@ public static class Seed
                 Id = Guid.NewGuid().ToString(),
                 UserName = $"user{i}",
                 NormalizedUserName = $"USER{i}",
-                Email = $"userng08{i}@gmail.com",
+                Email = $"usertest{i}@gmail.com",
                 NormalizedEmail = $"USERNG08{i}@GMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = hasher.HashPassword(null, "123123aA@"),
@@ -2805,7 +3003,7 @@ public static class Seed
             context.UserRoles.Add(new IdentityUserRole<string>()
             {
                 UserId = userAdd.Id,
-                RoleId = i % 2 == 0 ? roleAdmin.Id : roleBranch.Id,
+                RoleId = i % 2 == 0 ? roleManager.Id : roleBranch.Id,
             });
         }
         context.SaveChanges();

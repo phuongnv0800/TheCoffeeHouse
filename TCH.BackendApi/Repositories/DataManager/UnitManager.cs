@@ -27,33 +27,33 @@ public class UnitManager : IDisposable, IUnitRepository
         UserID = httpContext != null ? httpContext?.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value : "";
         _accessToken = httpContext?.HttpContext != null ? httpContext.HttpContext.Request.Headers["Authorization"] : "";
     }
-    public async Task<Respond<PagedList<UnitVm>>> GetAll(Search request)
+    public async Task<Respond<PagedList<MeasuresVm>>> GetAll(Search request)
     {
-        var query = from c in _context.Units select c;
+        var query = from c in _context.Measures select c;
         if (!string.IsNullOrEmpty(request.Name))
         {
             query = query.Where(x => x.Name.Contains(request.Name));
         }
         //paging
         int totalRow = await query.CountAsync();
-        var data = new List<UnitVm>();
+        var data = new List<MeasuresVm>();
         if (request.IsPging)
         {
             data = await query
-                .Select(x => _mapper.Map<UnitVm>(x))
+                .Select(x => _mapper.Map<MeasuresVm>(x))
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToListAsync();
         }
         else
         {
-            data = await query.Select(x => _mapper.Map<UnitVm>(x)).ToListAsync();
+            data = await query.Select(x => _mapper.Map<MeasuresVm>(x)).ToListAsync();
         }
-        return new Respond<PagedList<UnitVm>>()
+        return new Respond<PagedList<MeasuresVm>>()
         {
             Result = 1,
             Message = "Thành công",
-            Data = new PagedList<UnitVm>()
+            Data = new PagedList<MeasuresVm>()
             {
                 TotalRecord = totalRow,
                 PageSize = request.PageSize,
@@ -72,7 +72,7 @@ public class UnitManager : IDisposable, IUnitRepository
         category.CreateDate = DateTime.Now;
         category.UserCreateID = UserID;
         category.UserUpdateID = UserID;
-        _context.Units.Add(category);
+        _context.Measures.Add(category);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -82,7 +82,7 @@ public class UnitManager : IDisposable, IUnitRepository
     }
     public async Task<MessageResult> Update(string id, UnitRequest request)
     {
-        var category = await _context.Units.FindAsync(id);
+        var category = await _context.Measures.FindAsync(id);
         if (category == null)
         {
             return new MessageResult()
@@ -96,7 +96,7 @@ public class UnitManager : IDisposable, IUnitRepository
         category.UpdateDate = DateTime.Now;
         category.UserUpdateID = UserID;
 
-        _context.Units.Update(category);
+        _context.Measures.Update(category);
         await _context.SaveChangesAsync();
         return new MessageResult()
         {

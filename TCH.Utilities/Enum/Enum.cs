@@ -12,23 +12,43 @@ public enum ReportType
     Export = 1,
     Liquidation = 2,
 }
+
+public enum MeasureType
+{
+    Mass,//Khối lượng g, kg,...
+    Volume,// thể tích ml, l,...
+}
+
 public enum Gender
 {
     Male,
     Female,
 }
+
 public enum SugarType
 {
     ZeroPercent = 1,
-    FiftyPercent = 2,
-    SeventyFivePercent = 3,
-    OneHundredPercent = 4,
+    TwentyFivePercent = 2,
+    FiftyPercent = 3,
+    SeventyFivePercent = 4,
+    OneHundredPercent = 5,
 }
+
+public enum IcedType
+{
+    ZeroPercent = 1,
+    TwentyFivePercent = 2,
+    FiftyPercent = 3,
+    SeventyFivePercent = 4,
+    OneHundredPercent = 5,
+}
+
 public enum PromotionObject
 {
     Food = 1,
     Invoice = 2
 }
+
 public enum PromotionType
 {
     Percent = 1,
@@ -37,6 +57,7 @@ public enum PromotionType
     SumPercent = 4,
     Gift = 5,
 }
+
 public enum OrderStatus
 {
     Canceled = 0,
@@ -45,29 +66,34 @@ public enum OrderStatus
     Finished = 3,
     Paid = 4,
 }
+
 public enum HistoryType
 {
     Product = 1,
     Size = 2,
     Topping = 3,
 }
+
 public enum SizeType
 {
     S,
     M,
     L,
 }
+
 public enum PaymentType
 {
     Cash,
     Credit,
 }
+
 public enum ProductType
 {
     Drink,
     Food,
     Other
 }
+
 public enum OrderType
 {
     InPlace,//Tại chỗ
