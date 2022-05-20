@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TCH.BackendApi.Migrations
 {
-    public partial class db2 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,6 +66,26 @@ namespace TCH.BackendApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MaterialTypes", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Measures",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MeasureType = table.Column<int>(type: "int", nullable: false),
+                    ConversionFactor = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserCreateID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserUpdateID = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Measures", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,23 +180,6 @@ namespace TCH.BackendApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UnitConversions", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Units",
-                columns: table => new
-                {
-                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserCreateID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserUpdateID = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Units", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -469,7 +472,13 @@ namespace TCH.BackendApi.Migrations
                     ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BeginDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    PriceOfUnit = table.Column<double>(type: "float", nullable: false)
+                    PriceOfUnit = table.Column<double>(type: "float", nullable: false),
+                    IsDelete = table.Column<bool>(type: "bit", nullable: false),
+                    Mass = table.Column<double>(type: "float", nullable: false),
+                    MeasureType = table.Column<int>(type: "int", nullable: false),
+                    StandardMass = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MeasureID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -478,6 +487,12 @@ namespace TCH.BackendApi.Migrations
                         name: "FK_ReportDetails_Materials_MaterialID",
                         column: x => x.MaterialID,
                         principalTable: "Materials",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReportDetails_Measures_MeasureID",
+                        column: x => x.MeasureID,
+                        principalTable: "Measures",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -499,9 +514,12 @@ namespace TCH.BackendApi.Migrations
                     ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     PriceOfUnit = table.Column<double>(type: "float", nullable: false),
-                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StandardUnit = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    IsDelete = table.Column<bool>(type: "bit", nullable: false),
+                    Mass = table.Column<double>(type: "float", nullable: false),
+                    MeasureType = table.Column<int>(type: "int", nullable: false),
+                    StandardMass = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MeasureID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -516,6 +534,12 @@ namespace TCH.BackendApi.Migrations
                         name: "FK_StockMaterials_Materials_MaterialID",
                         column: x => x.MaterialID,
                         principalTable: "Materials",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StockMaterials_Measures_MeasureID",
+                        column: x => x.MeasureID,
+                        principalTable: "Measures",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -580,8 +604,8 @@ namespace TCH.BackendApi.Migrations
                     IsSale = table.Column<bool>(type: "bit", nullable: false),
                     PriceSale = table.Column<double>(type: "float", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LinkImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LinkImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -646,6 +670,7 @@ namespace TCH.BackendApi.Migrations
                     SubAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SugarType = table.Column<int>(type: "int", nullable: false),
+                    IcedType = table.Column<int>(type: "int", nullable: false),
                     PriceSize = table.Column<double>(type: "float", nullable: false),
                     ToppingID1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Topping1Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -842,6 +867,34 @@ namespace TCH.BackendApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "OrderToppingDetails",
+                columns: table => new
+                {
+                    ToppingID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    OrderID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProductID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderToppingDetails", x => new { x.OrderID, x.ProductID, x.ToppingID });
+                    table.ForeignKey(
+                        name: "FK_OrderToppingDetails_OrderDetails_ProductID_OrderID",
+                        columns: x => new { x.ProductID, x.OrderID },
+                        principalTable: "OrderDetails",
+                        principalColumns: new[] { "OrderID", "ProductID" },
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderToppingDetails_Toppings_ToppingID",
+                        column: x => x.ToppingID,
+                        principalTable: "Toppings",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -917,6 +970,12 @@ namespace TCH.BackendApi.Migrations
                 column: "MaterialTypeID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Measures_Code",
+                table: "Measures",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Menus_BranchID",
                 table: "Menus",
                 column: "BranchID");
@@ -950,6 +1009,16 @@ namespace TCH.BackendApi.Migrations
                 name: "IX_Orders_CustomerID",
                 table: "Orders",
                 column: "CustomerID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderToppingDetails_ProductID_OrderID",
+                table: "OrderToppingDetails",
+                columns: new[] { "ProductID", "OrderID" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderToppingDetails_ToppingID",
+                table: "OrderToppingDetails",
+                column: "ToppingID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductImages_ProductId",
@@ -987,6 +1056,11 @@ namespace TCH.BackendApi.Migrations
                 column: "MaterialID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ReportDetails_MeasureID",
+                table: "ReportDetails",
+                column: "MeasureID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reports_BranchID",
                 table: "Reports",
                 column: "BranchID");
@@ -1002,15 +1076,14 @@ namespace TCH.BackendApi.Migrations
                 column: "MaterialID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StockMaterials_MeasureID",
+                table: "StockMaterials",
+                column: "MeasureID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ToppingInProducts_ToppingID",
                 table: "ToppingInProducts",
                 column: "ToppingID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Units_Code",
-                table: "Units",
-                column: "Code",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -1034,7 +1107,7 @@ namespace TCH.BackendApi.Migrations
                 name: "HistoryPriceUpdates");
 
             migrationBuilder.DropTable(
-                name: "OrderDetails");
+                name: "OrderToppingDetails");
 
             migrationBuilder.DropTable(
                 name: "ProductImages");
@@ -1064,13 +1137,10 @@ namespace TCH.BackendApi.Migrations
                 name: "UnitConversions");
 
             migrationBuilder.DropTable(
-                name: "Units");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "OrderDetails");
 
             migrationBuilder.DropTable(
                 name: "Promotions");
@@ -1079,25 +1149,31 @@ namespace TCH.BackendApi.Migrations
                 name: "Reports");
 
             migrationBuilder.DropTable(
-                name: "Sizes");
+                name: "Materials");
 
             migrationBuilder.DropTable(
-                name: "Materials");
+                name: "Measures");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
+                name: "Sizes");
+
+            migrationBuilder.DropTable(
                 name: "Toppings");
+
+            migrationBuilder.DropTable(
+                name: "MaterialTypes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Customers");
-
-            migrationBuilder.DropTable(
-                name: "MaterialTypes");
 
             migrationBuilder.DropTable(
                 name: "Categories");

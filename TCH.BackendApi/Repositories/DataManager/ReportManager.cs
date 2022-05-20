@@ -38,7 +38,7 @@ public class ReportManager : IReportRepository
             TotalAmount = request.TotalAmount,
             Code = request.Code,
             Name = request.Name,
-            Reason =request.Reason,
+            Reason = request.Reason,
             ReportType = ReportType.Export,
             Depreciation = request.Depreciation,
             RecoveryValue = request.RecoveryValue,
@@ -57,7 +57,7 @@ public class ReportManager : IReportRepository
                 if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
                 {
                     stock.Quantity -= item.Quantity;
-                    if(stock.Quantity < 0)
+                    if (stock.Quantity < 0)
                     {
                         stock.Quantity = 0;
                     }
@@ -97,7 +97,7 @@ public class ReportManager : IReportRepository
             TotalAmount = request.TotalAmount,
             Code = request.Code,
             Name = request.Name,
-            Reason =request.Reason,
+            Reason = request.Reason,
             ReportType = ReportType.Import,
             Depreciation = request.Depreciation,
             RecoveryValue = request.RecoveryValue,
@@ -107,15 +107,16 @@ public class ReportManager : IReportRepository
             BranchID = request.BranchID,
             UserCreateID = _userId,
         };
-        _context.Reports.Add(report);
-        var stockDetails = await _context.StockMaterials.Where(x=>x.BranchID == request.BranchID).ToListAsync();
+        await _context.Reports.AddAsync(report);
+        var stockDetails = await _context.StockMaterials.Where(x => x.BranchID == request.BranchID).ToListAsync();
 
         foreach (var item in request.ReportDetails)
         {
+            var measure = await _context.Measures.FindAsync(item.MeasureID);
             bool isAddStock = true;
             foreach (var stock in stockDetails)
             {
-                if(item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
+                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
                 {
                     isAddStock = false;
                     stock.Quantity += item.Quantity;
@@ -132,11 +133,15 @@ public class ReportManager : IReportRepository
                     ExpirationDate = item.ExpirationDate,
                     PriceOfUnit = item.PriceOfUnit,
                     Quantity = item.Quantity,
-                    Unit = item.Unit,
                     Status = item.Status,
-                    StandardUnit = item.Unit,
+                    IsDelete = false,
+                    Mass = item.Mass,
+                    MeasureType = item.MeasureType,
+                    StandardMass = measure != null ? measure.ConversionFactor*item.Mass : item.Mass,
+                    Description = item.Description,
+                    MeasureID = item.MeasureID,
                 };
-                _context.StockMaterials.Add(stockMaterial);
+                await _context.StockMaterials.AddAsync(stockMaterial);
             }
             var exportMaterial = new ReportDetail()
             {
@@ -148,8 +153,14 @@ public class ReportManager : IReportRepository
                 Quantity = item.Quantity,
                 Unit = item.Unit,
                 Status = item.Status,
+                IsDelete = false,
+                Mass = item.Mass,
+                MeasureType = item.MeasureType,
+                StandardMass = measure != null ? measure.ConversionFactor * item.Mass : item.Mass,
+                Description = item.Description,
+                MeasureID = item.MeasureID,
             };
-            _context.ReportDetails.Add(exportMaterial);
+            await _context.ReportDetails.AddAsync(exportMaterial);
         }
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -171,7 +182,7 @@ public class ReportManager : IReportRepository
             TotalAmount = request.TotalAmount,
             Code = request.Code,
             Name = request.Name,
-            Reason =request.Reason,
+            Reason = request.Reason,
             ReportType = ReportType.Liquidation,
             Depreciation = request.Depreciation,
             RecoveryValue = request.RecoveryValue,
@@ -221,7 +232,7 @@ public class ReportManager : IReportRepository
 
     public async Task<MessageResult> DeleteExportReport(string id)
     {
-        var report = await _context.Reports.FirstOrDefaultAsync(x=>x.ID==id && x.ReportType==ReportType.Export);
+        var report = await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Export);
         if (report == null)
         {
             return new MessageResult()
@@ -243,7 +254,7 @@ public class ReportManager : IReportRepository
 
     public async Task<MessageResult> DeleteImportReport(string id)
     {
-        var report = await _context.Reports.FirstOrDefaultAsync(x=>x.ID==id && x.ReportType==ReportType.Import);
+        var report = await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Import);
         if (report == null)
         {
             return new MessageResult()
@@ -265,7 +276,7 @@ public class ReportManager : IReportRepository
 
     public async Task<MessageResult> DeleteLiquidationReport(string id)
     {
-        var report = await _context.Reports.FirstOrDefaultAsync(x=>x.ID==id && x.ReportType==ReportType.Liquidation);
+        var report = await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Liquidation);
         if (report == null)
         {
             return new MessageResult()
@@ -288,9 +299,9 @@ public class ReportManager : IReportRepository
     public async Task<Respond<PagedList<Report>>> GetAllExportReport(Search request)
     {
         var query = await _context.Reports
-            .Include(x=>x.ReportDetails)
+            .Include(x => x.ReportDetails)
             .ToListAsync();
-        if(request.Name != null)
+        if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Export).ToList();
         }

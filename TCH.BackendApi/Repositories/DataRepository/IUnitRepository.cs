@@ -11,7 +11,7 @@ public interface IUnitRepository
     Task<MessageResult> Create(UnitRequest request);
     Task<MessageResult> CreateExchangeUnit(ExchangeUnitRequest request);
     Task<MessageResult> Delete(string id);
-    Task<Respond<PagedList<UnitVm>>> GetAll(Search request);
+    Task<Respond<PagedList<MeasuresVm>>> GetAll(Search request);
     Task<Respond<List<UnitConversion>>> GetAllExchangeUnit();
     Task<MessageResult> Update(string id, UnitRequest request);
     Task<MessageResult> UpdateExchangeUnit(ExchangeUnitRequest request);

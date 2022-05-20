@@ -8,9 +8,11 @@ namespace TCH.BackendApi.Configuration
     {
         public void Configure(EntityTypeBuilder<Measure> builder)
         {
-            builder.ToTable("Units");
+            builder.ToTable("Measures");
             builder.HasKey(x => x.ID);
             builder.HasIndex(u => u.Code).IsUnique();
+            builder.HasMany(x => x.StockMaterials).WithOne(x => x.Measure).HasForeignKey(x => x.MeasureID);
+            builder.HasMany(x => x.ReportDetails).WithOne(x => x.Measure).HasForeignKey(x => x.MeasureID);
         }
     }
 }

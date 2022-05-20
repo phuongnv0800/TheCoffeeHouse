@@ -14,5 +14,6 @@ public class OrderDetailConfiguration : IEntityTypeConfiguration<OrderDetail>
         builder.HasOne(x => x.Product).WithMany(x => x.OrderDetails).HasForeignKey(x => x.ProductID);
         builder.HasOne(x => x.Size).WithMany(x => x.OrderDetails).HasForeignKey(x => x.SizeID);
         builder.Property(x => x.SubAmount).IsRequired().HasColumnType("decimal(18,2)");
+        builder.HasMany(x => x.OrderToppingDetails).WithOne(x => x.OrderDetail).HasForeignKey(x => new { x.ProductID, x.OrderID });
     }
 }

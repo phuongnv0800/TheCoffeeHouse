@@ -34,6 +34,7 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
         builder.ApplyConfiguration(new PromotionGiftConfiguration());
         builder.ApplyConfiguration(new ReportDetailConfig());
         builder.ApplyConfiguration(new StockMaterialConfiguration());
+        builder.ApplyConfiguration(new OrderToppingDetailConfiguration());
         builder.ApplyConfiguration(new ToppingConfiguration());
         builder.ApplyConfiguration(new UnitConfig());
         builder.ApplyConfiguration(new UnitConversionConfig());
@@ -67,6 +68,7 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
     public DbSet<StockMaterial> StockMaterials { get; set; }
     public DbSet<Topping> Toppings { get; set; }
     public DbSet<HistoryPriceUpdate> HistoryPriceUpdates { get; set; }
-    public DbSet<Measure> Units { get; set; }
+    public DbSet<Measure> Measures { get; set; }
+    public DbSet<OrderToppingDetail> OrderToppingDetails { get; set; }
     public DbSet<UnitConversion> UnitConversions{ get; set; }
 }

@@ -108,9 +108,6 @@ public class OrdersController : ControllerBase
     }
 
 
-    [Authorize(Roles = Permission.Admin)]
-    [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
     [HttpGet("print/{ID}")]
     public async Task<IActionResult> Print(string ID)
     {
@@ -180,9 +177,6 @@ public class OrdersController : ControllerBase
         }
     }
 
-    [Authorize(Roles = Permission.Staff)]
-    [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
     [HttpPost("status/{orderID}/{status}")]
     public async Task<IActionResult> UpdateStatus(string orderID, OrderStatus status)
     {
@@ -206,8 +200,6 @@ public class OrdersController : ControllerBase
         }
     }
 
-    [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
     [HttpDelete("{orderID}")]
     public async Task<IActionResult> Delete(string orderID)
     {
@@ -227,8 +219,6 @@ public class OrdersController : ControllerBase
         }
     }
 
-    [Authorize(Roles = Permission.Branch)]
-    [Authorize(Roles = Permission.Manage)]
     [HttpPut("{orderId}")]
     //call api with httpClient thi dung FromBody
     public async Task<IActionResult> Update([FromBody] OrderRequest request)

@@ -9,6 +9,7 @@ public class OrderItem
     public double PriceSize { get; set; }
     public double SubAmount { get; set; }
     public SugarType SugarType { get; set; }
+    public IcedType IcedType { get; set; }
     public string? Description { get; set; }
     public string SizeID { get; set; }
     public string ProductID { get; set; }

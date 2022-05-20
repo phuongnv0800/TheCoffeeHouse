@@ -15,7 +15,11 @@ public class OrderDetail
     public double SubAmount { get; set; }
     public string? Description { get; set; }
     public SugarType SugarType { get; set; }
+    public IcedType IcedType { get; set; }
     public double PriceSize { get; set; }
+
+    public virtual ICollection<OrderToppingDetail> OrderToppingDetails { get; set; }
+
     public string? ToppingID1 { get; set; }
     public string? Topping1Name { get; set; }
     public double PriceToppping1 { get; set; }

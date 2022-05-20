@@ -41,27 +41,27 @@ public class UnitsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [HttpGet("unit-exchange")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetAllUnitExchange()
-    {
-        try
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var result = await _repository.GetAllExchangeUnit();
-            return Ok(result);
-        }
-        catch (CustomException e)
-        {
-            return BadRequest(new { result = -1, message = e.Message });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
-        }
-    }
+    //[HttpGet("unit-exchange")]
+    //[AllowAnonymous]
+    //public async Task<IActionResult> GetAllUnitExchange()
+    //{
+    //    try
+    //    {
+    //        if (!ModelState.IsValid)
+    //            return BadRequest(ModelState);
+    //        var result = await _repository.GetAllExchangeUnit();
+    //        return Ok(result);
+    //    }
+    //    catch (CustomException e)
+    //    {
+    //        return BadRequest(new { result = -1, message = e.Message });
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        _logger.LogError(e.ToString());
+    //        return BadRequest(new { result = -2, message = e.Message });
+    //    }
+    //}
     [HttpPost]
     [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Create([FromBody] UnitRequest name)
@@ -83,27 +83,27 @@ public class UnitsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [HttpPost("exchange-unit")]
-    [Authorize(Roles = Permission.Branch)]
-    public async Task<IActionResult> CreateExchangeUnit([FromBody] ExchangeUnitRequest name)
-    {
-        try
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var result = await _repository.CreateExchangeUnit(name);
-            return Ok(result);
-        }
-        catch (CustomException e)
-        {
-            return BadRequest(new { result = -1, message = e.Message });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
-        }
-    }
+    //[HttpPost("exchange-unit")]
+    //[Authorize(Roles = Permission.Branch)]
+    //public async Task<IActionResult> CreateExchangeUnit([FromBody] ExchangeUnitRequest name)
+    //{
+    //    try
+    //    {
+    //        if (!ModelState.IsValid)
+    //            return BadRequest(ModelState);
+    //        var result = await _repository.CreateExchangeUnit(name);
+    //        return Ok(result);
+    //    }
+    //    catch (CustomException e)
+    //    {
+    //        return BadRequest(new { result = -1, message = e.Message });
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        _logger.LogError(e.ToString());
+    //        return BadRequest(new { result = -2, message = e.Message });
+    //    }
+    //}
     [HttpPut("{id}")]
     [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Update(string id, [FromBody] UnitRequest name)
@@ -125,27 +125,27 @@ public class UnitsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [HttpPut("exchange-unit")]
-    [Authorize(Roles = Permission.Branch)]
-    public async Task<IActionResult> UpdateExchangeUnit([FromBody] ExchangeUnitRequest name)
-    {
-        try
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var result = await _repository.UpdateExchangeUnit(name);
-            return Ok(result);
-        }
-        catch (CustomException e)
-        {
-            return BadRequest(new { result = -1, message = e.Message });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
-        }
-    }
+    //[HttpPut("exchange-unit")]
+    //[Authorize(Roles = Permission.Branch)]
+    //public async Task<IActionResult> UpdateExchangeUnit([FromBody] ExchangeUnitRequest name)
+    //{
+    //    try
+    //    {
+    //        if (!ModelState.IsValid)
+    //            return BadRequest(ModelState);
+    //        var result = await _repository.UpdateExchangeUnit(name);
+    //        return Ok(result);
+    //    }
+    //    catch (CustomException e)
+    //    {
+    //        return BadRequest(new { result = -1, message = e.Message });
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        _logger.LogError(e.ToString());
+    //        return BadRequest(new { result = -2, message = e.Message });
+    //    }
+    //}
     [HttpDelete("{id}")]
     [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Delete(string id)

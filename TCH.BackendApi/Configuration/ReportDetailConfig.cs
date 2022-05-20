@@ -12,5 +12,6 @@ public class ReportDetailConfig : IEntityTypeConfiguration<ReportDetail>
         builder.HasKey(x => new { x.ReportID, x.MaterialID });
         builder.HasOne(x => x.Report).WithMany(x => x.ReportDetails).HasForeignKey(x => x.ReportID);
         builder.HasOne(x => x.Material).WithMany(x => x.ReportDetails).HasForeignKey(x => x.MaterialID);
+        builder.HasOne(x => x.Measure).WithMany(x => x.ReportDetails).HasForeignKey(x => x.MeasureID);
     }
 }

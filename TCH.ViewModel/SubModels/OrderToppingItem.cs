@@ -2,7 +2,7 @@
 
 public class OrderToppingItem
 {
-    public string ID { get; set; }
+    public string ToppingID { get; set; }
     public int Quantity { get; set; } = 1;
     public double SubPrice { get; set; }
 }
