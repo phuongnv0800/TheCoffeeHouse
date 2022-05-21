@@ -15,10 +15,11 @@
 @inject ILocalStorageService localStorage;
 @inject IProductService productServices;
 @inject IUserService userServices;
+@inject IUserApiClient userApiClient;
 @inject NavigationManager navigationManager;
 @inject IJSRuntime jsRuntime;
 @inject IToastService toastService;
-
+@attribute [Authorize]
 <div class="fluid d-flex">
     <div class="py-5 w-100 px-5 ">
         <TCH.WebServer.Shared.Header.Header User="@User"></TCH.WebServer.Shared.Header.Header>
@@ -172,14 +173,14 @@
     public List<Product>? ProductsList = new List<Product>();
     private string? token;
     public string Name;
-    private Pagination pagination = new Pagination();
+     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
     private ApplicationUser User;
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
     protected override async  Task OnParametersSetAsync()
     {
-        navigationManager.NavigateTo("admin-dashboard");
+        //navigationManager.NavigateTo("admin-dashboard");
         var response = await userServices.GetUserInfo();
         User = response.Data;
         await Get(1);

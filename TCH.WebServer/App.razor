@@ -1,17 +1,35 @@
-﻿<CascadingBlazoredModal>
-    <Router AppAssembly="@typeof(App).Assembly">
-        <Found Context="routeData" >
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-            
-        </Found>
-        <NotFound>
-            <PageTitle>Not found</PageTitle>
-            <LayoutView Layout="@typeof(MainLayout)">
-                <p role="alert">Sorry, there's nothing at this address.</p>
-            </LayoutView>
-        </NotFound>
-    </Router>
-</CascadingBlazoredModal>
-
-
+﻿<CascadingAuthenticationState>
+    <CascadingBlazoredModal>
+        <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
+            <Found Context="routeData">
+                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                    <NotAuthorized>
+                        <RedirectLogin />
+                    </NotAuthorized>
+                </AuthorizeRouteView>
+            </Found>
+            <NotFound>
+                <LayoutView Layout="@typeof(EmptyLayout)">
+                    <body id="kt_body" class="bg-body">
+                        <!--begin::Main-->
+                        <div class="d-flex flex-column flex-root">
+                            <!--begin::Authentication - 404 Page-->
+                            <div class="d-flex flex-column flex-center flex-column-fluid p-10">
+                                <!--begin::Illustration-->
+                                <img src="assets/media/illustrations/sketchy-1/18.png" alt="" class="mw-100 mb-10 h-lg-450px" />
+                                <!--end::Illustration-->
+                                <!--begin::Message-->
+                                <h1 class="fw-bold mb-10" style="color: #A3A3C7">Seems there is nothing here</h1>
+                                <!--end::Message-->
+                                <!--begin::Link-->
+                                <a href="/" class="btn btn-primary">Return Home</a>
+                                <!--end::Link-->
+                            </div>
+                            <!--end::Authentication - 404 Page-->
+                        </div>
+                    </body>
+                </LayoutView>
+            </NotFound>
+        </Router>
+    </CascadingBlazoredModal>
+</CascadingAuthenticationState>

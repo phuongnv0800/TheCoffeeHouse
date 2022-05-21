@@ -1,25 +1,40 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>TCH.WebServer</PageTitle>
+<PageTitle>Phần mềm xếp container</PageTitle>
 
-<div class="page">
-    <main>
-        <article class="content" style="padding:0 !important">
+<Layout>
+    <Aside>
+        <AsideBrand Logo="" Class="px-4">
+            <span class="text-primary fw-bolder fs-6 lh-base ms-2">The Coffee House</span>
+        </AsideBrand>
+
+        <AsideMenu>
+            <NavMenu />
+        </AsideMenu>
+
+        <AsideFooter FullName="Administrator" Description="" Image="assets/media/avatars/300-1.jpg" />
+    </Aside>
+
+    <Page Logo="">
+        <Mobile>
+            <span class="text-primary fw-bolder fs-6 lh-base ms-2">The Coffee House</span>
+        </Mobile>
+        <Content>
             @Body
-        </article>
-    </main>
-</div>
-<BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.BottomRight"
+        </Content>
+    </Page>
+</Layout>
+
+<Overlay />
+
+<BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopRight"
                 Timeout="2"
                 IconType="IconType.FontAwesome"
                 InfoClass="alert alert-dismissible bg-light-primary border border-primary border-dashed text-primary show"
-                InfoIcon="far fa-lightbulb text-primary fs-1"
+                InfoIcon="far fa-lightbulb text-primary fs-3"
                 SuccessClass="alert alert-dismissible bg-light-success border border-success border-dashed text-success show"
-                SuccessIcon="far fa-solid fa-bell text-success fs-1"
+                SuccessIcon="far fa-solid fa-bell text-success fs-3"
                 WarningClass="alert alert-dismissible bg-light-warning border border-warning border-dashed text-warning show"
-                WarningIcon="fas fa-exclamation-triangle text-warning fs-1"
+                WarningIcon="fas fa-exclamation-triangle text-warning fs-3"
                 ErrorClass="alert alert-dismissible bg-light-danger border border-danger border-dashed text-danger show"
-                ErrorIcon="fas fa-times text-danger fs-1" />
-@code{
-    public bool login = GbParameter.GbParameter.IsLogin;
-}
+                ErrorIcon="fas fa-times text-danger fs-3" />

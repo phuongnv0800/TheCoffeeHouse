@@ -23,17 +23,17 @@ namespace TCH.WebServer.Services.Users
                 {
                     return new ResponseLogin<ApplicationUser> { Result = 2, Data = null };
                 }
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var response = await _httpClient.GetAsync($"/api/Users/{GbParameter.GbParameter.UserId}");
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var response = await _httpClient.GetFromJsonAsync<ResponseLogin<ApplicationUser>>($"/api/Users/{GbParameter.GbParameter.UserId}");
+                if ((int)response.Result == 1)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<ApplicationUser> respond = JsonConvert.DeserializeObject<ResponseLogin<ApplicationUser>>(content);
-                    if (respond.Result == 1)
-                    {
-                        return respond;
-                    }
-                    return null;
+                    return response;
+                    //ResponseLogin<ApplicationUser> respond = JsonConvert.DeserializeObject<ResponseLogin<ApplicationUser>>(content);
+                    //if (respond.Result == 1)
+                    //{
+                    //    return respond;
+                    //}
+                    //return null;
                 }
                 return null;
             }

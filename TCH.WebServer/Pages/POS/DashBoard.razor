@@ -451,7 +451,7 @@
 @code {
     public List<Product>? ProductsList = new List<Product>();
     [CascadingParameter] public IModalService Modal { get; set; }
-    private Pagination pagination = new Pagination();
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
     private List<Category> categories = new List<Category>();
     private ApplicationUser User;
 	protected override async  Task OnParametersSetAsync()

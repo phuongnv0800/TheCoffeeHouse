@@ -1,0 +1,84 @@
+﻿
+@inject IUserApiClient UserApiClient
+@inject IRoleApiClient RoleApiClient
+@inject IToastService ToastService
+<div class="simple-form" style="width: 260px">
+    <div class="">
+        <div class="mb-3">
+            @if (roles != null)
+            {
+                @foreach (var item in request.Roles)
+                {
+                    <div class="form-check mb-2">
+                        <input type="checkbox" class="form-check-input" id="@item.Name" @bind="item.Selected">
+                        <label class="form-check-label" for="@item.Name">@item.Name</label>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <button @onclick="AssignRoleUser" class="btn btn-sm btn-primary me-3">Cập nhật</button>
+
+    <button @onclick="ModalInstance.CancelAsync" class="btn btn-sm btn-danger">Huỷ bỏ</button>
+
+</div>
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    [CascadingParameter]
+    BlazoredModalInstance ModalInstance { get; set; }
+
+    private PagedList<RoleVm> roles;
+
+    private UserVm user;
+    private RoleAssignRequest request;
+    protected override async Task OnInitializedAsync()
+    {
+
+        request = new RoleAssignRequest();
+        var respondRole = await RoleApiClient.GetAll();
+        var respondUser = await UserApiClient.GetById(Id);
+        if (respondRole.Result == 1)
+        {
+            roles = respondRole.Data;
+        }
+        if (respondUser.Result == 1)
+        {
+            user = respondUser.Data;
+        }
+        request.Id = Id;
+        foreach (var role in roles.Items)
+        {
+            request.Roles.Add(new SelectedItem()
+                {
+                    Id = role.ID.ToString(),
+                    Name = role.Name,
+                    Selected = user.Roles.Contains(role.Name)
+                });
+        }
+    }
+
+    private async Task AssignRoleUser()
+    {
+        try
+        {
+            var messageResult = await UserApiClient.Assign(Id, request);
+            if (messageResult.Result == 1)
+            {
+                ToastService.ShowSuccess(messageResult.Message, $"Thông báo");
+            }
+            else
+            {
+                ToastService.ShowError(messageResult.Message, "Thông báo");
+            }
+            await ModalInstance.CloseAsync(ModalResult.Ok<string>("thành công"));
+        }
+        catch
+        {
+
+        }
+
+    }
+}

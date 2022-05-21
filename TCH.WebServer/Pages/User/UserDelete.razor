@@ -1,0 +1,32 @@
+﻿
+@inject IToastService ToastService
+@inject IUserApiClient UserApiClient
+
+<div class="simple-form">
+    <div class="form-group pb-4">
+        Are you sure you want to delete the record?
+    </div>
+
+    <button @onclick="Yes" class="btn btn-sm btn-danger me-3">Delete</button>
+    <button @onclick="No" class="btn btn-sm btn-secondary">Cancel</button>
+</div>
+
+@code {
+    [CascadingParameter]
+    BlazoredModalInstance ModalInstance { get; set; }
+
+    [Parameter]
+    public string Id { get; set; }
+    async Task Yes()
+    {
+        await UserApiClient.Delete(Id);
+        ToastService.ShowError("Xoá thành công", "Thông báo");
+        await ModalInstance.CloseAsync(ModalResult.Ok<bool>(true));
+    }
+
+    void No()
+    {
+        ModalInstance.CloseAsync(ModalResult.Cancel());
+    }
+
+}
