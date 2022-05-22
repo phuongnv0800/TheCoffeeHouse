@@ -18,14 +18,9 @@
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
 @inject IJSRuntime jsRuntime;
+@attribute [Authorize]
 
-@if (!GbParameter.GbParameter.IsLogin)
-{
-    <h3>Bạn chưa đăng nhập</h3>
-}
-else
-{
-    <div class="page d-flex flex-row flex-column-fluid">
+<div class="page d-flex flex-row flex-column-fluid">
     <TCH.WebServer.Pages.SideBar.SidebarAdmin></TCH.WebServer.Pages.SideBar.SidebarAdmin>
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
         <TCH.WebServer.Shared.Header.Header></TCH.WebServer.Shared.Header.Header>
@@ -169,13 +164,13 @@ else
         </div>
     </div>
 </div>
-}
+
 
 @code {
     public List<Promotion>? ProductsList = new List<Promotion>();
     private string? token;
     public string Name;
-    private Pagination pagination = new Pagination();
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
     private ApplicationUser User;
 
     [CascadingParameter] public IModalService Modal { get; set; }

@@ -51535,7 +51535,7 @@ body {
 
     .aside-enabled.aside-fixed .wrapper {
         transition: padding-left .3s ease;
-        padding-left: 265px
+        /*padding-left: 265px*/
     }
 
     .aside-enabled.aside-fixed[data-kt-aside-minimize=on] .wrapper {
@@ -51544,11 +51544,11 @@ body {
     }
 
     .header-fixed .wrapper {
-        padding-top: 65px
+        /*padding-top: 65px*/
     }
 
     .header-fixed.toolbar-fixed .wrapper {
-        padding-top: calc(65px + var(--kt-toolbar-height))
+        /*padding-top: calc(65px + var(--kt-toolbar-height))*/
     }
 }
 

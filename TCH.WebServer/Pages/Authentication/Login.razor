@@ -1,6 +1,7 @@
 ﻿@page "/login"
 @using Microsoft.AspNetCore.Components.Authorization
 @using System.Security.Claims
+@using TCH.ViewModel.SubModels
 @using TCH.WebServer.Services
 @layout EmptyLayout
 @inject IAuthService authService
@@ -59,7 +60,7 @@
 
         if (user.Identity.IsAuthenticated)
         {
-            navigationManager.NavigateTo("/product", true);
+            navigationManager.NavigateTo("/admin-dashboard", true);
         }
     }
     private async Task HandleLogin()

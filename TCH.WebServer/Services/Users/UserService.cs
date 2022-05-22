@@ -40,7 +40,7 @@ namespace TCH.WebServer.Services.Users
                 {
                     return new ResponseLogin<ApplicationUser> { Result = 2, Data = null };
                 }
-                //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
                 var response = await _httpClient.GetFromJsonAsync<ResponseLogin<ApplicationUser>>($"/api/Users/{GbParameter.GbParameter.UserId}");
                 if ((int)response.Result == 1)
                 {
