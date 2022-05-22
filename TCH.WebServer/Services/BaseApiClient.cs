@@ -37,8 +37,10 @@ public class BaseApiClient
             var response = await httpClient.DeleteAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                var body = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<MessageResult>(body);
+                //var body = await response.Content.ReadAsStringAsync();
+                //return JsonSerializer.Deserialize<MessageResult>(body);
+                var body = await response.Content.ReadFromJsonAsync<MessageResult>();
+                return body;
             }
         }
         catch (Exception e)
@@ -62,8 +64,10 @@ public class BaseApiClient
             var response = await httpClient.PutAsJsonAsync(url, request);
             if (response.IsSuccessStatusCode)
             {
-                var body = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<MessageResult>(body);
+                //var body = await response.Content.ReadAsStringAsync();
+                //return JsonSerializer.Deserialize<MessageResult>(body);
+                var body = await response.Content.ReadFromJsonAsync<MessageResult>();
+                return body;
             }
         }
         catch (Exception e)
@@ -85,8 +89,10 @@ public class BaseApiClient
             var response = await httpClient.PutAsync(url, request);
             if (response.IsSuccessStatusCode)
             {
-                var body = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<MessageResult>(body);
+                //var body = await response.Content.ReadAsStringAsync();
+                //return JsonSerializer.Deserialize<MessageResult>(body);
+                var body = await response.Content.ReadFromJsonAsync<MessageResult>();
+                return body;
             }
         }
         catch (Exception e)
@@ -109,8 +115,10 @@ public class BaseApiClient
             var response = await httpClient.PostAsJsonAsync(url, request);
             if (response.IsSuccessStatusCode)
             {
-                var body = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<MessageResult>(body);
+                //var body = await response.Content.ReadAsStringAsync();
+                //return JsonSerializer.Deserialize<MessageResult>(body);
+                var body = await response.Content.ReadFromJsonAsync<MessageResult>();
+                return body;
             }
         }
         catch (Exception e)
@@ -132,8 +140,10 @@ public class BaseApiClient
             var response = await httpClient.PostAsJsonAsync(url, "");
             if (response.IsSuccessStatusCode)
             {
-                var body = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<MessageResult>(body);
+                //var body = await response.Content.ReadAsStringAsync();
+                //return JsonSerializer.Deserialize<MessageResult>(body);
+                var body = await response.Content.ReadFromJsonAsync<MessageResult>();
+                return body;
             }
         }
         catch (Exception e)
@@ -155,8 +165,10 @@ public class BaseApiClient
             var response = await httpClient.PostAsync(url, request);
             if (response.IsSuccessStatusCode)
             {
-                var body = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<MessageResult>(body);
+                //var body = await response.Content.ReadAsStringAsync();
+                //return JsonSerializer.Deserialize<MessageResult>(body);
+                var body = await response.Content.ReadFromJsonAsync<MessageResult>();
+                return body;
             }
         }
         catch (Exception e)

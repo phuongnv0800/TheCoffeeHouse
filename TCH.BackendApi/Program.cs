@@ -28,9 +28,13 @@ builder.Services.AddDbContext<APIContext>(options =>
 });
 builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Program));
 builder.Services.AddIdentity<AppUser, AppRole>()
-    .AddRoles<AppRole>()
     .AddEntityFrameworkStores<APIContext>()
     .AddDefaultTokenProviders();
+//Declare DI
+builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
+builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+
 builder.Services.AddScoped<IProductRepository, ProductManager>();
 builder.Services.AddScoped<ICategoryRepository, CategoryManager>();
 builder.Services.AddScoped<IUserRepository, UserManager>();

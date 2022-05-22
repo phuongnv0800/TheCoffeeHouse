@@ -1,6 +1,9 @@
-﻿@inherits LayoutComponentBase
-
-<PageTitle>Phần mềm xếp container</PageTitle>
+﻿@using System.Security.Claims
+@inherits LayoutComponentBase
+@inject IUserApiClient userApiClient
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+<PageTitle>Quản lý The Coffee House</PageTitle>
 
 <Layout>
     <Aside>
@@ -12,7 +15,7 @@
             <NavMenu />
         </AsideMenu>
 
-        <AsideFooter FullName="Administrator" Description="" Image="assets/media/avatars/300-1.jpg" />
+        <AsideFooter FullName=@(user.FirstName + user.LastName) Description="Quản trị viên" Image="assets/media/avatars/300-1.jpg" />
     </Aside>
 
     <Page Logo="">
@@ -26,7 +29,28 @@
 </Layout>
 
 <Overlay />
-
+@code{
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
+    private UserVm user = new UserVm();
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationState;
+        if (authState.User.Identity.IsAuthenticated)
+        {
+            var userId = authState.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            var result = await userApiClient.GetById(userId);
+            if(result.Result == 1)
+            {
+                user = result.Data;
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/login");
+            }
+        }
+    }
+}
 <BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopRight"
                 Timeout="2"
                 IconType="IconType.FontAwesome"

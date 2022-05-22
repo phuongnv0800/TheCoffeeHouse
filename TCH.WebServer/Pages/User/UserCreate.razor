@@ -1,182 +1,144 @@
-﻿@page "/add-user"
-@inject IToastService ToastService
+﻿@inject IToastService ToastService
 @inject IUserApiClient UserApiClient
-@inject NavigationManager NavigationManager
 @inject IJSRuntime JS
 @attribute [Authorize]
-<div class="row page-titles">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active">
-            <a href="/">Home</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="/user">User</a>
-        </li>
-    </ol>
-</div>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Tạo tài khoản mới</h4>
+
+@inject IToastService _toastService
+
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="OnCancel"></div>
+    <div class="modal-dialog modal-dialog-centered mw-650px" style="z-index: 1050">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="fw-bolder">@Title</h5>
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" @onclick="OnCancel">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                        </svg>
+                    </span>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="form-validation">
-                    <EditForm class="needs-validation" Model="register" OnValidSubmit="Create">
-                        <DataAnnotationsValidator></DataAnnotationsValidator>
-                        <ValidationSummary></ValidationSummary>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="validationCustom01">
-                                        Tên tài khoản
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <InputText type="text" class="form-control"
-                                                   id="validationCustom01" placeholder="Enter a username.."
-                                                   @bind-Value="register.UserName"></InputText>
-                                        <ValidationMessage For="()=> register.UserName"></ValidationMessage>
-                                    </div>
+            <div class="modal-body">
+                <div class="scroll-y me-n7 pe-7">
+                    <EditForm Model="user" OnValidSubmit="OnSubmit" class="form">
+                        <DataAnnotationsValidator />
+                        <div class="fv-row mb-7">
+                            <label class="required fs-6 fw-bold mb-2" for="validationCustom01">
+                                Tên tài khoản
+                                <span class="text-danger">*</span>
+                            </label>
+                            <InputText type="text" class="form-control form-control-solid col-sm-6"
+                                       id="validationCustom01" placeholder="Enter a username.."
+                                       @bind-Value="user.UserName"></InputText>
+                            <ValidationMessage For="()=> user.UserName"></ValidationMessage>
+
+                        </div>
+                        <div class="row mb-7">
+                            <div class="col-6">
+                                <label class="required fs-6 fw-bold mb-2" for="Password">
+                                    Mật khẩu
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <InputText class="form-control form-control-solid col-sm-6" type="password" placeholder="Password"
+                                           id="Password" @bind-Value="@user.Password"></InputText>
+                                <ValidationMessage For="()=> user.Password"></ValidationMessage>
+                            </div>
+                            <div class="col-6">
+                                <label class="required fs-6 fw-bold mb-2" for="Password2">
+                                    Nhập lại mật khẩu
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <InputText class="form-control form-control-solid col-sm-6" type="password" placeholder="Password"
+                                           id="Password2" @bind-Value="@user.ConfirmPassword"></InputText>
+                                <ValidationMessage For="()=> user.ConfirmPassword"></ValidationMessage>
+                            </div>
+                        </div>
+                        <div class="fv-row mb-7">
+                            <label class="required fs-6 fw-bold mb-2" for="Avatar">
+                                Avatar
+                                <span class="text-danger">*</span>
+                            </label>
+                            <InputFile OnChange="HandleFileSelection" class="form-file"></InputFile>
+                        </div>
+                        <div class="row mb-7">
+                            <div class="col-6">
+                                <label class="required fs-6 fw-bold mb-2">Tên</label>
+                                <InputText @bind-Value="user.LastName" class="form-control form-control-solid col-sm-6" />
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                    <ValidationMessage For="@(() => user.LastName)" />
                                 </div>
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="Email">
-                                        Email <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <InputText type="email" placeholder="Email"
-                                                   class="form-control"
-                                                   id="Email" @bind-Value="@register.Email"></InputText>
-                                        <ValidationMessage For="()=> register.Email"></ValidationMessage>
-                                    </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="required fs-6 fw-bold mb-2">Họ</label>
+                                <InputText @bind-Value="user.FirstName" class="form-control form-control-solid col-sm-6" />
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                    <ValidationMessage For="@(() => user.FirstName)" />
                                 </div>
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="Password">
-                                        Mật khẩu
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <InputText class="form-control" type="password" placeholder="Password"
-                                                   id="Password" @bind-Value="@register.Password"></InputText>
-                                        <ValidationMessage For="()=> register.Password"></ValidationMessage>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="row mb-7">
+                            <div class="col-6">
+                                <label class="fs-6 fw-bold mb-2">Điện thoại</label>
+                                <InputText @bind-Value="user.PhoneNumber" class="form-control form-control-solid col-sm-6" />
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                    <ValidationMessage For="@(() => user.PhoneNumber)" />
                                 </div>
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="Password2">
-                                        Nhập lại mật khẩu
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <InputText class="form-control" type="password" placeholder="Password"
-                                                   id="Password2" @bind-Value="@register.ConfirmPassword"></InputText>
-                                        <ValidationMessage For="()=> register.ConfirmPassword"></ValidationMessage>
-                                    </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="fs-6 fw-bold mb-2">Email</label>
+                                <InputText @bind-Value="user.Email" class="form-control form-control-solid col-sm-6" />
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                    <ValidationMessage For="@(() => user.Email)" />
                                 </div>
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="Avatar">
-                                        Avatar
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <InputFile OnChange="SaveFile" class="form-file"></InputFile>
+                            </div>
+                        </div>
+                        <div class="fv-row mb-7">
+                            <label class="fs-6 fw-bold mb-2">Địa chỉ</label>
+                            <InputText @bind-Value="user.Address" class="form-control form-control-solid col-sm-6" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => user.Address)" />
+                            </div>
+                        </div>
+                        <div class="row mb-7">
+                            <div class="col-lg-6">
+                                <label class="col-form-label">Giới tính:</label>
+                                <div class="col-form-label">
+                                    <div class="radio-inline">
+                                        <InputRadioGroup @bind-Value="user.Gender">
+                                            @foreach (var item in (Gender[])Enum.GetValues(typeof(Gender)))
+                                            {
+                                                <InputRadio Value="item" class="form-check-input" />
+                                                <label class="form-check-label me-3">
+                                                    @item
+                                                </label>
+                                            }
+                                        </InputRadioGroup>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-6">
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="FirstName">
-                                        Họ
-                                        <span class="text-danger">*</span>
+                            <div class="col-lg-6">
+                                <label for="Dob">Ngày sinh</label>
+                                <InputDate class="form-control" id="Dob" @bind-Value="@user.DateOfBirth" />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-lg-4 col-form-label">
+                                <a href="javascript:void()">Terms &amp; Conditions</a> <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="validationCustom12" required>
+                                    <label class="form-check-label" for="validationCustom12">
+                                        Agree to terms and conditions
                                     </label>
-                                    <div class="col-lg-6">
-                                        <InputText class="form-control" id="FirstName" placeholder="FirstName"
-                                                   @bind-Value="@register.FirstName"></InputText>
-                                        <ValidationMessage For="()=> register.FirstName"></ValidationMessage>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="LastName">
-                                        Tên
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <InputText class="form-control" id="LastName" placeholder="LastName"
-                                                   @bind-Value="@register.LastName"></InputText>
-                                        <ValidationMessage For="()=> register.LastName"></ValidationMessage>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="PhoneNumber">
-                                        Phone (VN)
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <div class="input-group input-success-o">
-                                            <span class="input-group-text"><i class="la la-phone"></i></span>
-                                            <InputText placeholder="Phone"
-                                                       class="form-control"
-                                                       id="PhoneNumber" @bind-Value="@register.PhoneNumber"></InputText>
-                                            <ValidationMessage For="()=> register.PhoneNumber"></ValidationMessage>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="Dob">
-                                        Date of Birth <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <InputDate class="form-control"
-                                                   id="Dob" @bind-Value="@register.DateOfBirth"></InputDate>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="Gender">
-                                        Giới tính <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <div class="radio-inline">
-                                            <InputRadioGroup @bind-Value="register.Gender">
-                                                @foreach (var item in (Gender[])Enum.GetValues(typeof(Gender)))
-                                                {
-                                                    <InputRadio Value="item" class="form-check-input" />
-                                                    <label class="form-check-label me-3">
-                                                        @item
-                                                    </label>
-                                                }
-                                            </InputRadioGroup>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="Address">
-                                        Địa chỉ
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-6">
-                                        <InputTextArea class="form-control" id="Address" placeholder="Address" style="height: 100px"
-                                                       @bind-Value="@register.Address"></InputTextArea>
-                                        <ValidationMessage For="()=> register.Address"></ValidationMessage>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label">
-                                        <a href="javascript:void()">Terms &amp; Conditions</a> <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="col-lg-8">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="validationCustom12" required>
-                                            <label class="form-check-label" for="validationCustom12">
-                                                Agree to terms and conditions
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <div class="col-lg-8 ms-auto">
-                                        <button type="submit" class="btn btn-primary">Tạo tài khoản</button>
-                                    </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="card-footer p-2">
+                            <button type="submit" class="btn btn-primary mr-2">Thêm mới</button>
+                            <button class="btn btn-danger mr-2" @onclick="OnCancel">Đóng</button>
                         </div>
                     </EditForm>
                 </div>
@@ -184,38 +146,63 @@
         </div>
     </div>
 </div>
+
 @code {
-    private RegisterRequest register;
+    [Parameter] public string Title { get; set; }
 
-
+    public MultipartFormDataContent content = new MultipartFormDataContent();
+    public RegisterRequest user { set; get; }
     protected override void OnInitialized()
     {
-        register = new RegisterRequest();
-        base.OnInitialized();
-    }
-
-    private async void Create(EditContext context)
-    {
-        try
-        {
-            var result = await UserApiClient.Register(register);
-            if (result.Result == 1)
-            {
-                ToastService.ShowSuccess(result.Message, $"Thành công");
-                NavigationManager.NavigateTo("/user");
-            }
-            else
-            {
-                ToastService.ShowError("error!!", "Thất bại");
-            }
-        }
-        catch (Exception e) { }
-
-    }
-
-    private void SaveFile()
-    {
-
+        user = new RegisterRequest();
     }
 }
 
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
+    private async Task OnCancel() => await BlazoredModal.CancelAsync();
+
+    private async Task OnSubmit()
+    {
+        content.Add(new StringContent(user.FirstName), "firstName");
+        content.Add(new StringContent(user.LastName), "lastName");
+        content.Add(new StringContent(user.DateOfBirth.ToString()), "dateOfBirth");
+        content.Add(new StringContent(user.Email), "email");
+        content.Add(new StringContent(user.PhoneNumber), "phoneNumber");
+        content.Add(new StringContent(user.Address), "address");
+        content.Add(new StringContent(user.Gender.ToString()), "gender");
+        content.Add(new StringContent(user.UserName.ToString()), "userName");
+        content.Add(new StringContent(user.Password.ToString()), "password");
+        content.Add(new StringContent(user.ConfirmPassword.ToString()), "confirmPassword");
+
+        var result = await UserApiClient.Register(content);
+
+        if (result.Result == 1)
+        {
+            _toastService.ShowSuccess(result.Message);
+
+            await BlazoredModal.CloseAsync(ModalResult.Ok(true));
+        }
+        else
+        {
+            _toastService.ShowError(result.Message);
+        }
+    }
+    private void HandleFileSelection(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        long maxFileSize = 512 * 512;
+        try
+        {
+            var fileContent = new StreamContent(file.OpenReadStream(maxFileSize));
+            content.Add(fileContent, "avatarFile", file.Name);
+
+        }
+        catch (Exception)
+        {
+            //Logger.LogError($"File: {file.Name} Error: {ex.Message}");
+        }
+    }
+}
