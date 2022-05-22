@@ -24,5 +24,6 @@ public interface IUserRepository
 
     Task<MessageResult> Delete(string id);
     Task<MessageResult> ChangePasword(ChangePassword req);
+    Task<Respond<PagedList<UserVm>>> GetAllByBranchID(string branchID, Search request);
 
 }

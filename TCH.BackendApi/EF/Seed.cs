@@ -307,7 +307,6 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = " Latte Táo Lê Quế Nóng",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
@@ -317,8 +316,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
-
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/latte-tao-le-que-nong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
@@ -326,18 +324,14 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = " Latte Táo Lê Quế Đá",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 58000,
                 IsAvailable = true,
-
-
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
-
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/latte-tao-le-que-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
@@ -345,18 +339,14 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = " Latte Táo Lê Quế Chai Fresh 500ml",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 107000,
                 IsAvailable = true,
-
-
                 Price = 107000,
-                Description = "Mô tả sản phẩm của cửa hàng",
-
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/latte-tao-le-que-chai-fresh-500ml.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
@@ -371,12 +361,9 @@ public static class Seed
                 IsSale = false,
                 PriceSale = 49000,
                 IsAvailable = true,
-
-
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
-
-                LinkImage = "/products/ mochanong.webp",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
+                LinkImage = "/products/mochanong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
@@ -393,7 +380,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/mocha-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -412,7 +399,7 @@ public static class Seed
 
 
                 Price = 40000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/espressonong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -431,7 +418,7 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/cfdenda-espressoda.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -450,7 +437,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/cappuccino.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -466,7 +453,7 @@ public static class Seed
                 PriceSale = 49000,
                 IsAvailable = true,
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/mocha-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
@@ -481,7 +468,7 @@ public static class Seed
                 PriceSale = 40000,
                 IsAvailable = true,
                 Price = 40000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/americano-nong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
@@ -499,7 +486,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/latte-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -518,7 +505,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/caramel-macchiato-nong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -537,7 +524,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/caramel-macchiato-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -556,7 +543,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/latte.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -575,7 +562,7 @@ public static class Seed
 
 
                 Price = 40000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/latte.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
@@ -594,7 +581,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/bac-siu-da.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -613,7 +600,7 @@ public static class Seed
 
 
                 Price = 35000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/bac-siu-nong.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -632,7 +619,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/cfdenda-espressoda.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -651,7 +638,7 @@ public static class Seed
 
 
                 Price = 35000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/ca-phe-den-nong.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -670,7 +657,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/ca-phe-sua-da.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -689,7 +676,7 @@ public static class Seed
 
 
                 Price = 78000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/bottlecfsd.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -708,7 +695,7 @@ public static class Seed
 
 
                 Price = 78000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/ca-phe-sua-nong.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
@@ -727,7 +714,7 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/cold-brew-sua-tuoi.webp",
                 CategoryID = "0e91fcb8-fa59-4a86-9af9-e608d3175caa ",
@@ -746,7 +733,7 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/classic-cold-brew.webp",
                 CategoryID = "0e91fcb8-fa59-4a86-9af9-e608d3175caa ",
@@ -765,7 +752,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-dao-dua-luoi.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -784,7 +771,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-sen-nhan.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -803,7 +790,7 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-nhan-da.webp ",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -822,7 +809,7 @@ public static class Seed
 
 
                 Price = 51000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/nhan-hat-chia--nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -841,7 +828,7 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-sen.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -860,7 +847,7 @@ public static class Seed
 
 
                 Price = 51000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-sen-nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -879,9 +866,9 @@ public static class Seed
 
 
                 Price = 45000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
-                LinkImage = "/products/ tra-dao-cam-xa.webp",
+                LinkImage = "/products/tra-dao-cam-xa.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
@@ -898,7 +885,7 @@ public static class Seed
 
 
                 Price = 52000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tdcs-nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -917,7 +904,7 @@ public static class Seed
 
 
                 Price = 107000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/bottle_tradao.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
@@ -936,7 +923,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/caramel-macchiato-da.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -955,7 +942,7 @@ public static class Seed
 
 
                 Price = 54000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/hong-tra-latte.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -974,7 +961,7 @@ public static class Seed
 
 
                 Price = 54000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/hong-tra-sua-nong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -993,7 +980,7 @@ public static class Seed
 
 
                 Price = 54000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/hong-tra-sua-tran-chau.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1012,7 +999,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/latte-tao-le-que-da.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1031,7 +1018,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-den-matchiato.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1050,7 +1037,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-sua-mac-ca.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1069,7 +1056,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-sua-masala-chai-nong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1088,7 +1075,7 @@ public static class Seed
 
 
                 Price = 107000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-sua-masala-chai-tran-chau-chai-fresh-500ml.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1107,9 +1094,9 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
-                LinkImage = "/products/ masala-chai-tran-chau-lanh.webp",
+                LinkImage = "/products/masala-chai-tran-chau-lanh.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
@@ -1126,7 +1113,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/oolong-nuong-nong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1145,7 +1132,7 @@ public static class Seed
 
 
                 Price = 54000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/olong-nuong-tran-chau.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1164,7 +1151,7 @@ public static class Seed
 
 
                 Price = 97000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/bottle_oolong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
@@ -1183,7 +1170,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/cf-da-xay.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
@@ -1200,7 +1187,7 @@ public static class Seed
                 PriceSale = 49000,
                 IsAvailable = true,
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/chanh-sa-da-xay.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1215,7 +1202,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/chocolate-ice-blended.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1230,7 +1217,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/cookies_da_xay.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1246,7 +1233,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/daovietquat.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1261,7 +1248,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/matchadaxa.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1276,7 +1263,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/sinh-to-viet-quat.webp",
                 CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
             },
@@ -1291,7 +1278,7 @@ public static class Seed
                 PriceSale = 58000,
                 IsAvailable = true,
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/chocolate-da.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
             },
@@ -1309,7 +1296,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/chocolate-ice-blended.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
@@ -1328,7 +1315,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/chocolatenong.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
@@ -1347,7 +1334,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/matcha-latte-da.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
@@ -1366,7 +1353,7 @@ public static class Seed
 
 
                 Price = 58000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/matcha-latte.webp",
                 CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
@@ -1385,7 +1372,7 @@ public static class Seed
 
 
                 Price = 12000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/banhmique.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
@@ -1404,7 +1391,7 @@ public static class Seed
 
 
                 Price = 12000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/banhmiquecay.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
@@ -1423,7 +1410,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/banh-mi-vn-thit-nguoi.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
@@ -1442,7 +1429,7 @@ public static class Seed
 
 
                 Price = 32000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/cha-bong-pho-mai.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
@@ -1461,7 +1448,7 @@ public static class Seed
 
 
                 Price = 35000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/croissant-trung-muoi.webp",
                 CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
@@ -1480,7 +1467,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/mochi-kem-chocolate.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1499,7 +1486,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/mochi-kem-dua-dua.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1518,7 +1505,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/mochi-kem-matcha.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1537,7 +1524,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/mochi-kem-viet-quat.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1556,7 +1543,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/mochi-kem-xoai.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1575,7 +1562,7 @@ public static class Seed
 
 
                 Price = 19000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/mochi-kem-phuc-bon-tu.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1594,7 +1581,7 @@ public static class Seed
 
 
                 Price = 39000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/mousse-gau-chocolate.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1613,7 +1600,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/chanh-day.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1632,7 +1619,7 @@ public static class Seed
 
 
                 Price = 29000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/mousse-red-velvet.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1651,9 +1638,9 @@ public static class Seed
 
 
                 Price = 32000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
-                LinkImage = "/products/ mousse-tiramisu.webp",
+                LinkImage = "/products/mousse-tiramisu.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
             },
             new Product()
@@ -1670,7 +1657,7 @@ public static class Seed
 
 
                 Price = 20000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/mit-say.webp",
                 CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
@@ -1689,7 +1676,7 @@ public static class Seed
 
 
                 Price = 230000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/ori-1-1kg.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1708,7 +1695,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/ca-phe-rang-xay-original.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1727,7 +1714,7 @@ public static class Seed
 
 
                 Price = 79000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/ca-phe-dam-vi-viet_tui_new.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1746,7 +1733,7 @@ public static class Seed
 
 
                 Price = 39000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/cpsd-3in1.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1765,7 +1752,7 @@ public static class Seed
 
 
                 Price = 39000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/ca-phe-sua-da-hoa-tan-dam-vi.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1784,7 +1771,7 @@ public static class Seed
 
 
                 Price = 79000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/ca-phe-sua-da-hoa-tan-tui.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1803,7 +1790,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/rich-finish-nopromo.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1822,7 +1809,7 @@ public static class Seed
 
 
                 Price = 49000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/peak-plavor-nopromo.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1841,7 +1828,7 @@ public static class Seed
 
 
                 Price = 98000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/arabica.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1857,7 +1844,7 @@ public static class Seed
                 PriceSale = 69000,
                 IsAvailable = true,
                 Price = 69000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/p6-lon-3in1.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
@@ -1872,7 +1859,7 @@ public static class Seed
                 PriceSale = 269000,
                 IsAvailable = true,
                 Price = 269000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/24-lon-cpsd.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
             },
@@ -1889,7 +1876,7 @@ public static class Seed
 
 
                 Price = 109000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/combo-3-hop-ca-phe-sua-da-hoa-tan-dam.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1908,7 +1895,7 @@ public static class Seed
 
 
                 Price = 109000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/combo-3cfsd-nopromo.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1927,7 +1914,7 @@ public static class Seed
 
 
                 Price = 109000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/2combo2-cforiginal.webp",
                 CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
@@ -1946,7 +1933,7 @@ public static class Seed
 
 
                 Price = 169000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/giftset-tra-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -1962,7 +1949,7 @@ public static class Seed
                 PriceSale = 69000,
                 IsAvailable = true,
                 Price = 69000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/combo-3-hop-tra-lai-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
@@ -1977,7 +1964,7 @@ public static class Seed
                 PriceSale = 69000,
                 IsAvailable = true,
                 Price = 69000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/combo-3-hop-tra-oolong-tui-loc-tearoma1.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
             },
@@ -1995,7 +1982,7 @@ public static class Seed
 
 
                 Price = 69000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/combo-3-hop-tra-dao-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2014,7 +2001,7 @@ public static class Seed
 
 
                 Price = 69000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/combo-3-hop-tra-sen-tui-loc-tearoma1.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2033,7 +2020,7 @@ public static class Seed
 
 
                 Price = 28000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-dao-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2052,7 +2039,7 @@ public static class Seed
 
 
                 Price = 28000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-lai-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2071,7 +2058,7 @@ public static class Seed
 
 
                 Price = 28000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-oolong-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2090,7 +2077,7 @@ public static class Seed
 
 
                 Price = 28000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-sen-tui-loc-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2109,7 +2096,7 @@ public static class Seed
 
 
                 Price = 74000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-xanh-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2128,7 +2115,7 @@ public static class Seed
 
 
                 Price = 74000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-sen-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2147,7 +2134,7 @@ public static class Seed
 
 
                 Price = 74000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-oolong-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2166,7 +2153,7 @@ public static class Seed
 
 
                 Price = 74000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/tra-lai-la-tearoma.webp",
                 CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
@@ -2185,7 +2172,7 @@ public static class Seed
 
 
                 Price = 250000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/binh-giu-nhiet-inox-trang-den.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
@@ -2204,7 +2191,7 @@ public static class Seed
 
 
                 Price = 250000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/bình giữ nhiệt inox xám cam 473ml.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
@@ -2223,7 +2210,7 @@ public static class Seed
 
 
                 Price = 79000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
 
                 LinkImage = "/products/bộ ống hút inox.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
@@ -2239,7 +2226,7 @@ public static class Seed
                 PriceSale = 100000,
                 IsAvailable = true,
                 Price = 100000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/cốc sứ the coffee house gợn sóng.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
@@ -2254,7 +2241,7 @@ public static class Seed
                 PriceSale = 100000,
                 IsAvailable = true,
                 Price = 100000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/cốc sứ the coffee house sọc ngang.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
@@ -2269,7 +2256,7 @@ public static class Seed
                 PriceSale = 79000,
                 IsAvailable = true,
                 Price = 79000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/túi canvans đà nãng.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
@@ -2284,7 +2271,7 @@ public static class Seed
                 PriceSale = 79000,
                 IsAvailable = true,
                 Price = 79000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/túi canvans hà nội.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
@@ -2299,7 +2286,7 @@ public static class Seed
                 PriceSale = 79000,
                 IsAvailable = true,
                 Price = 79000,
-                Description = "Mô tả sản phẩm của cửa hàng",
+                Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/túi canvans trăng nhà sung túc.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             }

@@ -99,7 +99,7 @@ public class UsersController : ControllerBase
 
     }
 
-    [Authorize(Roles = Permission.Admin + "," + Permission.Branch+","+ Permission.Manage)]
+    [Authorize(Roles = Permission.Admin + "," + Permission.Branch + "," + Permission.Manage)]
     //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
     [HttpGet("paging")]
     public async Task<IActionResult> GetAllPaging([FromQuery] Search request)
@@ -115,7 +115,28 @@ public class UsersController : ControllerBase
         }
         catch (Exception e)
         {
-           
+
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [Authorize(Roles = Permission.Admin + "," + Permission.Branch + "," + Permission.Manage)]
+    //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
+    [HttpGet("user-branch/{branchID}")]
+    public async Task<IActionResult> GetAllByBranchID(string branchID, [FromQuery] Search request)
+    {
+        try
+        {
+            var products = await _repository.GetAllByBranchID(branchID, request);
+            return Ok(products);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }
