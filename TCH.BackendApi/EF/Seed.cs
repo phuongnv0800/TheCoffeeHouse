@@ -2891,24 +2891,28 @@ public static class Seed
         {
             Id = Guid.NewGuid().ToString(),
             Name = Permission.Admin,
+            NormalizedName = Permission.Admin.ToUpper(),
             Description = "Quản trị viên"
         };
         var roleManager = new AppRole()
         {
             Id = Guid.NewGuid().ToString(),
             Name = Permission.Manage,
+            NormalizedName = Permission.Manage.ToUpper(),
             Description = "Quản lý"
         };
         var roleBranch = new AppRole()
         {
             Id = Guid.NewGuid().ToString(),
             Name = Permission.Branch,
+            NormalizedName = Permission.Branch.ToUpper(),
             Description = "Quản lý chi nhánh"
         };
         var roleStaff = new AppRole()
         {
             Id = Guid.NewGuid().ToString(),
             Name = Permission.Staff,
+            NormalizedName = Permission.Staff.ToUpper(),
             Description = "Nhân viên"
         };
         context.AppRoles.Add(roleAdmin);

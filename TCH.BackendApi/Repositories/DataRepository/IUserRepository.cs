@@ -13,7 +13,7 @@ public interface IUserRepository
 
     Task<Respond<UserVm>> GetByUserName(string userName);
 
-    Task<PagedList<UserVm>> GetAll(Search request);
+    Task<Respond<PagedList<UserVm>>> GetAll(Search request);
 
     Task<MessageResult> Register(RegisterRequest request);
     Task<MessageResult> LockUser(string id);

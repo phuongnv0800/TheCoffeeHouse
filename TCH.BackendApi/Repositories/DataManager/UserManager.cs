@@ -200,7 +200,7 @@ public class UserManager : IUserRepository, IDisposable
         };
     }
 
-    public async Task<PagedList<UserVm>> GetAll(Search request)
+    public async Task<Respond<PagedList<UserVm>>> GetAll(Search request)
     {
         var query = _userManager.Users;
         if (!string.IsNullOrEmpty(request.Name))
@@ -257,7 +257,12 @@ public class UserManager : IUserRepository, IDisposable
             TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
             Items = data,
         };
-        return pagedResult;
+        return new Respond<PagedList<UserVm>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message="Success",
+        };
     }
 
     public async Task<MessageResult> Register(RegisterRequest request)

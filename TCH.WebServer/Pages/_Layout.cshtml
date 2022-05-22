@@ -8,21 +8,62 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="~/" />
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
-    <link href="css/site.css" rel="stylesheet" />
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <!--end::Fonts-->
     <link href="css/style.bundle.css" rel="stylesheet" />
-    <link href="TCH.WebServer.styles.css" rel="stylesheet" />
-    <link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
-        <!--end::Page Vendor Stylesheets-->
-        <!--begin::Global Stylesheets Bundle(used by all pages)-->
-    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="_content/Blazored.Toast/blazored-toast.min.css" rel="stylesheet" />
+    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" />
+    <!--begin::Vendor Stylesheets-->
     <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
-    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+    <link href="_content/Blazored.Toast/blazored-toast.min.css" rel="stylesheet" />
+    <!--end::Vendor Stylesheets-->
+    <!--begin::Global Stylesheets-->
+    @*    <link href="_content/VMU/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+        <link href="_content/VMU/css/style.bundle.css" rel="stylesheet" type="text/css" />
+        <link href="_content/VMU.Components/custom.css" rel="stylesheet" type="text/css" />*@
+    <!--end::Global Stylesheets-->
+    <component type="typeof(HeadOutlet)" render-mode="Server" />
+    <link href="TCH.WebServer.styles.css" rel="stylesheet" />
+    <style>
+        #blazor-error-ui {
+            background: lightyellow;
+            bottom: 0;
+            box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+            display: none;
+            left: 0;
+            padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+            #blazor-error-ui .dismiss {
+                cursor: pointer;
+                position: absolute;
+                right: 0.75rem;
+                top: 0.5rem;
+            }
+
+        #components-reconnect-modal {
+            z-index: 9999 !important;
+        }
+
+        .blazored-toast-container {
+            z-index: 999 !important;
+        }
+
+        .blazored-toast-header {
+            display: none !important;
+        }
+
+        /**Aside Menu*/
+        .aside-menu.flex-column-fluid {
+            overflow: auto;
+            height: 110px;
+        }
+    </style>
 </head>
-<body>
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
     @RenderBody()
 
     <div id="blazor-error-ui">
@@ -51,32 +92,25 @@
     <script src="assets/js/custom/apps/chat/chat.js"></script>
     <script src="assets/js/custom/utilities/modals/users-search.js"></script>
     <script src="_framework/blazor.server.js"></script>
-    @*<script>
-      Blazor.start().then(function () {
-        var customScript = document.createElement('script');
-        customScript.setAttribute('src', 'assets/plugins/global/plugins.bundle.js');
-        document.head.appendChild(customScript);
+    <script src="_content/Blazored.Modal/blazored.modal.js"></script>
+    <script src="js/plugins.bundle.js"></script>
+    <script src="js/scrpts.bundle.js"></script>
+    <!--begin::Global Scripts-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="_content/VMU.Components/custom.js"></script>
+    <!--end::Global Scripts-->
+    <script>
+        window.main = {
+            toggle: function () {
+                $('[data-kt-drawer="true"]').toggleClass("drawer drawer-start drawer-on");
+                $(".drawer-overlay").removeClass("d-none").addClass("d-block");
 
-        var customScript1 = document.createElement('script');:7234
-        customScript1.setAttribute('src', 'assets/js/scripts.bundle.js');
-        document.head.appendChild(customScript);
-
-        var customScript2 = document.createElement('script');
-        customScript2.setAttribute('src', 'assets/js/widgets.bundle.js');
-        document.head.appendChild(customScript);
-
-        var customScript3 = document.createElement('script');
-        customScript3.setAttribute('src', 'assets/js/custom/widgets.js');
-        document.head.appendChild(customScript);
-
-        var customScript4 = document.createElement('script');
-        customScript4.setAttribute('src', 'assets/js/custom/apps/chat/chat.js');
-        document.head.appendChild(customScript);
-
-        var customScript5 = document.createElement('script');
-        customScript.setAttribute('src', 'assets/js/custom/utilities/modals/users-search.js');
-        document.head.appendChild(customScript);
-      });
-    </script>*@
+                $(".drawer-overlay").on("click", function () {
+                    $('[data-kt-drawer="true"]').removeClass("drawer drawer-start drawer-on");
+                    $(".drawer-overlay").removeClass("d-block").addClass("d-none");
+                });
+            },
+        };
+    </script>
 </body>
 </html>
