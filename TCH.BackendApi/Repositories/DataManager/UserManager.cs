@@ -199,7 +199,70 @@ public class UserManager : IUserRepository, IDisposable
             Data = userVm,
         };
     }
-
+    public async Task<Respond<PagedList<UserVm>>> GetAllByBranchID(string branchID, Search request)
+    {
+        var query = _userManager.Users.Where(x=>x.BranchID ==branchID);
+        if (!string.IsNullOrEmpty(request.Name))
+        {
+            query = query.Where(x => x.UserName.Contains(request.Name));
+        }
+        //paging
+        int totalRow = await query.CountAsync();
+        var data = new List<UserVm>();
+        if (request.IsPging)
+            data = await query
+                .Select(
+                    x => new UserVm()
+                    {
+                        Email = x.Email,
+                        FirstName = x.FirstName ?? "",
+                        LastName = x.LastName ?? "",
+                        UserName = x.UserName,
+                        Id = x.Id,
+                        PhoneNumber = x.PhoneNumber,
+                        DateOfBirth = x.DateOfBirth,
+                        Gender = x.Gender,
+                        Status = x.Status,
+                        Address = x.Address ?? "",
+                        Avatar = USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
+                    }
+                )
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync();
+        else
+            data = await query
+                .Select(
+                    x => new UserVm()
+                    {
+                        Email = x.Email,
+                        FirstName = x.FirstName ?? "",
+                        LastName = x.LastName ?? "",
+                        UserName = x.UserName,
+                        Id = x.Id,
+                        PhoneNumber = x.PhoneNumber,
+                        DateOfBirth = x.DateOfBirth,
+                        Gender = x.Gender,
+                        Status = x.Status,
+                        Address = x.Address ?? "",
+                        Avatar = USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
+                    }
+                ).ToListAsync();
+        var pagedResult = new PagedList<UserVm>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<UserVm>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Success",
+        };
+    }
     public async Task<Respond<PagedList<UserVm>>> GetAll(Search request)
     {
         var query = _userManager.Users;
