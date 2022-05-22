@@ -12,6 +12,12 @@
     <link href="css/site.css" rel="stylesheet" />
     <link href="css/style.bundle.css" rel="stylesheet" />
     <link href="TCH.WebServer.styles.css" rel="stylesheet" />
+    <link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+        <!--end::Page Vendor Stylesheets-->
+        <!--begin::Global Stylesheets Bundle(used by all pages)-->
+    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <link href="_content/Blazored.Toast/blazored-toast.min.css" rel="stylesheet" />
     <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
@@ -30,10 +36,47 @@
         <a class="dismiss">🗙</a>
     </div>
 
-    <script src="_framework/blazor.server.js"></script>
+    
     <script src="_content/Blazored.Modal/blazored.modal.js"></script>
+    <script src="assets/plugins/global/plugins.bundle.js"></script>
+    <script src="assets/js/scripts.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Page Vendors Javascript(used by this page)-->
+    <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <!--end::Page Vendors Javascript-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <script src="assets/js/widgets.bundle.js"></script>
+    <script src="assets/js/custom/widgets.js"></script>
+    <script src="assets/js/custom/apps/chat/chat.js"></script>
+    <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+    <script src="_framework/blazor.server.js"></script>
+    @*<script>
+      Blazor.start().then(function () {
+        var customScript = document.createElement('script');
+        customScript.setAttribute('src', 'assets/plugins/global/plugins.bundle.js');
+        document.head.appendChild(customScript);
 
-    <script src="js/plugins.bundle.js"></script>
-    <script src="js/scrpts.bundle.js"></script>
+        var customScript1 = document.createElement('script');:7234
+        customScript1.setAttribute('src', 'assets/js/scripts.bundle.js');
+        document.head.appendChild(customScript);
+
+        var customScript2 = document.createElement('script');
+        customScript2.setAttribute('src', 'assets/js/widgets.bundle.js');
+        document.head.appendChild(customScript);
+
+        var customScript3 = document.createElement('script');
+        customScript3.setAttribute('src', 'assets/js/custom/widgets.js');
+        document.head.appendChild(customScript);
+
+        var customScript4 = document.createElement('script');
+        customScript4.setAttribute('src', 'assets/js/custom/apps/chat/chat.js');
+        document.head.appendChild(customScript);
+
+        var customScript5 = document.createElement('script');
+        customScript.setAttribute('src', 'assets/js/custom/utilities/modals/users-search.js');
+        document.head.appendChild(customScript);
+      });
+    </script>*@
 </body>
 </html>

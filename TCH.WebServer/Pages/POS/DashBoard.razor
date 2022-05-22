@@ -80,7 +80,7 @@
                             <!--begin::Table container-->
                             <div class="table-responsive">
                                 <!--begin::Table-->
-                                @if(order != null)
+                                @if(order != null && order.OrderDetails != null)
                                 {
                                     foreach(var orderDetail in order.OrderDetails)
                                     {

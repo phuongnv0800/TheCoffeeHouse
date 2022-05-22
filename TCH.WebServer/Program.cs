@@ -11,6 +11,9 @@ using TCH.WebServer.Services.Users;
 using TCH.WebServer.Services.Brands;
 using TCH.WebServer.Services.Materials;
 using TCH.WebServer.Services.OrderDetails;
+using TCH.WebServer.Services.Orders;
+using TCH.WebServer.Services.Promotions;
+using TCH.WebServer.Services.Reports;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:8001") });
@@ -33,6 +36,9 @@ builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IBrandService, BrandService>();
 builder.Services.AddTransient<IMaterialService, MaterialService>();
 builder.Services.AddTransient<IOrderDetailService, OrderDetailService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IPromotionService, PromotionService>();
+builder.Services.AddTransient<IReportService, ReportService>();
 builder.Services.AddBlazoredLocalStorage();
 
 var app = builder.Build();

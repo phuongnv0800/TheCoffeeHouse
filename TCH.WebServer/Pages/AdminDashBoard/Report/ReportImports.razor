@@ -1,4 +1,4 @@
-﻿@page "/materials"
+﻿@page "/reports-import"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -8,12 +8,12 @@
 @using TCH.Data.Entities
 @using TCH.WebServer.Models
 @using TCH.WebServer.Models.Pagination
-@using TCH.WebServer.Services.Materials
+@using TCH.WebServer.Services.Reports
 @using TCH.WebServer.Services.Users
 
 @inject HttpClient httpClient
 @inject ILocalStorageService localStorage;
-@inject IMaterialService materialService;
+@inject IReportService reportService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
 @inject IJSRuntime jsRuntime;
@@ -42,10 +42,6 @@ else
                             <input type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm loại sản phẩm">
                         </div>
                     </div>
-                    <div class="card-toolbar">
-
-                        <a class="btn btn-primary" onclick="@(() => Add())">Thêm nguyên liệu</a>
-                    </div>
                 </div>
                 <div class="card-body pt-0">
 
@@ -72,7 +68,6 @@ else
                                     {
                                         foreach (var product in ProductsList)
                                         {
-                                            string fileImage = "https://localhost:8001/uploads" + product.LinkImage;
                                             string href = "/materials/" + product.ID.ToString();
                                             <tr class="odd">
                                                 <td>
@@ -82,12 +77,11 @@ else
                                                 </td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
-                                                        <img height="40" width="40" src="@fileImage">
                                                         <div class="ms-5">
                                                             <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
                                                                 @product.Name
                                                             </a>
-                                                            <div class="text-muted fs-7 fw-bolder">@product.Description</div>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.BranchID</div>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -102,8 +96,7 @@ else
                                                             Thao tác
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                            <li><a class="dropdown-item" onclick="@(() => Update(product.ID))">Sửa</a></li>
-                                                            <li><a class="dropdown-item" onclick="@(() => Delete())">Xóa</a></li>
+                                                            <li><a class="dropdown-item" onclick="@(() => Delete(@product.ID.ToString()))">Xóa</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -173,7 +166,7 @@ else
 }
 
 @code {
-    public List<Material>? ProductsList = new List<Material>();
+    public List<Report>? ProductsList = new List<Report>();
     private string? token;
     public string Name;
     private Pagination pagination = new Pagination();
@@ -183,7 +176,7 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        navigationManager.NavigateTo("materials");
+        navigationManager.NavigateTo("reports-import");
         var response = await userServices.GetUserInfo();
         User = response.Data;
         await Get(1);
@@ -191,26 +184,14 @@ else
     }
     public async Task Get(int pageNumber)
     {
-        var response = await materialService.GetMaterials(true, pagination.pageSize, pageNumber);
+        var response = await reportService.GetAllImport(true, pagination.pageSize, pageNumber);
         pagination.PageNumber = response.Data.CurrentPage;
         ProductsList = response.Data.Items.ToList();
         pagination.totalPage = response.Data.TotalPages;
     }
-    public async void Add()
+    public async void Delete(string id)
     {
-        Modal.Show<AddMaterial>("Thêm nguyên liệu");
-        var response = await materialService.GetMaterials(true, pagination.pageSize, 1);
-    }
-    public async void Update(string id)
-    {
-        //var parameters = new ModalParameters();
-        //parameters.Add(nameof(AddProduct.ProductId), id);
-        //Modal.Show<AddProduct>("Sửa sản phẩm", parameters);
-        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
-    }
-    public async void Delete()
-    {
-
+        await reportService.DeleteImport(id);
     }
     public async void Change(int link)
     {

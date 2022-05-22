@@ -2,12 +2,10 @@
 
 <PageTitle>TCH.WebServer</PageTitle>
 
-<div class="page">
-    <main>
-        <article class="content" style="padding:0 !important">
-            @Body
-        </article>
-    </main>
+<div class="header-tablet-and-mobile-fixed aside-enabled" id="kt_body">
+    <div class="d-flex flex-column flex-root">
+        @Body
+    </div>
 </div>
 <BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.BottomRight"
                 Timeout="2"
@@ -20,6 +18,7 @@
                 WarningIcon="fas fa-exclamation-triangle text-warning fs-1"
                 ErrorClass="alert alert-dismissible bg-light-danger border border-danger border-dashed text-danger show"
                 ErrorIcon="fas fa-times text-danger fs-1" />
-@code{
+@code {
     public bool login = GbParameter.GbParameter.IsLogin;
+    
 }

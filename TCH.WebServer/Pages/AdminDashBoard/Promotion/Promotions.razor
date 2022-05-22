@@ -1,4 +1,4 @@
-﻿@page "/materials"
+﻿@page "/promotions"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -9,11 +9,12 @@
 @using TCH.WebServer.Models
 @using TCH.WebServer.Models.Pagination
 @using TCH.WebServer.Services.Materials
+@using TCH.WebServer.Services.Promotions
 @using TCH.WebServer.Services.Users
 
 @inject HttpClient httpClient
 @inject ILocalStorageService localStorage;
-@inject IMaterialService materialService;
+@inject IPromotionService promotionService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
 @inject IJSRuntime jsRuntime;
@@ -44,7 +45,7 @@ else
                     </div>
                     <div class="card-toolbar">
 
-                        <a class="btn btn-primary" onclick="@(() => Add())">Thêm nguyên liệu</a>
+                        <a class="btn btn-primary" onclick="@(() => Add())">Thêm khuyến mãi mới</a>
                     </div>
                 </div>
                 <div class="card-body pt-0">
@@ -72,8 +73,7 @@ else
                                     {
                                         foreach (var product in ProductsList)
                                         {
-                                            string fileImage = "https://localhost:8001/uploads" + product.LinkImage;
-                                            string href = "/materials/" + product.ID.ToString();
+                                            string href = "/promotions/" + product.ID.ToString();
                                             <tr class="odd">
                                                 <td>
                                                     <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -82,7 +82,6 @@ else
                                                 </td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
-                                                        <img height="40" width="40" src="@fileImage">
                                                         <div class="ms-5">
                                                             <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
                                                                 @product.Name
@@ -173,7 +172,7 @@ else
 }
 
 @code {
-    public List<Material>? ProductsList = new List<Material>();
+    public List<Promotion>? ProductsList = new List<Promotion>();
     private string? token;
     public string Name;
     private Pagination pagination = new Pagination();
@@ -183,7 +182,7 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        navigationManager.NavigateTo("materials");
+        navigationManager.NavigateTo("promotions");
         var response = await userServices.GetUserInfo();
         User = response.Data;
         await Get(1);
@@ -191,15 +190,15 @@ else
     }
     public async Task Get(int pageNumber)
     {
-        var response = await materialService.GetMaterials(true, pagination.pageSize, pageNumber);
+        var response = await promotionService.GetAllPromotions(true, pagination.pageSize, pageNumber);
         pagination.PageNumber = response.Data.CurrentPage;
         ProductsList = response.Data.Items.ToList();
         pagination.totalPage = response.Data.TotalPages;
     }
     public async void Add()
     {
-        Modal.Show<AddMaterial>("Thêm nguyên liệu");
-        var response = await materialService.GetMaterials(true, pagination.pageSize, 1);
+        Modal.Show<AddPromotion>("Thêm mới khuyến mãi");
+        var response = await promotionService.GetAllPromotions(true, pagination.pageSize, 1);
     }
     public async void Update(string id)
     {

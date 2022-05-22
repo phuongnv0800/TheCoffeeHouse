@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using TCH.Utilities.Paginations;
 using TCH.WebServer.Models;
 
 namespace TCH.WebServer.Services.Users
@@ -15,6 +16,22 @@ namespace TCH.WebServer.Services.Users
             _httpClient = httpClient;
             _httpContext = httpContext;
         }
+
+        public Task<ResponseLogin<PagedList<ApplicationUser>>> GetAllUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ResponseLogin<PagedList<ApplicationUser>>> GetAllUserBranchRole()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ResponseLogin<PagedList<ApplicationUser>>> GetAllUserManageRole()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ResponseLogin<ApplicationUser>> GetUserInfo()
         {
             try

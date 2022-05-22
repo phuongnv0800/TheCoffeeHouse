@@ -1,0 +1,430 @@
+﻿@page "/promotions/{PromotionId}"
+@using TCH.Data.Entities
+@using TCH.Utilities.Enum
+@using TCH.Utilities.Paginations
+@using TCH.ViewModel.SubModels
+@using TCH.WebServer.Models
+@using TCH.WebServer.Services.Brands
+@using TCH.WebServer.Services.Categories
+@using TCH.WebServer.Services.Products
+@using TCH.WebServer.Services.Users
+@using TCH.WebServer.Services.Promotions
+
+@inject IProductService _promotionService
+@inject IPromotionService _promotionService
+@inject IUserService userService
+@inject IToastService _toastService
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Toolbar-->
+    <div class="toolbar" id="kt_toolbar">
+        <!--begin::Container-->
+        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+            <!--begin::Page title-->
+            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                <!--begin::Title-->
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Add Product</h1>
+                <!--end::Title-->
+                <!--begin::Separator-->
+                <span class="h-20px border-gray-300 border-start mx-4"></span>
+                <!--end::Separator-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-muted">
+                        <a href="/admin-dashboard" class="text-muted text-hover-primary">Home</a>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-muted"><a href="/admin-dashboard">Products</a></li>
+
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-dark">Add Category</li>
+                    <!--end::Item-->
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page title-->
+            <!--begin::Actions-->
+            <div class="d-flex align-items-center gap-2 gap-lg-3">
+                <!--begin::Filter menu-->
+                <div class="m-0">
+                    <!--begin::Menu toggle-->
+                    <a href="#" class="btn btn-sm btn-flex btn-light btn-active-primary fw-bolder" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
+                        <span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black"></path>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->Filter
+                    </a>
+                    <!--end::Menu toggle-->
+                    <!--begin::Menu 1-->
+                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="kt_menu_61de0bb981473">
+                        <!--begin::Header-->
+                        <div class="px-7 py-5">
+                            <div class="fs-5 text-dark fw-bolder">Filter Options</div>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Menu separator-->
+                        <div class="separator border-gray-200"></div>
+                        <!--end::Menu separator-->
+                        <!--begin::Form-->
+                        <div class="px-7 py-5">
+                            <!--begin::Input group-->
+                            <div class="mb-10">
+                                <!--begin::Label-->
+                                <label class="form-label fw-bold">Status:</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <div>
+                                    <select class="form-select form-select-solid select2-hidden-accessible" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_61de0bb981473" data-allow-clear="true" data-select2-id="select2-data-7-ido7" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-9-ojx5"></option>
+                                        <option value="1">Approved</option>
+                                        <option value="2">Pending</option>
+                                        <option value="2">In Process</option>
+                                        <option value="2">Rejected</option>
+                                    </select><span class="select2 select2-container select2-container--bootstrap5" dir="ltr" data-select2-id="select2-data-8-vfld" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single form-select form-select-solid" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-wbnb-container" aria-controls="select2-wbnb-container"><span class="select2-selection__rendered" id="select2-wbnb-container" role="textbox" aria-readonly="true" title="Select option"><span class="select2-selection__placeholder">Select option</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-10">
+                                <!--begin::Label-->
+                                <label class="form-label fw-bold">Member Type:</label>
+                                <!--end::Label-->
+                                <!--begin::Options-->
+                                <div class="d-flex">
+                                    <!--begin::Options-->
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                        <input class="form-check-input" type="checkbox" value="1">
+                                        <span class="form-check-label">Author</span>
+                                    </label>
+                                    <!--end::Options-->
+                                    <!--begin::Options-->
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid">
+                                        <input class="form-check-input" type="checkbox" value="2" checked="checked">
+                                        <span class="form-check-label">Customer</span>
+                                    </label>
+                                    <!--end::Options-->
+                                </div>
+                                <!--end::Options-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="mb-10">
+                                <!--begin::Label-->
+                                <label class="form-label fw-bold">Notifications:</label>
+                                <!--end::Label-->
+                                <!--begin::Switch-->
+                                <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" value="" name="notifications" checked="checked">
+                                    <label class="form-check-label">Enabled</label>
+                                </div>
+                                <!--end::Switch-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Actions-->
+                            <div class="d-flex justify-content-end">
+                                <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
+                                <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
+                            </div>
+                            <!--end::Actions-->
+                        </div>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Menu 1-->
+                </div>
+                <!--end::Filter menu-->
+                <!--begin::Secondary button-->
+                <!--end::Secondary button-->
+                <!--begin::Primary button-->
+                <a href="../../demo1/dist/.html" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">Create</a>
+                <!--end::Primary button-->
+            </div>
+            <!--end::Actions-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Toolbar-->
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework" data-kt-redirect="../../demo1/dist/apps/ecommerce/catalog/categories.html">
+                <!--begin::Aside column-->
+                <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+                    <!--begin::Status-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header">
+                            <!--begin::Card title-->
+                            <div class="card-title">
+                                <h2>Status</h2>
+                            </div>
+                            <!--end::Card title-->
+                            <!--begin::Card toolbar-->
+                            <div class="card-toolbar">
+                                <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_category_status"></div>
+                            </div>
+                            <!--begin::Card toolbar-->
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <!--begin::Select2-->
+                            <EditForm Model="editPromotion">
+                                <InputSelect @bind-Value="editPromotion.Status" class="form-control">
+                                <option value="1">Publish</option>
+                                 <option value="0">UnPublish</option>
+                                </InputSelect>
+                            </EditForm>
+                            <!--end::Select2-->
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7">Set the category status.</div>
+                            <!--end::Description-->
+                            <!--begin::Datepicker-->
+                            <div class="d-none mt-10">
+                                <label for="kt_ecommerce_add_category_status_datepicker" class="form-label">Select publishing date and time</label>
+                                <input class="form-control flatpickr-input" id="kt_ecommerce_add_category_status_datepicker" placeholder="Pick date &amp; time" type="text" readonly="readonly">
+                            </div>
+                            <!--end::Datepicker-->
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                    <!--end::Status-->
+                </div>
+                <!--end::Aside column-->
+                <!--begin::Main column-->
+                <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                    <!--begin::General options-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>Thông tin</h2>
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <!--begin::Input group-->
+                            <EditForm Model="@editPromotion">
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Tên khuyến mãi</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputText @bind-Value="editPromotion.Name" class="form-control form-control-solid col-sm-6" />
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                        <ValidationMessage For="@(() => editPromotion.Name)" />
+                                    </div>
+                                    <!--end::Input-->
+                                    <!--begin::Description-->
+                                    <div class="text-muted fs-7">A product name is required and recommended to be unique.</div>
+                                    <!--end::Description-->
+                                </div>
+
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Mô tả</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputText @bind-Value="editPromotion.Description" class="form-control form-control-solid col-sm-6" />
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                        <ValidationMessage For="@(() => editPromotion.Description)" />
+                                    </div>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Loại hình khuyến mại</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputSelect @bind-Value="editPromotion.PromotionType" class="form-control">
+                                        @foreach (var country in Enum.GetValues(typeof(PromotionType)))
+                                        {
+                                            <option value="@country">@country</option>
+                                        }
+
+                                    </InputSelect>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Ngày bắt đầu</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputDate @bind-Value="editPromotion.StartDate" class="form-control form-control-solid col-sm-6" />
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                        <ValidationMessage For="@(() => editPromotion.StartDate)" />
+                                    </div>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Ngày kết thúc</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputDate @bind-Value="editPromotion.EndDate" class="form-control form-control-solid col-sm-6" />
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                        <ValidationMessage For="@(() => editPromotion.EndDate)" />
+                                    </div>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Số lượng</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputNumber @bind-Value="editPromotion.Quantity" class="form-control form-control-solid col-sm-6" />
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                        <ValidationMessage For="@(() => editPromotion.Quantity)" />
+                                    </div>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Tiền giảm giá</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputNumber @bind-Value="editPromotion.ReduceAmount" class="form-control form-control-solid col-sm-6" />
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                        <ValidationMessage For="@(() => editPromotion.ReduceAmount)" />
+                                    </div>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">% giảm giá</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputNumber @bind-Value="editPromotion.ReducePercent" class="form-control form-control-solid col-sm-6" />
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                        <ValidationMessage For="@(() => editPromotion.ReducePercent)" />
+                                    </div>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                            </EditForm>
+                        </div>
+                        <!--end::Card header-->
+                    </div>
+                    <!--end::General options-->
+                    <!--begin::Meta options-->
+
+                    <div class="d-flex justify-content-end">
+                        <!--begin::Button-->
+                        <a href="../../demo1/dist/apps/ecommerce/catalog/products.html" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+                        <!--end::Button-->
+                        <!--begin::Button-->
+                        <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary" onclick="@(() => OnSubmit())">
+                            <span class="indicator-label">Save Changes</span>
+                            <span class="indicator-progress">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                </div>
+                <!--end::Main column-->
+                <div></div>
+            </form>
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string? PromotionId { get; set; }
+
+    private List<PromotionType> types = new List<PromotionType>();
+    private PromotionRequest editPromotion = null;
+
+    protected async override Task OnInitializedAsync()
+    {
+        editPromotion = new PromotionRequest();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (string.IsNullOrEmpty(PromotionId))
+        {
+            editPromotion = new PromotionRequest();
+        }
+        else
+        {
+            var responseP = await _promotionService.GetPromotionById(PromotionId);
+            var vesselDB = responseP.Data;
+            editPromotion.Name = vesselDB.Name;
+            editPromotion.Description = vesselDB.Description;
+            editPromotion.Code = vesselDB.Code;
+            editPromotion.StartDate = vesselDB.StartDate;
+            editPromotion.EndDate = vesselDB.EndDate;
+            editPromotion.Status = vesselDB.Status;
+            editPromotion.PromotionType = vesselDB.PromotionType;
+            editPromotion.Quantity = vesselDB.Quantity;
+            editPromotion.ReduceAmount = vesselDB.ReduceAmount;
+            editPromotion.ReducePercent = vesselDB.ReducePercent;
+            editPromotion.PromotionObject = vesselDB.PromotionObject;
+        }
+    }
+}
+
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
+    private async Task OnCancel() => await BlazoredModal.CancelAsync();
+
+    private MultipartFormDataContent content = new MultipartFormDataContent();
+    private async Task OnSubmit()
+    {
+        try{
+            ResponseLogin<Promotion> response = new ResponseLogin<Promotion>();
+            
+            if (string.IsNullOrEmpty(PromotionId))
+            {
+                response = await _promotionService.AddPromotion(editPromotion);
+            }
+            else
+            {
+                response = await _promotionService.Update(editPromotion);
+            }
+            if(response != null)
+            {
+                if(response.Result == 1)
+                {
+                    _toastService.ShowSuccess("Thêm thành công");
+                    await BlazoredModal.CloseAsync(ModalResult.Ok(true));
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            _toastService.ShowError(ex.ToString());
+        }
+    }
+}
