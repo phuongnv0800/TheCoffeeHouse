@@ -8,7 +8,7 @@
 <PageTitle>Quản lý The Coffee House</PageTitle>
 
 <Layout>
-    if (authState.User.Identity.IsAuthenticated){
+    @*if (authState.User.Identity.IsAuthenticated){
         <Aside>
         <AsideBrand Logo="" Class="px-4">
             <span class="text-primary fw-bolder fs-6 lh-base ms-2">The Coffee House</span>
@@ -20,7 +20,7 @@
 
         <AsideFooter FullName=@(user.FirstName + user.LastName) Description="Quản trị viên" Image="assets/media/avatars/300-1.jpg" />
     </Aside>
-    }
+    }*@
     <Page Logo="">
         <Mobile>
             <span class="text-primary fw-bolder fs-6 lh-base ms-2">The Coffee House</span>
