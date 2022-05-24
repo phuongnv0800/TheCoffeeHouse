@@ -20,7 +20,7 @@
                     <div class="row g-6 g-xl-9">
                             <div class="col-lg-6 col-xxl-4">
                                 <!--begin::Card-->
-                            <div class="card h-100">
+                            <div class="card h-200">
                                     <!--begin::Card body-->
                                 <div class="card-body p-9">
                                         <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@("https://localhost:8001/uploads" + product.LinkImage)">
@@ -44,47 +44,27 @@
                                     <div class="card-body p-9">
                                         <div class="fs-2hx fw-bolder">@product.Price</div>
                                         <div class="fs-4 fw-bold text-gray-400 mb-7">@product.Name</div>
-                                        <div class="fs-6 d-flex justify-content-between mb-4">
-                                            <div class="fw-bold">Size S</div>
-                                            <div class="d-flex fw-bolder">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr007.svg-->
-                                            <span class="svg-icon svg-icon-3 me-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M13.4 10L5.3 18.1C4.9 18.5 4.9 19.1 5.3 19.5C5.7 19.9 6.29999 19.9 6.69999 19.5L14.8 11.4L13.4 10Z" fill="currentColor"></path>
-                                                        <path opacity="0.3" d="M19.8 16.3L8.5 5H18.8C19.4 5 19.8 5.4 19.8 6V16.3Z" fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->@product.Price
-                                            </div>
-                                        </div>
-                                        <div class="separator separator-dashed"></div>
-                                        <div class="fs-6 d-flex justify-content-between my-4">
-                                            <div class="fw-bold">Size M</div>
-                                            <div class="d-flex fw-bolder">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr006.svg-->
+                                        @if (product.Sizes != null)
+                                        {
+                                            foreach (var size in product.Sizes)
+                                            {
+                                                <div class="separator separator-dashed"></div>
+                                                <div class="fs-6 d-flex justify-content-between my-4">
+                                                    <div class="fw-bold">@size.Name</div>
+                                                    <div class="d-flex fw-bolder">
+                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr006.svg-->
                                             <span class="svg-icon svg-icon-3 me-1 svg-icon-danger">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M13.4 14.8L5.3 6.69999C4.9 6.29999 4.9 5.7 5.3 5.3C5.7 4.9 6.29999 4.9 6.69999 5.3L14.8 13.4L13.4 14.8Z" fill="currentColor"></path>
-                                                        <path opacity="0.3" d="M19.8 8.5L8.5 19.8H18.8C19.4 19.8 19.8 19.4 19.8 18.8V8.5Z" fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->@product.Price + 5000đ
-                                            </div>
-                                        </div>
-                                        <div class="separator separator-dashed"></div>
-                                        <div class="fs-6 d-flex justify-content-between mt-4">
-                                            <div class="fw-bold">Size </div>
-                                            <div class="d-flex fw-bolder">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr007.svg-->
-                                            <span class="svg-icon svg-icon-3 me-1 svg-icon-success">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M13.4 10L5.3 18.1C4.9 18.5 4.9 19.1 5.3 19.5C5.7 19.9 6.29999 19.9 6.69999 19.5L14.8 11.4L13.4 10Z" fill="currentColor"></path>
-                                                        <path opacity="0.3" d="M19.8 16.3L8.5 5H18.8C19.4 5 19.8 5.4 19.8 6V16.3Z" fill="currentColor"></path>
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->@product.Price + 7000đ
-                                            </div>
-                                        </div>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path d="M13.4 14.8L5.3 6.69999C4.9 6.29999 4.9 5.7 5.3 5.3C5.7 4.9 6.29999 4.9 6.69999 5.3L14.8 13.4L13.4 14.8Z" fill="currentColor"></path>
+                                                                <path opacity="0.3" d="M19.8 8.5L8.5 19.8H18.8C19.4 19.8 19.8 19.4 19.8 18.8V8.5Z" fill="currentColor"></path>
+                                                            </svg>
+                                                        </span>
+                                                        @size.SubPrice
+                                                    </div>
+                                                    <button class="btn btn-primary rounded" onclick="@(() => PickSize(size.ID))">+</button>
+                                                </div>
+                                            }
+                                        }
                                     </div>
                                 </div>
                                 <!--end::Budget-->
@@ -107,37 +87,44 @@
                                                 </span>
                                                 @topping.SubPrice
                                             </div>
+                                            <button class="btn btn-primary rounded" onclick="@(() => AddTopping(topping.ID, topping.SubPrice))">+</button>
                                         </div>
                                     }
                                 }
+                            </div>
+                            <div class="col-lg-6 col-xxl-4">
+                                <EditForm Model="orderDetail">
+                                    <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                        <label class="required form-label">Lượng Đá</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <InputSelect @bind-Value="orderDetail.IcedType" class="form-control">
+                                            @foreach(var ice in Enum.GetValues(typeof(IcedType))){
+                                                <option value="@ice">@ice</option>
+                                            }
+                                        </InputSelect>
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                        <label class="required form-label">Lượng đường</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <InputSelect @bind-Value="orderDetail.SugarType" class="form-control">
+                                            @foreach(var sugar in Enum.GetValues(typeof(SugarType))){
+                                                <option value="@sugar">@sugar</option>
+                                            }
+                                        </InputSelect>
+                                        <!--end::Input-->
+                                    </div>
+                                </EditForm>
                             </div>
                         </div>
 
                     </div>
                     <!--end::Post-->
-                    <!--begin::Footer-->
-                <div class="footer py-4 d-flex flex-column flex-md-row flex-stack" id="kt_footer">
-                        <!--begin::Copyright-->
-                    <div class="text-dark order-2 order-md-1">
-                            <span class="text-muted fw-bold me-1">2022©</span>
-                            <a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">Keenthemes</a>
-                        </div>
-                        <!--end::Copyright-->
-                        <!--begin::Menu-->
-                    <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
-                            <li class="menu-item">
-                                <a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="https://devs.keenthemes.com" target="_blank" class="menu-link px-2">Support</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="https://1.envato.market/EA4JP" target="_blank" class="menu-link px-2">Purchase</a>
-                            </li>
-                        </ul>
-                        <!--end::Menu-->
-                </div>
-                    <!--end::Footer-->
+
             </div>
             }
         </div>
@@ -148,13 +135,33 @@
     [Parameter] public string ProductId { get; set; }
     private Order order;
     private ProductVm product;
-    private OrderDetail orderDetail;
+    private OrderItem orderDetail;
+    private int quantity;
     protected override async Task OnParametersSetAsync()
     {
         var responseProduct = await productService.GetProductById(ProductId);
         product = responseProduct.Data;
         order = GbParameter.GbParameter.Order;
-        orderDetail = new OrderDetail();
+        orderDetail = new OrderItem()
+            {
+                SubAmount = 0,
+                ProductID = ProductId,
+                SizeID = "6f6fc132-d92b-475f-98e3-0ba15e90706f",
+            };
         base.OnParametersSet();
+    }
+    public async Task AddTopping(string toppingId, double subPrice)
+    {
+        var topping = new OrderToppingItem()
+            {
+                ToppingID = toppingId,
+                SubPrice = subPrice
+            };
+        orderDetail.Toppings.Add(topping);
+    }
+    public async Task PickSize(string size)
+    {
+
+        orderDetail.SizeID = size;
     }
 }

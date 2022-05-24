@@ -478,17 +478,17 @@ public class ProductManager : IProductRepository, IDisposable
         };
     }
 
-    public async Task<Respond<Product>> GetById(string productID)
+    public async Task<Respond<ProductVm>> GetById(string productID)
     {
         var product = await _context.Products.Include(x => x.ProductImages).FirstOrDefaultAsync(x => x.ID == productID);
         if (product == null)
-            return new Respond<Product>()
+            return new Respond<ProductVm>()
             {
                 Result = 0,
                 Message = "Không tìm thấy sản phẩm",
             };
 
-        return new Respond<Product>()
+        return new Respond<ProductVm>()
         {
             Result = 1,
             Message = "Thành công",
