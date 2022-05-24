@@ -7,6 +7,7 @@ using System.Net.Http.Json;
 using System.Text;
 using TCH.Data.Entities;
 using TCH.Utilities.Paginations;
+using TCH.ViewModel.SubModels;
 using TCH.WebServer.Models;
 
 namespace TCH.WebServer.Services.Products
@@ -23,7 +24,7 @@ namespace TCH.WebServer.Services.Products
             _localStorage = localStorage;
         }
 
-        public async Task<ResponseLogin<Product>> AddProduct(MultipartFormDataContent product)
+        public async Task<ResponseLogin<ProductVm>> AddProduct(MultipartFormDataContent product)
         {
             try
             {
@@ -33,7 +34,7 @@ namespace TCH.WebServer.Services.Products
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<Product> respond = JsonConvert.DeserializeObject<ResponseLogin<Product>>(content);
+                    ResponseLogin<ProductVm> respond = JsonConvert.DeserializeObject<ResponseLogin<ProductVm>>(content);
                     if (respond.Result == 1)
                     {
                         return respond;
@@ -57,7 +58,7 @@ namespace TCH.WebServer.Services.Products
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<PagedList<Product>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<Product>>>(content);
+                    ResponseLogin<PagedList<ProductVm>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<ProductVm>>>(content);
                     if (respond.Result == 1)
                     {
                         return;
@@ -70,7 +71,7 @@ namespace TCH.WebServer.Services.Products
             }
         }
 
-        public async Task<ResponseLogin<PagedList<Product>>> GetProductByCategoryId(string id)
+        public async Task<ResponseLogin<PagedList<ProductVm>>> GetProductByCategoryId(string id)
         {
             try
             {
@@ -79,7 +80,7 @@ namespace TCH.WebServer.Services.Products
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<PagedList<Product>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<Product>>>(content);
+                    ResponseLogin<PagedList<ProductVm>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<ProductVm>>>(content);
                     if (respond.Result == 1)
                     {
                         return respond;
@@ -94,7 +95,7 @@ namespace TCH.WebServer.Services.Products
             }
         }
 
-        public async Task<ResponseLogin<Product>> GetProductById(string id)
+        public async Task<ResponseLogin<ProductVm>> GetProductById(string id)
         {
             try
             {
@@ -103,7 +104,7 @@ namespace TCH.WebServer.Services.Products
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<Product> respond = JsonConvert.DeserializeObject<ResponseLogin<Product>>(content);
+                    ResponseLogin<ProductVm> respond = JsonConvert.DeserializeObject<ResponseLogin<ProductVm>>(content);
                     if (respond.Result == 1)
                     {
                         return respond;
@@ -117,19 +118,19 @@ namespace TCH.WebServer.Services.Products
             }
         }
 
-        public Task<Product> GetProductByName(string name)
+        public Task<ProductVm> GetProductByName(string name)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ResponseLogin<PagedList<Product>>> GetProducts(bool IsPaging, int pageSize, int pageNumber)
+        public async Task<ResponseLogin<PagedList<ProductVm>>> GetProducts(bool IsPaging, int pageSize, int pageNumber)
         {
             try
             {
-                List<Product> Products;
+                List<ProductVm> Products;
                 _httpClient.DefaultRequestHeaders.Accept.Clear();
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = await _httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Product>>>("/api/Products?IsPging=" + IsPaging.ToString() 
+                var response = await _httpClient.GetFromJsonAsync<ResponseLogin<PagedList<ProductVm>>>("/api/Products?IsPging=" + IsPaging.ToString() 
                     + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString());
                 if (response.Result != 1)
                 {
@@ -143,7 +144,7 @@ namespace TCH.WebServer.Services.Products
             }
         }
 
-        public async Task<ResponseLogin<Product>> UpdateProduct(MultipartFormDataContent product)
+        public async Task<ResponseLogin<ProductVm>> UpdateProduct(MultipartFormDataContent product)
         {
             try
             {
@@ -153,7 +154,7 @@ namespace TCH.WebServer.Services.Products
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<Product> respond = JsonConvert.DeserializeObject<ResponseLogin<Product>>(content);
+                    ResponseLogin<ProductVm> respond = JsonConvert.DeserializeObject<ResponseLogin<ProductVm>>(content);
                     if (respond.Result == 1)
                     {
                         return respond;

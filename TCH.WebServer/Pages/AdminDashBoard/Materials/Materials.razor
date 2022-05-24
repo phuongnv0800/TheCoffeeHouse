@@ -17,19 +17,14 @@
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
 @inject IJSRuntime jsRuntime;
+@attribute [Authorize]
 
-@if (!GbParameter.GbParameter.IsLogin)
-{
-    <h3>Bạn chưa đăng nhập</h3>
-}
-else
-{
     <div class="page d-flex flex-row flex-column-fluid">
     <TCH.WebServer.Pages.SideBar.SidebarAdmin></TCH.WebServer.Pages.SideBar.SidebarAdmin>
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
         <TCH.WebServer.Shared.Header.Header></TCH.WebServer.Shared.Header.Header>
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-            <div class="card card-flush " style="margin-top:65px">
+            <div class="card card-flush " style="">
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                     <div class="card-title">
                         <div class="d-flex align-items-center position-relative my-1">
@@ -170,7 +165,7 @@ else
         </div>
     </div>
 </div>
-}
+
 
 @code {
     public List<Material>? ProductsList = new List<Material>();

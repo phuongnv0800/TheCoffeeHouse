@@ -149,7 +149,7 @@
     private async Task OnSubmit()
     {
         try{
-            ResponseLogin<Product> response = new ResponseLogin<Product>();
+            ResponseLogin<ProductVm> response = new ResponseLogin<ProductVm>();
             content.Add(new StringContent(editProduct.CategoryID), "CategoryID");
             content.Add(new StringContent(editProduct.Description), "Description");
             //content.Add(new StringContent(editProduct.LinkImage), "Image");

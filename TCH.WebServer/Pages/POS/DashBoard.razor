@@ -42,7 +42,7 @@
                                         <!--begin::Body-->
                                 <div class="mt-5">
                                             <!--begin::Title-->
-                                    <a href="/product-detail/{@product.ID}/{@order.ID}" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
+                                    <a href="/product-detail/{@product.ID}" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
                                             <!--end::Title-->
                                             <!--begin::Text-->
                                     <div class="fw-bold text-gray-600 text-dark mt-3">@product.Description</div>
@@ -55,7 +55,7 @@
                                                 </span>
                                                 <!--end::Label-->
                                                 <!--begin::Action-->
-                                        <button onclick="@(() => NavManager.NavigateTo($"/product-detail/{@product.ID}/{@order.ID}"))" class="btn btn-sm btn-primary">Purchase</button>
+                                        <button onclick="@(() => NavManager.NavigateTo($"/product-detail/{@product.ID}"))" class="btn btn-sm btn-primary">Purchase</button>
                                                 <!--end::Action-->
                                     </div>
                                             <!--end::Text-->
@@ -192,7 +192,7 @@
 
 
 @code {
-    public List<Product>? ProductsList = new List<Product>();
+    public List<ProductVm>? ProductsList = new List<ProductVm>();
     [CascadingParameter] public IModalService Modal { get; set; }
     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
     private List<Category> categories = new List<Category>();
@@ -200,7 +200,10 @@
     private Order order;
     protected override async Task OnParametersSetAsync()
     {
-        if (order == null) order = new Order();
+        if (order == null) {
+            order = new Order();
+            GbParameter.GbParameter.Order = order;
+        }
         var response = await userServices.GetUserInfo();
         User = response.Data;
         await Get(1);

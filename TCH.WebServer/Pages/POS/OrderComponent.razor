@@ -276,7 +276,7 @@
 </div>
 
 @code {
-    public List<Product>? ProductsList = new List<Product>();
+    public List<ProductVm>? ProductsList = new List<ProductVm>();
     public Product? Product = new Product();
     public string Name;
     private int pageSize = 10;
@@ -293,6 +293,5 @@
         PageNumber = response.Data.CurrentPage;
         ProductsList = response.Data.Items.ToList();
         totalPage = response.Data.TotalPages;
-        Product = ProductsList[0];
     }
 }}

@@ -396,12 +396,12 @@
     [Parameter] public string Title { get; set; }
     [Parameter] public string ProductId { get; set; }
     private ApplicationUser User;
-    private Product editProduct = null;
+    private ProductVm editProduct = null;
     public List<Category> categories = new List<Category>();
 
     protected async override Task OnInitializedAsync()
     {
-        editProduct = new Product();
+        editProduct = new ProductVm();
         var response = await userService.GetUserInfo();
         User = response.Data;
     }
@@ -412,7 +412,7 @@
         categories = response.Data.Items.ToList();
         if (string.IsNullOrEmpty(ProductId))
         {
-            editProduct = new Product();
+            editProduct = new ProductVm();
         }
         else
         {
@@ -437,7 +437,7 @@
     {
         try
         {
-            ResponseLogin<Product> response = new ResponseLogin<Product>();
+            ResponseLogin<ProductVm> response = new ResponseLogin<ProductVm>();
             content.Add(new StringContent(editProduct.CategoryID), "CategoryID");
             content.Add(new StringContent(editProduct.Description), "Description");
             content.Add(new StringContent(editProduct.LinkImage), "Image");
