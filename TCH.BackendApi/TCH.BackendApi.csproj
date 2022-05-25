@@ -29,14 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Uploads\customers" />
-    <Folder Include="Uploads\branch\" />
-    <Folder Include="Uploads\material\" />
-    <Folder Include="Uploads\users\" />
-    <Folder Include="Uploads\users\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TCH.Data\TCH.Data.csproj" />
     <ProjectReference Include="..\TCH.Utilities\TCH.Utilities.csproj" />
     <ProjectReference Include="..\TCH.ViewModel\TCH.ViewModel.csproj" />
