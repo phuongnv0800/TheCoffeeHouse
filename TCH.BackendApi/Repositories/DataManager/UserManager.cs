@@ -130,201 +130,101 @@ public class UserManager : IUserRepository, IDisposable
         };
     }
 
-    public async Task<Respond<UserVm>> GetById(string id)
+    public async Task<Respond<AppUser>> GetById(string id)
     {
-        var user = await _userManager.FindByIdAsync(id);
+        var user = await _context.AppUsers.Include(x => x.Branch).Where(x => x.Id == id).FirstOrDefaultAsync();
         if (user == null)
-            return new Respond<UserVm>()
-            {
-                Result = -1,
-                Message = "Tài khoản không tồn tại",
-                Data = new UserVm(),
-            };
-
-        var roles = await _userManager.GetRolesAsync(user);
-        var userVm = new UserVm()
-        {
-            Email = user.Email,
-            FirstName = user.FirstName ?? "",
-            LastName = user.LastName ?? "",
-            Id = user.Id,
-            DateOfBirth = user.DateOfBirth,
-            PhoneNumber = user.PhoneNumber,
-            UserName = user.UserName,
-            Gender = user.Gender,
-            Address = user.Address ?? "",
-            Status = user.Status,
-            Avatar = USER_CONTENT_FOLDER_NAME + "/" + user.Avatar,
-            Roles = roles,
-        };
-        return new Respond<UserVm>()
-        {
-            Result = 1,
-            Message = "Lấy thông tin thành công",
-            Data = userVm,
-        };
-    }
-
-    public async Task<Respond<UserVm>> GetByUserName(string userName)
-    {
-        var user = await _userManager.FindByNameAsync(userName);
-        if (user == null)
-            return new Respond<UserVm>()
+            return new Respond<AppUser>()
             {
                 Result = 0,
                 Message = "Tài khoản không tồn tại",
-                Data = new UserVm(),
+                Data = null,
             };
 
-        var roles = await _userManager.GetRolesAsync(user);
-        var userVm = new UserVm()
-        {
-            Email = user.Email,
-            FirstName = user.FirstName ?? "",
-            LastName = user.LastName ?? "",
-            Id = user.Id,
-            DateOfBirth = user.DateOfBirth,
-            PhoneNumber = user.PhoneNumber,
-            UserName = user.UserName,
-            Gender = user.Gender,
-            Address = user.Address ?? "",
-            Status = user.Status,
-            Avatar = USER_CONTENT_FOLDER_NAME + "/" + user.Avatar,
-            Roles = roles,
-        };
-        return new Respond<UserVm>()
+
+        return new Respond<AppUser>()
         {
             Result = 1,
             Message = "Lấy thông tin thành công",
-            Data = userVm,
+            Data = user,
         };
     }
-    public async Task<Respond<PagedList<UserVm>>> GetAllByBranchID(string branchID, Search request)
+
+    public async Task<Respond<AppUser>> GetByUserName(string userName)
     {
-        var query = _userManager.Users.Where(x=>x.BranchID ==branchID);
+        var user = await _context.AppUsers.Include(x=>x.Branch).Where(x=>x.UserName == userName).FirstOrDefaultAsync();
+        if (user == null)
+            return new Respond<AppUser>()
+            {
+                Result = 0,
+                Message = "Tài khoản không tồn tại",
+                Data = null,
+            };
+
+        
+        return new Respond<AppUser>()
+        {
+            Result = 1,
+            Message = "Lấy thông tin thành công",
+            Data = user,
+        };
+    }
+    public async Task<Respond<PagedList<AppUser>>> GetAllByBranchID(string branchID, Search request)
+    {
+        var query = await _context.AppUsers.Include(x => x.Branch).Where(x=>x.BranchID ==branchID).ToListAsync();
         if (!string.IsNullOrEmpty(request.Name))
         {
-            query = query.Where(x => x.UserName.Contains(request.Name));
+            query = query.Where(x => x.UserName.Contains(request.Name)).ToList();
         }
         //paging
-        int totalRow = await query.CountAsync();
-        var data = new List<UserVm>();
+        int totalRow = query.Count;
         if (request.IsPging)
-            data = await query
-                .Select(
-                    x => new UserVm()
-                    {
-                        Email = x.Email,
-                        FirstName = x.FirstName ?? "",
-                        LastName = x.LastName ?? "",
-                        UserName = x.UserName,
-                        Id = x.Id,
-                        PhoneNumber = x.PhoneNumber,
-                        DateOfBirth = x.DateOfBirth,
-                        Gender = x.Gender,
-                        Status = x.Status,
-                        Address = x.Address ?? "",
-                        Avatar = USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
-                    }
-                )
+            query = query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .ToListAsync();
-        else
-            data = await query
-                .Select(
-                    x => new UserVm()
-                    {
-                        Email = x.Email,
-                        FirstName = x.FirstName ?? "",
-                        LastName = x.LastName ?? "",
-                        UserName = x.UserName,
-                        Id = x.Id,
-                        PhoneNumber = x.PhoneNumber,
-                        DateOfBirth = x.DateOfBirth,
-                        Gender = x.Gender,
-                        Status = x.Status,
-                        Address = x.Address ?? "",
-                        Avatar = USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
-                    }
-                ).ToListAsync();
-        var pagedResult = new PagedList<UserVm>()
+                .ToList();
+        var pagedResult = new PagedList<AppUser>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
             TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
-            Items = data,
+            Items = query,
         };
-        return new Respond<PagedList<UserVm>>()
+        return new Respond<PagedList<AppUser>>()
         {
             Data = pagedResult,
             Result = 1,
             Message = "Success",
         };
     }
-    public async Task<Respond<PagedList<UserVm>>> GetAll(Search request)
+    public async Task<Respond<PagedList<AppUser>>> GetAll(Search request)
     {
-        var query = _userManager.Users;
+        var query = await _context.AppUsers.Include(x=>x.Branch).ToListAsync();
         if (!string.IsNullOrEmpty(request.Name))
         {
-            query = query.Where(x => x.UserName.Contains(request.Name));
+            query = query.Where(x => x.UserName.Contains(request.Name)).ToList();
         }
         //paging
-        int totalRow = await query.CountAsync();
-        var data = new List<UserVm>();
+        int totalRow =  query.Count;
         if (request.IsPging)
-            data = await query
-                .Select(
-                    x => new UserVm()
-                    {
-                        Email = x.Email,
-                        FirstName = x.FirstName ?? "",
-                        LastName = x.LastName ?? "",
-                        UserName = x.UserName,
-                        Id = x.Id,
-                        PhoneNumber = x.PhoneNumber,
-                        DateOfBirth = x.DateOfBirth,
-                        Gender = x.Gender,
-                        Status = x.Status,
-                        Address = x.Address ?? "",
-                        Avatar = USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
-                    }
-                )
+            query =  query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .ToListAsync();
-        else
-            data = await query
-                .Select(
-                    x => new UserVm()
-                    {
-                        Email = x.Email,
-                        FirstName = x.FirstName ?? "",
-                        LastName = x.LastName ?? "",
-                        UserName = x.UserName,
-                        Id = x.Id,
-                        PhoneNumber = x.PhoneNumber,
-                        DateOfBirth = x.DateOfBirth,
-                        Gender = x.Gender,
-                        Status = x.Status,
-                        Address = x.Address ?? "",
-                        Avatar = USER_CONTENT_FOLDER_NAME + "/" + x.Avatar,
-                    }
-                ).ToListAsync();
-        var pagedResult = new PagedList<UserVm>()
+                .ToList();
+        var pagedResult = new PagedList<AppUser>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
             TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
-            Items = data,
+            Items = query,
         };
-        return new Respond<PagedList<UserVm>>()
+        return new Respond<PagedList<AppUser>>()
         {
             Data = pagedResult,
             Result = 1,
-            Message="Success",
+            Message = "Success",
         };
     }
 

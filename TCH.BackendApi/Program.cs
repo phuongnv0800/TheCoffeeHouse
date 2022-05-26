@@ -24,7 +24,7 @@ builder.Services.AddDbContext<APIContext>(options =>
 {
     options.UseLoggerFactory(LoggerFactory.Create(builder => { builder.AddConsole(); }));
     options.EnableSensitiveDataLogging();
-    options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(config.GetConnectionString("Prod"));
 });
 builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Program));
 builder.Services.AddIdentity<AppUser, AppRole>()

@@ -27,6 +27,7 @@ public class UserVm
 
     [Display(Name = "Số điện thoại")]
     public string PhoneNumber { get; set; }
-
+    public string BranchID { get; set; }
+    public string BranchName { get; set; }
     public IList<string> Roles { get; set; }
 }
