@@ -152,7 +152,7 @@ public class UserManager : IUserRepository, IDisposable
 
     public async Task<Respond<AppUser>> GetByUserName(string userName)
     {
-        var user = await _context.AppUsers.Include(x=>x.Branch).Where(x=>x.UserName == userName).FirstOrDefaultAsync();
+        var user = await _context.AppUsers.Include(x => x.Branch).Where(x => x.UserName == userName).FirstOrDefaultAsync();
         if (user == null)
             return new Respond<AppUser>()
             {
@@ -161,7 +161,7 @@ public class UserManager : IUserRepository, IDisposable
                 Data = null,
             };
 
-        
+
         return new Respond<AppUser>()
         {
             Result = 1,
@@ -171,7 +171,7 @@ public class UserManager : IUserRepository, IDisposable
     }
     public async Task<Respond<PagedList<AppUser>>> GetAllByBranchID(string branchID, Search request)
     {
-        var query = await _context.AppUsers.Include(x => x.Branch).Where(x=>x.BranchID ==branchID).ToListAsync();
+        var query = await _context.AppUsers.Include(x => x.Branch).Where(x => x.BranchID == branchID).ToListAsync();
         if (!string.IsNullOrEmpty(request.Name))
         {
             query = query.Where(x => x.UserName.Contains(request.Name)).ToList();
@@ -200,15 +200,15 @@ public class UserManager : IUserRepository, IDisposable
     }
     public async Task<Respond<PagedList<AppUser>>> GetAll(Search request)
     {
-        var query = await _context.AppUsers.Include(x=>x.Branch).ToListAsync();
+        var query = await _context.AppUsers.Include(x => x.Branch).ToListAsync();
         if (!string.IsNullOrEmpty(request.Name))
         {
             query = query.Where(x => x.UserName.Contains(request.Name)).ToList();
         }
         //paging
-        int totalRow =  query.Count;
+        int totalRow = query.Count;
         if (request.IsPging)
-            query =  query
+            query = query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToList();

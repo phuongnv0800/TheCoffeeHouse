@@ -5,52 +5,31 @@ using TCH.Utilities.Error;
 using TCH.Utilities.Roles;
 using TCH.Utilities.Searchs;
 using TCH.ViewModel.RequestModel;
+using TCH.ViewModel.SubModels;
 
 namespace TCH.BackendApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class StocksController : ControllerBase
+public class RecipesController : ControllerBase
 {
-    private readonly IStockRepository _repository;
-    private readonly ILogger<StocksController> _logger;
+    private readonly IRecipeRepository _repository;
+    private readonly ILogger<RecipesController> _logger;
 
-    public StocksController(IStockRepository repository, ILogger<StocksController> logger)
+    public RecipesController(IRecipeRepository repository, ILogger<RecipesController> logger)
     {
         _repository = repository;
         _logger = logger;
     }
-
-    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
-    [HttpGet("get-by-branch/{branchId}")]
-    public async Task<IActionResult> GetAllStockByBranchID(string branchId, [FromQuery] Search search)
-    {
-        try
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var result = await _repository.GetAllStockByBranchID(branchId, search);
-            return Ok(result);
-        }
-        catch (CustomException e)
-        {
-            return BadRequest(new { result = -1, message = e.Message });
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
-        }
-    }
-    [Authorize(Roles = Permission.Branch)]
-    [HttpGet("get-all/{branchId}")]
+    [AllowAnonymous]
+    [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] Search search)
     {
         try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _repository.GetAllStock(search);
+            var result = await _repository.GetAll(search);
             return Ok(result);
         }
         catch (CustomException e)
@@ -63,15 +42,13 @@ public class StocksController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
-    [HttpPost("create/{branchId}")]
-    public async Task<IActionResult> Create(string branchId, [FromBody] StockRequest search)
+    [AllowAnonymous]
+    [HttpGet("recipe-product/{producId}")]
+    public async Task<IActionResult> GetByID(string producId)
     {
         try
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var result = await _repository.CreateStockMaterial(search);
+            var result = await _repository.GetRecipeByProductID(producId);
             return Ok(result);
         }
         catch (CustomException e)
@@ -84,15 +61,15 @@ public class StocksController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
-    [HttpPut("{branchId}")]
-    public async Task<IActionResult> Update(string branchId, [FromBody] StockRequest search)
+    [HttpPost]
+    [Authorize(Roles = Permission.Branch)]
+    public async Task<IActionResult> Create([FromForm] IEnumerable<RecipeRequest> request)
     {
         try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _repository.UpdateStockMaterial(search);
+            var result = await _repository.Create(request);
             return Ok(result);
         }
         catch (CustomException e)
@@ -105,15 +82,38 @@ public class StocksController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
-    [HttpDelete("{branchId}/{materialID}")]
-    public async Task<IActionResult> Delete(string branchId, string materialID)
+
+  
+
+    [HttpPut]
+    [Authorize(Roles = Permission.Branch)]
+    public async Task<IActionResult> Update( [FromForm] RecipeRequest request)
     {
         try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _repository.DeleteStockMaterial(branchId, materialID);
+            var result = await _repository.Update(request);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+
+    [HttpDelete("recipe-product/{productID}")]
+    [Authorize(Roles = Permission.Branch)]
+    public async Task<IActionResult> Delete(string productID)
+    {
+        try
+        {
+            var result = await _repository.Delete(productID);
             return Ok(result);
         }
         catch (CustomException e)

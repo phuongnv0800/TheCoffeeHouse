@@ -61,7 +61,7 @@ public class BranchsController: ControllerBase
         }
     }
     [HttpPost]
-    //[Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Create([FromForm] BranchRequest request)
     {
         try
@@ -127,7 +127,7 @@ public class BranchsController: ControllerBase
     }
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Update(string id, [FromForm] BranchRequest name)
     {
         try
@@ -149,7 +149,7 @@ public class BranchsController: ControllerBase
     }
 
     [HttpDelete("{id}")]
-    //[Authorize(Roles = Permission.Branch)]
+    [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Delete(string id)
     {
         try

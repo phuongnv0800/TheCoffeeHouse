@@ -18,6 +18,11 @@ public enum MeasureType
     Mass,//Khối lượng g, kg,...
     Volume,// thể tích ml, l,...
 }
+public enum StandardUnitType
+{
+    ml = 1,
+    g = 2,
+}
 public enum BeanType
 {
     New = 1,
@@ -104,6 +109,6 @@ public enum ProductType
 public enum OrderType
 {
     InPlace,//Tại chỗ
-    BringBack,// Mang về
+    TakeAway,// Mang về
     Shipping, // Vận chuyển
 }
