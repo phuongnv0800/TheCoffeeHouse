@@ -24,7 +24,7 @@ public interface IProductRepository
 
     Task<MessageResult> CategoryAssign(string productID, string categoryID);
 
-    Task<Respond<Product>> GetById(string productID);
+    Task<Respond<ProductVm>> GetById(string productID);
 
     Task<MessageResult> AddImage(string productID, ProductImageRequest request);
 

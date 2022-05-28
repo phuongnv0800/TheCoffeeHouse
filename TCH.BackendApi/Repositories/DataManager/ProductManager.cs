@@ -37,70 +37,58 @@ public class ProductManager : IProductRepository, IDisposable
     }
     public async Task<Respond<PagedList<ProductVm>>> GetAllByBranchID(string branchID, Search request)
     {
-        var menu = await _context.Menus.FirstOrDefaultAsync(x => x.BranchID == branchID);
-        if (menu == null)
-        {
-            return new Respond<PagedList<ProductVm>>()
-            {
-                Result = 0,
-                Message = "Chi nhánh chưa có menu",
-                Data = null,
-            };
-        }
-        var query = from p in _context.Products
-                    join pm in _context.ProductInMenus on p.ID equals pm.ProductID
-                    where pm.MenuID == menu.ID && pm.IsActive == true
-                    select new { p, pm };
+        var query = from c in _context.Products select c;
         if (!string.IsNullOrEmpty(request.Name))
-            query = query.Where(x => x.p.Name.Contains(request.Name));
+            query = query.Where(x => x.Name.Contains(request.Name));
         //paging
         int totalRow = await query.CountAsync();
+        var data = new List<ProductVm>();
         var item1 = from sp in _context.SizeInProducts
                     join s in _context.Sizes on sp.SizeID equals s.ID
                     select new { s, sp, };
         var item2 = from tp in _context.ToppingInProducts
                     join t in _context.Toppings on tp.ToppingID equals t.ID
                     select new { t, tp, };
-        //var products = await _context.Products.Include(x=>x.ProductInMenus).ToListAsync();
-        var data = new List<ProductVm>();
-        if (request.IsPging == true)
+        if (request.IsPging)
         {
             data = await query.Select(x => new ProductVm()
             {
-                ID = x.p.ID,
-                Name = x.p.Name,
-                ProductType = x.p.ProductType,
-                CreateDate = x.p.CreateDate,
-                UpdateDate = x.p.UpdateDate,
-                IsSale = x.p.IsSale,
-                PriceSale = x.p.PriceSale,
-                IsAvailable = x.p.IsAvailable,
-                Price = x.p.Price,
-                Description = x.p.Description,
-                LinkImage = x.p.LinkImage,
-                CategoryID = x.p.CategoryID,
-                IsActive = x.pm.IsActive,
+                ID = x.ID,
+                Name = x.Name,
+                ProductType = x.ProductType,
+                CreateDate = x.CreateDate,
+                UpdateDate = x.UpdateDate,
+                IsSale = x.IsSale,
+                PriceSale = x.PriceSale,
+                IsAvailable = x.IsAvailable,
+                Price = x.Price,
+                Description = x.Description,
+                LinkImage = x.LinkImage,
+                CategoryID = x.CategoryID,
+                IsActive = true,
             })
-            .Skip((request.PageNumber - 1) * request.PageSize)
-            .Take(request.PageSize).ToListAsync();
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToListAsync();
         }
         else
+        {
             data = await query.Select(x => new ProductVm()
             {
-                ID = x.p.ID,
-                Name = x.p.Name,
-                ProductType = x.p.ProductType,
-                CreateDate = x.p.CreateDate,
-                UpdateDate = x.p.UpdateDate,
-                IsSale = x.p.IsSale,
-                PriceSale = x.p.PriceSale,
-                IsAvailable = x.p.IsAvailable,
-                Price = x.p.Price,
-                Description = x.p.Description,
-                LinkImage = x.p.LinkImage,
-                CategoryID = x.p.CategoryID,
-                IsActive = x.pm.IsActive,
+                ID = x.ID,
+                Name = x.Name,
+                ProductType = x.ProductType,
+                CreateDate = x.CreateDate,
+                UpdateDate = x.UpdateDate,
+                IsSale = x.IsSale,
+                PriceSale = x.PriceSale,
+                IsAvailable = x.IsAvailable,
+                Price = x.Price,
+                Description = x.Description,
+                LinkImage = x.LinkImage,
+                CategoryID = x.CategoryID,
+                IsActive = true,
             }).ToListAsync();
+        }
         foreach (var item in data)
         {
             var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
@@ -122,6 +110,91 @@ public class ProductManager : IProductRepository, IDisposable
             Result = 1,
             Message = "Thành công",
         };
+        //var menu = await _context.Menus.FirstOrDefaultAsync(x => x.BranchID == branchID);
+        //if (menu == null)
+        //{
+        //    return new Respond<PagedList<ProductVm>>()
+        //    {
+        //        Result = 0,
+        //        Message = "Chi nhánh chưa có menu",
+        //        Data = null,
+        //    };
+        //}
+        //var query = from p in _context.Products
+        //            join pm in _context.ProductInMenus on p.ID equals pm.ProductID
+        //            where pm.MenuID == menu.ID && pm.IsActive == true
+        //            select new { p, pm };
+        //if (!string.IsNullOrEmpty(request.Name))
+        //    query = query.Where(x => x.p.Name.Contains(request.Name));
+        ////paging
+        //int totalRow = await query.CountAsync();
+        //var item1 = from sp in _context.SizeInProducts
+        //            join s in _context.Sizes on sp.SizeID equals s.ID
+        //            select new { s, sp, };
+        //var item2 = from tp in _context.ToppingInProducts
+        //            join t in _context.Toppings on tp.ToppingID equals t.ID
+        //            select new { t, tp, };
+        ////var products = await _context.Products.Include(x=>x.ProductInMenus).ToListAsync();
+        //var data = new List<ProductVm>();
+        //if (request.IsPging == true)
+        //{
+        //    data = await query.Select(x => new ProductVm()
+        //    {
+        //        ID = x.p.ID,
+        //        Name = x.p.Name,
+        //        ProductType = x.p.ProductType,
+        //        CreateDate = x.p.CreateDate,
+        //        UpdateDate = x.p.UpdateDate,
+        //        IsSale = x.p.IsSale,
+        //        PriceSale = x.p.PriceSale,
+        //        IsAvailable = x.p.IsAvailable,
+        //        Price = x.p.Price,
+        //        Description = x.p.Description,
+        //        LinkImage = x.p.LinkImage,
+        //        CategoryID = x.p.CategoryID,
+        //        IsActive = x.pm.IsActive,
+        //    })
+        //    .Skip((request.PageNumber - 1) * request.PageSize)
+        //    .Take(request.PageSize).ToListAsync();
+        //}
+        //else
+        //    data = await query.Select(x => new ProductVm()
+        //    {
+        //        ID = x.p.ID,
+        //        Name = x.p.Name,
+        //        ProductType = x.p.ProductType,
+        //        CreateDate = x.p.CreateDate,
+        //        UpdateDate = x.p.UpdateDate,
+        //        IsSale = x.p.IsSale,
+        //        PriceSale = x.p.PriceSale,
+        //        IsAvailable = x.p.IsAvailable,
+        //        Price = x.p.Price,
+        //        Description = x.p.Description,
+        //        LinkImage = x.p.LinkImage,
+        //        CategoryID = x.p.CategoryID,
+        //        IsActive = x.pm.IsActive,
+        //    }).ToListAsync();
+        //foreach (var item in data)
+        //{
+        //    var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
+        //    var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
+        //    item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
+        //    item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).ToList();
+        //}
+        //var pagedResult = new PagedList<ProductVm>()
+        //{
+        //    TotalRecord = totalRow,
+        //    PageSize = request.PageSize,
+        //    CurrentPage = request.PageNumber,
+        //    TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+        //    Items = data,
+        //};
+        //return new Respond<PagedList<ProductVm>>()
+        //{
+        //    Data = pagedResult,
+        //    Result = 1,
+        //    Message = "Thành công",
+        //};
     }
 
     public async Task<Respond<PagedList<ProductVm>>> GetAll(Search request)
@@ -480,7 +553,36 @@ public class ProductManager : IProductRepository, IDisposable
 
     public async Task<Respond<Product>> GetById(string productID)
     {
-        var product = await _context.Products.Include(x => x.ProductImages).FirstOrDefaultAsync(x => x.ID == productID);
+        var item1 = from sp in _context.SizeInProducts
+                    join s in _context.Sizes on sp.SizeID equals s.ID
+                    select new { s, sp, };
+        var item2 = from tp in _context.ToppingInProducts
+                    join t in _context.Toppings on tp.ToppingID equals t.ID
+                    select new { t, tp, };
+        var product = await _context.Products.Where(x => x.ID == productID).Select(x => new ProductVm()
+        {
+            ID = x.ID,
+            Name = x.Name,
+            ProductType = x.ProductType,
+            CreateDate = x.CreateDate,
+            UpdateDate = x.UpdateDate,
+            IsSale = x.IsSale,
+            PriceSale = x.PriceSale,
+            IsAvailable = x.IsAvailable,
+            Price = x.Price,
+            Description = x.Description,
+            LinkImage = x.LinkImage,
+            CategoryID = x.CategoryID,
+            IsActive = true,
+        }).FirstOrDefaultAsync();
+        if (product != null)
+        {
+            var sizes = await item1.Where(x => x.sp.ProductID == product.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
+            var toppings = await item2.Where(x => x.tp.ProductID == product.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
+            product.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
+            product.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).ToList();
+        }
+
         if (product == null)
             return new Respond<Product>()
             {
@@ -848,7 +950,7 @@ public class ProductManager : IProductRepository, IDisposable
 
     public async Task<Respond<PagedList<HistoryPriceUpdate>>> GetHistoryPriceByID(string ID, Search request)
     {
-        
+
         var query = from c in _context.HistoryPriceUpdates where c.ProductID == ID || c.SizeID == ID || c.ToppingID == ID select c;
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.Name!.Contains(request.Name));

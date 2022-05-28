@@ -1,9 +1,12 @@
-﻿namespace TCH.Data.Entities;
+﻿using TCH.Utilities.Enum;
+
+namespace TCH.Data.Entities;
 
 public class Bean
 {
     public string ID { get; set; }
     public string Name { get; set; }
+    public BeanType Code { get; set; }
     public int MinPoint { get; set; }
     public int MaxPoint { get; set; }
     public double ConversationMoney { get; set; }

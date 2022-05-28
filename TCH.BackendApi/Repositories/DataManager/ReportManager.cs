@@ -137,7 +137,7 @@ public class ReportManager : IReportRepository
                     IsDelete = false,
                     Mass = item.Mass,
                     MeasureType = item.MeasureType,
-                    StandardMass = measure != null ? measure.ConversionFactor*item.Mass : item.Mass,
+                    StandardMass = measure != null ? measure.ConversionFactor * item.Mass : item.Mass,
                     Description = item.Description,
                     MeasureID = item.MeasureID,
                 };
@@ -296,6 +296,40 @@ public class ReportManager : IReportRepository
         };
     }
 
+    public async Task<Respond<PagedList<Report>>> GetAllExportReportByBranchID(string branchID, Search request)
+    {
+        var query = await _context.Reports
+            .Include(x => x.ReportDetails)
+            .Where(x => x.BranchID == branchID)
+            .ToListAsync();
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Export).ToList();
+        }
+        //paging
+        int totalRow = query.Count;
+        var data = new List<Report>();
+        if (request.IsPging)
+            data = query
+            .Select(x => x)
+            .Skip((request.PageNumber - 1) * request.PageSize)
+            .Take(request.PageSize).ToList();
+        var pagedResult = new PagedList<Report>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<Report>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+
     public async Task<Respond<PagedList<Report>>> GetAllExportReport(Search request)
     {
         var query = await _context.Reports
@@ -329,6 +363,41 @@ public class ReportManager : IReportRepository
         };
     }
 
+
+    public async Task<Respond<PagedList<Report>>> GetAllImportReportByBranchID(string branchID, Search request)
+    {
+        var query = await _context.Reports
+            .Include(x => x.ReportDetails)
+            .Where(x => x.BranchID == branchID)
+            .ToListAsync();
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Import).ToList();
+        }
+        //paging
+        int totalRow = query.Count;
+        var data = new List<Report>();
+        if (request.IsPging)
+            data = query
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        var pagedResult = new PagedList<Report>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<Report>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+
     public async Task<Respond<PagedList<Report>>> GetAllImportReport(Search request)
     {
         var query = await _context.Reports
@@ -337,6 +406,40 @@ public class ReportManager : IReportRepository
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Import).ToList();
+        }
+        //paging
+        int totalRow = query.Count;
+        var data = new List<Report>();
+        if (request.IsPging)
+            data = query
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        var pagedResult = new PagedList<Report>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<Report>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+
+    public async Task<Respond<PagedList<Report>>> GetAllLiquidationReportByBranchID(string branchID, Search request)
+    {
+        var query = await _context.Reports
+             .Include(x => x.ReportDetails)
+            .Where(x => x.BranchID == branchID)
+             .ToListAsync();
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Liquidation).ToList();
         }
         //paging
         int totalRow = query.Count;

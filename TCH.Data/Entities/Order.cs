@@ -44,8 +44,6 @@ public class Order
 
     public string? CustomerID { get; set; }
 
-    public Customer? Customer { get; set; }
-
     public string BranchID { get; set; }
 
     public Branch Branch { get; set; }

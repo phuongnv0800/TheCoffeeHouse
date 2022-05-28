@@ -14,6 +14,7 @@ public static class Seed
         {
             return; // DB has been seeded
         }
+       
         var units = new Measure[]
         {
             new Measure()
@@ -2490,6 +2491,7 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Thành viên mới",
+                Code = BeanType.New,
                 MinPoint = 0,
                 MaxPoint = 99,
                 ConversationMoney = 100000,
@@ -2503,6 +2505,7 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Thành viên Đồng",
+                Code = BeanType.Bronze,
                 MinPoint = 100,
                 MaxPoint = 199,
                 ConversationMoney = 100000,
@@ -2516,6 +2519,7 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Thành viên Bạc",
+                Code = BeanType.Silver,
                 MinPoint = 199,
                 MaxPoint = 499,
                 ConversationMoney = 100000,
@@ -2529,6 +2533,7 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Thành viên vàng",
+                Code = BeanType.Gold,
                 MinPoint = 500,
                 MaxPoint = 2999,
                 ConversationMoney = 100000,
@@ -2542,6 +2547,7 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Thành viên kim cương",
+                Code = BeanType.Diamond,
                 MinPoint = 3000,
                 MaxPoint = 9999,
                 ConversationMoney = 100000,
@@ -2994,7 +3000,7 @@ public static class Seed
             context.UserRoles.Add(new IdentityUserRole<string>()
             {
                 UserId = userAdd.Id,
-                RoleId = i % 2 == 0 ? roleManager.Id : roleBranch.Id,
+                RoleId = i % 2 == 0 ? roleManager.Id : roleStaff.Id,
             });
         }
         context.SaveChanges();

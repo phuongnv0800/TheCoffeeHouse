@@ -110,7 +110,65 @@ public class StockManager : IDisposable, IStockRepository
             Message = "Thành công",
         };
     }
-
+    
+    //public async Task<MessageResult> CreateStockMaterial(ExportRequest request)
+    //{
+    //    var export = new Report()
+    //    {
+    //        ID = Guid.NewGuid().ToString(),
+    //        CreateDate = DateTime.Now,
+    //        Supplier = request.Supplier,
+    //        StockName = request.StockName,
+    //        Address = request.Address,
+    //        TotalAmount = request.TotalAmount,
+    //        Code = request.Code,
+    //        Name = request.Name,
+    //        Reason = request.Reason,
+    //        ReportType = ReportType.Export,
+    //        Depreciation = request.Depreciation,
+    //        RecoveryValue = request.RecoveryValue,
+    //        Conclude = request.Conclude,
+    //        LiquidationName = request.LiquidationName,
+    //        LiquidationRole = request.LiquidationRole,
+    //        BranchID = request.BranchID,
+    //        UserCreateID = _userId,
+    //    };
+    //    await _context.Reports.AddAsync(export);
+    //    var stockDetails = await _context.StockMaterials.Where(x => x.BranchID == request.BranchID).ToListAsync();
+    //    foreach (var item in request.ReportDetails)
+    //    {
+    //        foreach (var stock in stockDetails)
+    //        {
+    //            if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
+    //            {
+    //                stock.Quantity -= item.Quantity;
+    //                if (stock.Quantity < 0)
+    //                {
+    //                    stock.Quantity = 0;
+    //                }
+    //                break;
+    //            }
+    //        }
+    //        var exportMaterial = new ReportDetail()
+    //        {
+    //            ReportID = export.ID,
+    //            MaterialID = item.MaterialID,
+    //            BeginDate = item.BeginDate,
+    //            ExpirationDate = item.ExpirationDate,
+    //            PriceOfUnit = item.PriceOfUnit,
+    //            Quantity = item.Quantity,
+    //            Unit = item.Unit,
+    //            Status = item.Status,
+    //        };
+    //        await _context.ReportDetails.AddAsync(exportMaterial);
+    //    }
+    //    await _context.SaveChangesAsync();
+    //    return new MessageResult()
+    //    {
+    //        Result = 1,
+    //        Message = "Tạo thành công",
+    //    };
+    //}
 
     private async Task<string> SaveFileIFormFile(IFormFile file)
     {
