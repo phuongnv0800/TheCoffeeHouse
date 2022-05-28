@@ -1,4 +1,4 @@
-﻿@page "/admin-dashboard"
+﻿@page "/reports-liquid/{BranchId}"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -8,40 +8,33 @@
 @using TCH.Data.Entities
 @using TCH.WebServer.Models
 @using TCH.WebServer.Models.Pagination
-@using TCH.WebServer.Services
-@using TCH.WebServer.Services.Products
+@using TCH.WebServer.Services.Reports
 @using TCH.WebServer.Services.Users
 
 @inject HttpClient httpClient
 @inject ILocalStorageService localStorage;
-@inject IProductService productServices;
+@inject IReportService reportService;
 @inject IUserService userServices;
-@inject IUserApiClient userApiClient;
 @inject NavigationManager navigationManager;
 @inject IJSRuntime jsRuntime;
-@inject IToastService toastService;
 @attribute [Authorize]
 
-<div class="page d-flex flex-row flex-column-fluid">
+    <div class="page d-flex flex-row flex-column-fluid">
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
         <TCH.WebServer.Shared.Header.Header></TCH.WebServer.Shared.Header.Header>
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-             <div class="card card-flush " style="">
-            <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                <div class="card-title">
-                    <div class="d-flex align-items-center position-relative my-1">
-                        <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
-                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
-                            </svg>
-                        </span>
-                        <input type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm loại sản phẩm">
-                    </div>
-                </div>
-                <div class="card-toolbar">
-
-                        <a class="btn btn-primary" onclick="@(() => Add())">Thêm sản phẩm</a>
+            <div class="card card-flush " style="margin-top:65px">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            <input type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm phiếu thanh lý">
+                        </div>
                     </div>
                 </div>
                 <div class="card-body pt-0">
@@ -57,10 +50,7 @@
                                             </div>
                                         </th>
                                         <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                            Sản phẩm
-                                        </th>
-                                        <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending" style="width: 159.297px;">
-                                            loại sản phẩm
+                                            Tên phiếu nhập
                                         </th>
                                         <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
                                             Thao tác
@@ -72,8 +62,7 @@
                                     {
                                         foreach (var product in ProductsList)
                                         {
-                                            string fileImage = "http://tchhost.somee.com/uploads" + product.LinkImage;
-                                            string href = "/products/" + product.ID.ToString();
+                                            string href = "/materials/" + product.ID.ToString();
                                             <tr class="odd">
                                                 <td>
                                                     <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -82,12 +71,11 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
-                                                        <img height="40" width="40" src="@fileImage" alt="">
                                                         <div class="ms-5">
                                                             <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
                                                                 @product.Name
                                                             </a>
-                                                            <div class="text-muted fs-7 fw-bolder">@product.Description</div>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.BranchID</div>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -102,8 +90,7 @@
                                                             Thao tác
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                            <li><a class="dropdown-item" onclick="@(() => Update(product.ID.ToString()))">Sửa</a></li>
-                                                            <li><a class="dropdown-item" onclick="@(() => Delete(product.ID.ToString()))">Xóa</a></li>
+                                                            <li><a class="dropdown-item" onclick="@(() => Delete(@product.ID.ToString()))">Xóa</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -172,19 +159,19 @@
 </div>
 
 
-
 @code {
-    public List<ProductVm>? ProductsList = new List<ProductVm>();
+    [Parameter] public string BranchId { get; set; }
+    public List<Report>? ProductsList = new List<Report>();
     private string? token;
     public string Name;
-     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
     private ApplicationUser User;
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        //navigationManager.NavigateTo("admin-dashboard");
+        navigationManager.NavigateTo($"reports-liquid/{BranchId}");
         var response = await userServices.GetUserInfo();
         User = response.Data;
         await Get(1);
@@ -192,40 +179,16 @@
     }
     public async Task Get(int pageNumber)
     {
-        var response = await productServices.GetProducts(true, pagination.pageSize, pageNumber);
+        var response = await reportService.GetAllLiquidInBranch(true, pagination.pageSize, pageNumber, BranchId);
         pagination.PageNumber = response.Data.CurrentPage;
         ProductsList = response.Data.Items.ToList();
         pagination.totalPage = response.Data.TotalPages;
     }
-    public async void Add()
-    {
-        var modal = Modal.Show<AddProduct>("Thêm sản phẩm");
-        var result = await modal.Result;
-        if (!result.Cancelled)
-        {
-            await Change(1);
-        }
-        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
-    }
-    public async void Update(string id)
-    {
-        navigationManager.NavigateTo($"categories/{id}");
-    }
     public async void Delete(string id)
     {
-        try
-        {
-            await productServices.DeleteProduct(id);
-            toastService.ShowSuccess("Xóa thành công");
-            await Change(1);
-        }
-        catch (Exception ex)
-        {
-            toastService.ShowError(ex.ToString());
-        }
-        var response = await productServices.GetProducts(true, pagination.pageSize, 1);
+        await reportService.DeleteLiquid(id);
     }
-    public async Task Change(int link)
+    public async void Change(int link)
     {
         pagination.PageNumber = link;
         await Get(link);
