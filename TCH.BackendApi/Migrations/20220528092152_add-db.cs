@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TCH.BackendApi.Migrations
 {
-    public partial class init : Migration
+    public partial class adddb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -94,6 +94,7 @@ namespace TCH.BackendApi.Migrations
                 {
                     ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<int>(type: "int", nullable: false),
                     MinPoint = table.Column<int>(type: "int", nullable: false),
                     MaxPoint = table.Column<int>(type: "int", nullable: false),
                     ConversationMoney = table.Column<double>(type: "float", nullable: false),
@@ -441,6 +442,48 @@ namespace TCH.BackendApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TableNum = table.Column<int>(type: "int", nullable: false),
+                    Cashier = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    OrderType = table.Column<int>(type: "int", nullable: false),
+                    ReducePromotion = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ReduceAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CustomerPut = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CustomerReceive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ShippingFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SubAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CancellationReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserCreateID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaymentType = table.Column<int>(type: "int", nullable: false),
+                    CustomerID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BranchID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orders_Branchs_BranchID",
+                        column: x => x.BranchID,
+                        principalTable: "Branchs",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -542,53 +585,6 @@ namespace TCH.BackendApi.Migrations
                         principalTable: "Measures",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    TableNum = table.Column<int>(type: "int", nullable: false),
-                    Cashier = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    OrderType = table.Column<int>(type: "int", nullable: false),
-                    ReducePromotion = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ReduceAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CustomerPut = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CustomerReceive = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ShippingFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SubAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CancellationReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserCreateID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PaymentType = table.Column<int>(type: "int", nullable: false),
-                    CustomerID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    BranchID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_Branchs_BranchID",
-                        column: x => x.BranchID,
-                        principalTable: "Branchs",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerID",
-                        column: x => x.CustomerID,
-                        principalTable: "Customers",
-                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -1006,11 +1002,6 @@ namespace TCH.BackendApi.Migrations
                 column: "BranchID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerID",
-                table: "Orders",
-                column: "CustomerID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderToppingDetails_ProductID_OrderID",
                 table: "OrderToppingDetails",
                 columns: new[] { "ProductID", "OrderID" });
@@ -1104,6 +1095,9 @@ namespace TCH.BackendApi.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Customers");
+
+            migrationBuilder.DropTable(
                 name: "HistoryPriceUpdates");
 
             migrationBuilder.DropTable(
@@ -1140,6 +1134,9 @@ namespace TCH.BackendApi.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "MemberTypes");
+
+            migrationBuilder.DropTable(
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
@@ -1173,13 +1170,7 @@ namespace TCH.BackendApi.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Customers");
-
-            migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "MemberTypes");
 
             migrationBuilder.DropTable(
                 name: "Menus");

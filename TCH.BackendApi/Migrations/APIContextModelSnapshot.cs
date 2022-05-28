@@ -261,6 +261,9 @@ namespace TCH.BackendApi.Migrations
                     b.Property<string>("ID")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
                     b.Property<double>("ConversationMoney")
                         .HasColumnType("float");
 
@@ -677,7 +680,7 @@ namespace TCH.BackendApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CustomerID")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("CustomerPut")
                         .HasColumnType("decimal(18,2)");
@@ -723,8 +726,6 @@ namespace TCH.BackendApi.Migrations
                     b.HasIndex("AppUserId");
 
                     b.HasIndex("BranchID");
-
-                    b.HasIndex("CustomerID");
 
                     b.ToTable("Orders", (string)null);
                 });
@@ -1456,13 +1457,7 @@ namespace TCH.BackendApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TCH.Data.Entities.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerID");
-
                     b.Navigation("Branch");
-
-                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("TCH.Data.Entities.OrderDetail", b =>
@@ -1731,11 +1726,6 @@ namespace TCH.BackendApi.Migrations
             modelBuilder.Entity("TCH.Data.Entities.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("TCH.Data.Entities.Customer", b =>
-                {
-                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("TCH.Data.Entities.Material", b =>

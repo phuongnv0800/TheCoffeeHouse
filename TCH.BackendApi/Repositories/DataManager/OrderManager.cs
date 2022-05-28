@@ -33,6 +33,7 @@ public class OrderManager : IOrderRepository, IDisposable
     }
     public async Task<MessageResult> Create(OrderRequest request)
     {
+
         var branch = await _context.Branches.FindAsync(request.BranchID);
         if (branch == null)
             return new MessageResult()
@@ -51,6 +52,39 @@ public class OrderManager : IOrderRepository, IDisposable
                 {
                     subTotal += toppingDb.SubPrice * topping.Quantity;
                 }
+            }
+        }
+        var totalAmount = subTotal - (request.ReducePromotion + request.ReduceAmount);
+        if (string.IsNullOrWhiteSpace(request.CustomerID))
+        {
+            var customer = await _context.Customers.FindAsync(request.CustomerID);
+            if (customer != null)
+            {
+                if (totalAmount >= customer.Bean.ConversationMoney)
+                {
+                    switch (customer.Bean.Code)
+                    {
+                        case BeanType.New:
+                            customer.Point += (int)(totalAmount / customer.Bean.ConversationMoney)* customer.Bean.ConversationPoint;
+                            break;
+                        case BeanType.Bronze:
+                            customer.Point += (int)(totalAmount / customer.Bean.ConversationMoney) * customer.Bean.ConversationPoint;
+                            break;
+                        case BeanType.Silver:
+                            customer.Point += (int)(totalAmount / customer.Bean.ConversationMoney) * customer.Bean.ConversationPoint;
+                            break;
+                        case BeanType.Gold:
+                            customer.Point += (int)(totalAmount / customer.Bean.ConversationMoney) * customer.Bean.ConversationPoint;
+                            break;
+                        case BeanType.Diamond:
+                            customer.Point += (int)(totalAmount / customer.Bean.ConversationMoney) * customer.Bean.ConversationPoint;
+                            break;
+                       default:
+                            customer.Point += (int)(totalAmount / customer.Bean.ConversationMoney) * customer.Bean.ConversationPoint;
+                            break;
+                    }
+                }
+
             }
         }
         var orderRe = new Order()
@@ -76,7 +110,7 @@ public class OrderManager : IOrderRepository, IDisposable
             CustomerID = request.CustomerID,
             BranchID = request.BranchID,
         };
-        _context.Orders.Add(orderRe);
+        await _context.Orders.AddAsync(orderRe);
         var orderDetails = new List<OrderDetail>();
         foreach (var item in request.OrderItems)
         {
@@ -111,12 +145,7 @@ public class OrderManager : IOrderRepository, IDisposable
                     PriceSize = item.PriceSize,
                     SizeID = item.SizeID,
                     ProductID = item.ProductID,
-                    //ToppingID1 = item.Toppings[0].ID,
-                    //Topping1Name = null,
-                    //PriceToppping1 = item.Toppings[0].SubPrice,
-                    //ToppingID2 = item.Toppings[1] != null ? item.Toppings[1]?.ID : "",
-                    //Topping2Name = null,
-                    //PriceToppping2 = item.Toppings[1] != null ? item.Toppings[1].SubPrice : 0,
+                    OrderToppingDetails = orderToppingDetail,
                 };
                 orderDetails.Add(orderDetail);
             }
@@ -132,12 +161,6 @@ public class OrderManager : IOrderRepository, IDisposable
                     PriceSize = item.PriceSize,
                     SizeID = item.SizeID,
                     ProductID = item.ProductID,
-                    //ToppingID1 = null,
-                    //Topping1Name = null,
-                    //PriceToppping1 = 0,
-                    //ToppingID2 = null,
-                    //Topping2Name = null,
-                    //PriceToppping2 = 0,
                 });
             }
         }
@@ -459,7 +482,7 @@ public class OrderManager : IOrderRepository, IDisposable
     public async Task<Respond<Order>> GetById(string orderID)
     {
         var order = await _context.Orders
-            .Include(x => x.OrderDetails).ThenInclude(x=>x.OrderToppingDetails)
+            .Include(x => x.OrderDetails).ThenInclude(x => x.OrderToppingDetails)
             .FirstOrDefaultAsync(x => x.ID == orderID);
         if (order == null)
             return new Respond<Order>()
@@ -499,7 +522,7 @@ public class OrderManager : IOrderRepository, IDisposable
     {
         var order = await _context.Orders
             .Include(x => x.OrderDetails)
-            .ThenInclude(x=>x.OrderToppingDetails)
+            .ThenInclude(x => x.OrderToppingDetails)
             .FirstOrDefaultAsync(x => x.ID == orderID);
         if (order == null)
             return new MessageResult()

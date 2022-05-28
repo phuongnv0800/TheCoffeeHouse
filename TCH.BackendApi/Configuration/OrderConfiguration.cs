@@ -19,6 +19,5 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.Property(z => z.ShippingFee).IsRequired().HasColumnType("decimal(18,2)");
         builder.Property(z => z.CustomerReceive).IsRequired().HasColumnType("decimal(18,2)");
         builder.HasOne(x => x.Branch).WithMany(x => x.Orders).HasForeignKey(x => x.BranchID);
-        builder.HasOne(x => x.Customer).WithMany(y => y.Orders).HasForeignKey(z => z.CustomerID);
     }
 }

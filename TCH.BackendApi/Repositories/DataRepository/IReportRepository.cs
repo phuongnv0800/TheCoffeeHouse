@@ -12,6 +12,7 @@ public interface IReportRepository
     Task<MessageResult> UpdateImportReport(string id, ImportRequest request);
     Task<MessageResult> DeleteImportReport(string id);
     Task<Respond<Report>> GetImportReportByID(string id);
+    Task<Respond<PagedList<Report>>> GetAllImportReportByBranchID(string branchID, Search request);
     Task<Respond<PagedList<Report>>> GetAllImportReport(Search request);
 
     Task<MessageResult> CreateExportReport(ExportRequest request);
@@ -19,10 +20,12 @@ public interface IReportRepository
     Task<MessageResult> DeleteExportReport(string id);
     Task<Respond<Report>> GetExportReportByID(string id);
     Task<Respond<PagedList<Report>>> GetAllExportReport(Search request);
+    Task<Respond<PagedList<Report>>> GetAllExportReportByBranchID(string branchID, Search request);
 
     Task<MessageResult> CreateLiquidationReport(ImportRequest request);
     Task<MessageResult> UpdateLiquidationReport(string id, Report request);
     Task<MessageResult> DeleteLiquidationReport(string id);
     Task<Respond<Report>> GetLiquidationReportByID(string id);
     Task<Respond<PagedList<Report>>> GetAllLiquidationReport(Search request);
+    Task<Respond<PagedList<Report>>> GetAllLiquidationReportByBranchID(string branchID, Search request);
 }

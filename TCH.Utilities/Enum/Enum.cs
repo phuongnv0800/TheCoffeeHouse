@@ -18,7 +18,14 @@ public enum MeasureType
     Mass,//Khối lượng g, kg,...
     Volume,// thể tích ml, l,...
 }
-
+public enum BeanType
+{
+    New = 1,
+    Bronze = 2,
+    Silver = 3,
+    Gold = 4,
+    Diamond = 5,
+}
 public enum Gender
 {
     Male,

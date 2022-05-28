@@ -18,7 +18,6 @@ public class CustomerConfig : IEntityTypeConfiguration<Customer>
         builder.Property(x => x.Point).HasDefaultValue(0);
 
         builder.HasOne(x => x.Bean).WithMany(x => x.Customers).HasForeignKey(z => z.BeanID);
-        builder.HasMany(x => x.Orders).WithOne(x => x.Customer).HasForeignKey(z => z.CustomerID);
 
     }
 }

@@ -23,6 +23,25 @@ public class ReportsController : ControllerBase
         _logger = logger;
     }
 
+    [HttpGet("import/{branchID}")]
+    public async Task<IActionResult> GetAllImportByBranchID(string branchID,[FromQuery] Search search)
+    {
+        try
+        {
+            var respond = await _repository.GetAllImportReportByBranchID(branchID, search);
+            return Ok(respond);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
     [HttpGet("import")]
     public async Task<IActionResult> GetAllImport([FromQuery] Search search)
     {
@@ -42,6 +61,25 @@ public class ReportsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    [HttpGet("export/{branchID}")]
+    public async Task<IActionResult> GetAllExport(string branchID,[FromQuery] Search search)
+    {
+        try
+        {
+            var respond = await _repository.GetAllExportReportByBranchID(branchID, search);
+            return Ok(respond);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
     [HttpGet("export")]
     public async Task<IActionResult> GetAllExport([FromQuery] Search search)
     {
@@ -57,6 +95,25 @@ public class ReportsController : ControllerBase
         catch (Exception e)
         {
             
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [HttpGet("liquidation/{branchID}")]
+    public async Task<IActionResult> GetAllLiquidationByBranchID(string branchID, [FromQuery] Search search)
+    {
+        try
+        {
+            var respond = await _repository.GetAllLiquidationReportByBranchID(branchID, search);
+            return Ok(respond);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+
             _logger.LogError(e.ToString());
             return BadRequest(new { result = -2, message = e.Message });
         }

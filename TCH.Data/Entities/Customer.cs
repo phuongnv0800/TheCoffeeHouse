@@ -28,5 +28,4 @@ public class Customer
 
     public string BeanID { get; set; }
     public Bean Bean { get; set; }
-    public ICollection<Order> Orders { get; set; }
 }
