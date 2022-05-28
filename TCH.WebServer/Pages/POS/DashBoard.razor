@@ -3,6 +3,7 @@
 @using TCH.WebServer.Models
 @using TCH.WebServer.Models.Pagination
 @using TCH.WebServer.Services.Categories
+@using TCH.WebServer.Services.Orders
 @using TCH.WebServer.Services.Products
 @using TCH.WebServer.Services.Users
 @inject NavigationManager navigationManager
@@ -10,10 +11,11 @@
 @inject IUserService userServices
 @inject ICategoryService categoryServices
 @inject NavigationManager NavManager
+@inject IToastService toastService
+@inject IOrderService orderService
 @attribute [Authorize]
 
 <div class="page d-flex flex-row flex-column-fluid">
-    <TCH.WebServer.Pages.SideBar.SidebarAdmin></TCH.WebServer.Pages.SideBar.SidebarAdmin>
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
         <TCH.WebServer.Shared.Header.Header></TCH.WebServer.Shared.Header.Header>
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -28,9 +30,9 @@
                                     <!--begin::Hot sales post-->
                             <div class="card-xl-stretch me-md-6">
                                         <!--begin::Overlay-->
-                                <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@("https://localhost:8001/uploads" + product.LinkImage)">
+                                <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@("http://tchhost.somee.com/uploads" + product.LinkImage)">
                                             <!--begin::Image-->
-                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(@("https://localhost:8001/uploads" + product.LinkImage))"></div>
+                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(@("http://tchhost.somee.com/uploads" + product.LinkImage))"></div>
                                             <!--end::Image-->
                                             <!--begin::Action-->
                                     <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
@@ -42,10 +44,10 @@
                                         <!--begin::Body-->
                                 <div class="mt-5">
                                             <!--begin::Title-->
-                                    <a href="/product-detail/{@product.ID}" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
+                                    <a href="/product-detail/@product.ID" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
                                             <!--end::Title-->
                                             <!--begin::Text-->
-                                    <div class="fw-bold text-gray-600 text-dark mt-3">@product.Description</div>
+                                            @*<div class="fw-bold text-gray-600 text-dark mt-3">@product.Description</div>*@
                                             <!--end::Text-->
                                             <!--begin::Text-->
                                     <div class="fs-6 fw-bolder mt-5 d-flex flex-stack">
@@ -83,42 +85,37 @@
                                 <!--begin::Tap pane-->
                                 <div class="tab-pane fade show active" id="kt_stats_widget_2_tab_4">
                                     <!--begin::Table container-->
-                                    <div class="table-responsive">
+                                    <div class="table">
                                         <!--begin::Table-->
-                                        @if (order != null && order.OrderDetails != null)
+                                        @if (order != null && order.OrderItems != null)
                                         {
-                                            foreach (var orderDetail in order.OrderDetails)
+                                            foreach (var orderDetail in order.OrderItems)
                                             {
+                                                
                                                 <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
                                                     <!--begin::Table head-->
                                             <thead>
                                                         <tr class="fs-7 fw-bolder text-gray-500 border-bottom-0">
                                                             <th class="ps-0 w-50px">ITEM</th>
-                                                            <th class="min-w-140px"></th>
                                                             <th class="text-end min-w-140px">QTY</th>
                                                             <th class="pe-0 text-end min-w-120px">PRICE</th>
-                                                            <th class="pe-0 text-end min-w-120px">TOTAL PRICE</th>
                                                         </tr>
                                                     </thead>
                                                     <!--end::Table head-->
                                                     <!--begin::Table body-->
                                             <tbody>
                                                         <tr>
-                                                            <td>
-                                                                <img src="@("https://localhost:8001/uploads" + orderDetail.Product.LinkImage)" class="w-50px ms-n1" alt="">
-                                                            </td>
+                                                            @*<td>
+                                                                <img src="@("http://tchhost.somee.com/uploads" + orderDetail..LinkImage)" class="w-50px ms-n1" alt="">
+                                                                </td>*@
                                                             <td class="ps-0">
-                                                                <a href="../../demo8/dist/apps/ecommerce/catalog/edit-product.html" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6 text-start pe-0">@orderDetail.Product.Name</a>
-                                                                <span class="text-gray-400 fw-bold fs-7 d-block text-start ps-0">Item: #XDG-1523</span>
+                                                                <a href="/product-detail/@@orderDetail.ProductID" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6 text-start pe-0">@orderDetail.NameProduct</a>
                                                             </td>
                                                             <td>
                                                                 <span class="text-gray-800 fw-bolder d-block fs-6 ps-0 text-end">x@(orderDetail.Quantity)</span>
                                                             </td>
                                                             <td class="text-end pe-0">
-                                                                <span class="text-gray-800 fw-bolder d-block fs-6">$@orderDetail.PriceProduct</span>
-                                                            </td>
-                                                            <td class="text-end pe-0">
-                                                                <span class="text-gray-800 fw-bolder d-block fs-6">$@(orderDetail.Quantity * orderDetail.PriceProduct)</span>
+                                                                <span class="text-gray-800 fw-bolder d-block fs-6">@orderDetail.SubAmount</span>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -126,6 +123,20 @@
                                         </table>
                                             }
                                         }
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <!--begin::Button-->
+                                        <a href="../../demo1/dist/apps/ecommerce/catalog/products.html" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+                                        <!--end::Button-->
+                                        <!--begin::Button-->
+                                        <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary" onclick="@(() => OnSubmit())">
+                                            <span class="indicator-label">Save Changes</span>
+                                            <span class="indicator-progress">
+                                                Please wait...
+                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                            </span>
+                                        </button>
+                                        <!--end::Button-->
                                     </div>
                                     <!--end::Table-->
                                 </div>
@@ -194,25 +205,36 @@
 @code {
     public List<ProductVm>? ProductsList = new List<ProductVm>();
     [CascadingParameter] public IModalService Modal { get; set; }
+    [Parameter] public string BranchId { get; set; }
     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
     private List<Category> categories = new List<Category>();
     private ApplicationUser User;
-    private Order order;
+    private OrderRequest order;
     protected override async Task OnParametersSetAsync()
     {
-        if (order == null) {
-            order = new Order();
+        order = GbParameter.GbParameter.Order;
+        if (order == null)
+        {
+            order = new OrderRequest();
+            order.OrderItems = new List<OrderItem>();
             GbParameter.GbParameter.Order = order;
         }
+
         var response = await userServices.GetUserInfo();
         User = response.Data;
+
+        foreach(var or in order.OrderItems){
+            var res = await productServices.GetProductById(or.ProductID);
+            or.NameProduct = res.Data.Name;
+        }
         await Get(1);
 
         base.OnParametersSet();
     }
     public async Task Get(int pageNumber)
     {
-        var response = await productServices.GetProducts(true, pagination.pageSize, pageNumber);
+        var response = await productServices.GetProductsByBranch(true, pagination.pageSize, pageNumber, User.BranchId);
+        //var response = await productServices.GetProducts(true, pagination.pageSize, pageNumber);
         pagination.PageNumber = response.Data.CurrentPage;
         ProductsList = response.Data.Items.ToList();
         pagination.totalPage = response.Data.TotalPages;
@@ -226,6 +248,14 @@
     }
     public async void CreateOrder()
     {
-        order = new Order();
+        order = new OrderRequest();
+        order.OrderItems = new List<OrderItem>();
+        GbParameter.GbParameter.Order = order;
+    }
+    public async void OnSubmit()
+    {
+
+        navigationManager.NavigateTo($"/invoice");
+
     }
 }

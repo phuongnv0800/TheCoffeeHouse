@@ -61,7 +61,17 @@
 
         if (user.Identity.IsAuthenticated)
         {
-            navigationManager.NavigateTo("/admin-dashboard", true);
+            if (GbParameter.GbParameter.claims != null)
+            {
+                if (GbParameter.GbParameter.claims.FirstOrDefault(x => x.Value == "Branch") != null)
+                {
+                    navigationManager.NavigateTo("/admin-dashboard", forceLoad: true);
+                }
+                else
+                {
+                    navigationManager.NavigateTo("/dashboard", forceLoad: true);
+                }
+            }
         }
     }
     private async Task HandleLogin()
@@ -73,16 +83,18 @@
             var claims = authService.GetClaims();
             if (claims != null)
             {
-                if (claims.Where(x => x.Value.Contains("Branch")) != null)
+                if (claims.FirstOrDefault(x => x.Value == "Branch") != null)
                 {
                     navigationManager.NavigateTo("/admin-dashboard", forceLoad: true);
                     GbParameter.GbParameter.IsLogin = true;
+                    GbParameter.GbParameter.claims = claims;
                     return;
                 }
                 else
                 {
                     navigationManager.NavigateTo("/dashboard", forceLoad: true);
                     GbParameter.GbParameter.IsLogin = true;
+                    GbParameter.GbParameter.claims = claims;
                     return;
                 }
             }
