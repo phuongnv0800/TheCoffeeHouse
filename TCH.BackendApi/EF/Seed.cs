@@ -14,7 +14,6 @@ public static class Seed
         {
             return; // DB has been seeded
         }
-       
         var units = new Measure[]
         {
             new Measure()
@@ -23,7 +22,7 @@ public static class Seed
                 Name = "Tấn",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
-                Code = "TAN", 
+                Code = "TAN",
                 MeasureType = MeasureType.Mass,
                 ConversionFactor = 1000000,
                 Description = "Quy đổi từ Tấn sang gam"
@@ -99,7 +98,7 @@ public static class Seed
         {
             context.Measures.Add(item);
         }
-        
+
         var categories = new Category[]
         {
             new Category()
@@ -307,15 +306,13 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Latte Táo Lê Quế Nóng",
+                Name = "Latte Táo Lê Quế Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 58000,
                 IsAvailable = true,
-
-
                 Price = 58000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
                 LinkImage = "/products/latte-tao-le-que-nong.webp",
@@ -324,7 +321,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Latte Táo Lê Quế Đá",
+                Name = "Latte Táo Lê Quế Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
@@ -339,7 +336,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Latte Táo Lê Quế Chai Fresh 500ml",
+                Name = "Latte Táo Lê Quế Chai Fresh 500ml",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
@@ -371,82 +368,66 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Mocha Đá",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 49000,
                 IsAvailable = true,
-
-
                 Price = 49000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/mocha-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Espresso Nóng",
-
+                Name = "Espresso Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 40000,
                 IsAvailable = true,
-
-
                 Price = 40000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/espressonong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Espresso Đá",
-
+                Name = "Espresso Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 45000,
                 IsAvailable = true,
-
-
                 Price = 45000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/cfdenda-espressoda.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Cappuccino Nóng",
-
+                Name = "Cappuccino Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 49000,
                 IsAvailable = true,
-
-
                 Price = 49000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/cappuccino.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Cappuccino Đá",
+                Name = "Cappuccino Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
@@ -461,7 +442,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Americano Nóng",
+                Name = "Americano Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
@@ -476,501 +457,397 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Latte Đá",
-
+                Name = "Latte Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 49000,
                 IsAvailable = true,
-
-
                 Price = 49000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/latte-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Caramel Macchiato Nóng",
-
+                Name = "Caramel Macchiato Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 49000,
                 IsAvailable = true,
-
-
                 Price = 49000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/caramel-macchiato-nong.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Caramel Macchiato Đá",
-
+                Name = "Caramel Macchiato Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 49000,
                 IsAvailable = true,
-
-
                 Price = 49000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/caramel-macchiato-da.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Latte Nóng",
-
+                Name = "Latte Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 49000,
                 IsAvailable = true,
-
-
                 Price = 49000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/latte.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Americano Đá",
-
+                Name = "Americano Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 40000,
                 IsAvailable = true,
-
-
                 Price = 40000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/latte.webp",
                 CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Bạc Sỉu Đá",
-
+                Name = "Bạc Sỉu Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 29000,
                 IsAvailable = true,
-
-
                 Price = 29000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/bac-siu-da.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Bạc Sỉu Nóng",
-
+                Name = "Bạc Sỉu Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 35000,
                 IsAvailable = true,
-
-
                 Price = 35000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/bac-siu-nong.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Cà Phê Đen Đá",
-
+                Name = "Cà Phê Đen Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 29000,
                 IsAvailable = true,
-
-
                 Price = 29000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/cfdenda-espressoda.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Cà Phê Đen Nóng",
-
+                Name = "Cà Phê Đen Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 35000,
                 IsAvailable = true,
-
-
                 Price = 35000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/ca-phe-den-nong.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Cà Phê Sữa Đá",
-
+                Name = "Cà Phê Sữa Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 29000,
                 IsAvailable = true,
-
-
                 Price = 29000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/ca-phe-sua-da.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Cà Phê Sữa Đá Chai Fresh 250ml",
-
+                Name = "Cà Phê Sữa Đá Chai Fresh 250ml",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 78000,
                 IsAvailable = true,
-
-
                 Price = 78000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/bottlecfsd.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Cà Phê Sữa Nóng",
-
+                Name = "Cà Phê Sữa Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 78000,
                 IsAvailable = true,
-
-
                 Price = 78000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/ca-phe-sua-nong.webp",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Cold Brew Sữa Tươi",
-
+                Name = "Cold Brew Sữa Tươi",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 45000,
                 IsAvailable = true,
-
-
                 Price = 45000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/cold-brew-sua-tuoi.webp",
                 CategoryID = "0e91fcb8-fa59-4a86-9af9-e608d3175caa ",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Cold Brew Truyền Thống",
-
+                Name = "Cold Brew Truyền Thống",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 45000,
                 IsAvailable = true,
-
-
                 Price = 45000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/classic-cold-brew.webp",
                 CategoryID = "0e91fcb8-fa59-4a86-9af9-e608d3175caa ",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Dưa Đào Sung Túc",
-
+                Name = "Trà Dưa Đào Sung Túc",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 58000,
                 IsAvailable = true,
-
-
                 Price = 58000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/tra-dao-dua-luoi.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Sen Nhãn Sum Vầy",
-
+                Name = "Trà Sen Nhãn Sum Vầy",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 58000,
                 IsAvailable = true,
-
-
                 Price = 58000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/tra-sen-nhan.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Long Nhãn Hạt Chia",
-
+                Name = "Trà Long Nhãn Hạt Chia",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 45000,
                 IsAvailable = true,
-
-
                 Price = 45000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/tra-nhan-da.webp ",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Long Nhãn Hạt Chia Nóng",
-
+                Name = "Trà Long Nhãn Hạt Chia Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 51000,
                 IsAvailable = true,
-
-
                 Price = 51000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/nhan-hat-chia--nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Hạt Sen Đá",
-
+                Name = "Trà Hạt Sen Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 45000,
                 IsAvailable = true,
-
-
                 Price = 45000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/tra-sen.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Hạt Sen Nóng",
-
+                Name = "Trà Hạt Sen Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 51000,
                 IsAvailable = true,
-
-
                 Price = 51000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/tra-sen-nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Đào Cam Sả Đá",
-
+                Name = "Trà Đào Cam Sả Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 45000,
                 IsAvailable = true,
-
-
                 Price = 45000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/tra-dao-cam-xa.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Đào Cam Sả Nóng",
-
+                Name = "Trà Đào Cam Sả Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 51000,
                 IsAvailable = true,
-
-
                 Price = 52000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/tdcs-nong.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Đào Cam Sả Chai Fresh 500ml",
-
+                Name = "Trà Đào Cam Sả Chai Fresh 500ml",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 107000,
                 IsAvailable = true,
-
-
                 Price = 107000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/bottle_tradao.webp",
                 CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Caramel Macchiato Đá",
-
+                Name = "Caramel Macchiato Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 49000,
                 IsAvailable = true,
-
-
                 Price = 49000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/caramel-macchiato-da.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Hồng Trà Latte Macchiato",
-
+                Name = "Hồng Trà Latte Macchiato",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 54000,
                 IsAvailable = true,
-
-
                 Price = 54000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/hong-tra-latte.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Hồng Trà Sữa Nóng",
-
+                Name = "Hồng Trà Sữa Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 54000,
                 IsAvailable = true,
-
-
                 Price = 54000,
                 Description = "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
                 LinkImage = "/products/hong-tra-sua-nong.webp",
                 CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Hồng Trà Sữa Trân Châu",
+                Name = "Hồng Trà Sữa Trân Châu",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -989,7 +866,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Latte Táo Lê Quế Đá",
+                Name = "Latte Táo Lê Quế Đá",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1008,7 +885,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Đen Macchiato",
+                Name = "Trà Đen Macchiato",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1027,7 +904,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Sữa Mắc Ca Trân Châu Trắng",
+                Name = "Trà Sữa Mắc Ca Trân Châu Trắng",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1046,7 +923,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà sữa Masala Chai Nóng",
+                Name = "Trà sữa Masala Chai Nóng",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1065,7 +942,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà sữa Masala Chai Trân Châu Chai Fresh 500ml",
+                Name = "Trà sữa Masala Chai Trân Châu Chai Fresh 500ml",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1084,7 +961,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà sữa Masala Chai Trân Châu Đá",
+                Name = "Trà sữa Masala Chai Trân Châu Đá",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1103,7 +980,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Sữa Oolong Nướng Nóng",
+                Name = "Trà Sữa Oolong Nướng Nóng",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1122,7 +999,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà Sữa Oolong Nướng Trân Châu",
+                Name = "Trà Sữa Oolong Nướng Trân Châu",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1141,7 +1018,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Trà sữa Oolong Nướng Trân Châu Chai 500ml",
+                Name = "Trà sữa Oolong Nướng Trân Châu Chai 500ml",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1160,7 +1037,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Cà Phê Đá Xay",
+                Name = "Cà Phê Đá Xay",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1179,7 +1056,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Chanh Sả Đá Xay",
+                Name = "Chanh Sả Đá Xay",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1195,7 +1072,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Chocolate Đá Xay",
+                Name = "Chocolate Đá Xay",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
@@ -1210,7 +1087,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Cookie Đá Xay",
+                Name = "Cookie Đá Xay",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
@@ -1225,7 +1102,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Đào Việt Quất Đá Xay",
+                Name = "Đào Việt Quất Đá Xay",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1241,7 +1118,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Matcha Đá Xay",
+                Name = "Matcha Đá Xay",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
@@ -1256,7 +1133,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Sinh Tố Việt Quất",
+                Name = "Sinh Tố Việt Quất",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
@@ -1271,7 +1148,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Chocolate Đá",
+                Name = "Chocolate Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
@@ -1286,7 +1163,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Chocolate Đá Xay",
+                Name = "Chocolate Đá Xay",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1305,7 +1182,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Chocolate Nóng",
+                Name = "Chocolate Nóng",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1324,7 +1201,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Matcha Latte Đá",
+                Name = "Matcha Latte Đá",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1343,7 +1220,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Matcha Latte Nóng",
+                Name = "Matcha Latte Nóng",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1362,7 +1239,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Bánh Mì Que Pate",
+                Name = "Bánh Mì Que Pate",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1381,7 +1258,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Bánh Mì Que Pate Cay",
+                Name = "Bánh Mì Que Pate Cay",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1400,7 +1277,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Bánh Mì Thịt Nguội",
+                Name = "Bánh Mì Thịt Nguội",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1419,7 +1296,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Chà Bông Phô Mai",
+                Name = "Chà Bông Phô Mai",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1438,7 +1315,7 @@ public static class Seed
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = " Croissant Trứng Muối",
+                Name = "Croissant Trứng Muối",
 
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -2563,6 +2440,25 @@ public static class Seed
             context.Beans.Add(item);
         }
 
+        for (var i = 0; i < 100; i++)
+        {
+            var customer = new Customer()
+            {
+                ID = Guid.NewGuid().ToString(),
+                FullName = "Khách hàng " + i,
+                Phone = "09999999999",
+                Email = "custormer" + i + "@gmail.com",
+                Address = "Ngô Quyền, Hải Phòng",
+                Gender = Gender.Female,
+                DateOfBirth = DateTime.Now,
+                MemberID = "CODEKH" + i,
+                Point = 0,
+                BeanID = memberTypes[0].ID,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+            };
+            context.Customers.Add(customer);
+        }
 
         var materialTypes = new MaterialType[]
         {
@@ -2879,7 +2775,110 @@ public static class Seed
         {
             context.Materials.Add(item);
         }
+        var promotions = new Promotion[]
+        {
+            new Promotion()
+            {
+                ID = Guid.NewGuid().ToString(),
+                Name ="Giảm giá 10K cho hoá đơn lớn hơn 100K",
+                Code = "GIAM10K",
+                StartDate =DateTime.Now,
+                EndDate = DateTime.Now.AddDays(30),
+                CreateDate = DateTime.Now,
+                PromotionType = PromotionType.SumAmount,
+                PromotionObject = PromotionObject.Invoice,
+                ReduceAmount = 10000,
+                ReducePercent = 0,
+                Status = 1,
+                Description="Giảm giá 10K cho hoá đơn lớn hơn 100K trong sự kiện mùa hè",
+                Quantity = 999,
+            }
+        };
+        foreach (var item in promotions)
+        {
+            context.Promotions.Add(item);
+        }
+        var recipes = new RecipeDetail[]
+        {
+            new RecipeDetail()
+            {
+                ProductID = products[15].ID,
+                MaterialID=materials[5].ID,
+                SizeID = sizes[0].ID,
+                Weight = 30,
+                Unit = "Gam",
+                StandardUnitType = StandardUnitType.g,
+            },
+            new RecipeDetail()
+            {
+                ProductID = products[15].ID,
+                MaterialID=materials[6].ID,
+                SizeID = sizes[0].ID,
+                Weight = 20,
+                Unit = "Mililit",
+                StandardUnitType = StandardUnitType.ml,
+            },
+            new RecipeDetail()
+            {
+                ProductID = products[15].ID,
+                MaterialID=materials[10].ID,
+                SizeID = sizes[0].ID,
+                Weight = 100,
+                Unit = "Mililit",
+                StandardUnitType = StandardUnitType.ml,
+            },
+        };
+        foreach (var item in recipes)
+        {
+            context.RecipeDetails.Add(item);
+        }
 
+        var order = new Order()
+        {
+            ID = Guid.NewGuid().ToString(),
+            TableNum = 15,
+            Cashier = "Nam Phuong",
+            Code = "ORDER.N0" + DateTime.Now.Minute + "-" + DateTime.Now.Day,
+            SubAmount = 68000,
+            TotalAmount = 58000,
+            Status = OrderStatus.Open,
+            OrderType = OrderType.InPlace,
+            ReducePromotion = 10000,
+            ReduceAmount = 0,
+            CustomerPut = 68000,
+            CustomerReceive = 10000,
+            ShippingFee = 0,
+            CreateDate = DateTime.Now,
+            Description = "Đơn hàng ngày -" + DateTime.Now.ToShortDateString(),
+            CancellationReason = null,
+            UserCreateID = null,
+            PaymentType = PaymentType.Credit,
+            CustomerID = null,
+            BranchID = branches[0].ID,
+        };
+        context.Orders.Add(order);
+        var orderDetail = new OrderDetail()
+        {
+            OrderID = order.ID,
+            Quantity = 1,
+            PriceProduct = 58000,
+            Description = "Mô tả",
+            SugarType = SugarType.OneHundredPercent,
+            IcedType = IcedType.OneHundredPercent,
+            PriceSize = 0,
+            SizeID = sizes[0].ID,
+            ProductID = products[0].ID
+        };
+        context.OrderDetails.Add(orderDetail);
+        context.OrderToppingDetails.Add(new OrderToppingDetail()
+        {
+            ToppingID = toppings[0].ID,
+            OrderID = order.ID,
+            ProductID = products[0].ID,
+            SubPrice = 10000,
+            Name = toppings[0].Name,
+            Quantity = 1,
+        });
         var roleAdmin = new AppRole()
         {
             Id = Guid.NewGuid().ToString(),
