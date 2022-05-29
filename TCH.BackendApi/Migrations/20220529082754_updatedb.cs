@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TCH.BackendApi.Migrations
 {
-    public partial class adddb : Migration
+    public partial class updatedb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -337,7 +337,7 @@ namespace TCH.BackendApi.Migrations
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    MemberID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MemberID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Point = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     ConversionRate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -346,8 +346,6 @@ namespace TCH.BackendApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.ID);
-                    table.UniqueConstraint("AK_Customers_MemberID", x => x.MemberID);
-                    table.UniqueConstraint("AK_Customers_Phone", x => x.Phone);
                     table.ForeignKey(
                         name: "FK_Customers_MemberTypes_BeanID",
                         column: x => x.BeanID,
@@ -790,7 +788,8 @@ namespace TCH.BackendApi.Migrations
                     SizeID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MaterialID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
-                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StandardUnitType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -2446,7 +2446,7 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 FullName = "Khách hàng " + i,
-                Phone = "09999999999",
+                Phone = "0965654078",
                 Email = "custormer" + i + "@gmail.com",
                 Address = "Ngô Quyền, Hải Phòng",
                 Gender = Gender.Female,
@@ -2870,15 +2870,17 @@ public static class Seed
             ProductID = products[0].ID
         };
         context.OrderDetails.Add(orderDetail);
-        context.OrderToppingDetails.Add(new OrderToppingDetail()
+        var orderToppingDetail = new OrderToppingDetail()
         {
             ToppingID = toppings[0].ID,
             OrderID = order.ID,
             ProductID = products[0].ID,
+            OrderDetail = orderDetail,
             SubPrice = 10000,
             Name = toppings[0].Name,
             Quantity = 1,
-        });
+        };
+        context.OrderToppingDetails.Add(orderToppingDetail);
         var roleAdmin = new AppRole()
         {
             Id = Guid.NewGuid().ToString(),

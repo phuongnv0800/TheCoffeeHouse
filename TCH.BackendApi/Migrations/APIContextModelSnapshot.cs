@@ -441,7 +441,7 @@ namespace TCH.BackendApi.Migrations
 
                     b.Property<string>("MemberID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -457,10 +457,6 @@ namespace TCH.BackendApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
-
-                    b.HasAlternateKey("MemberID");
-
-                    b.HasAlternateKey("Phone");
 
                     b.HasIndex("BeanID");
 

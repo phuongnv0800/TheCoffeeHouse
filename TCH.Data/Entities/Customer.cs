@@ -9,10 +9,6 @@ public class Customer
 
     public string? FullName { get; set; }
 
-    [MaxLength(10)]
-    [Required]
-    [RegularExpression(@"(84|0[3|5|7|8|9])+([0-9]{8})\b",
-        ErrorMessage = "Định dạng số điện thoại sai")]
     public string Phone { get; set; }
     public string? Email { get; set; }
     [MaxLength(255)]
