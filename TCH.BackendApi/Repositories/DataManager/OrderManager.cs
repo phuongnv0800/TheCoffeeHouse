@@ -92,7 +92,7 @@ public class OrderManager : IOrderRepository, IDisposable
             ID = Guid.NewGuid().ToString(),
             TableNum = request.TableNum,
             Cashier = request.Cashier,
-            Code = "",
+            Code = "ORDER.N0"+ DateTime.Now.Minute + "-"+ DateTime.Now.Day,
             SubAmount = subTotal,
             TotalAmount = subTotal - (request.ReducePromotion + request.ReduceAmount),
             Status = request.OrderType == OrderType.Shipping ? OrderStatus.Open : OrderStatus.Finished,

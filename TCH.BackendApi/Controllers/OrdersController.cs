@@ -15,7 +15,6 @@ namespace TCH.BackendApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class OrdersController : ControllerBase
 {
     private readonly IOrderRepository _repository;
@@ -108,6 +107,7 @@ public class OrdersController : ControllerBase
     }
 
 
+    [AllowAnonymous]
     [HttpGet("print/{ID}")]
     public async Task<IActionResult> Print(string ID)
     {
@@ -177,6 +177,7 @@ public class OrdersController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpPost("status/{orderID}/{status}")]
     public async Task<IActionResult> UpdateStatus(string orderID, OrderStatus status)
     {
@@ -200,6 +201,8 @@ public class OrdersController : ControllerBase
         }
     }
 
+
+    [Authorize(Roles = Permission.Branch + Permission.Manage)]
     [HttpDelete("{orderID}")]
     public async Task<IActionResult> Delete(string orderID)
     {
@@ -219,6 +222,7 @@ public class OrdersController : ControllerBase
         }
     }
 
+    [Authorize(Roles = Permission.Branch + Permission.Manage)]
     [HttpPut("{orderId}")]
     //call api with httpClient thi dung FromBody
     public async Task<IActionResult> Update([FromBody] OrderRequest request)

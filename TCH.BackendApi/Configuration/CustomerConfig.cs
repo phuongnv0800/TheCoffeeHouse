@@ -10,8 +10,6 @@ public class CustomerConfig : IEntityTypeConfiguration<Customer>
     {
         builder.ToTable("Customers");
         builder.HasKey(x => x.ID);
-        builder.HasAlternateKey(x => x.Phone);
-        builder.HasAlternateKey(x => x.MemberID);
         builder.Property(x => x.Phone).IsRequired().HasMaxLength(10);
         builder.Property(x => x.FullName).IsRequired().HasMaxLength(255);
         builder.Property(x => x.Email).HasMaxLength(255);

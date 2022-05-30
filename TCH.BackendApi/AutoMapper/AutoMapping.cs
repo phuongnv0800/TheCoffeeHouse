@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using TCH.Data.Entities;
+using TCH.ViewModel.RequestModel;
 using TCH.ViewModel.SubModels;
 
 namespace TCH.BackendApi.AutoMapper;
@@ -28,6 +29,8 @@ public class AutoMapping : Profile
         CreateMap<ExchangeUnitRequest, UnitConversion>();
 
 
+        CreateMap<RecipeRequest, RecipeDetail>();
+        CreateMap<StockRequest, StockMaterial>();
         CreateMap<BranchRequest, Branch>();
         CreateMap<PromotionRequest, Promotion>();
     }

@@ -12,8 +12,8 @@ using TCH.BackendApi.EF;
 namespace TCH.BackendApi.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20220528092152_add-db")]
-    partial class adddb
+    [Migration("20220529082754_updatedb")]
+    partial class updatedb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -443,7 +443,7 @@ namespace TCH.BackendApi.Migrations
 
                     b.Property<string>("MemberID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -459,10 +459,6 @@ namespace TCH.BackendApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
-
-                    b.HasAlternateKey("MemberID");
-
-                    b.HasAlternateKey("Phone");
 
                     b.HasIndex("BeanID");
 
@@ -1022,6 +1018,9 @@ namespace TCH.BackendApi.Migrations
 
                     b.Property<string>("SizeID")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("StandardUnitType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Unit")
                         .IsRequired()

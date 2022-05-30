@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using TCH.Utilities.Enum;
 
 namespace TCH.Data.Entities;
 
@@ -22,4 +23,5 @@ public class RecipeDetail
     public double Weight { get; set; }
 
     public string Unit { get; set; }
+    public StandardUnitType StandardUnitType { get; set; }
 }
