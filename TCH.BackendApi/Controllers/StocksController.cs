@@ -43,7 +43,7 @@ public class StocksController : ControllerBase
         }
     }
     [Authorize(Roles = Permission.Branch)]
-    [HttpGet("get-all/{branchId}")]
+    [HttpGet("get-all")]
     public async Task<IActionResult> GetAll([FromQuery] Search search)
     {
         try

@@ -149,6 +149,12 @@ app.UseStaticFiles(new StaticFileOptions
            Path.Combine(builder.Environment.ContentRootPath, "Uploads")),
     RequestPath = "/Uploads"
 });
+app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(Directory.GetCurrentDirectory(), @"Uploads")),
+    RequestPath = new PathString("/Uploads")
+});
 //app.UseStaticFiles();
 app.UseCors("CorsPolicy");
 app.UseRouting();
