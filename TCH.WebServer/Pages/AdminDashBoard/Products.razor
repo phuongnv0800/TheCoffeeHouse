@@ -74,7 +74,7 @@
                                     {
                                         foreach (var product in ProductsList)
                                         {
-                                            string fileImage = "http://tchhost.somee.com/uploads" + product.LinkImage;
+                                            string fileImage = "http://www.tchhost.somee.com/uploads" + product.LinkImage;
                                             string href = "/products/" + product.ID.ToString();
                                             <tr class="odd">
                                                 <td>
@@ -84,7 +84,8 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
-                                                        <img height="40" width="40" src="@fileImage" alt="">
+                                                        @*<img height="40" width="40" src="@fileImage" >*@
+                                                        <img src="http://www.tchhost.somee.com/uploads/products/oolong-nuong-nong.webp" height="40" width="40">
                                                         <div class="ms-5">
                                                             <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
                                                                 @product.Name
