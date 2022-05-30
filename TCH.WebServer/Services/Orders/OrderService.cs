@@ -5,12 +5,13 @@ using TCH.ViewModel.SubModels;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Text;
+using System.Globalization;
 
 namespace TCH.WebServer.Services.Orders
 {
     public interface IOrderService
     {
-        Task<ResponseLogin<PagedList<Order>>> GetAllOrders(string orderId);
+        Task<ResponseLogin<PagedList<Order>>> GetAllOrders(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<Order>> AddOrder(OrderRequest branch);
         Task<ResponseLogin<Order>> GetOrderById(string id);
         Task<ResponseLogin<Order>> UpdateOrder(OrderRequest branch);
@@ -94,9 +95,15 @@ namespace TCH.WebServer.Services.Orders
                 throw;
             }
         }
-        public async Task<ResponseLogin<PagedList<Order>>> GetAllOrders(string orderId)
+        public async Task<ResponseLogin<PagedList<Order>>> GetAllOrders(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate)
         {
-            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Order>>>($"/api/Orders/{orderId}");
+            CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+            string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Order>>>($"/api/Orders/?IsPging=" + IsPaging.ToString()
+                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate
+                    + toDate);
             if (response.Result != 1)
             {
                 return null;

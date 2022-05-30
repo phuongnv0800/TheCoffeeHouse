@@ -1,4 +1,4 @@
-﻿@page "/reports-liquid"
+﻿@page "/orders"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -8,18 +8,19 @@
 @using TCH.Data.Entities
 @using TCH.WebServer.Models
 @using TCH.WebServer.Models.Pagination
+@using TCH.WebServer.Services.Orders
 @using TCH.WebServer.Services.Reports
 @using TCH.WebServer.Services.Users
 
 @inject HttpClient httpClient
 @inject ILocalStorageService localStorage;
-@inject IReportService reportService;
+@inject IOrderService orderService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
 @inject IJSRuntime jsRuntime;
 @attribute [Authorize]
 
-    <div class="page d-flex flex-row flex-column-fluid">
+<div class="page d-flex flex-row flex-column-fluid">
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
         <TCH.WebServer.Shared.Header.Header></TCH.WebServer.Shared.Header.Header>
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -83,7 +84,7 @@
                                                     <div class="d-flex align-items-center">
                                                         <div class="ms-5">
                                                             <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                @product.Name
+                                                                @product.Code
                                                             </a>
                                                             <div class="text-muted fs-7 fw-bolder">@product.BranchID</div>
                                                         </div>
@@ -170,7 +171,7 @@
 
 
 @code {
-    public List<Report>? ProductsList = new List<Report>();
+    public List<Order>? ProductsList = new List<Order>();
     private string? token;
     public string Name;
     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
@@ -181,7 +182,8 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        navigationManager.NavigateTo("reports-liquid");
+        dateRequest = new DateRequest();
+        navigationManager.NavigateTo("orders");
         var response = await userServices.GetUserInfo();
         User = response.Data;
         await Get(1);
@@ -189,14 +191,14 @@
     }
     public async Task Get(int pageNumber)
     {
-        var response = await reportService.GetAllLiquid(true, pagination.pageSize, pageNumber,dateRequest.FromDate, dateRequest.ToDate);
+        var response = await orderService.GetAllOrders(true, pagination.pageSize, pageNumber, dateRequest.FromDate, dateRequest.ToDate);
         pagination.PageNumber = response.Data.CurrentPage;
         ProductsList = response.Data.Items.ToList();
         pagination.totalPage = response.Data.TotalPages;
     }
     public async void Delete(string id)
     {
-        await reportService.DeleteLiquid(id);
+        await orderService.DeleteOrder(id);
     }
     public async void Change(int link)
     {
@@ -217,3 +219,4 @@
         public DateTime? ToDate { get; set; }
     }
 }
+

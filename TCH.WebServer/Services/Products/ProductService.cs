@@ -118,12 +118,7 @@ namespace TCH.WebServer.Services.Products
             }
         }
 
-        public Task<ProductVm> GetProductByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<ResponseLogin<PagedList<ProductVm>>> GetProducts(bool IsPaging, int pageSize, int pageNumber)
+        public async Task<ResponseLogin<PagedList<ProductVm>>> GetProducts(bool IsPaging, int pageSize, int pageNumber, string name)
         {
             try
             {
@@ -131,7 +126,7 @@ namespace TCH.WebServer.Services.Products
                 _httpClient.DefaultRequestHeaders.Accept.Clear();
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await _httpClient.GetFromJsonAsync<ResponseLogin<PagedList<ProductVm>>>("/api/Products?IsPging=" + IsPaging.ToString() 
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString());
+                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&Name=" + name);
                 if (response.Result != 1)
                 {
                     return null;
@@ -144,7 +139,7 @@ namespace TCH.WebServer.Services.Products
             }
         }
 
-        public async Task<ResponseLogin<PagedList<ProductVm>>> GetProductsByBranch(bool IsPaging, int pageSize, int pageNumber, string branchId)
+        public async Task<ResponseLogin<PagedList<ProductVm>>> GetProductsByBranch(bool IsPaging, int pageSize, int pageNumber, string branchId, string name)
         {
             try
             {
@@ -152,7 +147,7 @@ namespace TCH.WebServer.Services.Products
                 _httpClient.DefaultRequestHeaders.Accept.Clear();
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await _httpClient.GetFromJsonAsync<ResponseLogin<PagedList<ProductVm>>>($"/api/Products/branch/{branchId}?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString());
+                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&Name=" + name);
                 if (response.Result != 1)
                 {
                     return null;

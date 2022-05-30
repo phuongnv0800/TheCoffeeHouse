@@ -9,7 +9,7 @@ namespace TCH.WebServer.Services.Brands
 {
     public interface IBrandService
     {
-        Task<ResponseLogin<PagedList<Branch>>> GetAllBranchs();
+        Task<ResponseLogin<PagedList<Branch>>> GetAllBranchs(string name);
         Task<ResponseLogin<Branch>> AddBranch(MultipartFormDataContent branch);
         Task<ResponseLogin<Branch>> GetBranchById(string id);
         Task<ResponseLogin<Branch>> Update(MultipartFormDataContent branch);
@@ -93,9 +93,9 @@ namespace TCH.WebServer.Services.Brands
                 throw;
             }
         }
-        public async Task<ResponseLogin<PagedList<Branch>>> GetAllBranchs()
+        public async Task<ResponseLogin<PagedList<Branch>>> GetAllBranchs(string name)
         {
-            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Branch>>>("/api/Branchs");
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Branch>>>("/api/Branchs?Name="+name);
             if (response.Result != 1)
             {
                 return null;

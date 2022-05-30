@@ -152,7 +152,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        var response = await _branchService.GetAllBranchs();
+        
         if (string.IsNullOrEmpty(BranchId))
         {
             editBranch = new Branch();
