@@ -1,4 +1,5 @@
 ﻿@page "/user"
+@using TCH.Data.Entities
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @inject PageContainer _page
 @inject IToastService _toastService
@@ -101,7 +102,7 @@
 </div>
 
 @code {
-    private List<UserVm> users = null;
+    private List<AppUser> users = null;
     private int pageSize = 10;
     private int total = 0;
     private string searchContent;
@@ -117,7 +118,7 @@
     {
         _page.Config("Quản lý tài khoản");
 
-        users = new List<UserVm>();
+        users = new List<AppUser>();
         total = 0;
         searchContent = string.Empty;
     }
