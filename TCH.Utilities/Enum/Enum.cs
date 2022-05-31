@@ -1,4 +1,6 @@
-﻿namespace TCH.Utilities.Enum;
+﻿using System.ComponentModel;
+
+namespace TCH.Utilities.Enum;
 
 public enum Status
 {
@@ -39,19 +41,29 @@ public enum Gender
 
 public enum SugarType
 {
+    [Description("0%")]
     ZeroPercent = 1,
+    [Description("25%")]
     TwentyFivePercent = 2,
+    [Description("50%")]
     FiftyPercent = 3,
+    [Description("75%")]
     SeventyFivePercent = 4,
+    [Description("100%")]
     OneHundredPercent = 5,
 }
 
 public enum IcedType
 {
+    [Description("0%")]
     ZeroPercent = 1,
+    [Description("25%")]
     TwentyFivePercent = 2,
+    [Description("50%")]
     FiftyPercent = 3,
+    [Description("75%")]
     SeventyFivePercent = 4,
+    [Description("100%")]
     OneHundredPercent = 5,
 }
 

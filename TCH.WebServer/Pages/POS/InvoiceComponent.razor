@@ -98,12 +98,11 @@
                                                 <!--end::Table head-->
                                                 <!--begin::Table body-->
                                                 <tbody>
-                                                    <tr class="border-bottom border-bottom-dashed" data-kt-element="item">
-
                                                         @if (order != null && order.OrderItems != null)
                                                         {
                                                             foreach (var orderDetail in order.OrderItems)
                                                             {
+                                                                <tr class="border-bottom border-bottom-dashed" data-kt-element="item">
                                                                 <td class="pe-7">
                                                                     <input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="@orderDetail.NameProduct">
                                                                 </td>
@@ -113,9 +112,10 @@
                                                                 <td>
                                                                     <input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" value="@orderDetail.SubAmount" data-kt-element="price">
                                                                 </td>
+                                                                </tr>
                                                             }
                                                         }
-                                                    </tr>
+                                                    
                                                 </tbody>
                                                 <!--end::Table body-->
                                                 <!--begin::Table foot-->
@@ -203,13 +203,6 @@
                         <div class="card" data-kt-sticky="true" data-kt-sticky-name="invoice" data-kt-sticky-offset="{default: false, lg: '200px'}" data-kt-sticky-width="{lg: '250px', lg: '300px'}" data-kt-sticky-left="auto" data-kt-sticky-top="150px" data-kt-sticky-animation="false" data-kt-sticky-zindex="95" style="">
                             <!--begin::Card body-->
                             <div class="card-body p-10">
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bolder fs-6 text-gray-700">Currency</label>
-                                    <!--end::Label-->
-                                </div>
-                                <!--end::Input group-->
                                 <!--begin::Separator-->
                                 <div class="separator separator-dashed mb-8"></div>
                                 <!--end::Separator-->
