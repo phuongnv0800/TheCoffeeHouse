@@ -149,6 +149,41 @@ public class UserManager : IUserRepository, IDisposable
             Data = user,
         };
     }
+    public async Task<Respond<UserVm>> GetByIdVm(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        if (user == null)
+            return new Respond<UserVm>()
+            {
+                Result = 0,
+                Message = "Tài khoản không tồn tại",
+                Data = null,
+            };
+
+        var roles = await _userManager.GetRolesAsync(user);
+        var userVm = new UserVm()
+        {
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Id = user.Id,
+            DateOfBirth = user.DateOfBirth,
+            PhoneNumber = user.PhoneNumber,
+            UserName = user.UserName,
+            Gender = user.Gender,
+            Address = user.Address,
+            Roles = roles,
+        };
+       
+
+
+        return new Respond<UserVm>()
+        {
+            Result = 1,
+            Message = "Lấy thông tin thành công",
+            Data = userVm,
+        };
+    }
 
     public async Task<Respond<AppUser>> GetByUserName(string userName)
     {

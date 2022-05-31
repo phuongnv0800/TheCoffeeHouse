@@ -11,6 +11,7 @@ public interface IUserRepository
     Task<Respond<dynamic>> Authenicate(LoginRequest request);
 
     Task<Respond<AppUser>> GetById(string id);
+    Task<Respond<UserVm>> GetByIdVm(string id);
 
     Task<Respond<AppUser>> GetByUserName(string userName);
 

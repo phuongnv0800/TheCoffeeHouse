@@ -188,6 +188,25 @@ public class UsersController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    [HttpGet("user-by/{id}")]
+    public async Task<IActionResult> GetByIdVm(string id)
+    {
+        try
+        {
+            var user = await _repository.GetByIdVm(id);
+            return Ok(user);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
     [HttpGet("name/{userName}")]
     public async Task<IActionResult> GetByUserName(string userName)
     {

@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.WebUtilities;
+using TCH.Data.Entities;
 using TCH.Utilities.Paginations;
 using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;
@@ -11,9 +12,10 @@ public interface IUserApiClient
 {
     Task<MessageResult> Assign(string id, RoleAssignRequest request);
     Task<MessageResult> Delete(string id);
-    Task<Respond<PagedList<UserVm>>> GetAll(Search request);
-    Task<Respond<UserVm>> GetById(string id);
-    Task<Respond<UserVm>> GetByUserName(string userName);
+    Task<Respond<PagedList<AppUser>>> GetAll(Search request);
+    Task<Respond<AppUser>> GetById(string id);
+    Task<Respond<UserVm>> GetByIdVm(string id);
+    Task<Respond<AppUser>> GetByUserName(string userName);
     Task<MessageResult> Register(MultipartFormDataContent request);
     Task<MessageResult> Update(string id, MultipartFormDataContent request);
 }
@@ -24,7 +26,7 @@ public class UserApiClient : BaseApiClient, IUserApiClient
         : base(httpClient, localStorageService)
     {
     }
-    public async Task<Respond<PagedList<UserVm>>> GetAll(Search request)
+    public async Task<Respond<PagedList<AppUser>>> GetAll(Search request)
     {
         var queryStringParam = new Dictionary<string, string>
         {
@@ -36,10 +38,11 @@ public class UserApiClient : BaseApiClient, IUserApiClient
             queryStringParam.Add("name", request.Name);
         string url = QueryHelpers.AddQueryString($"/api/users/paging", queryStringParam);
 
-        return await GetFromJsonAsync<Respond<PagedList<UserVm>>>(url);
+        return await GetFromJsonAsync<Respond<PagedList<AppUser>>>(url);
     }
-    public async Task<Respond<UserVm>> GetById(string id) => await GetFromJsonAsync<Respond<UserVm>>($"/api/users/{id}");
-    public async Task<Respond<UserVm>> GetByUserName(string userName) => await GetFromJsonAsync<Respond<UserVm>>($"/api/users/name/{userName}");
+    public async Task<Respond<UserVm>> GetByIdVm(string id) => await GetFromJsonAsync<Respond<UserVm>>($"/api/users/user-by/{id}");
+    public async Task<Respond<AppUser>> GetById(string id) => await GetFromJsonAsync<Respond<AppUser>>($"/api/users/{id}");
+    public async Task<Respond<AppUser>> GetByUserName(string userName) => await GetFromJsonAsync<Respond<AppUser>>($"/api/users/name/{userName}");
     public async Task<MessageResult> Register(MultipartFormDataContent request) => await CreateAsync($"/api/users/create", request);
     public async Task<MessageResult> Update(string id, MultipartFormDataContent request) => await UpdateAsync($"/api/users/{id}", request);
 

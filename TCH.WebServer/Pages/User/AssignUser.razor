@@ -1,4 +1,5 @@
-﻿@inject IUserApiClient UserApiClient
+﻿@using TCH.Data.Entities
+@inject IUserApiClient UserApiClient
 @inject IRoleApiClient RoleApiClient
 @inject IToastService ToastService
 
@@ -57,7 +58,7 @@
 
         request = new RoleAssignRequest();
         var respondRole = await RoleApiClient.GetAll();
-        var respondUser = await UserApiClient.GetById(Id);
+        var respondUser = await UserApiClient.GetByIdVm(Id);
         if (respondRole.Result == 1)
         {
             roles = respondRole.Data;
