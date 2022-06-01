@@ -182,6 +182,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        dateRequest = new DateRequest();
         navigationManager.NavigateTo($"reports-liquid/{BranchId}");
         var response = await userServices.GetUserInfo();
         User = response.Data;

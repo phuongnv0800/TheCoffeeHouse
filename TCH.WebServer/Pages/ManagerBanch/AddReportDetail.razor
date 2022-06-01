@@ -3,11 +3,13 @@
 @using TCH.WebServer.Services.Materials
 @using TCH.WebServer.Services.Reports
 @using TCH.WebServer.Services.StockMaterials
+@using TCH.WebServer.Services.Units
 
 @inject IReportService reportService
 @inject IToastService toastService
 @inject IStockService stockService
 @inject IMaterialService materialService
+@inject IUnitService unitService
 
 <div class="modal fade show d-block" tabindex="-1" role="dialog">
     <div class="modal-backdrop fade show" @onclick="OnCancel"></div>
@@ -26,7 +28,7 @@
             </div>
             <div class="modal-body">
                 <div class="scroll-y me-n7 pe-7">
-                    @if (importDetail != null)
+                    @if (importDetail != null )
                     {
                         <EditForm Model="importDetail" OnInvalidSubmit="OnPick">
                             <div class="mb-10 fv-row fv-plugins-icon-container">
@@ -87,6 +89,19 @@
                             <div class="fv-plugins-message-container invalid-feedback">
                                 <ValidationMessage For="@(() => importDetail.PriceOfUnit)" />
                             </div>
+                            <!--end::Input-->
+                        </div>
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label">Đơn vị trọng lượng</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <InputSelect @bind-Value="importDetail.MeasureID" class="form-control form-control-solid ">
+                                @foreach (var mes in units)
+                                    {
+                                    <option value="@mes.ID">@mes.Name</option>
+                                    }
+                            </InputSelect>
                             <!--end::Input-->
                         </div>
                         <div class="mb-10 fv-row fv-plugins-icon-container">
@@ -153,6 +168,7 @@
 @code {
     private ImportDetail importDetail;
     private List<Material> materials;
+    private List<MeasuresVm> units;
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
 
     private async Task OnCancel() => await BlazoredModal.CancelAsync();
@@ -160,6 +176,8 @@
     {
         var response = await materialService.GetAllMaterials();
         materials = response.Data.Items;
+        var res = await unitService.GetAllMaterials();
+        units = res.Data.Items;
         importDetail = new ImportDetail()
             {
                 BeginDate = DateTime.Now,
