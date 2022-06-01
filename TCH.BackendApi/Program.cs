@@ -46,6 +46,7 @@ builder.Services.AddScoped<IOrderRepository, OrderManager>();
 builder.Services.AddScoped<ICustomerRepository, CustomerManager>();
 builder.Services.AddScoped<IPromotionRepository, PromotionManager>();
 builder.Services.AddScoped<IRecipeRepository, RecipeManager>();
+builder.Services.AddScoped<IReportRepository, ReportManager>();
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IStorageService, FileStorageService>();

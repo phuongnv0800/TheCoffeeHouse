@@ -414,7 +414,7 @@ public class ProductsController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet("topping")]
-    public async Task<IActionResult> GetAllTopping(string id)
+    public async Task<IActionResult> GetAllTopping()
     {
         try
         {

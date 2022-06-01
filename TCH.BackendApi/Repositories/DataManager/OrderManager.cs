@@ -114,6 +114,17 @@ public class OrderManager : IOrderRepository, IDisposable
         var orderDetails = new List<OrderDetail>();
         foreach (var item in request.OrderItems)
         {
+            var productDb = await _context.Products.FindAsync(item.ProductID);
+
+            var sizeDb = await _context.Products.FindAsync(item.SizeID);
+            if (productDb == null || sizeDb == null)
+            {
+                return new MessageResult()
+                {
+                    Result = 1,
+                    Message = "Không tìm thấy product hoặc size, hãy chọn lại",
+                };
+            }
             if (item.Toppings.Count > 0)
             {
                 var orderToppingDetail = new List<OrderToppingDetail>();
@@ -126,7 +137,7 @@ public class OrderManager : IOrderRepository, IDisposable
                         {
                             ToppingID = topping.ToppingID,
                             OrderID = orderRe.ID,
-                            ProductID = item.ProductID,
+                            ProductID = productDb.ID,
                             SubPrice = toppingDb.SubPrice,
                             Name = toppingDb.Name
                         });
@@ -134,6 +145,7 @@ public class OrderManager : IOrderRepository, IDisposable
 
                 }
                 await _context.OrderToppingDetails.AddRangeAsync(orderToppingDetail);
+                
                 var orderDetail = new OrderDetail()
                 {
                     OrderID = orderRe.ID,
@@ -143,8 +155,8 @@ public class OrderManager : IOrderRepository, IDisposable
                     SugarType = item.SugarType,
                     IcedType = item.IcedType,
                     PriceSize = item.PriceSize,
-                    SizeID = item.SizeID,
-                    ProductID = item.ProductID,
+                    SizeID = sizeDb.ID,
+                    ProductID = productDb.ID,
                     OrderToppingDetails = orderToppingDetail,
                 };
                 orderDetails.Add(orderDetail);
@@ -160,7 +172,7 @@ public class OrderManager : IOrderRepository, IDisposable
                     SugarType = item.SugarType,
                     PriceSize = item.PriceSize,
                     SizeID = item.SizeID,
-                    ProductID = item.ProductID,
+                    ProductID = productDb.ID,
                 });
             }
         }
