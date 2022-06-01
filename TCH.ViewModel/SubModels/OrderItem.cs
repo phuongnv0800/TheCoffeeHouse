@@ -12,7 +12,7 @@ public class OrderItem
     public IcedType IcedType { get; set; }
     public string? Description { get; set; }
     public string SizeID { get; set; }
-    public string NameProduct { get; set; }
+    public string? NameProduct { get; set; }
     public string ProductID { get; set; }
     public List<OrderToppingItem> Toppings { get; set; }
 }
