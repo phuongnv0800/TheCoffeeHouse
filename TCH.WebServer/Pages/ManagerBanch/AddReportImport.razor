@@ -233,8 +233,10 @@
                 if (response.Result == 1)
                 {
                     toastService.ShowSuccess("Cập nhật thành công");
+                    return;
                 }
             }
+            toastService.ShowError("Cập nhật thất bại");
         }
         catch (Exception ex)
         {
