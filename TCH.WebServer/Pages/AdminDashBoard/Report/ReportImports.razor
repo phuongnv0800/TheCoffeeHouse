@@ -182,6 +182,7 @@
     protected override async Task OnParametersSetAsync()
     {
         navigationManager.NavigateTo("reports-import");
+        dateRequest = new DateRequest();
         var response = await userServices.GetUserInfo();
         User = response.Data;
         await Get(1);

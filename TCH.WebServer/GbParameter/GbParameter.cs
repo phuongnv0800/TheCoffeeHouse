@@ -12,6 +12,8 @@ namespace TCH.WebServer.GbParameter
         public static string UserId {get;set;}
         public static string Token { get; set;}
         public static OrderRequest Order { get; set; }
+        public static ImportRequest ReportImport { get; set; }
+        public static ExportRequest ReportExport { get; set; }
         public static IEnumerable<Claim> claims { get; set; }
     }
 }

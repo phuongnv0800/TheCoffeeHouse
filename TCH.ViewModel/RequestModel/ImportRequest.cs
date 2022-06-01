@@ -19,5 +19,5 @@ public class ImportRequest
     public double TotalAmount { get; set; }
     public string BranchID { get; set; }
 
-    public List<ImportDetail> ReportDetails { get; set; }
+    public List<ImportDetail> ReportDetails { get; set; } = new List<ImportDetail>();
 }

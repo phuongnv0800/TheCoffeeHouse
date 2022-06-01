@@ -44,9 +44,11 @@
         {
             var userId = authState.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value;
             var result = await userApiClient.GetById(userId);
+            
             if(result.Result == 1)
             {
                 user = result.Data;
+                GbParameter.GbParameter.BranchId = result.Data.BranchID;
             }
             else
             {

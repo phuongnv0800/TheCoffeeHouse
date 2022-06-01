@@ -10,6 +10,7 @@ namespace TCH.WebServer.Services.Materials
     public interface IMaterialService
     {
         Task<ResponseLogin<PagedList<Material>>> GetMaterials(bool IsPaging, int pageSize, int pageNumber, string name);
+        Task<ResponseLogin<PagedList<Material>>> GetAllMaterials();
         Task<ResponseLogin<PagedList<MaterialType>>> GetMaterialTypes();
         Task<ResponseLogin<Material>> AddMaterial(MultipartFormDataContent material);
         Task<ResponseLogin<Material>> UpdateMaterial(MultipartFormDataContent material);
@@ -142,6 +143,23 @@ namespace TCH.WebServer.Services.Materials
             try
             {
                 var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<MaterialType>>>("/api/Materials/type");
+                if (response.Result != 1)
+                {
+                    return null;
+                }
+                return response;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<ResponseLogin<PagedList<Material>>> GetAllMaterials()
+        {
+            try
+            {
+                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Material>>>("/api/Materials");
                 if (response.Result != 1)
                 {
                     return null;

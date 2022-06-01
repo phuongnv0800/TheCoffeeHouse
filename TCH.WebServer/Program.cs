@@ -11,6 +11,7 @@ using TCH.WebServer.Services.Orders;
 using TCH.WebServer.Services.Promotions;
 using TCH.WebServer.Services.Reports;
 using VMU.Components;
+using TCH.WebServer.Services.StockMaterials;
 
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
@@ -35,6 +36,7 @@ builder.Services.AddTransient<IOrderDetailService, OrderDetailService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IPromotionService, PromotionService>();
 builder.Services.AddTransient<IReportService, ReportService>();
+builder.Services.AddTransient<IStockService, StockService>();
 
 builder.Services.AddScoped<IUserApiClient, UserApiClient>();
 builder.Services.AddScoped<IRoleApiClient, RoleApiClient>();

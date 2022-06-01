@@ -86,17 +86,13 @@
                 if (claims.FirstOrDefault(x => x.Value == "Branch") != null)
                 {
                     navigationManager.NavigateTo("/admin-dashboard", forceLoad: true);
-                    GbParameter.GbParameter.IsLogin = true;
-                    GbParameter.GbParameter.claims = claims;
-                    return;
                 }
-                else
+                else 
                 {
                     navigationManager.NavigateTo("/dashboard", forceLoad: true);
-                    GbParameter.GbParameter.IsLogin = true;
-                    GbParameter.GbParameter.claims = claims;
-                    return;
                 }
+                GbParameter.GbParameter.IsLogin = true;
+                GbParameter.GbParameter.claims = claims;
             }
 
         }
