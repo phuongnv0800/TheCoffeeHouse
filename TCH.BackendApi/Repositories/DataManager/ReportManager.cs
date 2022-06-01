@@ -50,8 +50,25 @@ public class ReportManager : IReportRepository
         };
         await _context.Reports.AddAsync(export);
         var stockDetails = await _context.StockMaterials.Where(x => x.BranchID == request.BranchID).ToListAsync();
+        if (stockDetails == null)
+        {
+            return new MessageResult()
+            {
+                Result = 0,
+                Message = "Không tim thấy thông tin kho theo chi nhánh",
+            };
+        }
         foreach (var item in request.ReportDetails)
         {
+            var measure = await _context.Measures.FindAsync(item.MeasureID);
+            if (measure == null)
+            {
+                return new MessageResult()
+                {
+                    Result = 0,
+                    Message = "Không tim thấy thông tin đơn vị",
+                };
+            }
             foreach (var stock in stockDetails)
             {
                 if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
@@ -74,6 +91,12 @@ public class ReportManager : IReportRepository
                 Quantity = item.Quantity,
                 Unit = item.Unit,
                 Status = item.Status,
+                IsDelete = false,
+                Mass = item.Mass,
+                MeasureType = item.MeasureType,
+                StandardMass = measure != null ? measure.ConversionFactor * item.Mass : item.Mass,
+                Description = item.Description,
+                MeasureID = item.MeasureID,
             };
             await _context.ReportDetails.AddAsync(exportMaterial);
         }
@@ -109,10 +132,25 @@ public class ReportManager : IReportRepository
         };
         await _context.Reports.AddAsync(report);
         var stockDetails = await _context.StockMaterials.Where(x => x.BranchID == request.BranchID).ToListAsync();
-
+        if (stockDetails == null)
+        {
+            return new MessageResult()
+            {
+                Result = 0,
+                Message = "Không tim thấy thông tin kho theo chi nhánh",
+            };
+        }
         foreach (var item in request.ReportDetails)
         {
             var measure = await _context.Measures.FindAsync(item.MeasureID);
+            if (measure == null)
+            {
+                return new MessageResult()
+                {
+                    Result = 0,
+                    Message = "Không tim thấy thông tin đơn vị",
+                };
+            }
             bool isAddStock = true;
             foreach (var stock in stockDetails)
             {
@@ -195,8 +233,25 @@ public class ReportManager : IReportRepository
         _context.Reports.Add(report);
 
         var stockDetails = await _context.StockMaterials.Where(x => x.BranchID == request.BranchID).ToListAsync();
+        if (stockDetails == null)
+        {
+            return new MessageResult()
+            {
+                Result = 0,
+                Message = "Không tim thấy thông tin kho theo chi nhánh",
+            };
+        }
         foreach (var item in request.ReportDetails)
         {
+            var measure = await _context.Measures.FindAsync(item.MeasureID);
+            if (measure == null)
+            {
+                return new MessageResult()
+                {
+                    Result = 0,
+                    Message = "Không tim thấy thông tin đơn vị",
+                };
+            }
             foreach (var stock in stockDetails)
             {
                 if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
@@ -219,6 +274,12 @@ public class ReportManager : IReportRepository
                 Quantity = item.Quantity,
                 Unit = item.Unit,
                 Status = item.Status,
+                IsDelete = false,
+                Mass = item.Mass,
+                MeasureType = item.MeasureType,
+                StandardMass = measure != null ? measure.ConversionFactor * item.Mass : item.Mass,
+                Description = item.Description,
+                MeasureID = item.MeasureID,
             };
             _context.ReportDetails.Add(exportMaterial);
         }

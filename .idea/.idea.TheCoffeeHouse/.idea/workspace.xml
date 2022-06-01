@@ -13,8 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/CategoriesTable.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/CategoriesTable.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Promotion/PromotionComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Promotion/PromotionComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +186,7 @@
       <workItem from="1649521481616" duration="504000" />
       <workItem from="1649591693999" duration="2142000" />
       <workItem from="1649681132928" duration="610000" />
-      <workItem from="1654094646231" duration="2489000" />
+      <workItem from="1654094646231" duration="4820000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -231,7 +230,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654097040317</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="no message">
+      <created>1654097440628</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1654097440628</updated>
+    </task>
+    <task id="LOCAL-00008" summary="report">
+      <created>1654099432048</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1654099432048</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -259,7 +272,9 @@
     <MESSAGE value="add DI for program" />
     <MESSAGE value="fix" />
     <MESSAGE value=" value" />
-    <option name="LAST_COMMIT_MESSAGE" value=" value" />
+    <MESSAGE value="no message" />
+    <MESSAGE value="report" />
+    <option name="LAST_COMMIT_MESSAGE" value="report" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -272,13 +287,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/TCH.BackendApi/Program.cs</url>
-          <line>138</line>
+          <line>147</line>
           <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" initialLine="137" containingFunctionPresentation="">
             <startOffsets>
-              <option value="5458" />
+              <option value="5662" />
             </startOffsets>
             <endOffsets>
-              <option value="5519" />
+              <option value="5723" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="4" />

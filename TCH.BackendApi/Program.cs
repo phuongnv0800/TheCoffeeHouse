@@ -24,7 +24,15 @@ builder.Services.AddDbContext<APIContext>(options =>
 {
     options.UseLoggerFactory(LoggerFactory.Create(builder => { builder.AddConsole(); }));
     options.EnableSensitiveDataLogging();
-    options.UseSqlServer(config.GetConnectionString("Dev"));
+    if (environment.IsProduction())
+    {
+        options.UseSqlServer(config.GetConnectionString("Dev"));
+    }
+    else
+    {
+        options.UseSqlServer(config.GetConnectionString("Prod"));
+    }
+    
 });
 builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Program));
 builder.Services.AddIdentity<AppUser, AppRole>()
@@ -47,6 +55,7 @@ builder.Services.AddScoped<ICustomerRepository, CustomerManager>();
 builder.Services.AddScoped<IPromotionRepository, PromotionManager>();
 builder.Services.AddScoped<IRecipeRepository, RecipeManager>();
 builder.Services.AddScoped<IReportRepository, ReportManager>();
+builder.Services.AddScoped<IUnitRepository, UnitManager>();
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IStorageService, FileStorageService>();
