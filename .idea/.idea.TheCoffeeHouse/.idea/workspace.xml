@@ -13,7 +13,8 @@
   <component name="ChangeListManager">
     <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.ViewModel/RequestModel/ImportRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.ViewModel/RequestModel/ImportRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/CategoriesTable.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/CategoriesTable.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Promotion/PromotionComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Promotion/PromotionComponent.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +187,7 @@
       <workItem from="1649521481616" duration="504000" />
       <workItem from="1649591693999" duration="2142000" />
       <workItem from="1649681132928" duration="610000" />
-      <workItem from="1654094646231" duration="1959000" />
+      <workItem from="1654094646231" duration="2489000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -223,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654096779562</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=" value">
+      <created>1654097040317</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1654097040317</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,7 +258,8 @@
     <MESSAGE value="add layout print" />
     <MESSAGE value="add DI for program" />
     <MESSAGE value="fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix" />
+    <MESSAGE value=" value" />
+    <option name="LAST_COMMIT_MESSAGE" value=" value" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

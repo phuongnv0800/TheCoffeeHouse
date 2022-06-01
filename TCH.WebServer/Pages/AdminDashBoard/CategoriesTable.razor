@@ -167,7 +167,7 @@ else
     public List<Category>? CategoryList = new List<Category>();
     private string? token;
     public string Name;
-    private Pagination pagination = new Pagination();
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new ();
     private ApplicationUser User;
 
     [CascadingParameter] public IModalService Modal { get; set; }
