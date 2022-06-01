@@ -8,8 +8,8 @@ public class OrderItem
     public double PriceProduct { get; set; }
     public double PriceSize { get; set; }
     public double SubAmount { get; set; }
-    public SugarType SugarType { get; set; }
-    public IcedType IcedType { get; set; }
+    public SugarType SugarType { get; set; } = SugarType.OneHundredPercent;
+    public IcedType IcedType { get; set; } = IcedType.OneHundredPercent;
     public string? Description { get; set; }
     public string SizeID { get; set; }
     public string? NameProduct { get; set; }
