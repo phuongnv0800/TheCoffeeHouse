@@ -33,5 +33,5 @@ public class OrderRequest
 
     public string BranchID { get; set; }
 
-    public List<OrderItem> OrderItems { get; set; }
+    public List<OrderItem>? OrderItems { get; set; }
 }

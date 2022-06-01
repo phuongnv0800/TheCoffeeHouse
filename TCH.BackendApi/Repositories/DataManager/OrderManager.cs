@@ -115,8 +115,7 @@ public class OrderManager : IOrderRepository, IDisposable
         foreach (var item in request.OrderItems)
         {
             var productDb = await _context.Products.FindAsync(item.ProductID);
-
-            var sizeDb = await _context.Products.FindAsync(item.SizeID);
+            var sizeDb = await _context.Sizes.FindAsync(item.SizeID);
             if (productDb == null || sizeDb == null)
             {
                 return new MessageResult()

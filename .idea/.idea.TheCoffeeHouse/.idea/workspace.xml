@@ -6,33 +6,15 @@
     <projectFile profileName="IIS Express">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
     <projectFile profileName="TCH.Web">TCH.Web/TCH.Web.csproj</projectFile>
     <projectFile profileName="IIS Express">TCH.Web/TCH.Web.csproj</projectFile>
+    <projectFile profileName="TCH.WebServer">TCH.WebServer/TCH.WebServer.csproj</projectFile>
+    <projectFile profileName="IIS Express">TCH.WebServer/TCH.WebServer.csproj</projectFile>
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/EF/APIContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/EF/APIContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/InvoiceLayout.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/Report.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/Report.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Entities/ReportDetail.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Entities/ReportDetail.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220320123358_init.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220320123358_init.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220323042035_m1.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220323042035_m1.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328055443_update-entities.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328055443_update-entities.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328062506_update-entities2.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328062506_update-entities2.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328154007_app1.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220328154007_app1.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220408152525_updateb.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220408152525_updateb.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/APIContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/FileStorageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/FileStorageService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/ProductManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/DataManager/ProductManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/SubModels/MessageResult.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/SubModels/MessageResult.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Models/SubModels/Respond.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Models/SubModels/Respond.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/CategoriesTable.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/CategoriesTable.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Promotion/PromotionComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Promotion/PromotionComponent.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +28,10 @@
       </set>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -55,11 +41,10 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9d4f4ac7db6d2c5d183ab2d92602280ed4349fd6e6a1b6313546b3d01fdab5/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/092f909183744c5cb93eabf45e789713271d800/9f/70e4abdd/HtmlConverter.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2656e3487208acb3487490904326ac4e1fdc62459bbaf6dc682863a3c37a/ParameterExpression.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Controllers/ProductsController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/642d9f16c9c555739ef4a95f47d58b898151bdbccd55cbbd1860ef78f8182/TypeUtils.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.ViewModel/RequestModel/OrderRequest.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -73,14 +58,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.TCH.BackendApi">
     <configuration name="TCH.BackendApi: FolderProfile" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish publish_profile="FolderProfile.pubxml" pubxml_path="$PROJECT_DIR$/TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml" uuid_high="-3772649467511487652" uuid_low="-6946827706269875391" />
@@ -120,6 +103,36 @@
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/TCH.Web/TCH.Web.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
       <option name="LAUNCH_PROFILE_NAME" value="TCH.Web" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <configuration name="TCH.WebServer" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/TCH.WebServer/TCH.WebServer.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
+      <option name="LAUNCH_PROFILE_NAME" value="TCH.WebServer" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <configuration name="TCH.WebServer: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/TCH.WebServer/TCH.WebServer.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
+      <option name="LAUNCH_PROFILE_NAME" value="IIS Express" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
@@ -174,6 +187,7 @@
       <workItem from="1649521481616" duration="504000" />
       <workItem from="1649591693999" duration="2142000" />
       <workItem from="1649681132928" duration="610000" />
+      <workItem from="1654094646231" duration="2489000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -196,7 +210,28 @@
       <option name="project" value="LOCAL" />
       <updated>1649421235597</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add DI for program">
+      <created>1654095221195</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1654095221195</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix">
+      <created>1654096779562</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1654096779562</updated>
+    </task>
+    <task id="LOCAL-00006" summary=" value">
+      <created>1654097040317</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1654097040317</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,36 +256,32 @@
     <MESSAGE value="add order, customer controller" />
     <MESSAGE value="add print pdf" />
     <MESSAGE value="add layout print" />
-    <option name="LAST_COMMIT_MESSAGE" value="add layout print" />
+    <MESSAGE value="add DI for program" />
+    <MESSAGE value="fix" />
+    <MESSAGE value=" value" />
+    <option name="LAST_COMMIT_MESSAGE" value=" value" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TCH.BackendApi/Program.cs</url>
-          <line>131</line>
-          <properties documentPath="D:\Tốt nghiệp\TheCoffeeHouse\TCH.BackendApi\Program.cs" initialLine="139" containingFunctionPresentation="">
-            <startOffsets>
-              <option value="5030" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5091" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs</url>
           <line>143</line>
-          <properties documentPath="D:\Tốt nghiệp\TheCoffeeHouse\TCH.BackendApi\Controllers\OrdersController.cs" initialLine="133" containingFunctionPresentation="method 'PrintImg'">
+          <properties documentPath="D:\Tốt nghiệp\TheCoffeeHouse\TCH.BackendApi\Controllers\OrdersController.cs" initialLine="133" containingFunctionPresentation="method 'PrintImg'" />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.BackendApi/Program.cs</url>
+          <line>138</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" initialLine="137" containingFunctionPresentation="">
             <startOffsets>
-              <option value="4363" />
+              <option value="5458" />
             </startOffsets>
             <endOffsets>
-              <option value="4409" />
+              <option value="5519" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="3" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
