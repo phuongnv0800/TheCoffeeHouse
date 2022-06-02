@@ -221,20 +221,6 @@
                                 <!--end::Separator-->
                                 <!--begin::Actions-->
                                 <div class="mb-0">
-                                    <!--begin::Row-->
-                                    <div class="row mb-5">
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <a href="#" class="btn btn-light btn-active-light-primary w-100">Xem trước</a>
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col">
-                                            <a href="#" class="btn btn-light btn-active-light-primary w-100">Tải bản PDF</a>
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Row-->
                                     <button type="submit" onclick="@(() => OnSubmit())" href="#" class="btn btn-primary w-100" id="kt_invoice_submit_button">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen016.svg-->
                                         <span class="svg-icon svg-icon-3">
@@ -269,6 +255,8 @@
     private List<Category> categories = new List<Category>();
     private ApplicationUser User;
     private OrderRequest order;
+    private string Id;
+
     protected override async Task OnParametersSetAsync()
     {
         order = GbParameter.GbParameter.Order;
@@ -289,6 +277,14 @@
 
         base.OnParametersSet();
     }
+    public async Task ShowPopUp()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(InvoicePopup.Id), Id);
+
+        var modal = Modal.Show<InvoicePopup>("Hóa đơn", parameters);
+        var result = await modal.Result;
+    }
     public async Task OnSubmit()
     {
         order.BranchID = User.BranchId;
@@ -296,6 +292,8 @@
         if (response != null && response.Result == 1)
         {
             toastService.ShowSuccess("thành công");
+            Id = response.Data.ID;
+            await ShowPopUp();
             GbParameter.GbParameter.Order = null;
             navigationManager.NavigateTo("/dashboard");
             return;

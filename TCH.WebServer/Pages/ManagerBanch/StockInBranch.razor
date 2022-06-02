@@ -42,10 +42,7 @@
                         </EditForm>
                     </div>
                 </div>
-                <div class="card-toolbar">
 
-                        <a class="btn btn-primary" onclick="@(() => Add())">Thêm sản phẩm</a>
-                    </div>
                 </div>
                 <div class="card-body pt-0">
 
@@ -192,34 +189,6 @@
         ProductsList = response.Data.Items.ToList();
         pagination.totalPage = response.Data.TotalPages;
         StateHasChanged();
-    }
-    public async void Add()
-    {
-        //var modal = Modal.Show<AddProduct>("Thêm sản phẩm");
-        //var result = await modal.Result;
-        //if (!result.Cancelled)
-        //{
-        //    await Change(1);
-        //}
-        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
-    }
-    public async void Update(string id)
-    {
-        navigationManager.NavigateTo($"categories/{id}");
-    }
-    public async void Delete(string id)
-    {
-        //try
-        //{
-        //    await stockService.DeleteProduct(id);
-        //    toastService.ShowSuccess("Xóa thành công");
-        //    await Change(1);
-        //}
-        //catch (Exception ex)
-        //{
-        //    toastService.ShowError(ex.ToString());
-        //}
-        
     }
     public async Task Change(int link)
     {

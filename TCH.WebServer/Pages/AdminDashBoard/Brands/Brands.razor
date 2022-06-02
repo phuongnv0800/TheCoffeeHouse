@@ -172,26 +172,41 @@
 
     protected override async  Task OnParametersSetAsync()
     {
-        navigationManager.NavigateTo("branchs");
-        var response = await userService.GetUserInfo();
-        User = response.Data;
-        await Get(1);
-        base.OnParametersSet();
+        try{
+            navigationManager.NavigateTo("branchs");
+            var response = await userService.GetUserInfo();
+            User = response.Data;
+            await Get(1);
+            base.OnParametersSet();
+        }
+        catch(Exception ex){
+            toastService.ShowError("có lỗi");
+        }
     }
     public async Task Get(int pageNumber){
-        var response = await brandService.GetAllBranchs(searchText);
-        //pagination.PageNumber = response.Data.CurrentPage;
-        BranchList = response.Data.Items.ToList();
-        //pagination.totalPage = response.Data.TotalPages;
+        try{
+            var response = await brandService.GetAllBranchs(searchText);
+            //pagination.PageNumber = response.Data.CurrentPage;
+            BranchList = response.Data.Items.ToList();
+            //pagination.totalPage = response.Data.TotalPages;
+        }
+        catch(Exception ex){
+            toastService.ShowError("có lỗi");
+        }            
     }
     public async void Add()
     {
-        var modal = Modal.Show<AddBranch>("Thêm cửa hàng");
-        var result = await modal.Result;
-        if (!result.Cancelled)
-        {
-            await Change(1);
+        try{
+            var modal = Modal.Show<AddBranch>("Thêm cửa hàng");
+            var result = await modal.Result;
+            if (!result.Cancelled)
+            {
+                await Change(1);
+            }
         }
+        catch(Exception ex){
+            toastService.ShowError("có lỗi");
+        } 
     }
     public async void Update(string id)
     {
@@ -206,9 +221,8 @@
         }
         catch(Exception ex)
         {
-            toastService.ShowError(ex.ToString());
+            toastService.ShowError("có lỗi");
         }
-        var response = await brandService.GetAllBranchs(searchText);
     }
     public async Task Change(int link)
     {

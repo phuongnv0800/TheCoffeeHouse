@@ -16,6 +16,7 @@
 @inject IMaterialService materialService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
+@inject IToastService toastService
 @inject IJSRuntime jsRuntime;
 @attribute [Authorize]
 
@@ -180,23 +181,38 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        navigationManager.NavigateTo("materials");
-        var response = await userServices.GetUserInfo();
-        User = response.Data;
-        await Get(1);
-        base.OnParametersSet();
+        try{
+            navigationManager.NavigateTo("materials");
+            var response = await userServices.GetUserInfo();
+            User = response.Data;
+            await Get(1);
+            base.OnParametersSet();
+        }
+        catch(Exception e){
+            toastService.ShowError("Có lỗi");
+        }
     }
     public async Task Get(int pageNumber)
     {
-        var response = await materialService.GetMaterials(true, pagination.pageSize, pageNumber, searchText);
-        pagination.PageNumber = response.Data.CurrentPage;
-        ProductsList = response.Data.Items.ToList();
-        pagination.totalPage = response.Data.TotalPages;
+        try{
+            var response = await materialService.GetMaterials(true, pagination.pageSize, pageNumber, searchText);
+            pagination.PageNumber = response.Data.CurrentPage;
+            ProductsList = response.Data.Items.ToList();
+            pagination.totalPage = response.Data.TotalPages;
+        }
+        catch(Exception e){
+            toastService.ShowError("Có lỗi");
+        }
     }
     public async void Add()
     {
-        Modal.Show<AddMaterial>("Thêm nguyên liệu");
-        var response = await materialService.GetMaterials(true, pagination.pageSize, 1, searchText);
+        try{
+            Modal.Show<AddMaterial>("Thêm nguyên liệu");
+            var response = await materialService.GetMaterials(true, pagination.pageSize, 1, searchText);
+        }
+        catch(Exception e){
+            toastService.ShowError("Có lỗi");
+        }
     }
     public async void Update(string id)
     {

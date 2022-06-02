@@ -1,0 +1,194 @@
+﻿@using TCH.Data.Entities
+@using TCH.WebServer.Models
+@using TCH.WebServer.Services.Materials
+@using TCH.WebServer.Services.Reports
+@using TCH.WebServer.Services.StockMaterials
+@using TCH.WebServer.Services.Units
+
+@inject IReportService reportService
+@inject IToastService toastService
+@inject IStockService stockService
+@inject IMaterialService materialService
+@inject IUnitService unitService
+
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="OnCancel"></div>
+    <div class="modal-dialog modal-dialog-centered mw-650px" style="z-index: 1050">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="fw-bolder">Chọn nguyên liệu nhập</h5>
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" @onclick="OnCancel">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="scroll-y me-n7 pe-7">
+                    @if (importDetail != null )
+                    {
+                        <EditForm Model="importDetail" OnInvalidSubmit="OnPick">
+                            <div class="mb-10 fv-row fv-plugins-icon-container">
+                                <!--begin::Label-->
+                            <label class="required form-label">Chọn hàng nhập</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                            <InputSelect @bind-Value="importDetail.MaterialID" class="form-control form-control-solid ">
+                                    @foreach (var material in materials)
+                                    {
+                                    <option value="@material.ID">@material.Name</option>
+                                    }
+                            </InputSelect>
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => importDetail.MaterialID)" />
+                            </div>
+                            <!--end::Input-->
+                        </div>
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label">Số lượng</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <InputNumber @bind-Value="importDetail.Quantity" class="form-control form-control-solid " />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => importDetail.Quantity)" />
+                            </div>
+                            <!--end::Input-->
+                        </div>
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label">Đơn vị</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <InputText @bind-Value="importDetail.Unit" class="form-control form-control-solid " />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => importDetail.Unit)" />
+                            </div>
+                            <!--end::Input-->
+                        </div>
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label">Ngày hết hạn</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <InputDate @bind-Value="importDetail.ExpirationDate" class="form-control form-control-solid" />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => importDetail.ExpirationDate)" />
+                            </div>
+                            <!--end::Input-->
+                        </div>
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label">Giá</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <InputNumber @bind-Value="importDetail.PriceOfUnit" class="form-control form-control-solid " />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => importDetail.PriceOfUnit)" />
+                            </div>
+                            <!--end::Input-->
+                        </div>
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label">Đơn vị trọng lượng</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <InputSelect @bind-Value="importDetail.MeasureID" class="form-control form-control-solid ">
+                                @foreach (var mes in units)
+                                    {
+                                    <option value="@mes.ID">@mes.Name</option>
+                                    }
+                            </InputSelect>
+                            <!--end::Input-->
+                        </div>
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label">Cân nặng</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <InputNumber @bind-Value="importDetail.Mass" class="form-control form-control-solid " />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => importDetail.Mass)" />
+                            </div>
+                            <!--end::Input-->
+                        </div>
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label">Loại hình</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <InputSelect @bind-Value="importDetail.Mass" class="form-control form-control-solid ">
+                                @foreach (var mes in Enum.GetValues(typeof(MeasureType)))
+                                    {
+                                    <option value="@mes">@mes</option>
+                                    }
+                            </InputSelect>
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => importDetail.Mass)" />
+                            </div>
+                            <!--end::Input-->
+                        </div>
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label">Ghi chú</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <InputText @bind-Value="importDetail.Description" class="form-control form-control-solid " />
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => importDetail.Description)" />
+                            </div>
+                            <!--end::Input-->
+                        </div>
+                        <div class="card-body p-5">
+
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary" onclick="@(() => OnPick())">
+                                    <span class="indicator-label">Save Changes</span>
+                                    <span class="indicator-progress">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                        </div>
+                    </EditForm>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+    private ImportDetail importDetail;
+    private List<Material> materials;
+    private List<MeasuresVm> units;
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
+    private async Task OnCancel() => await BlazoredModal.CancelAsync();
+    protected async override Task OnInitializedAsync()
+    {
+        var response = await materialService.GetAllMaterials();
+        materials = response.Data.Items;
+        var res = await unitService.GetAllMaterials();
+        units = res.Data.Items;
+        importDetail = new ImportDetail()
+            {
+                BeginDate = DateTime.Now,
+                Status = 0,
+            };
+
+    }
+    public async Task OnPick()
+    {
+        GbParameter.GbParameter.ReportExport.ReportDetails.Add(importDetail);
+
+        await BlazoredModal.CloseAsync(ModalResult.Ok(true));
+    }
+}

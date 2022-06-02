@@ -189,18 +189,28 @@
     protected override async Task OnParametersSetAsync()
     {
         //navigationManager.NavigateTo("admin-dashboard");
-        var response = await userServices.GetUserInfo();
-        User = response.Data;
-        await Get(1);
-        base.OnParametersSet();
+        try{
+            var response = await userServices.GetUserInfo();
+            User = response.Data;
+            await Get(1);
+            base.OnParametersSet();
+        }
+        catch(Exception e){
+            toastService.ShowError("Có lỗi");
+        }
     }
     public async Task Get(int pageNumber)
     {
-        var response = await productServices.GetProducts(true, pagination.pageSize, pageNumber, searchText);
-        pagination.PageNumber = response.Data.CurrentPage;
-        ProductsList = response.Data.Items.ToList();
-        pagination.totalPage = response.Data.TotalPages;
-        StateHasChanged();
+        try{
+            var response = await productServices.GetProducts(true, pagination.pageSize, pageNumber, searchText);
+            pagination.PageNumber = response.Data.CurrentPage;
+            ProductsList = response.Data.Items.ToList();
+            pagination.totalPage = response.Data.TotalPages;
+            StateHasChanged();
+        }
+        catch(Exception e){
+            toastService.ShowError("Có lỗi");
+        }
     }
     public async void Add()
     {

@@ -229,36 +229,46 @@
 
     protected async override Task OnInitializedAsync()
     {
-        editBranch = new Order();
-        var response = await userService.GetUserInfo();
-        User = response.Data;
+        try{
+            editBranch = new Order();
+            var response = await userService.GetUserInfo();
+            User = response.Data;
+        }
+        catch(Exception ex){
+            _toastService.ShowError("có lỗi");
+        }
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        if (string.IsNullOrEmpty(OrderId))
-        {
-            editBranch = new Order();
+        try{
+            if (string.IsNullOrEmpty(OrderId))
+            {
+                editBranch = new Order();
+            }
+            else
+            {
+                var responseP = await _orderService.GetOrderById(OrderId);
+                var vesselDB = responseP.Data;
+                editBranch.Code = vesselDB.Code;
+                editBranch.Cashier = vesselDB.Cashier;
+                editBranch.CreateDate = vesselDB.CreateDate;
+                editBranch.CustomerID = vesselDB.CustomerID;
+                editBranch.CustomerPut = vesselDB.CustomerPut;
+                editBranch.CustomerReceive = vesselDB.CustomerReceive;
+                editBranch.Description = vesselDB.Description;
+                editBranch.OrderDetails = vesselDB.OrderDetails;
+                editBranch.OrderType = vesselDB.OrderType;
+                editBranch.PaymentType = vesselDB.PaymentType;
+                editBranch.ReduceAmount = vesselDB.ReduceAmount;
+                editBranch.ReducePromotion = vesselDB.ReducePromotion;
+                editBranch.ShippingFee = vesselDB.ShippingFee;
+                editBranch.Status = vesselDB.Status;
+                editBranch.SubAmount = vesselDB.SubAmount;
+            }
         }
-        else
-        {
-            var responseP = await _orderService.GetOrderById(OrderId);
-            var vesselDB = responseP.Data;
-            editBranch.Code = vesselDB.Code;
-            editBranch.Cashier = vesselDB.Cashier;
-            editBranch.CreateDate = vesselDB.CreateDate;
-            editBranch.CustomerID = vesselDB.CustomerID;
-            editBranch.CustomerPut = vesselDB.CustomerPut;
-            editBranch.CustomerReceive = vesselDB.CustomerReceive;
-            editBranch.Description = vesselDB.Description;
-            editBranch.OrderDetails = vesselDB.OrderDetails;
-            editBranch.OrderType = vesselDB.OrderType;
-            editBranch.PaymentType = vesselDB.PaymentType;
-            editBranch.ReduceAmount = vesselDB.ReduceAmount;
-            editBranch.ReducePromotion = vesselDB.ReducePromotion;
-            editBranch.ShippingFee = vesselDB.ShippingFee;
-            editBranch.Status = vesselDB.Status;
-            editBranch.SubAmount = vesselDB.SubAmount;
+        catch(Exception ex){
+            _toastService.ShowError("có lỗi");
         }
     }
 }

@@ -17,6 +17,7 @@
 @inject IPromotionService promotionService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
+@inject IToastService _toastService
 @inject IJSRuntime jsRuntime;
 @attribute [Authorize]
 
@@ -176,23 +177,38 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        navigationManager.NavigateTo("promotions");
-        var response = await userServices.GetUserInfo();
-        User = response.Data;
-        await Get(1);
-        base.OnParametersSet();
+        try{
+            navigationManager.NavigateTo("promotions");
+            var response = await userServices.GetUserInfo();
+            User = response.Data;
+            await Get(1);
+            base.OnParametersSet();
+        }
+        catch(Exception ex){
+            _toastService.ShowError("có lỗi");
+        }
     }
     public async Task Get(int pageNumber)
     {
-        var response = await promotionService.GetAllPromotions(true, pagination.pageSize, pageNumber);
-        pagination.PageNumber = response.Data.CurrentPage;
-        ProductsList = response.Data.Items.ToList();
-        pagination.totalPage = response.Data.TotalPages;
+        try{
+            var response = await promotionService.GetAllPromotions(true, pagination.pageSize, pageNumber);
+            pagination.PageNumber = response.Data.CurrentPage;
+            ProductsList = response.Data.Items.ToList();
+            pagination.totalPage = response.Data.TotalPages;
+        }
+        catch(Exception ex){
+            _toastService.ShowError("có lỗi");
+        }
     }
     public async void Add()
     {
-        Modal.Show<AddPromotion>("Thêm mới khuyến mãi");
-        var response = await promotionService.GetAllPromotions(true, pagination.pageSize, 1);
+        try{
+            Modal.Show<AddPromotion>("Thêm mới khuyến mãi");
+            var response = await promotionService.GetAllPromotions(true, pagination.pageSize, 1);
+        }
+        catch(Exception ex){
+            _toastService.ShowError("có lỗi");
+        }
     }
     public async void Update(string id)
     {

@@ -16,6 +16,7 @@
 @inject IReportService reportService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
+@inject IToastService toastService
 @inject IJSRuntime jsRuntime;
 @attribute [Authorize]
 
@@ -181,19 +182,29 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        dateRequest = new DateRequest();
-        navigationManager.NavigateTo("reports-liquid");
-        var response = await userServices.GetUserInfo();
-        User = response.Data;
-        await Get(1);
-        base.OnParametersSet();
+        try{
+            dateRequest = new DateRequest();
+            navigationManager.NavigateTo("reports-liquid");
+            var response = await userServices.GetUserInfo();
+            User = response.Data;
+            await Get(1);
+            base.OnParametersSet();
+        }
+        catch(Exception e){
+            toastService.ShowError("Có lỗi");
+        }
     }
     public async Task Get(int pageNumber)
     {
-        var response = await reportService.GetAllLiquid(true, pagination.pageSize, pageNumber,dateRequest.FromDate, dateRequest.ToDate);
-        pagination.PageNumber = response.Data.CurrentPage;
-        ProductsList = response.Data.Items.ToList();
-        pagination.totalPage = response.Data.TotalPages;
+        try{
+            var response = await reportService.GetAllLiquid(true, pagination.pageSize, pageNumber,dateRequest.FromDate, dateRequest.ToDate);
+            pagination.PageNumber = response.Data.CurrentPage;
+            ProductsList = response.Data.Items.ToList();
+            pagination.totalPage = response.Data.TotalPages;
+        }
+        catch(Exception e){
+            toastService.ShowError("Có lỗi");
+        }
     }
     public async void Delete(string id)
     {

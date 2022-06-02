@@ -1,5 +1,6 @@
 ﻿@page "/categories" 
 @using Blazored.LocalStorage
+@using Blazored.Toast.Services
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
 @using System.Net.Http.Headers
@@ -15,6 +16,7 @@
 @inject NavigationManager navigationManager
 @inject ICategoryService categoryService
 @inject IUserService userService
+@inject IToastService toastService
 
 @if (!GbParameter.IsLogin)
 {
@@ -174,17 +176,27 @@ else
 
     protected override async  Task OnParametersSetAsync()
     {
-        navigationManager.NavigateTo("categories");
-        var response = await userService.GetUserInfo();
-        User = response.Data;
-        await Get(1);
-        base.OnParametersSet();
+        try{
+            navigationManager.NavigateTo("categories");
+            var response = await userService.GetUserInfo();
+            User = response.Data;
+            await Get(1);
+            base.OnParametersSet();
+        }
+        catch(Exception e){
+            toastService.ShowError("có lỗi");
+        }
     }
     public async Task Get(int pageNumber){
-        var response = await categoryService.GetCategories( true,  pagination.pageSize,  pageNumber);
-        pagination.PageNumber = response.Data.CurrentPage;
-        CategoryList = response.Data.Items.ToList();
-        pagination.totalPage = response.Data.TotalPages;
+        try{
+            var response = await categoryService.GetCategories( true,  pagination.pageSize,  pageNumber);
+            pagination.PageNumber = response.Data.CurrentPage;
+            CategoryList = response.Data.Items.ToList();
+            pagination.totalPage = response.Data.TotalPages;
+        }
+        catch(Exception e){
+            toastService.ShowError("có lỗi");
+        }
     }
     public async void Add()
     {

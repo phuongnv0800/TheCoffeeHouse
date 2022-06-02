@@ -370,25 +370,30 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if (string.IsNullOrEmpty(PromotionId))
-        {
-            editPromotion = new PromotionRequest();
+        try{
+            if (string.IsNullOrEmpty(PromotionId))
+            {
+                editPromotion = new PromotionRequest();
+            }
+            else
+            {
+                var responseP = await _promotionService.GetPromotionById(PromotionId);
+                var vesselDB = responseP.Data;
+                editPromotion.Name = vesselDB.Name;
+                editPromotion.Description = vesselDB.Description;
+                editPromotion.Code = vesselDB.Code;
+                editPromotion.StartDate = vesselDB.StartDate;
+                editPromotion.EndDate = vesselDB.EndDate;
+                editPromotion.Status = vesselDB.Status;
+                editPromotion.PromotionType = vesselDB.PromotionType;
+                editPromotion.Quantity = vesselDB.Quantity;
+                editPromotion.ReduceAmount = vesselDB.ReduceAmount;
+                editPromotion.ReducePercent = vesselDB.ReducePercent;
+                editPromotion.PromotionObject = vesselDB.PromotionObject;
+            }
         }
-        else
-        {
-            var responseP = await _promotionService.GetPromotionById(PromotionId);
-            var vesselDB = responseP.Data;
-            editPromotion.Name = vesselDB.Name;
-            editPromotion.Description = vesselDB.Description;
-            editPromotion.Code = vesselDB.Code;
-            editPromotion.StartDate = vesselDB.StartDate;
-            editPromotion.EndDate = vesselDB.EndDate;
-            editPromotion.Status = vesselDB.Status;
-            editPromotion.PromotionType = vesselDB.PromotionType;
-            editPromotion.Quantity = vesselDB.Quantity;
-            editPromotion.ReduceAmount = vesselDB.ReduceAmount;
-            editPromotion.ReducePercent = vesselDB.ReducePercent;
-            editPromotion.PromotionObject = vesselDB.PromotionObject;
+        catch(Exception ex){
+            _toastService.ShowError("có lỗi");
         }
     }
 }

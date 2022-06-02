@@ -68,7 +68,7 @@
                                 <!--end::Input group-->
                             <div class="mb-10 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                <label class=" form-label">Mô tả</label>
+                                <label class=" form-label">Lí do nhập</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                 <InputText @bind-Value="newReport.Reason" class="form-control form-control-solid col-sm-6" />
@@ -212,7 +212,7 @@
     public async Task Onclick()
     {
         GbParameter.GbParameter.ReportImport = newReport;
-        var modal = Modal.Show<AddReportDetail>("Thêm nguyên liệu nhập");
+        var modal = Modal.Show<AddImportReportDetail>("Thêm nguyên liệu nhập");
         var result = await modal.Result;
         if (!result.Cancelled)
         {

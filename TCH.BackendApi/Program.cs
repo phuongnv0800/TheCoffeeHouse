@@ -26,7 +26,7 @@ builder.Services.AddDbContext<APIContext>(options =>
     options.EnableSensitiveDataLogging();
     if (environment.IsProduction())
     {
-        options.UseSqlServer(config.GetConnectionString("Dev"));
+        options.UseSqlServer(config.GetConnectionString("Prod"));
     }
     else
     {

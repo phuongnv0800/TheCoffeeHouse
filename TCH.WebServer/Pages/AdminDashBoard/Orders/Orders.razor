@@ -197,10 +197,15 @@
     }
     public async Task Get(int pageNumber)
     {
-        var response = await orderService.GetAllOrders(true, pagination.pageSize, pageNumber, dateRequest.FromDate, dateRequest.ToDate);
-        pagination.PageNumber = response.Data.CurrentPage;
-        ProductsList = response.Data.Items.ToList();
-        pagination.totalPage = response.Data.TotalPages;
+        try{
+            var response = await orderService.GetAllOrders(true, pagination.pageSize, pageNumber, dateRequest.FromDate, dateRequest.ToDate);
+            pagination.PageNumber = response.Data.CurrentPage;
+            ProductsList = response.Data.Items.ToList();
+            pagination.totalPage = response.Data.TotalPages;
+        }
+        catch(Exception ex){
+            toastService.ShowError("có lỗi");
+        }
     }
     public async void Delete(string id)
     {

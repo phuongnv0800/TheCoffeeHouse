@@ -402,31 +402,43 @@
 
     protected async override Task OnInitializedAsync()
     {
-        editProduct = new ProductVm();
-        var response = await userService.GetUserInfo();
-        User = response.Data;
+        try{
+            editProduct = new ProductVm();
+            var response = await userService.GetUserInfo();
+            User = response.Data;
+        }
+        catch(Exception e)
+        {
+            toastService.ShowError("có lỗi");
+        }
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        var response = await _categoryService.GetAllCategories();
-        categories = response.Data.Items.ToList();
-        if (string.IsNullOrEmpty(ProductId))
-        {
-            editProduct = new ProductVm();
+        try{
+            var response = await _categoryService.GetAllCategories();
+            categories = response.Data.Items.ToList();
+            if (string.IsNullOrEmpty(ProductId))
+            {
+                editProduct = new ProductVm();
+            }
+            else
+            {
+                var responseP = await _productService.GetProductById(ProductId);
+                var vesselDB = responseP.Data;
+                editProduct.CategoryID = vesselDB.CategoryID;
+                editProduct.Name = vesselDB.Name;
+                editProduct.Description = vesselDB.Description;
+                editProduct.Price = vesselDB.Price;
+                editProduct.PriceSale = vesselDB.PriceSale;
+                editProduct.IsSale = vesselDB.IsSale;
+                editProduct.IsAvailable = vesselDB.IsAvailable;
+                editProduct.LinkImage = vesselDB.LinkImage;
+            }
         }
-        else
+        catch(Exception e)
         {
-            var responseP = await _productService.GetProductById(ProductId);
-            var vesselDB = responseP.Data;
-            editProduct.CategoryID = vesselDB.CategoryID;
-            editProduct.Name = vesselDB.Name;
-            editProduct.Description = vesselDB.Description;
-            editProduct.Price = vesselDB.Price;
-            editProduct.PriceSale = vesselDB.PriceSale;
-            editProduct.IsSale = vesselDB.IsSale;
-            editProduct.IsAvailable = vesselDB.IsAvailable;
-            editProduct.LinkImage = vesselDB.LinkImage;
+            toastService.ShowError("có lỗi");
         }
     }
 }

@@ -12,7 +12,7 @@
 <!--begin::Post-->
     <!--begin::Container-->
     <div id="kt_content_container" class="container-xxl">
-        <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework" data-kt-redirect="../../demo1/dist/apps/ecommerce/catalog/categories.html">
+        <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework" >
             <!--begin::Main column-->
             <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                 <!--begin::General options-->
@@ -32,7 +32,7 @@
                             <EditForm Model="newReport">
                             <div class="mb-10 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                <label class="required form-label">Mã phiếu nhập</label>
+                                <label class="required form-label">Mã phiếu xuất</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                 <InputText @bind-Value="newReport.Code" class="form-control form-control-solid col-sm-6" />
@@ -68,7 +68,7 @@
                                 <!--end::Input group-->
                             <div class="mb-10 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                <label class=" form-label">Mô tả</label>
+                                <label class=" form-label">Lí do xuất</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                 <InputText @bind-Value="newReport.Reason" class="form-control form-control-solid col-sm-6" />
@@ -92,7 +92,7 @@
                                 <!--end::Input group-->
                             <div class="mb-10 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                <label class="required form-label">Đánh giá hàng nhập</label>
+                                <label class="required form-label">Đánh giá hàng xuất</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                 <InputText @bind-Value="newReport.Conclude" class="form-control form-control-solid col-sm-6" />
@@ -104,7 +104,7 @@
                                 <!--end::Input group-->
                             <div class="mb-10 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                <label class="required form-label">Chọn nguyên liệu nhập</label>
+                                <label class="required form-label">Chọn nguyên liệu xuất</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                 <button class="btn btn-warning" onclick="@(() => Onclick())">Chọn nguyên liệu</button>
@@ -188,7 +188,7 @@
 <!--end::Post-->
 @code {
     [Parameter] public string Title { get; set; }
-    private ImportRequest newReport;
+    private ExportRequest newReport;
     private List<ImportDetail> stockMaterials = new List<ImportDetail>();
 
     private List<Material> materials;
@@ -199,10 +199,10 @@
         materials = response.Data.Items;
         if(GbParameter.GbParameter.ReportImport != null)
         {
-            newReport = GbParameter.GbParameter.ReportImport;
+            newReport = GbParameter.GbParameter.ReportExport;
         }
         else{
-            newReport = new ImportRequest()
+            newReport = new ExportRequest()
             {
                 BranchID = GbParameter.GbParameter.BranchId
             };
@@ -211,12 +211,12 @@
     }
     public async Task Onclick()
     {
-        GbParameter.GbParameter.ReportImport = newReport;
-        var modal = Modal.Show<AddReportDetail>("Thêm nguyên liệu nhập");
+        GbParameter.GbParameter.ReportExport = newReport;
+        var modal = Modal.Show<AddExportReportDetail>("Thêm nguyên liệu nhập");
         var result = await modal.Result;
         if (!result.Cancelled)
         {
-            newReport = GbParameter.GbParameter.ReportImport;
+            newReport = GbParameter.GbParameter.ReportExport;
             StateHasChanged();
         }
     }
@@ -226,7 +226,7 @@
         {
             ResponseLogin<Report> response = new ResponseLogin<Report>();
 
-            response = await reportService.AddImport(newReport);
+            response = await reportService.AddExport(newReport);
 
             if (response != null)
             {
