@@ -20,10 +20,10 @@ public class OrderDetail
 
     public virtual ICollection<OrderToppingDetail> OrderToppingDetails { get; set; }
 
-    public string? ToppingID1 { get; set; }
-    public string? Topping1Name { get; set; }
-    public double PriceToppping1 { get; set; }
-    public string? ToppingID2 { get; set; }
-    public string? Topping2Name { get; set; }
-    public double PriceToppping2 { get; set; }
+    //public string? ToppingID1 { get; set; }
+    //public string? Topping1Name { get; set; }
+    //public double PriceToppping1 { get; set; }
+    //public string? ToppingID2 { get; set; }
+    //public string? Topping2Name { get; set; }
+    //public double PriceToppping2 { get; set; }
 }

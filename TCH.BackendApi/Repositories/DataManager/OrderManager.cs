@@ -31,12 +31,12 @@ public class OrderManager : IOrderRepository, IDisposable
         UserID = httpContext != null ? httpContext?.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value : "";
         _accessToken = httpContext?.HttpContext != null ? httpContext.HttpContext.Request.Headers["Authorization"] : "";
     }
-    public async Task<MessageResult> Create(OrderRequest request)
+    public async Task<Respond<object>> Create(OrderRequest request)
     {
 
         var branch = await _context.Branches.FindAsync(request.BranchID);
         if (branch == null)
-            return new MessageResult()
+            return new Respond<object>()
             {
                 Result = 0,
                 Message = "Không có thông tin nhánh",
@@ -118,7 +118,7 @@ public class OrderManager : IOrderRepository, IDisposable
             var sizeDb = await _context.Sizes.FindAsync(item.SizeID);
             if (productDb == null || sizeDb == null)
             {
-                return new MessageResult()
+                return new Respond<object>()
                 {
                     Result = 1,
                     Message = "Không tìm thấy product hoặc size, hãy chọn lại",
@@ -177,8 +177,9 @@ public class OrderManager : IOrderRepository, IDisposable
         }
         _context.OrderDetails.AddRange(orderDetails);
         await _context.SaveChangesAsync();
-        return new MessageResult()
+        return new Respond<object>()
         {
+            Data = orderRe,
             Result = 1,
             Message = "Tạo thành công"
         };
