@@ -17,6 +17,7 @@
 @inject IOrderService orderService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
+@inject IToastService toastService
 @inject IJSRuntime jsRuntime;
 @attribute [Authorize]
 
@@ -73,7 +74,7 @@
                                     {
                                         foreach (var product in ProductsList)
                                         {
-                                            string href = "/materials/" + product.ID.ToString();
+                                            string href = "/orders/" + product.ID.ToString();
                                             <tr class="odd">
                                                 <td>
                                                     <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -182,12 +183,17 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        dateRequest = new DateRequest();
-        navigationManager.NavigateTo("orders");
-        var response = await userServices.GetUserInfo();
-        User = response.Data;
-        await Get(1);
-        base.OnParametersSet();
+        try{
+            dateRequest = new DateRequest();
+            navigationManager.NavigateTo("orders");
+            var response = await userServices.GetUserInfo();
+            User = response.Data;
+            await Get(1);
+            base.OnParametersSet();
+        }
+        catch(Exception ex){
+            toastService.ShowError("có lỗi");
+        }
     }
     public async Task Get(int pageNumber)
     {

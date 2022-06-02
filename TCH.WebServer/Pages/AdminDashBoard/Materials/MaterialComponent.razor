@@ -372,20 +372,25 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if (string.IsNullOrEmpty(MaterialId))
-        {
-            editMaterial = new Material();
-        }
-        else
-        {
-            var responseP = await _materialService.GetMaterialById(MaterialId);
-            var vesselDB = responseP.Data;
-            editMaterial.Name = vesselDB.Name;
-            editMaterial.Description = vesselDB.Description;
-            editMaterial.LinkImage = vesselDB.LinkImage;
-            editMaterial.MaterialTypeID = vesselDB.MaterialTypeID;
-            editMaterial.MaterialType = vesselDB.MaterialType;
-        }
+        try{
+			if (string.IsNullOrEmpty(MaterialId))
+			{
+				editMaterial = new Material();
+			}
+			else
+			{
+				var responseP = await _materialService.GetMaterialById(MaterialId);
+				var vesselDB = responseP.Data;
+				editMaterial.Name = vesselDB.Name;
+				editMaterial.Description = vesselDB.Description;
+				editMaterial.LinkImage = vesselDB.LinkImage;
+				editMaterial.MaterialTypeID = vesselDB.MaterialTypeID;
+				editMaterial.MaterialType = vesselDB.MaterialType;
+			}
+		}
+		catch(Exception ex){
+			throw;
+		}
     }
 }
 

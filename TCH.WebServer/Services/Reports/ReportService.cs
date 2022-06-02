@@ -65,6 +65,7 @@ namespace TCH.WebServer.Services.Reports
         {
             try
             {
+                
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
                 var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync($"/api/Reports/import", httpContent);

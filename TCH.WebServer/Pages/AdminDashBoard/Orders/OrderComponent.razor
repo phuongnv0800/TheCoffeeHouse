@@ -1,0 +1,267 @@
+﻿@page "/orders/{OrderId}"
+@using TCH.Data.Entities
+@using TCH.WebServer.Models
+@using TCH.WebServer.Services.Orders
+@using TCH.WebServer.Services.Categories
+@using TCH.WebServer.Services.Products
+@using TCH.WebServer.Services.Users
+
+@inject IOrderService _orderService
+@inject ICategoryService _categoryService
+@inject IUserService userService
+@inject IToastService _toastService
+
+<TCH.WebServer.Shared.Header.Header User="@User"></TCH.WebServer.Shared.Header.Header>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Toolbar-->
+    <div class="toolbar" id="kt_toolbar">
+        <!--begin::Container-->
+        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+            <!--begin::Page title-->
+            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                <!--begin::Title-->
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Chi tiết đơn hàng</h1>
+                <!--end::Title-->
+                <!--begin::Separator-->
+                <span class="h-20px border-gray-300 border-start mx-4"></span>
+                <!--end::Separator-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-muted">
+                        <a href="/admin-dashboard" class="text-muted text-hover-primary">Home</a>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-muted"><a href="/admin-dashboard">Danh sách đơn hàng</a></li>
+
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-300 w-5px h-2px"></span>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-dark">Chi tiết đơn hàng</li>
+                    <!--end::Item-->
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page title-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Toolbar-->
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework">
+                <!--begin::Main column-->
+                <div class="d-flex flex-column flex-row-fluid ">
+                    <!--begin::General options-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>Thông tin</h2>
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <!--begin::Input group-->
+                            <EditForm Model="@editBranch">
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Mã đơn hàng</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputText @bind-Value="editBranch.Code" class="form-control form-control-solid col-sm-6 read-only"/>
+                                    <!--end::Input-->
+                                    <!--begin::Description-->
+                                    <div class="text-muted fs-7">A product name is required and recommended to be unique.</div>
+                                    <!--end::Description-->
+                                </div>
+
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Người trả tiền</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputText @bind-Value="editBranch.Cashier" class="form-control form-control-solid col-sm-6 read-only" />
+
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Ngày thanh toán</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputDate @bind-Value="editBranch.CreateDate" class="form-control form-control-solid col-sm-6 read-only" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Tiền khách trả</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputNumber @bind-Value="editBranch.CustomerPut" class="form-control form-control-solid col-sm-6 read-only" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Tiền khách nhận</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputNumber @bind-Value="editBranch.CustomerReceive" class="form-control form-control-solid col-sm-6 read-only" />
+
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Nội dung Footer</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputText @bind-Value="editBranch.Description" class="form-control form-control-solid col-sm-6 read-only" />
+
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Nội dung Header</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputNumber @bind-Value="editBranch.ReduceAmount" class="form-control form-control-solid col-sm-6 read-only" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Kiểu</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputNumber @bind-Value="editBranch.SubAmount" class="form-control form-control-solid col-sm-6 read-only" />
+
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                            </EditForm>
+                        </div>
+                        <div class="table-responsive">
+                            <!--begin::Table-->
+                            <table class="table align-middle gs-0 gy-4 my-0">
+                                <!--begin::Table head-->
+                                <thead>
+                                    <tr class="fs-7 fw-bolder text-gray-500">
+                                        <th class="p-0 min-w-150px d-block pt-3">Tên</th>
+                                        <th class="text-end min-w-140px pt-3">Trạng thái</th>
+                                        <th class="pe-0 text-end min-w-120px pt-3">Giá</th>
+                                        <th class="pe-0 text-end min-w-120px pt-3">Số lượng</th>
+                                    </tr>
+                                </thead>
+                                <!--end::Table head-->
+                                <!--begin::Table body-->
+                                <tbody>
+                                    @if (editBranch.OrderDetails != null)
+                                    {
+                                        @foreach (var topping in editBranch.OrderDetails)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <span class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">@topping.Product.Name</span>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span class="badge badge-light-success fs-7 fw-bolder">Còn hàng</span>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span class="text-gray-800 fw-bolder d-block fs-6">@topping.Size.Name</span>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span class="text-gray-800 fw-bolder d-block fs-6">@topping.SubAmount</span>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span class="text-gray-800 fw-bolder d-block fs-6">@topping.Quantity</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                                <!--end::Table body-->
+                            </table>
+                        </div>
+                        <!--end::Table container-->
+                    </div>
+                    <!--end::Card header-->
+                </div>
+                <!--end::General options-->
+                <!--begin::Meta options-->
+
+                <div class="d-flex justify-content-end">
+                    <!--begin::Button-->
+                    <a href="/orders" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+                    <!--end::Button-->
+                </div>
+
+        </form>
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Post-->
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string OrderId { get; set; }
+
+    private ApplicationUser User;
+    private Order editBranch = null;
+
+    protected async override Task OnInitializedAsync()
+    {
+        editBranch = new Order();
+        var response = await userService.GetUserInfo();
+        User = response.Data;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (string.IsNullOrEmpty(OrderId))
+        {
+            editBranch = new Order();
+        }
+        else
+        {
+            var responseP = await _orderService.GetOrderById(OrderId);
+            var vesselDB = responseP.Data;
+            editBranch.Code = vesselDB.Code;
+            editBranch.Cashier = vesselDB.Cashier;
+            editBranch.CreateDate = vesselDB.CreateDate;
+            editBranch.CustomerID = vesselDB.CustomerID;
+            editBranch.CustomerPut = vesselDB.CustomerPut;
+            editBranch.CustomerReceive = vesselDB.CustomerReceive;
+            editBranch.Description = vesselDB.Description;
+            editBranch.OrderDetails = vesselDB.OrderDetails;
+            editBranch.OrderType = vesselDB.OrderType;
+            editBranch.PaymentType = vesselDB.PaymentType;
+            editBranch.ReduceAmount = vesselDB.ReduceAmount;
+            editBranch.ReducePromotion = vesselDB.ReducePromotion;
+            editBranch.ShippingFee = vesselDB.ShippingFee;
+            editBranch.Status = vesselDB.Status;
+            editBranch.SubAmount = vesselDB.SubAmount;
+        }
+    }
+}
+
+
+

@@ -296,6 +296,8 @@
         if (response != null && response.Result == 1)
         {
             toastService.ShowSuccess("thành công");
+            GbParameter.GbParameter.Order = null;
+            navigationManager.NavigateTo("/dashboard");
             return;
         }
         toastService.ShowError("thất bại");
