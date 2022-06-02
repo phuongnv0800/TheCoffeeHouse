@@ -9,7 +9,7 @@ namespace TCH.BackendApi.Repositories.DataRepository
 {
     public interface IOrderRepository
     {
-        Task<MessageResult> Create(OrderRequest request);
+        Task<Respond<object>> Create(OrderRequest request);
         Task<MessageResult> Update(OrderRequest request);
         Task<MessageResult> Delete(string orderID);
         Task<Respond<PagedList<Order>>> GetByBranhID(string branhID, Search request);
