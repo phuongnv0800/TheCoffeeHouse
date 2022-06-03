@@ -1,0 +1,159 @@
+﻿@page "/admin-dashboard"
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Identity
+@using Newtonsoft.Json
+@using System.Net.Http.Headers
+
+@using System.Security.Claims
+@using TCH.Data.Entities
+@using TCH.WebServer.Models
+@using TCH.WebServer.Models.Pagination
+@using TCH.WebServer.Services.Orders
+@using TCH.WebServer.Services.Reports
+@using TCH.WebServer.Services.Users
+
+@inject HttpClient httpClient
+@inject ILocalStorageService localStorage;
+@inject IOrderService orderService;
+@inject IUserService userServices;
+@inject NavigationManager navigationManager;
+@inject IToastService toastService
+@inject IJSRuntime jsRuntime;
+@attribute [Authorize]
+
+<div class="page d-flex flex-row flex-column-fluid">
+    <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+        <TCH.WebServer.Shared.Header.Header></TCH.WebServer.Shared.Header.Header>
+        <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+            <div class="card card-flush " style="">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            <div class="card-title">
+                                <div class="d-flex align-items-center position-relative my-1">
+                                    <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                        </svg>
+                                    </span>
+                                            @if (dateRequest != null)
+                                            {
+                                            <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
+                                                <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu" />
+                                                <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith" />
+                                                <button onclick = "@(() => SearchByText())"
+                                            class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Tìm kiếm
+                                                </button>
+                                            </EditForm>
+                                            }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <RadzenChart>
+                            <RadzenLineSeries Smooth="@smooth" Data="@items" CategoryProperty="Date" Title="Tháng 6/2022" ValueProperty="Revenue">
+                                <RadzenMarkers MarkerType="MarkerType.Square" />
+                            </RadzenLineSeries>
+                       
+                            <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}" />
+                            <RadzenValueAxis>
+                                @*<RadzenGridLines Visible="true" />*@
+                                <RadzenAxisTitle Text="Tổng doanh thu" />
+                            </RadzenValueAxis>
+                        </RadzenChart>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+    @code {
+        bool smooth = true;
+        class DataItem
+        {
+            public DateTime Date { get; set; }
+            public double Revenue { get; set; }
+        }
+        private List<DataItem> items = new List<DataItem>();
+        public List<Order>? ProductsList = new List<Order>();
+        private string? token;
+        public string Name;
+        private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
+        private ApplicationUser User;
+        private DateRequest dateRequest;
+        private double Sum; 
+        [CascadingParameter] public IModalService Modal { get; set; }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            try{
+                dateRequest = new DateRequest(){
+                FromDate = new DateTime(2022,06,01),
+                ToDate = DateTime.Now
+                };
+                navigationManager.NavigateTo("admin-dashboard");
+                var response = await userServices.GetUserInfo();
+                User = response.Data;
+                await Get(1);
+                base.OnParametersSet();
+            }
+            catch(Exception ex){
+                toastService.ShowError("có lỗi");
+            }
+        }
+        public async Task Get(int pageNumber)
+        {
+            try{
+                for (var date = dateRequest.FromDate.Date; date <= dateRequest.ToDate.Date; date = date.AddDays(1))
+                {
+
+                    //int daysInMonth = DateTime.DaysInMonth(year: 2022, month: date);
+                    //var lastDayOfMonth = new DateTime(2022, date, daysInMonth);
+                    var respond = await orderService.GetAllOrders(false, 10, 1, date, date);
+                    List<Order> orders = respond.Data.Items;
+                    double sum = orders.Sum(x => x.TotalAmount);
+                    DataItem item = new DataItem
+                    {
+                        Date = date,
+                        Revenue = sum
+                    };
+                    items.Add(item);
+                }
+            
+        }
+        catch(Exception ex){
+            toastService.ShowError(ex.ToString());
+        }
+    }
+    public async void Delete(string id)
+    {
+        await orderService.DeleteOrder(id);
+    }
+    public async void Change(int link)
+    {
+        pagination.PageNumber = link;
+        await Get(link);
+        StateHasChanged();
+    }
+    public async Task SearchByText()
+    {
+        await Get(pagination.PageNumber);
+    }
+}
+@code {
+    public class DateRequest
+    {
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+    }
+}
