@@ -15,6 +15,7 @@ namespace TCH.WebServer.Services.Orders
         Task<ResponseLogin<Order>> AddOrder(OrderRequest branch);
         Task<ResponseLogin<Order>> GetOrderById(string id);
         Task<ResponseLogin<Order>> UpdateOrder(OrderRequest branch);
+        Task<string> PrintPDF(string id);
         Task DeleteOrder(string id);
     }
     public class OrderService : IOrderService
@@ -131,6 +132,25 @@ namespace TCH.WebServer.Services.Orders
             catch
             {
                 throw;
+            }
+        }
+
+        public async Task<string> PrintPDF(string id)
+        {
+            try
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var response = await httpClient.GetAsync($"/api/Orders/print/{id}");
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    return content;
+                }
+                return null;
+            }
+            catch
+            {
+                return null;
             }
         }
     }

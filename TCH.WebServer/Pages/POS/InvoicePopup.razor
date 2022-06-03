@@ -1,7 +1,10 @@
-﻿@if (Id != null)
+﻿@using TCH.WebServer.Services.Orders
+@inject IToastService toastService;
+@inject IOrderService orderService;
+
+@if (myMarkup != null)
 {
-    
-    <iframe width="1660" height="1115" src="@host" frameborder="0" allowfullscreen></iframe>
+   @((MarkupString)myMarkup)
 }
 <div class="d-flex justify-content-end">
     <!--begin::Button-->
@@ -20,9 +23,9 @@
 
 @code {
     [Parameter] public string Id { get; set; }
-    private string host;
+    public string myMarkup { get; set; }
     protected override async Task OnParametersSetAsync()
     {
-        host = "https://localhost:82/api/Orders/" + Id;
+        myMarkup = await orderService.PrintPDF(Id);
     }
 }
