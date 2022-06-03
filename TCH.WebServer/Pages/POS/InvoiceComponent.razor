@@ -293,8 +293,8 @@
         {
             toastService.ShowSuccess("thành công");
             Id = response.Data.ID;
-            await ShowPopUp();
             GbParameter.GbParameter.Order = null;
+            await ShowPopUp();
             navigationManager.NavigateTo("/dashboard");
             return;
         }

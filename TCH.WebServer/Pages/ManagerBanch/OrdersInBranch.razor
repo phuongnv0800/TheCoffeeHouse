@@ -1,4 +1,4 @@
-﻿@page "/orders"
+﻿@page "/orders-branch"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -9,7 +9,6 @@
 @using TCH.WebServer.Models
 @using TCH.WebServer.Models.Pagination
 @using TCH.WebServer.Services.Orders
-@using TCH.WebServer.Services.Reports
 @using TCH.WebServer.Services.Users
 
 @inject HttpClient httpClient
@@ -17,11 +16,11 @@
 @inject IOrderService orderService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
-@inject IToastService toastService
+@inject IToastService toastService;
 @inject IJSRuntime jsRuntime;
 @attribute [Authorize]
 
-<div class="page d-flex flex-row flex-column-fluid">
+    <div class="page d-flex flex-row flex-column-fluid">
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
         
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -74,7 +73,7 @@
                                     {
                                         foreach (var product in ProductsList)
                                         {
-                                            string href = "/orders/" + product.ID.ToString();
+                                            string href = "/materials/" + product.ID.ToString();
                                             <tr class="odd">
                                                 <td>
                                                     <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -172,6 +171,7 @@
 
 
 @code {
+    public string BranchId { get; set; }
     public List<Order>? ProductsList = new List<Order>();
     private string? token;
     public string Name;
@@ -184,26 +184,27 @@
     protected override async Task OnParametersSetAsync()
     {
         try{
+            navigationManager.NavigateTo($"reports-export-branch");
             dateRequest = new DateRequest();
-            navigationManager.NavigateTo("orders");
+            BranchId = GbParameter.GbParameter.BranchId;
             var response = await userServices.GetUserInfo();
             User = response.Data;
             await Get(1);
             base.OnParametersSet();
         }
-        catch(Exception ex){
+        catch(Exception e){
             toastService.ShowError("có lỗi");
         }
     }
     public async Task Get(int pageNumber)
     {
         try{
-            var response = await orderService.GetAllOrders(true, pagination.pageSize, pageNumber, dateRequest.FromDate, dateRequest.ToDate);
+            var response = await orderService.GetAllOrdersInBranch(true, pagination.pageSize, pageNumber, BranchId,dateRequest.FromDate,dateRequest.ToDate);
             pagination.PageNumber = response.Data.CurrentPage;
             ProductsList = response.Data.Items.ToList();
             pagination.totalPage = response.Data.TotalPages;
         }
-        catch(Exception ex){
+        catch(Exception e){
             toastService.ShowError("có lỗi");
         }
     }
