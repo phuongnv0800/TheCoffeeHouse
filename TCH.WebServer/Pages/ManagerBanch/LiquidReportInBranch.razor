@@ -1,4 +1,4 @@
-﻿@page "/reports-liquid/{BranchId}"
+﻿@page "/reports-liquid-branch"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -16,6 +16,7 @@
 @inject IReportService reportService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
+@inject IToastService toastService;
 @inject IJSRuntime jsRuntime;
 @attribute [Authorize]
 
@@ -182,19 +183,30 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        dateRequest = new DateRequest();
-        navigationManager.NavigateTo($"reports-liquid/{BranchId}");
-        var response = await userServices.GetUserInfo();
-        User = response.Data;
-        await Get(1);
-        base.OnParametersSet();
+        try{
+            navigationManager.NavigateTo("reports-liquid-branch");
+            BranchId = GbParameter.GbParameter.BranchId;
+            dateRequest = new DateRequest();
+            var response = await userServices.GetUserInfo();
+            User = response.Data;
+            await Get(1);
+            base.OnParametersSet();
+        }
+        catch(Exception e){
+            toastService.ShowError("có lỗi");
+        }
     }
     public async Task Get(int pageNumber)
     {
-        var response = await reportService.GetAllLiquidInBranch(true, pagination.pageSize, pageNumber, BranchId, dateRequest.FromDate, dateRequest.ToDate);
-        pagination.PageNumber = response.Data.CurrentPage;
-        ProductsList = response.Data.Items.ToList();
-        pagination.totalPage = response.Data.TotalPages;
+        try{
+            var response = await reportService.GetAllLiquidInBranch(true, pagination.pageSize, pageNumber, BranchId, dateRequest.FromDate, dateRequest.ToDate);
+            pagination.PageNumber = response.Data.CurrentPage;
+            ProductsList = response.Data.Items.ToList();
+            pagination.totalPage = response.Data.TotalPages;
+        }
+        catch(Exception e){
+            toastService.ShowError("có lỗi");
+        }
     }
     public async void Delete(string id)
     {

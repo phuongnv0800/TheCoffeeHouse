@@ -1,4 +1,4 @@
-﻿@page "/reports-import/{BranchId}"
+﻿@page "/reports-import-branch"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -16,6 +16,7 @@
 @inject IReportService reportService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
+@inject IToastService toastService;
 @inject IJSRuntime jsRuntime;
 @attribute [Authorize]
 
@@ -170,7 +171,7 @@
 
 
 @code {
-    [Parameter] public string BranchId { get; set; }
+    public string BranchId { get; set; }
     public List<Report>? ProductsList = new List<Report>();
     private string? token;
     public string Name;
@@ -182,18 +183,30 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        navigationManager.NavigateTo($"reports-import/{BranchId}");
-        var response = await userServices.GetUserInfo();
-        User = response.Data;
-        await Get(1);
-        base.OnParametersSet();
+        try{
+            navigationManager.NavigateTo($"reports-import-branch");
+            dateRequest = new DateRequest();
+            BranchId = GbParameter.GbParameter.BranchId;
+            var response = await userServices.GetUserInfo();
+            User = response.Data;
+            await Get(1);
+            base.OnParametersSet();
+        }
+        catch(Exception e){
+            toastService.ShowError("có lỗi");
+        }
     }
     public async Task Get(int pageNumber)
     {
-        var response = await reportService.GetAllImportInBranch(true, pagination.pageSize, pageNumber, BranchId, dateRequest.FromDate, dateRequest.ToDate);
-        pagination.PageNumber = response.Data.CurrentPage;
-        ProductsList = response.Data.Items.ToList();
-        pagination.totalPage = response.Data.TotalPages;
+        try{
+            var response = await reportService.GetAllImportInBranch(true, pagination.pageSize, pageNumber, BranchId, dateRequest.FromDate, dateRequest.ToDate);
+            pagination.PageNumber = response.Data.CurrentPage;
+            ProductsList = response.Data.Items.ToList();
+            pagination.totalPage = response.Data.TotalPages;
+        }
+        catch(Exception e){
+            toastService.ShowError("có lỗi");
+        }
     }
     public async void Delete(string id)
     {
