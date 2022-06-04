@@ -97,6 +97,23 @@ public class CustomerManager : IDisposable, ICustomerRepository
             Data = result,
         };
     }
+    public async Task<Respond<Customer>> GetByPhone(string phone)
+    {
+        var result = await _context.Customers.FirstOrDefaultAsync(x => x.Phone == phone);
+        if (result == null)
+            return new Respond<Customer>()
+            {
+                Result = 0,
+                Message = "Không tìm thấy",
+            };
+
+        return new Respond<Customer>()
+        {
+            Result = 1,
+            Message = "Thành công",
+            Data = result,
+        };
+    }
     public async Task<MessageResult> Update(string id, CustomerRequest request)
     {
         var result = await _context.Customers.FindAsync(id);
