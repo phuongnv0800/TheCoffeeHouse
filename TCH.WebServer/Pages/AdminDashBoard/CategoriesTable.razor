@@ -18,10 +18,6 @@
 @inject IUserService userService
 @inject IToastService toastService
 
-@if (!GbParameter.IsLogin)
-{
-    <h3>Bạn chưa đăng nhập</h3>
-}
 else
 {
     <div class="fluid d-flex">
@@ -177,7 +173,7 @@ else
     protected override async  Task OnParametersSetAsync()
     {
         try{
-            navigationManager.NavigateTo("categories");
+            navigationManager.NavigateTo("/categories");
             var response = await userService.GetUserInfo();
             User = response.Data;
             await Get(1);

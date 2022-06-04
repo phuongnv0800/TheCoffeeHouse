@@ -47,11 +47,12 @@
                                     <a href="/product-detail/@product.ID" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
                                             <!--end::Title-->
                                             <!--begin::Text-->
-                                            @*<div class="fw-bold text-gray-600 text-dark mt-3">@product.Description</div>*@
+                                            <a class="fw-bold text-gray-600 text-dark mt-3 d-block" href="/recipes/@product.ID">Xem công thức</a>
                                             <!--end::Text-->
                                             <!--begin::Text-->
                                     <div class="fs-6 fw-bolder mt-5 d-flex flex-stack">
                                                 <!--begin::Label-->
+
                                         <span class="badge border border-dashed text-primary p-2">
                                                     <span class="text-primary text-gray-400">đ</span>@((product.IsSale) ? product.Price - product.PriceSale : product.Price)
                                                 </span>

@@ -119,6 +119,7 @@
                                                     <th class="p-0 min-w-150px d-block pt-3">Tên</th>
                                                     <th class="text-end min-w-140px pt-3">Trạng thái</th>
                                                     <th class="pe-0 text-end min-w-120px pt-3">Giá</th>
+                                                    <th class="pe-0 text-end min-w-120px pt-3">Số lượng</th>
                                                     <th class="pe-0 text-end min-w-120px pt-3">Đơn vị</th>
                                                     <th class="pe-0 text-end min-w-120px pt-3">Cân nặng</th>
                                                 </tr>
@@ -141,11 +142,15 @@
                                                                 <span class="text-gray-800 fw-bolder d-block fs-6">@topping.PriceOfUnit</span>
                                                             </td>
                                                             <td class="text-end">
+                                                                <span class="text-gray-800 fw-bolder d-block fs-6">@topping.Quantity</span>
+                                                            </td>
+                                                            <td class="text-end">
                                                                 <span class="text-gray-800 fw-bolder d-block fs-6">@topping.Unit</span>
                                                             </td>
                                                             <td class="text-end">
                                                                 <span class="text-gray-800 fw-bolder d-block fs-6">@topping.Mass</span>
                                                             </td>
+                                                            
                                                         </tr>
                                                     }
                                                 }

@@ -435,6 +435,8 @@ public class ReportManager : IReportRepository
         {
             query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Import).ToList();
         }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -468,6 +470,8 @@ public class ReportManager : IReportRepository
         {
             query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Import).ToList();
         }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -502,6 +506,8 @@ public class ReportManager : IReportRepository
         {
             query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Liquidation).ToList();
         }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -535,6 +541,8 @@ public class ReportManager : IReportRepository
         {
             query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Liquidation).ToList();
         }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();

@@ -49,7 +49,7 @@ namespace TCH.WebServer.Services.StockMaterials
                 List<StockMaterial> Products;
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<StockMaterial>>>($"/api/Stocks/{BranchId}?IsPging=" + IsPaging.ToString()
+                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<StockMaterial>>>($"/api/Stocks/get-by-branch/{BranchId}?IsPging=" + IsPaging.ToString()
                     + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&Name=" + name);
                 if (response.Result != 1)
                 {

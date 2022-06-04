@@ -23,7 +23,7 @@
 
 <div class="page d-flex flex-row flex-column-fluid">
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-        
+
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
             <div class="card card-flush " style="">
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
@@ -43,95 +43,102 @@
                                             <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
                                         </svg>
                                     </span>
-                                            @if (dateRequest != null)
-                                            {
-                                            <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
-                                                <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu" />
-                                                <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith" />
-                                                <button onclick = "@(() => SearchByText())"
-                                            class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Tìm kiếm
-                                                </button>
-                                            </EditForm>
-                                            }
+                                    @if (dateRequest != null)
+                                    {
+                                        <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
+                                            <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu" />
+                                            <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith" />
+                                            <button onclick="@(() => SearchByText())"
+                                                class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Tìm kiếm
+                                            </button>
+                                        </EditForm>
+                                    }
                                 </div>
                             </div>
+
                         </div>
                     </div>
-                    <div class="card-body pt-0">
-                        <RadzenChart>
-                            <RadzenLineSeries Smooth="@smooth" Data="@items" CategoryProperty="Date" Title="Tháng 6/2022" ValueProperty="Revenue">
-                                <RadzenMarkers MarkerType="MarkerType.Square" />
-                            </RadzenLineSeries>
-                       
-                            <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}" />
-                            <RadzenValueAxis>
-                                @*<RadzenGridLines Visible="true" />*@
-                                <RadzenAxisTitle Text="Tổng doanh thu" />
-                            </RadzenValueAxis>
-                        </RadzenChart>
-                    </div>
+
                 </div>
+                <div class="card-body pt-0">
+                    <RadzenChart>
+                        <RadzenLineSeries Smooth="@smooth" Data="@items" CategoryProperty="Date" Title="Tháng 6/2022" ValueProperty="Revenue">
+                            <RadzenMarkers MarkerType="MarkerType.Square" />
+                        </RadzenLineSeries>
+
+                        <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}" />
+                        <RadzenValueAxis>
+                            @*<RadzenGridLines Visible="true" />*@
+                            <RadzenAxisTitle Text="Tổng doanh thu" />
+                        </RadzenValueAxis>
+                    </RadzenChart>
+                </div>
+            </div>
         </div>
-    </div>
     </div>
 </div>
 
-    @code {
-        bool smooth = true;
-        class DataItem
-        {
-            public DateTime Date { get; set; }
-            public double Revenue { get; set; }
-        }
-        private List<DataItem> items = new List<DataItem>();
-        public List<Order>? ProductsList = new List<Order>();
-        private string? token;
-        public string Name;
-        private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
-        private ApplicationUser User;
-        private DateRequest dateRequest;
-        private double Sum; 
-        [CascadingParameter] public IModalService Modal { get; set; }
+@code {
+    bool smooth = true;
+    class DataItem
+    {
+        public DateTime Date { get; set; }
+        public double Revenue { get; set; }
+    }
+    private List<DataItem> items = new List<DataItem>();
+    public List<Order>? ProductsList = new List<Order>();
+    private string? token;
+    public string Name;
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
+    private ApplicationUser User;
+    private DateRequest dateRequest;
+    private double Sum;
+    [CascadingParameter] public IModalService Modal { get; set; }
 
-        protected override async Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync()
+    {
+        try
         {
-            try{
-                dateRequest = new DateRequest(){
-                FromDate = new DateTime(2022,06,01),
-                ToDate = DateTime.Now
-                };
-                navigationManager.NavigateTo("admin-dashboard");
-                var response = await userServices.GetUserInfo();
-                User = response.Data;
-                await Get(1);
-                base.OnParametersSet();
-            }
-            catch(Exception ex){
-                toastService.ShowError("có lỗi");
-            }
-        }
-        public async Task Get(int pageNumber)
-        {
-            try{
-                for (var date = dateRequest.FromDate.Date; date <= dateRequest.ToDate.Date; date = date.AddDays(1))
+            dateRequest = new DateRequest()
                 {
+                    FromDate = new DateTime(2022, 06, 01),
+                    ToDate = DateTime.Now
+                };
+            navigationManager.NavigateTo("admin-dashboard");
+            var response = await userServices.GetUserInfo();
+            User = response.Data;
+            await Get(1);
+            base.OnParametersSet();
+        }
+        catch (Exception ex)
+        {
+            toastService.ShowError("có lỗi");
+        }
+    }
+    public async Task Get(int pageNumber)
+    {
+        try
+        {
+            for (var date = dateRequest.FromDate.Date; date <= dateRequest.ToDate.Date; date = date.AddDays(1))
+            {
 
-                    //int daysInMonth = DateTime.DaysInMonth(year: 2022, month: date);
-                    //var lastDayOfMonth = new DateTime(2022, date, daysInMonth);
-                    var respond = await orderService.GetAllOrders(false, 10, 1, date, date);
-                    List<Order> orders = respond.Data.Items;
-                    double sum = orders.Sum(x => x.TotalAmount);
-                    DataItem item = new DataItem
+                //int daysInMonth = DateTime.DaysInMonth(year: 2022, month: date);
+                //var lastDayOfMonth = new DateTime(2022, date, daysInMonth);
+                var respond = await orderService.GetAllOrders(false, 10, 1, date, date);
+                List<Order> orders = respond.Data.Items;
+                double sum = orders.Sum(x => x.TotalAmount);
+                DataItem item = new DataItem
                     {
                         Date = date,
                         Revenue = sum
                     };
-                    items.Add(item);
-                }
-            
+                items.Add(item);
+            }
+
         }
-        catch(Exception ex){
+        catch (Exception ex)
+        {
             toastService.ShowError(ex.ToString());
         }
     }

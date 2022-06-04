@@ -398,7 +398,7 @@ public class OrderManager : IOrderRepository, IDisposable
         if (!string.IsNullOrEmpty(request.Name))
             result = result.Where(x => x.Code.Contains(request.Name)).ToList();
         if (request.StartDate != null && request.EndDate != null)
-            result = result.Where(x => DateTime.Compare(x.CreateDate, (DateTime)request.StartDate) < 0 && DateTime.Compare(x.CreateDate, (DateTime)request.StartDate) > 0).ToList();
+            result = result.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
         //paging
         int totalRow = result.Count();
         var data = new List<Order>();
@@ -431,7 +431,7 @@ public class OrderManager : IOrderRepository, IDisposable
         if (!string.IsNullOrEmpty(request.Name))
             result = result.Where(x => x.Code.Contains(request.Name)).ToList();
         if (request.StartDate != null && request.EndDate != null)
-            result = result.Where(x => DateTime.Compare(x.CreateDate, (DateTime)request.StartDate) < 0 && DateTime.Compare(x.CreateDate, (DateTime)request.StartDate) > 0).ToList();
+            result = result.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
         //paging
         int totalRow = result.Count();
         var data = new List<Order>();

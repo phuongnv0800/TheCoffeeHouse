@@ -12,7 +12,7 @@ namespace TCH.WebServer.Services.Orders
     public interface IOrderService
     {
         Task<ResponseLogin<PagedList<Order>>> GetAllOrders(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate);
-        Task<ResponseLogin<PagedList<Order>>> GetAllOrdersInBranch(bool IsPaging, int pageSize, int pageNumber,string BranchId, DateTime? FromDate, DateTime? ToDate);
+        Task<ResponseLogin<PagedList<Order>>> GetAllOrdersInBranch(bool IsPaging, int pageSize, int pageNumber,string BranchId,string id, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<Order>> AddOrder(OrderRequest branch);
         Task<ResponseLogin<Order>> GetOrderById(string id);
         Task<ResponseLogin<Order>> UpdateOrder(OrderRequest branch);
@@ -155,7 +155,7 @@ namespace TCH.WebServer.Services.Orders
             }
         }
 
-        public async Task<ResponseLogin<PagedList<Order>>> GetAllOrdersInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<PagedList<Order>>> GetAllOrdersInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId,string id, DateTime? FromDate, DateTime? ToDate)
         {
             try
             {
@@ -163,8 +163,9 @@ namespace TCH.WebServer.Services.Orders
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Order>>>($"/api/Orders/{BranchId}?IsPging=" + IsPaging.ToString()
-                        + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate
+                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Order>>>($"/api/Orders/branch/{id}?IsPging=" + IsPaging.ToString()
+                        + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&BranchId=" + BranchId
+                        + fromDate
                         + toDate);
                 if (response.Result != 1)
                 {

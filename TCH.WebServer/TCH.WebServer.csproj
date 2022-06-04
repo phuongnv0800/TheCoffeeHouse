@@ -257,6 +257,7 @@
 
   <ItemGroup>
     <Folder Include="Pages\Branchs\Menus\" />
+    <Folder Include="Services\Customers\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="Services\Promotions\" />
   </ItemGroup>
