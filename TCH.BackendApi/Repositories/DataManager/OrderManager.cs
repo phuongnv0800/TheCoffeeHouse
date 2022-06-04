@@ -390,7 +390,62 @@ public class OrderManager : IOrderRepository, IDisposable
     {
         throw new NotImplementedException();
     }
+    public async Task<Respond<object>> GetAllMoneyByBranchId(string branhID, Search request)
+    {
+        var result = await _context.Orders.Include(x => x.OrderDetails).ThenInclude(e => e.OrderToppingDetails).Where(x => x.BranchID == branhID).ToListAsync();
+        
+        if (request.StartDate != null && request.EndDate != null)
+            result = result.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+        //paging
+        int totalRow = result.Count();
+        var data = new List<Order>();
+        if (request.IsPging)
+        {
+            data = result
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        }
+        else
+            data = result.ToList();
 
+        var moneyAll = data.Sum(x => x.TotalAmount);
+        return new Respond<object>()
+        {
+            Data = moneyAll,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+    public async Task<Respond<object>> GetAllMoney(Search request)
+    {
+        var result = await _context
+            .Orders
+            .Include(x => x.OrderDetails)
+            .ThenInclude(e => e.OrderToppingDetails)
+            .ToListAsync();
+        
+        if (request.StartDate != null && request.EndDate != null)
+            result = result.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+        //paging
+        int totalRow = result.Count();
+        var data = new List<Order>();
+        if (request.IsPging)
+        {
+            data = result
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        }
+        else
+            data = result.ToList();
+
+        var moneyAll = data.Sum(x => x.TotalAmount);
+        return new Respond<object>()
+        {
+            Data = moneyAll,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
     public async Task<Respond<PagedList<Order>>> GetByBranhID(string branhID, Search request)
     {
         //var query = from c in _context.Orders where c.BranchID == branhID select c;

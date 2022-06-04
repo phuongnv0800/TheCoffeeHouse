@@ -11,6 +11,7 @@ public interface ICustomerRepository
     Task<MessageResult> Create(CustomerRequest request);
     Task<MessageResult> Delete(string id);
     Task<Respond<Customer>> GetByID(string id);
+    Task<Respond<Customer>> GetByPhone(string phone);
     Task<MessageResult> Update(string id, CustomerRequest request);
     Task<Respond<PagedList<Customer>>> GetAll(Search request);
     Task<MessageResult> CreateMemberType(MemberTypeRequest request);
