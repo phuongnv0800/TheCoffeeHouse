@@ -375,6 +375,10 @@ public class ReportManager : IReportRepository
             .Select(x => x)
             .Skip((request.PageNumber - 1) * request.PageSize)
             .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,
@@ -408,6 +412,10 @@ public class ReportManager : IReportRepository
             .Select(x => x)
             .Skip((request.PageNumber - 1) * request.PageSize)
             .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,
@@ -445,6 +453,10 @@ public class ReportManager : IReportRepository
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,
@@ -480,6 +492,10 @@ public class ReportManager : IReportRepository
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,
@@ -516,6 +532,10 @@ public class ReportManager : IReportRepository
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,
@@ -551,6 +571,10 @@ public class ReportManager : IReportRepository
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,

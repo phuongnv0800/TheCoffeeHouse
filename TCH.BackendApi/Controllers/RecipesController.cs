@@ -82,9 +82,7 @@ public class RecipesController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-
-  
-
+    
     [HttpPut]
     [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Update( [FromForm] RecipeRequest request)

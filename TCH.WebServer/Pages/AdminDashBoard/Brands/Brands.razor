@@ -1,12 +1,10 @@
 ﻿@page "/branchs"
-
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @using TCH.Data.Entities
 @using TCH.WebServer.Models
-@using TCH.WebServer.Models.Pagination
 @using TCH.WebServer.Services.Brands
-@using TCH.WebServer.Services.Categories
 @using TCH.WebServer.Services.Users
-@using Blazored.Modal.Services
 
 @inject NavigationManager navigationManager
 @inject IBrandService brandService
@@ -66,7 +64,7 @@
                                 {
                                     foreach (var branch in BranchList)
                                     {
-                                        string fileImage = "http://localhost:82/uploads" + branch.LinkImage;
+                                        string fileImage = Configuration["BackendApiUrl"]+"/Uploads/" + branch.LinkImage;
                                         string href = "/branchs/" + branch.ID.ToString();
                                         <tr class="odd">
                                             <td>
@@ -161,14 +159,20 @@
 </div>
    
 @code {
+    public String Url { get; set; }
     public List<Branch>? BranchList = new List<Branch>();
     private string? token;
     public string Name;
-     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
+     private TCH.WebServer.Models.Pagination.Pagination pagination = new ();
     private ApplicationUser User;
     private string searchText = "";
 
     [CascadingParameter] public IModalService Modal { get; set; }
+    protected override void OnInitialized()
+    {
+        Url=  Configuration.GetSection("BackendApiUrl").Value;
+        base.OnInitialized();
+    }
 
     protected override async  Task OnParametersSetAsync()
     {
