@@ -1,6 +1,9 @@
-﻿using System.Net.Http.Headers;
+﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using System.Text;
 using TCH.Data.Entities;
 using TCH.Utilities.Paginations;
+using TCH.ViewModel.RequestModel;
 using TCH.ViewModel.SubModels;
 using TCH.WebServer.Models;
 
@@ -10,7 +13,7 @@ namespace TCH.WebServer.Services.Recipes
     {
         Task<ResponseLogin<PagedList<RecipeDetail>>> GetAllRecipe(bool IsPaging, int pageSize, int pageNumber, string name);
         Task<ResponseLogin<PagedList<RecipeDetail>>> GetAllRecipeByProductId(string id);
-        
+        Task<ResponseLogin<string>> AddRecipe(List<RecipeRequest> requests);
     }
     public class RecipeService : IRecipeService
     {
@@ -19,6 +22,31 @@ namespace TCH.WebServer.Services.Recipes
         public RecipeService(HttpClient httpClient)
         {
             _httpClient = httpClient;
+        }
+
+        public async Task<ResponseLogin<string>> AddRecipe(List<RecipeRequest> requests)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(requests), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"/api/Recipes/", httpContent);
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<string> respond = JsonConvert.DeserializeObject<ResponseLogin<string>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public async Task<ResponseLogin<PagedList<RecipeDetail>>> GetAllRecipe(bool IsPaging, int pageSize, int pageNumber, string name)
