@@ -4,6 +4,7 @@
 @using TCH.WebServer.Services.Products
 @using TCH.WebServer.Services.Recipes
 @using TCH.ViewModel.RequestModel;
+@using TCH.ViewModel.SubModels;
 
 @inject IOrderService orderService
 @inject IProductService productService
@@ -102,7 +103,7 @@
 
     private List<RecipeDetail> recipes = new List<RecipeDetail>();
     private List<RecipeRequest> request = new List<RecipeRequest>();
-    private Product product = new Product();
+    private ProductVm product = new ProductVm();
     protected override async Task OnParametersSetAsync()
     {
         var responseProduct = await productService.GetProductById(ProductId);
