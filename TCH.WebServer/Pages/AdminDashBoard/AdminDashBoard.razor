@@ -108,6 +108,7 @@
             navigationManager.NavigateTo("admin-dashboard");
             var response = await userServices.GetUserInfo();
             User = response.Data;
+            Sum = await 
             await Get(1);
             base.OnParametersSet();
         }

@@ -45,7 +45,7 @@ public class OrdersController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize(Roles = Permission.Branch + Permission.Manage)]
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     [HttpGet("all-money")]
     public async Task<IActionResult> GetMoneyAll([FromQuery]Search request)
     {
@@ -64,7 +64,7 @@ public class OrdersController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [Authorize(Roles = Permission.Branch + Permission.Manage)]
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     [HttpGet("all-money/{branchID}")]
     public async Task<IActionResult> GetMoneyAllByBranchID(string branchID, [FromQuery]Search request)
     {
