@@ -61,6 +61,26 @@ public class RecipesController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    [AllowAnonymous]
+    [Authorize(Roles = Permission.Branch+Permission.Manage)]
+    [HttpGet("recipe-product/{productId}/{sizeId}")]
+    public async Task<IActionResult> GetRecipe(string productId, string sizeId)
+    {
+        try
+        {
+            var result = await _repository.GetRecipeByProductSize(productId, sizeId);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
     [HttpPost]
     [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Create([FromForm] IEnumerable<RecipeRequest> request)

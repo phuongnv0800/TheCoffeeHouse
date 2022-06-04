@@ -55,6 +55,31 @@ public class RecipeManager : IDisposable, IRecipeRepository
             Message = "Thành công",
         };
     }
+    public async Task<Respond<IEnumerable<RecipeDetail>>> GetRecipeByProductSize(string productID, string sizeID)
+    {
+        var result = await _context.RecipeDetails
+            .Include(x => x.Product)
+            .Include(x => x.Size)
+            .Include(x => x.Material)
+            .Where(x => x.ProductID == productID && x.SizeID == sizeID)
+            .ToListAsync();
+        if (result.Count == 0)
+        {
+            return new Respond<IEnumerable<RecipeDetail>>()
+            {
+                Data = null,
+                Result = 0,
+                Message = "Chưa có công thức, bạn hãy thêm công thức cho sản phẩm này",
+            };
+        }
+
+        return new Respond<IEnumerable<RecipeDetail>>()
+        {
+            Data = result,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
     public async Task<MessageResult> Create(IEnumerable<RecipeRequest> request)
     {
         var recipes = request.Select(x => _mapper.Map<RecipeDetail>(x)).ToList();
