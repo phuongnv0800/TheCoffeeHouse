@@ -1,5 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Drawing;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using TCH.BackendApi.EF;
 using TCH.Data.Entities;
 using TCH.BackendApi.Repositories.DataRepository;
@@ -12,19 +16,21 @@ using TCH.ViewModel.SubModels;
 
 namespace TCH.BackendApi.Repositories.DataManager;
 
-public class ReportManager : IReportRepository
+public class ReportManager : IReportRepository, IDisposable
 {
     private readonly APIContext _context;
     private readonly IMapper _mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly string? _userId;
+    private readonly IStorageService _storageService;
+    private const string UserContentFolderName = "users";
 
-    public ReportManager(APIContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+    public ReportManager(APIContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor,
+        IStorageService storageService)
     {
         _context = context;
         _mapper = mapper;
-        _httpContextAccessor = httpContextAccessor;
-        _userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
+        _userId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
+        _storageService = storageService;
     }
     public async Task<MessageResult> CreateExportReport(ExportRequest request)
     {
@@ -361,12 +367,15 @@ public class ReportManager : IReportRepository
     {
         var query = await _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x => x.BranchID == branchID)
+            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Export)
             .ToListAsync();
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Export).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) < 0 && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) > 0).ToList();
+
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -399,11 +408,15 @@ public class ReportManager : IReportRepository
     {
         var query = await _context.Reports
             .Include(x => x.ReportDetails)
+            .Where(x=>x.ReportType == ReportType.Export)
             .ToListAsync();
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Export).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) <= 0 && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) >= 0).ToList();
+
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -432,16 +445,827 @@ public class ReportManager : IReportRepository
         };
     }
 
+    public async Task<string> ExcelExportReport(string branchId, Search request)
+    {
+         var query = await _context.Reports
+            .Include(x=>x.Branch)
+            .Include(x => x.ReportDetails)
+            .Where(x=>x.ReportType == ReportType.Export && x.BranchID == branchId)
+            .ToListAsync();
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+        }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) <= 0 && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) >= 0).ToList();
 
+        var data = new List<Report>();
+        if (request.IsPging)
+            data = query
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
+        
+        var stream = new MemoryStream();
+        using (var xlPackage = new ExcelPackage(stream))
+        {
+            var worksheet = xlPackage.Workbook.Worksheets.Add("Export");
+            var namedStyle = xlPackage.Workbook.Styles.CreateNamedStyle("HyperLink");
+            namedStyle.Style.Font.UnderLine = true;
+            namedStyle.Style.Font.Color.SetColor(Color.Blue);
+            const int startRow = 5;
+            var row = startRow;
+
+            //Create Headers and format them
+            worksheet.Cells["A1"].Value = "Báo cáo xuất";
+            using (var r = worksheet.Cells["A1:C1"])
+            {
+                r.Merge = true;
+                r.Style.Font.Color.SetColor(Color.White);
+                r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
+                r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(23, 55, 93));
+            }
+
+            worksheet.Cells["A4"].Value = "STT";
+            worksheet.Cells["B4"].Value = "Mã phiếu";
+            worksheet.Cells["C4"].Value = "Lý do";
+            worksheet.Cells["D4"].Value = "Tên chi nhánh";
+            worksheet.Cells["E4"].Value = "Ngày tạo";
+            worksheet.Cells["F4"].Value = "Địa chỉ";
+            worksheet.Cells["G4"].Value = "Nhà cung cấp";
+            worksheet.Cells["H4"].Value = "Tên kho";
+            worksheet.Cells["I4"].Value = "Tổng giá trị";
+            worksheet.Cells["A4:I4"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            worksheet.Cells["A4:I4"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+            worksheet.Cells["A4:I4"].Style.Font.Bold = true;
+
+            row = 5;
+            foreach (var item in data.Select((value, i)=> new {value, i}))
+            {
+                    worksheet.Cells[row, 1].Value = item.i;
+                     worksheet.Cells[row, 2].Value = item.value.Code;
+                     worksheet.Cells[row, 3].Value = item.value.Conclude;
+                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                     worksheet.Cells[row, 6].Value = item.value.Address;
+                     worksheet.Cells[row, 7].Value = item.value.Supplier;
+                     worksheet.Cells[row, 8].Value = item.value.StockName;
+                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+                    
+                    row++;
+            }
+
+            // set some core property values
+            xlPackage.Workbook.Properties.Title = "Báo cáo";
+            xlPackage.Workbook.Properties.Author = "Quản lý";
+            xlPackage.Workbook.Properties.Subject = "Báo cáo";
+            // save the new spreadsheet
+            xlPackage.Save();
+            // Response.Clear();
+        }
+        stream.Position = 0;
+        var fileName = "temp.xlsx";
+        await _storageService.SaveFileAsync(stream,  fileName);
+        return _storageService.GetPathBE(fileName);
+    }
+    public async Task<string> ExcelLiquidationReport(string branchId, Search request)
+    {
+         var query = await _context.Reports
+            .Include(x=>x.Branch)
+            .Include(x => x.ReportDetails)
+            .Where(x=>x.ReportType == ReportType.Liquidation && x.BranchID == branchId)
+            .ToListAsync();
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+        }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query
+                .Where(
+                    x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date!) <= 0 
+                                     && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date!) >= 0)
+                .ToList();
+
+        var data = new List<Report>();
+        if (request.IsPging)
+            data = query
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
+        
+        var stream = new MemoryStream();
+        using (var xlPackage = new ExcelPackage(stream))
+        {
+            var worksheet = xlPackage.Workbook.Worksheets.Add("Export");
+            var namedStyle = xlPackage.Workbook.Styles.CreateNamedStyle("HyperLink");
+            namedStyle.Style.Font.UnderLine = true;
+            namedStyle.Style.Font.Color.SetColor(Color.Blue);
+            const int startRow = 5;
+            var row = startRow;
+
+            //Create Headers and format them
+            worksheet.Cells["A1"].Value = "Báo cáo thanh lý";
+            using (var r = worksheet.Cells["A1:C1"])
+            {
+                r.Merge = true;
+                r.Style.Font.Color.SetColor(Color.White);
+                r.Style.HorizontalAlignment = ExcelHorizontalAlignment.CenterContinuous;
+                r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(23, 55, 93));
+            }
+
+            worksheet.Cells["A4"].Value = "STT";
+            worksheet.Cells["B4"].Value = "Mã phiếu";
+            worksheet.Cells["C4"].Value = "Lý do";
+            worksheet.Cells["D4"].Value = "Tên chi nhánh";
+            worksheet.Cells["E4"].Value = "Ngày tạo";
+            worksheet.Cells["F4"].Value = "Địa chỉ";
+            worksheet.Cells["G4"].Value = "Nhà cung cấp";
+            worksheet.Cells["H4"].Value = "Tên kho";
+            worksheet.Cells["I4"].Value = "Tổng giá trị";
+            worksheet.Cells["J4"].Value = "Tên người thanh lý";
+            worksheet.Cells["K4"].Value = "Vai trò";
+            worksheet.Cells["L4"].Value = "Giá trị khoi phục";
+            worksheet.Cells["A4:L4"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            worksheet.Cells["A4:L4"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+            worksheet.Cells["A4:L4"].Style.Font.Bold = true;
+
+            row = 5;
+            foreach (var item in data.Select((value, i)=> new {value, i}))
+            {
+                    worksheet.Cells[row, 1].Value = item.i;
+                     worksheet.Cells[row, 2].Value = item.value.Code;
+                     worksheet.Cells[row, 3].Value = item.value.Conclude;
+                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                     worksheet.Cells[row, 6].Value = item.value.Address;
+                     worksheet.Cells[row, 7].Value = item.value.Supplier;
+                     worksheet.Cells[row, 8].Value = item.value.StockName;
+                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+                     worksheet.Cells[row, 10].Value = item.value.LiquidationName;
+                     worksheet.Cells[row, 11].Value = item.value.LiquidationRole;
+                     worksheet.Cells[row, 12].Value = item.value.RecoveryValue;
+                    
+                    row++;
+            }
+
+            // set some core property values
+            xlPackage.Workbook.Properties.Title = "Báo cáo";
+            xlPackage.Workbook.Properties.Author = "Quản lý";
+            xlPackage.Workbook.Properties.Subject = "Báo cáo";
+            // save the new spreadsheet
+            xlPackage.Save();
+            // Response.Clear();
+        }
+        stream.Position = 0;
+        var fileName = "temp.xlsx";
+        await _storageService.SaveFileAsync(stream,  fileName);
+        return _storageService.GetPathBE(fileName);
+    }
+    public async Task<string> ExcelImportReport(string branchId, Search request)
+    {
+        var query = await _context.Reports
+            .Include(x=>x.Branch)
+            .Include(x => x.ReportDetails)
+            .Where(x=>x.ReportType == ReportType.Import && x.BranchID == branchId)
+            .ToListAsync();
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+        }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) <= 0 && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) >= 0).ToList();
+
+        var data = new List<Report>();
+        if (request.IsPging)
+            data = query
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
+        
+        var stream = new MemoryStream();
+        using (var xlPackage = new ExcelPackage(stream))
+        {
+            var worksheet = xlPackage.Workbook.Worksheets.Add("Export");
+            var namedStyle = xlPackage.Workbook.Styles.CreateNamedStyle("HyperLink");
+            namedStyle.Style.Font.UnderLine = true;
+            namedStyle.Style.Font.Color.SetColor(Color.Blue);
+            const int startRow = 5;
+            var row = startRow;
+
+            //Create Headers and format them
+            worksheet.Cells["A1"].Value = "Báo cáo nhập";
+            using (var r = worksheet.Cells["A1:C1"])
+            {
+                r.Merge = true;
+                r.Style.Font.Color.SetColor(Color.White);
+                r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
+                r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(23, 55, 93));
+            }
+
+            worksheet.Cells["A4"].Value = "STT";
+            worksheet.Cells["B4"].Value = "Mã phiếu";
+            worksheet.Cells["C4"].Value = "Lý do";
+            worksheet.Cells["D4"].Value = "Tên chi nhánh";
+            worksheet.Cells["E4"].Value = "Ngày tạo";
+            worksheet.Cells["F4"].Value = "Địa chỉ";
+            worksheet.Cells["G4"].Value = "Nhà cung cấp";
+            worksheet.Cells["H4"].Value = "Tên kho";
+            worksheet.Cells["I4"].Value = "Tổng giá trị";
+            worksheet.Cells["A4:I4"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            worksheet.Cells["A4:I4"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+            worksheet.Cells["A4:I4"].Style.Font.Bold = true;
+
+            row = 5;
+            foreach (var item in data.Select((value, i)=> new {value, i}))
+            {
+                    worksheet.Cells[row, 1].Value = item.i;
+                     worksheet.Cells[row, 2].Value = item.value.Code;
+                     worksheet.Cells[row, 3].Value = item.value.Conclude;
+                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                     worksheet.Cells[row, 6].Value = item.value.Address;
+                     worksheet.Cells[row, 7].Value = item.value.Supplier;
+                     worksheet.Cells[row, 8].Value = item.value.StockName;
+                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+                    
+                    row++;
+            }
+
+            // set some core property values
+            xlPackage.Workbook.Properties.Title = "Báo cáo";
+            xlPackage.Workbook.Properties.Author = "Quản lý";
+            xlPackage.Workbook.Properties.Subject = "Báo cáo";
+            // save the new spreadsheet
+            xlPackage.Save();
+            // Response.Clear();
+        }
+        stream.Position = 0;
+        var fileName = "temp.xlsx";
+        await _storageService.SaveFileAsync(stream,  fileName);
+        return _storageService.GetPathBE(fileName);
+    }
+    
+    public async Task<string> ExcelExportAllReport( Search request)
+    {
+         var query = await _context.Reports
+            .Include(x=>x.Branch)
+            .Include(x => x.ReportDetails)
+            .Where(x=>x.ReportType == ReportType.Export)
+            .ToListAsync();
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+        }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) <= 0 
+                                     && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) >= 0)
+                .ToList();
+
+        var data = new List<Report>();
+        if (request.IsPging)
+            data = query
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
+        
+        var stream = new MemoryStream();
+        using (var xlPackage = new ExcelPackage(stream))
+        {
+            var worksheet = xlPackage.Workbook.Worksheets.Add("Export");
+            var namedStyle = xlPackage.Workbook.Styles.CreateNamedStyle("HyperLink");
+            namedStyle.Style.Font.UnderLine = true;
+            namedStyle.Style.Font.Color.SetColor(Color.Blue);
+            const int startRow = 5;
+            var row = startRow;
+
+            //Create Headers and format them
+            worksheet.Cells["A1"].Value = "Báo cáo xuất";
+            using (var r = worksheet.Cells["A1:C1"])
+            {
+                r.Merge = true;
+                r.Style.Font.Color.SetColor(Color.White);
+                r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
+                r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(23, 55, 93));
+            }
+
+            worksheet.Cells["A4"].Value = "STT";
+            worksheet.Cells["B4"].Value = "Mã phiếu";
+            worksheet.Cells["C4"].Value = "Lý do";
+            worksheet.Cells["D4"].Value = "Tên chi nhánh";
+            worksheet.Cells["E4"].Value = "Ngày tạo";
+            worksheet.Cells["F4"].Value = "Địa chỉ";
+            worksheet.Cells["G4"].Value = "Nhà cung cấp";
+            worksheet.Cells["H4"].Value = "Tên kho";
+            worksheet.Cells["I4"].Value = "Tổng giá trị";
+            worksheet.Cells["A4:I4"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            worksheet.Cells["A4:I4"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+            worksheet.Cells["A4:I4"].Style.Font.Bold = true;
+
+            row = 5;
+            foreach (var item in data.Select((value, i)=> new {value, i}))
+            {
+                    worksheet.Cells[row, 1].Value = item.i;
+                     worksheet.Cells[row, 2].Value = item.value.Code;
+                     worksheet.Cells[row, 3].Value = item.value.Conclude;
+                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                     worksheet.Cells[row, 6].Value = item.value.Address;
+                     worksheet.Cells[row, 7].Value = item.value.Supplier;
+                     worksheet.Cells[row, 8].Value = item.value.StockName;
+                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+                    
+                    row++;
+            }
+
+            // set some core property values
+            xlPackage.Workbook.Properties.Title = "Báo cáo";
+            xlPackage.Workbook.Properties.Author = "Quản lý";
+            xlPackage.Workbook.Properties.Subject = "Báo cáo";
+            // save the new spreadsheet
+            xlPackage.Save();
+            // Response.Clear();
+        }
+        stream.Position = 0;
+        var fileName = "temp.xlsx";
+        await _storageService.SaveFileAsync(stream,  fileName);
+        return _storageService.GetPathBE(fileName);
+    }
+    public async Task<string> ExcelLiquidationAllReport(Search request)
+    {
+         var query = await _context.Reports
+            .Include(x=>x.Branch)
+            .Include(x => x.ReportDetails)
+            .Where(x=>x.ReportType == ReportType.Liquidation)
+            .ToListAsync();
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+        }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) <= 0 
+                                     && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) >= 0)
+                .ToList();
+
+        var data = new List<Report>();
+        if (request.IsPging)
+            data = query
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
+        
+        var stream = new MemoryStream();
+        using (var xlPackage = new ExcelPackage(stream))
+        {
+            var worksheet = xlPackage.Workbook.Worksheets.Add("Export");
+            var namedStyle = xlPackage.Workbook.Styles.CreateNamedStyle("HyperLink");
+            namedStyle.Style.Font.UnderLine = true;
+            namedStyle.Style.Font.Color.SetColor(Color.Blue);
+            const int startRow = 5;
+            var row = startRow;
+
+            //Create Headers and format them
+            worksheet.Cells["A1"].Value = "Báo cáo thanh lý";
+            using (var r = worksheet.Cells["A1:C1"])
+            {
+                r.Merge = true;
+                r.Style.Font.Color.SetColor(Color.White);
+                r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
+                r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(23, 55, 93));
+            }
+
+            worksheet.Cells["A4"].Value = "STT";
+            worksheet.Cells["B4"].Value = "Mã phiếu";
+            worksheet.Cells["C4"].Value = "Lý do";
+            worksheet.Cells["D4"].Value = "Tên chi nhánh";
+            worksheet.Cells["E4"].Value = "Ngày tạo";
+            worksheet.Cells["F4"].Value = "Địa chỉ";
+            worksheet.Cells["G4"].Value = "Nhà cung cấp";
+            worksheet.Cells["H4"].Value = "Tên kho";
+            worksheet.Cells["I4"].Value = "Tổng giá trị";
+            worksheet.Cells["J4"].Value = "Tên người thanh lý";
+            worksheet.Cells["K4"].Value = "Vai trò";
+            worksheet.Cells["L4"].Value = "Giá trị khoi phục";
+            worksheet.Cells["A4:L4"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            worksheet.Cells["A4:L4"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+            worksheet.Cells["A4:L4"].Style.Font.Bold = true;
+
+            row = 5;
+            foreach (var item in data.Select((value, i)=> new {value, i}))
+            {
+                    worksheet.Cells[row, 1].Value = item.i;
+                     worksheet.Cells[row, 2].Value = item.value.Code;
+                     worksheet.Cells[row, 3].Value = item.value.Conclude;
+                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                     worksheet.Cells[row, 6].Value = item.value.Address;
+                     worksheet.Cells[row, 7].Value = item.value.Supplier;
+                     worksheet.Cells[row, 8].Value = item.value.StockName;
+                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+                     worksheet.Cells[row, 10].Value = item.value.LiquidationName;
+                     worksheet.Cells[row, 11].Value = item.value.LiquidationRole;
+                     worksheet.Cells[row, 12].Value = item.value.RecoveryValue;
+                    
+                    row++;
+            }
+
+            // set some core property values
+            xlPackage.Workbook.Properties.Title = "Báo cáo";
+            xlPackage.Workbook.Properties.Author = "Quản lý";
+            xlPackage.Workbook.Properties.Subject = "Báo cáo";
+            // save the new spreadsheet
+            xlPackage.Save();
+            // Response.Clear();
+        }
+        stream.Position = 0;
+        var fileName = "temp.xlsx";
+        await _storageService.SaveFileAsync(stream,  fileName);
+        return _storageService.GetPathBE(fileName);
+    }
+    public async Task<string> ExcelImportAllReport(Search request)
+    {
+        var query = await _context.Reports
+            .Include(x=>x.Branch)
+            .Include(x => x.ReportDetails)
+            .Where(x=>x.ReportType == ReportType.Import)
+            .ToListAsync();
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+        }
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date!) <= 0 
+                                     && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date!) >= 0).ToList();
+
+        var data = new List<Report>();
+        if (request.IsPging)
+            data = query
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        else
+        {
+            data = query.ToList();
+        }
+        
+        var stream = new MemoryStream();
+        using (var xlPackage = new ExcelPackage(stream))
+        {
+            var worksheet = xlPackage.Workbook.Worksheets.Add("Export");
+            var namedStyle = xlPackage.Workbook.Styles.CreateNamedStyle("HyperLink");
+            namedStyle.Style.Font.UnderLine = true;
+            namedStyle.Style.Font.Color.SetColor(Color.Blue);
+            const int startRow = 5;
+            var row = startRow;
+
+            //Create Headers and format them
+            worksheet.Cells["A1"].Value = "Báo cáo nhập";
+            using (var r = worksheet.Cells["A1:C1"])
+            {
+                r.Merge = true;
+                r.Style.Font.Color.SetColor(Color.White);
+                r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
+                r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(23, 55, 93));
+            }
+
+            worksheet.Cells["A4"].Value = "STT";
+            worksheet.Cells["B4"].Value = "Mã phiếu";
+            worksheet.Cells["C4"].Value = "Lý do";
+            worksheet.Cells["D4"].Value = "Tên chi nhánh";
+            worksheet.Cells["E4"].Value = "Ngày tạo";
+            worksheet.Cells["F4"].Value = "Địa chỉ";
+            worksheet.Cells["G4"].Value = "Nhà cung cấp";
+            worksheet.Cells["H4"].Value = "Tên kho";
+            worksheet.Cells["I4"].Value = "Tổng giá trị";
+            worksheet.Cells["A4:I4"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            worksheet.Cells["A4:I4"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+            worksheet.Cells["A4:I4"].Style.Font.Bold = true;
+
+            row = 5;
+            foreach (var item in data.Select((value, i)=> new {value, i}))
+            {
+                    worksheet.Cells[row, 1].Value = item.i;
+                     worksheet.Cells[row, 2].Value = item.value.Code;
+                     worksheet.Cells[row, 3].Value = item.value.Conclude;
+                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                     worksheet.Cells[row, 6].Value = item.value.Address;
+                     worksheet.Cells[row, 7].Value = item.value.Supplier;
+                     worksheet.Cells[row, 8].Value = item.value.StockName;
+                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+                    
+                    row++;
+            }
+
+            // set some core property values
+            xlPackage.Workbook.Properties.Title = "Báo cáo";
+            xlPackage.Workbook.Properties.Author = "Quản lý";
+            xlPackage.Workbook.Properties.Subject = "Báo cáo";
+            // save the new spreadsheet
+            xlPackage.Save();
+            // Response.Clear();
+        }
+        stream.Position = 0;
+        var fileName = "temp.xlsx";
+        await _storageService.SaveFileAsync(stream,  fileName);
+        return _storageService.GetPathBE(fileName);
+    }
+     public async Task<string> ExcelImportReportById(string id)
+    {
+        var report = await _context.Reports
+            .Include(x=>x.Branch)
+            .Include(x => x.ReportDetails)
+            .ThenInclude(x=>x.Material)
+            .Include(x => x.ReportDetails)
+            .ThenInclude(x=>x.Measure)
+            .FirstOrDefaultAsync(x=>x.ReportType == ReportType.Import && x.ID == id);
+        if (report == null)
+        {
+            return null;
+        }
+        var stream = new MemoryStream();
+        using (var xlPackage = new ExcelPackage(stream))
+        {
+            var worksheet = xlPackage.Workbook.Worksheets.Add("Export");
+            var namedStyle = xlPackage.Workbook.Styles.CreateNamedStyle("HyperLink");
+            namedStyle.Style.Font.UnderLine = true;
+            namedStyle.Style.Font.Color.SetColor(Color.Blue);
+            const int startRow = 5;
+            var row = startRow;
+
+            //Create Headers and format them
+            worksheet.Cells["A1"].Value = "Báo cáo nhập";
+            using (var r = worksheet.Cells["A1:C1"])
+            {
+                r.Merge = true;
+                r.Style.Font.Color.SetColor(Color.White);
+                r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
+                r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(23, 55, 93));
+            }
+
+            worksheet.Cells["A4"].Value = "STT";
+            worksheet.Cells["B4"].Value = "Mã báo cáo";
+            worksheet.Cells["C4"].Value = "Ngày tạo báo cáo";
+            worksheet.Cells["D4"].Value = "Tên kho";
+            worksheet.Cells["E4"].Value = "Tên nguyên liệu";
+            worksheet.Cells["F4"].Value = "Số lượng";
+            worksheet.Cells["G4"].Value = "Ngày bắt đầu";
+            worksheet.Cells["H4"].Value = "Ngày hết hạn";
+            worksheet.Cells["I4"].Value = "Trạng thái";
+            worksheet.Cells["J4"].Value = "Giá theo đơn vị";
+            worksheet.Cells["K4"].Value = "Khối lượng";
+            worksheet.Cells["L4"].Value = "Loại đơn vị tiêu chuẩn";
+            worksheet.Cells["M4"].Value = "Khối lượng tiêu chuẩn";
+            worksheet.Cells["N4"].Value = "Tên đơn vị tính";
+            worksheet.Cells["O4"].Value = "Mô tả";
+            worksheet.Cells["A4:O4"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            worksheet.Cells["A4:O4"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+            worksheet.Cells["A4:O4"].Style.Font.Bold = true;
+
+            row = 5;
+            foreach (var item in report.ReportDetails.Select((value, i)=> new {value, i}))
+            {
+                    worksheet.Cells[row, 1].Value = item.i;
+                     worksheet.Cells[row, 2].Value = report.Code;
+                     worksheet.Cells[row, 3].Value = report.CreateDate.ToShortDateString();
+                     worksheet.Cells[row, 4].Value = report.Branch.Name;
+                     worksheet.Cells[row, 5].Value = item.value.Material.Name;
+                     worksheet.Cells[row, 6].Value = item.value.Quantity;
+                     worksheet.Cells[row, 7].Value = item.value.BeginDate.ToShortDateString();
+                     worksheet.Cells[row, 8].Value = item.value.ExpirationDate.ToShortDateString();
+                     worksheet.Cells[row, 9].Value = item.value.Status == 1 ? "Sử dụng" : "";
+                     worksheet.Cells[row, 10].Value = item.value.PriceOfUnit;
+                     worksheet.Cells[row, 11].Value = item.value.Mass;
+                     worksheet.Cells[row, 12].Value = item.value.MeasureType == MeasureType.Mass ? "Khối lượng" : "Trọng lượng";
+                     worksheet.Cells[row, 13].Value = item.value.StandardMass;
+                     worksheet.Cells[row, 14].Value = item.value.Measure.Name;
+                     worksheet.Cells[row, 15].Value = item.value.Description;
+                    
+                    row++;
+            }
+
+            // set some core property values
+            xlPackage.Workbook.Properties.Title = "Báo cáo";
+            xlPackage.Workbook.Properties.Author = "Quản lý";
+            xlPackage.Workbook.Properties.Subject = "Báo cáo";
+            // save the new spreadsheet
+            xlPackage.Save();
+            // Response.Clear();
+        }
+        stream.Position = 0;
+        var fileName = "temp.xlsx";
+        await _storageService.SaveFileAsync(stream,  fileName);
+        return _storageService.GetPathBE(fileName);
+    }
+      public async Task<string> ExcelLiquidationReportById(string id)
+    {
+        var report = await _context.Reports
+            .Include(x=>x.Branch)
+            .Include(x => x.ReportDetails)
+            .ThenInclude(x=>x.Material)
+            .Include(x => x.ReportDetails)
+            .ThenInclude(x=>x.Measure)
+            .FirstOrDefaultAsync(x=>x.ReportType == ReportType.Liquidation && x.ID == id);
+        if (report == null)
+        {
+            return null;
+        }
+        var stream = new MemoryStream();
+        using (var xlPackage = new ExcelPackage(stream))
+        {
+            var worksheet = xlPackage.Workbook.Worksheets.Add("Export");
+            var namedStyle = xlPackage.Workbook.Styles.CreateNamedStyle("HyperLink");
+            namedStyle.Style.Font.UnderLine = true;
+            namedStyle.Style.Font.Color.SetColor(Color.Blue);
+            const int startRow = 5;
+            var row = startRow;
+
+            //Create Headers and format them
+            worksheet.Cells["A1"].Value = "Báo cáo thanh lý";
+            using (var r = worksheet.Cells["A1:C1"])
+            {
+                r.Merge = true;
+                r.Style.Font.Color.SetColor(Color.White);
+                r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
+                r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(23, 55, 93));
+            }
+
+            worksheet.Cells["A4"].Value = "STT";
+            worksheet.Cells["B4"].Value = "Mã báo cáo";
+            worksheet.Cells["C4"].Value = "Ngày tạo báo cáo";
+            worksheet.Cells["D4"].Value = "Tên kho";
+            worksheet.Cells["E4"].Value = "Tên nguyên liệu";
+            worksheet.Cells["F4"].Value = "Số lượng";
+            worksheet.Cells["G4"].Value = "Ngày bắt đầu";
+            worksheet.Cells["H4"].Value = "Ngày hết hạn";
+            worksheet.Cells["I4"].Value = "Trạng thái";
+            worksheet.Cells["J4"].Value = "Giá theo đơn vị";
+            worksheet.Cells["K4"].Value = "Khối lượng";
+            worksheet.Cells["L4"].Value = "Loại đơn vị tiêu chuẩn";
+            worksheet.Cells["M4"].Value = "Khối lượng tiêu chuẩn";
+            worksheet.Cells["N4"].Value = "Tên đơn vị tính";
+            worksheet.Cells["O4"].Value = "Mô tả";
+            worksheet.Cells["A4:O4"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            worksheet.Cells["A4:O4"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+            worksheet.Cells["A4:O4"].Style.Font.Bold = true;
+
+            row = 5;
+            foreach (var item in report.ReportDetails.Select((value, i)=> new {value, i}))
+            {
+                worksheet.Cells[row, 1].Value = item.i;
+                worksheet.Cells[row, 2].Value = report.Code;
+                worksheet.Cells[row, 3].Value = report.CreateDate.ToShortDateString();
+                worksheet.Cells[row, 4].Value = report.Branch.Name;
+                worksheet.Cells[row, 5].Value = item.value.Material.Name;
+                worksheet.Cells[row, 6].Value = item.value.Quantity;
+                worksheet.Cells[row, 7].Value = item.value.BeginDate.ToShortDateString();
+                worksheet.Cells[row, 8].Value = item.value.ExpirationDate.ToShortDateString();
+                worksheet.Cells[row, 9].Value = item.value.Status == 1 ? "Sử dụng" : "";
+                worksheet.Cells[row, 10].Value = item.value.PriceOfUnit;
+                worksheet.Cells[row, 11].Value = item.value.Mass;
+                worksheet.Cells[row, 12].Value = item.value.MeasureType == MeasureType.Mass ? "Khối lượng" : "Trọng lượng";
+                worksheet.Cells[row, 13].Value = item.value.StandardMass;
+                worksheet.Cells[row, 14].Value = item.value.Measure.Name;
+                worksheet.Cells[row, 15].Value = item.value.Description;
+                    row++;
+            }
+
+            // set some core property values
+            xlPackage.Workbook.Properties.Title = "Báo cáo";
+            xlPackage.Workbook.Properties.Author = "Quản lý";
+            xlPackage.Workbook.Properties.Subject = "Báo cáo";
+            // save the new spreadsheet
+            xlPackage.Save();
+            // Response.Clear();
+        }
+        stream.Position = 0;
+        var fileName = "temp.xlsx";
+        await _storageService.SaveFileAsync(stream,  fileName);
+        return _storageService.GetPathBE(fileName);
+    }
+       public async Task<string> ExcelExportReportById(string id)
+    {
+        var report = await _context.Reports
+            .Include(x=>x.Branch)
+            .Include(x => x.ReportDetails)
+            .ThenInclude(x=>x.Material)
+            .Include(x => x.ReportDetails)
+            .ThenInclude(x=>x.Measure)
+            .FirstOrDefaultAsync(x=>x.ReportType == ReportType.Export && x.ID == id);
+        if (report == null)
+        {
+            return null;
+        }
+        var stream = new MemoryStream();
+        using (var xlPackage = new ExcelPackage(stream))
+        {
+            var worksheet = xlPackage.Workbook.Worksheets.Add("Export");
+            var namedStyle = xlPackage.Workbook.Styles.CreateNamedStyle("HyperLink");
+            namedStyle.Style.Font.UnderLine = true;
+            namedStyle.Style.Font.Color.SetColor(Color.Blue);
+            const int startRow = 5;
+            var row = startRow;
+
+            //Create Headers and format them
+            worksheet.Cells["A1"].Value = "Báo cáo xuất";
+            using (var r = worksheet.Cells["A1:C1"])
+            {
+                r.Merge = true;
+                r.Style.Font.Color.SetColor(Color.White);
+                r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
+                r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(23, 55, 93));
+            }
+
+            worksheet.Cells["A4"].Value = "STT";
+            worksheet.Cells["B4"].Value = "Mã báo cáo";
+            worksheet.Cells["C4"].Value = "Ngày tạo báo cáo";
+            worksheet.Cells["D4"].Value = "Tên kho";
+            worksheet.Cells["E4"].Value = "Tên nguyên liệu";
+            worksheet.Cells["F4"].Value = "Số lượng";
+            worksheet.Cells["G4"].Value = "Ngày bắt đầu";
+            worksheet.Cells["H4"].Value = "Ngày hết hạn";
+            worksheet.Cells["I4"].Value = "Trạng thái";
+            worksheet.Cells["J4"].Value = "Giá theo đơn vị";
+            worksheet.Cells["K4"].Value = "Khối lượng";
+            worksheet.Cells["L4"].Value = "Loại đơn vị tiêu chuẩn";
+            worksheet.Cells["M4"].Value = "Khối lượng tiêu chuẩn";
+            worksheet.Cells["N4"].Value = "Tên đơn vị tính";
+            worksheet.Cells["O4"].Value = "Mô tả";
+            worksheet.Cells["A4:O4"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            worksheet.Cells["A4:O4"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+            worksheet.Cells["A4:O4"].Style.Font.Bold = true;
+
+            row = 5;
+            foreach (var item in report.ReportDetails.Select((value, i)=> new {value, i}))
+            {
+                worksheet.Cells[row, 1].Value = item.i;
+                worksheet.Cells[row, 2].Value = report.Code;
+                worksheet.Cells[row, 3].Value = report.CreateDate.ToShortDateString();
+                worksheet.Cells[row, 4].Value = report.Branch.Name;
+                worksheet.Cells[row, 5].Value = item.value.Material.Name;
+                worksheet.Cells[row, 6].Value = item.value.Quantity;
+                worksheet.Cells[row, 7].Value = item.value.BeginDate.ToShortDateString();
+                worksheet.Cells[row, 8].Value = item.value.ExpirationDate.ToShortDateString();
+                worksheet.Cells[row, 9].Value = item.value.Status == 1 ? "Sử dụng" : "";
+                worksheet.Cells[row, 10].Value = item.value.PriceOfUnit;
+                worksheet.Cells[row, 11].Value = item.value.Mass;
+                worksheet.Cells[row, 12].Value = item.value.MeasureType == MeasureType.Mass ? "Khối lượng" : "Trọng lượng";
+                worksheet.Cells[row, 13].Value = item.value.StandardMass;
+                worksheet.Cells[row, 14].Value = item.value.Measure.Name;
+                worksheet.Cells[row, 15].Value = item.value.Description;
+                    row++;
+            }
+
+            // set some core property values
+            xlPackage.Workbook.Properties.Title = "Báo cáo";
+            xlPackage.Workbook.Properties.Author = "Quản lý";
+            xlPackage.Workbook.Properties.Subject = "Báo cáo";
+            // save the new spreadsheet
+            xlPackage.Save();
+            // Response.Clear();
+        }
+        stream.Position = 0;
+        var fileName = "temp.xlsx";
+        await _storageService.SaveFileAsync(stream,  fileName);
+        return _storageService.GetPathBE(fileName);
+    }
     public async Task<Respond<PagedList<Report>>> GetAllImportReportByBranchID(string branchID, Search request)
     {
         var query = await _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x => x.BranchID == branchID)
+            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Import)
             .ToListAsync();
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Import).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
@@ -477,10 +1301,11 @@ public class ReportManager : IReportRepository
     {
         var query = await _context.Reports
             .Include(x => x.ReportDetails)
+            .Where(x=>x.ReportType == ReportType.Import)
             .ToListAsync();
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Import).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
@@ -516,11 +1341,11 @@ public class ReportManager : IReportRepository
     {
         var query = await _context.Reports
              .Include(x => x.ReportDetails)
-            .Where(x => x.BranchID == branchID)
+            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Liquidation)
              .ToListAsync();
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Liquidation).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
@@ -556,10 +1381,11 @@ public class ReportManager : IReportRepository
     {
         var query = await _context.Reports
              .Include(x => x.ReportDetails)
+             .Where(x=>x.ReportType == ReportType.Liquidation)
              .ToListAsync();
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code) && x.ReportType == ReportType.Liquidation).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
@@ -658,5 +1484,18 @@ public class ReportManager : IReportRepository
     public Task<MessageResult> UpdateLiquidationReport(string id, Report request)
     {
         throw new NotImplementedException();
+    }
+    private async Task<string> SaveFileIFormFile(IFormFile file)
+    {
+        var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim();
+        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+        await _storageService.SaveFileAsync(file.OpenReadStream(), UserContentFolderName + "/" + fileName);
+        return fileName;
+    }
+    public void Dispose()
+    {
+        GC.Collect(2, GCCollectionMode.Forced, true);
+        GC.WaitForPendingFinalizers();
+        GC.SuppressFinalize(this);
     }
 }

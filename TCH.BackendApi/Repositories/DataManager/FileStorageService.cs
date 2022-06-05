@@ -15,6 +15,10 @@ public class FileStorageService : IStorageService
         return $"/{UserContentFolderName}/{fileName}";
     }
 
+    public string GetPathBE(string fileName)
+    {
+        return $"{_userContentFolder}/{fileName}";
+    }
     public async Task SaveFileAsync(Stream mediaBinaryStream, string fileName)
     {
         var filePath = Path.Combine(_userContentFolder, fileName);

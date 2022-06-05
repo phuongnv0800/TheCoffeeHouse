@@ -7,4 +7,5 @@ public interface IStorageService
     Task SaveFileAsync(Stream mediaBinaryStream, string fileName);
 
     Task DeleteFileAsync(string fileName);
+    string GetPathBE(string fileName);
 }

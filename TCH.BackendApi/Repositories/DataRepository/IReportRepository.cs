@@ -11,6 +11,16 @@ public interface IReportRepository
     Task<MessageResult> CreateImportReport(ImportRequest request);
     Task<MessageResult> UpdateImportReport(string id, ImportRequest request);
     Task<MessageResult> DeleteImportReport(string id);
+    Task<string> ExcelExportReport(string branchId, Search request);
+    Task<string> ExcelImportReport(string branchId, Search request);
+    Task<string> ExcelLiquidationReport(string branchId, Search request);
+    
+    Task<string> ExcelExportAllReport(Search request);
+    Task<string> ExcelImportAllReport(Search request);
+    Task<string> ExcelLiquidationAllReport(Search request);
+    Task<string> ExcelImportReportById(string id);
+    Task<string> ExcelLiquidationReportById(string id);
+    Task<string> ExcelExportReportById(string id);
     Task<Respond<Report>> GetImportReportByID(string id);
     Task<Respond<PagedList<Report>>> GetAllImportReportByBranchID(string branchID, Search request);
     Task<Respond<PagedList<Report>>> GetAllImportReport(Search request);

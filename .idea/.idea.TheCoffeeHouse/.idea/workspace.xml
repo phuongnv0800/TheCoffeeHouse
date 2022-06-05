@@ -11,9 +11,11 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="">
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="add print excel">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.ViewModel/RequestModel/CustomerRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.ViewModel/RequestModel/CustomerRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,10 +42,23 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bebd253e21dcf766929bfdfd74615bfe46e6e1693b289273dbdb82152893/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/CustomersController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/OrdersController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/OrdersController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/OrdersController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Controllers/ProductsController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/RecipesController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/ReportsController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/TCH.BackendApi/EF/Seed.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.ViewModel/RequestModel/OrderRequest.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/RecipeManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataRepository/ICustomerRepository.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataRepository/IOrderRepository.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataRepository/IRecipeRepository.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
