@@ -17,7 +17,5 @@ public class CustomerRequest
     public string Address { get; set; } = "Ngô Quyền, Hải Phòng";
     public Gender Gender { get; set; } = Gender.Female;
     public DateTime DateOfBirth { get; set; } = DateTime.Now;
-    public string? ConversionRate { get; set; }
     public IFormFile? File { get; set; }
-    public string MemberTypeID { get; set; }
 }

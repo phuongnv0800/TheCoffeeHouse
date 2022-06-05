@@ -5,6 +5,7 @@ using TCH.BackendApi.EF;
 using TCH.Data.Entities;
 using TCH.BackendApi.Repositories.DataRepository;
 using TCH.Utilities.Claims;
+using TCH.Utilities.Enum;
 using TCH.Utilities.Paginations;
 using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;
@@ -34,6 +35,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
 
     public async Task<MessageResult> Create(CustomerRequest request)
     {
+        var memberType = await _context.Beans.FirstOrDefaultAsync(x=>x.Code == BeanType.New);
         var customer = new Customer()
         {
             ID = Guid.NewGuid().ToString(),
@@ -45,9 +47,9 @@ public class CustomerManager : IDisposable, ICustomerRepository
             Address = request.Address,
             Gender = request.Gender,
             DateOfBirth  = request.DateOfBirth,
-            MemberID = "",
+            MemberID = request.Phone,
             Point  = 0,
-            BeanID = request.MemberTypeID,
+            BeanID = memberType!.ID,
         };
         if (request.File != null)
         {
@@ -129,7 +131,6 @@ public class CustomerManager : IDisposable, ICustomerRepository
         result.Address = request.Address ?? result.Address;
         result.Gender = request.Gender;
         result.DateOfBirth = request.DateOfBirth;
-        result.BeanID = request.MemberTypeID;
         _context.Customers.Update(result);
         await _context.SaveChangesAsync();
         return new MessageResult()
