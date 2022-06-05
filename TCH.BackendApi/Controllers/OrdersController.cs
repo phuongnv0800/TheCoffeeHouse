@@ -25,10 +25,10 @@ public class OrdersController : ControllerBase
         _repository = orderRepository;
         _logger = logger;
     }
-    
+
     [AllowAnonymous]
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery]Search request)
+    public async Task<IActionResult> GetAll([FromQuery] Search request)
     {
         try
         {
@@ -37,17 +37,18 @@ public class OrdersController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
+
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     [HttpGet("all-money")]
-    public async Task<IActionResult> GetMoneyAll([FromQuery]Search request)
+    public async Task<IActionResult> GetMoneyAll([FromQuery] Search request)
     {
         try
         {
@@ -56,17 +57,84 @@ public class OrdersController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
+
+    [Authorize(Roles = Permission.Branch)]
+    [HttpGet("excel-all")]
+    public async Task<IActionResult> ExcelAllOrder([FromQuery] Search request)
+    {
+        try
+        {
+            string newPath = await _repository.ExcelAllOrder(request);
+            if (newPath == null)
+            {
+                return BadRequest(new {result = -1, message = "Không thấy"});
+            }
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(newPath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+
+            memory.Position = 0;
+            return File(memory, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                Path.GetFileName(newPath));
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new {result = -1, message = e.Message});
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new {result = -2, message = e.Message});
+        }
+    }
+
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
+    [HttpGet("excel-by-branchId/{branchID}")]
+    public async Task<IActionResult> ExcelAllOrderByBranchID(string branchID, [FromQuery] Search request)
+    {
+        try
+        {
+            string newPath = await _repository.ExcelAllOrderByBranchID(branchID, request);
+            if (newPath == null)
+            {
+                return BadRequest(new {result = -1, message = "Không thấy"});
+            }
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(newPath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+
+            memory.Position = 0;
+            return File(memory, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                Path.GetFileName(newPath));
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new {result = -1, message = e.Message});
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new {result = -2, message = e.Message});
+        }
+    }
+
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     [HttpGet("all-money/{branchID}")]
-    public async Task<IActionResult> GetMoneyAllByBranchID(string branchID, [FromQuery]Search request)
+    public async Task<IActionResult> GetMoneyAllByBranchID(string branchID, [FromQuery] Search request)
     {
         try
         {
@@ -75,12 +143,12 @@ public class OrdersController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
 
@@ -95,15 +163,15 @@ public class OrdersController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
-    
+
     [AllowAnonymous]
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetByUserID(string userId, [FromQuery] Search request)
@@ -115,15 +183,15 @@ public class OrdersController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
-    
+
     [AllowAnonymous]
     [HttpGet("branch/{userId}")]
     public async Task<IActionResult> GetByBranchID(string branchID, [FromQuery] Search request)
@@ -135,12 +203,12 @@ public class OrdersController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
 
@@ -154,21 +222,23 @@ public class OrdersController : ControllerBase
             string invoiceHtml = await _repository.PrintInvoicePaymented(ID);
             if (string.IsNullOrEmpty(invoiceHtml))
             {
-                return BadRequest(new Respond<string> { Result = 0, Message = "Failed", Data = "Không tìm thấy dữ liệu" });
+                return BadRequest(new Respond<string>
+                    {Result = 0, Message = "Failed", Data = "Không tìm thấy dữ liệu"});
             }
+
             return base.Content(invoiceHtml, "text/html", Encoding.UTF8);
         }
         catch (CustomException e)
         {
-            return BadRequest(new Respond<string> { Result = -1, Message = "Failed", Data = e.Message });
+            return BadRequest(new Respond<string> {Result = -1, Message = "Failed", Data = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new Respond<string> { Result = -2, Message = "Failed", Data = e.Message });
+            return BadRequest(new Respond<string> {Result = -2, Message = "Failed", Data = e.Message});
         }
     }
-    
+
     [AllowAnonymous]
     [HttpGet("print-img/{ID}")]
     public async Task<IActionResult> PrintImg(string ID)
@@ -178,16 +248,18 @@ public class OrdersController : ControllerBase
             string invoiceHtml = await _repository.PrintInvoicePaymented(ID);
             if (string.IsNullOrEmpty(invoiceHtml))
             {
-                return BadRequest(new Respond<string> { Result = 0, Message = "Failed", Data = "Không tìm thấy dữ liệu" });
+                return BadRequest(new Respond<string>
+                    {Result = 0, Message = "Failed", Data = "Không tìm thấy dữ liệu"});
             }
+
             HtmlConverter converter = new HtmlConverter();
-            var bytes = converter.FromHtmlString(invoiceHtml.ToString());          
+            var bytes = converter.FromHtmlString(invoiceHtml.ToString());
             return Ok(Convert.ToBase64String(bytes));
             //return File(bytes, "image/png");
         }
         catch (CustomException e)
         {
-            return BadRequest(new Respond<string> { Result = -1, Message = "Failed", Data = e.Message });
+            return BadRequest(new Respond<string> {Result = -1, Message = "Failed", Data = e.Message});
         }
     }
 
@@ -201,17 +273,18 @@ public class OrdersController : ControllerBase
             {
                 return BadRequest(ModelState);
             }
+
             var result = await _repository.Create(request);
             return Ok(result);
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
 
@@ -225,17 +298,18 @@ public class OrdersController : ControllerBase
             {
                 return BadRequest(ModelState);
             }
+
             var result = await _repository.UpdateStatus(orderID, status);
             return Ok(result);
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
 
@@ -251,12 +325,12 @@ public class OrdersController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
 
@@ -276,12 +350,12 @@ public class OrdersController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
 }

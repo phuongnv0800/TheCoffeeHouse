@@ -32,6 +32,7 @@ public class ReportManager : IReportRepository, IDisposable
         _userId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
         _storageService = storageService;
     }
+
     public async Task<MessageResult> CreateExportReport(ExportRequest request)
     {
         var export = new Report()
@@ -64,6 +65,7 @@ public class ReportManager : IReportRepository, IDisposable
                 Message = "Không tim thấy thông tin kho theo chi nhánh",
             };
         }
+
         foreach (var item in request.ReportDetails)
         {
             var measure = await _context.Measures.FindAsync(item.MeasureID);
@@ -75,18 +77,22 @@ public class ReportManager : IReportRepository, IDisposable
                     Message = "Không tim thấy thông tin đơn vị",
                 };
             }
+
             foreach (var stock in stockDetails)
             {
-                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
+                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate &&
+                    item.ExpirationDate == stock.ExpirationDate)
                 {
                     stock.Quantity -= item.Quantity;
                     if (stock.Quantity < 0)
                     {
                         stock.Quantity = 0;
                     }
+
                     break;
                 }
             }
+
             var exportMaterial = new ReportDetail()
             {
                 ReportID = export.ID,
@@ -106,6 +112,7 @@ public class ReportManager : IReportRepository, IDisposable
             };
             await _context.ReportDetails.AddAsync(exportMaterial);
         }
+
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -146,6 +153,7 @@ public class ReportManager : IReportRepository, IDisposable
                 Message = "Không tim thấy thông tin kho theo chi nhánh",
             };
         }
+
         foreach (var item in request.ReportDetails)
         {
             var measure = await _context.Measures.FindAsync(item.MeasureID);
@@ -157,16 +165,19 @@ public class ReportManager : IReportRepository, IDisposable
                     Message = "Không tim thấy thông tin đơn vị",
                 };
             }
+
             bool isAddStock = true;
             foreach (var stock in stockDetails)
             {
-                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
+                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate &&
+                    item.ExpirationDate == stock.ExpirationDate)
                 {
                     isAddStock = false;
                     stock.Quantity += item.Quantity;
                     break;
                 }
             }
+
             if (isAddStock)
             {
                 var stockMaterial = new StockMaterial()
@@ -187,6 +198,7 @@ public class ReportManager : IReportRepository, IDisposable
                 };
                 await _context.StockMaterials.AddAsync(stockMaterial);
             }
+
             var exportMaterial = new ReportDetail()
             {
                 ReportID = report.ID,
@@ -206,6 +218,7 @@ public class ReportManager : IReportRepository, IDisposable
             };
             await _context.ReportDetails.AddAsync(exportMaterial);
         }
+
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -247,6 +260,7 @@ public class ReportManager : IReportRepository, IDisposable
                 Message = "Không tim thấy thông tin kho theo chi nhánh",
             };
         }
+
         foreach (var item in request.ReportDetails)
         {
             var measure = await _context.Measures.FindAsync(item.MeasureID);
@@ -258,18 +272,22 @@ public class ReportManager : IReportRepository, IDisposable
                     Message = "Không tim thấy thông tin đơn vị",
                 };
             }
+
             foreach (var stock in stockDetails)
             {
-                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate && item.ExpirationDate == stock.ExpirationDate)
+                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate &&
+                    item.ExpirationDate == stock.ExpirationDate)
                 {
                     stock.Quantity -= item.Quantity;
                     if (stock.Quantity < 0)
                     {
                         stock.Quantity = 0;
                     }
+
                     break;
                 }
             }
+
             var exportMaterial = new ReportDetail()
             {
                 ReportID = report.ID,
@@ -289,6 +307,7 @@ public class ReportManager : IReportRepository, IDisposable
             };
             _context.ReportDetails.Add(exportMaterial);
         }
+
         await _context.SaveChangesAsync();
         return new MessageResult()
         {
@@ -308,6 +327,7 @@ public class ReportManager : IReportRepository, IDisposable
                 Message = "Không tìm thấy",
             };
         }
+
         var details = await _context.ReportDetails.Where(x => x.ReportID == id).ToListAsync();
         _context.ReportDetails.RemoveRange(details);
         _context.Reports.Remove(report);
@@ -330,6 +350,7 @@ public class ReportManager : IReportRepository, IDisposable
                 Message = "Không tìm thấy",
             };
         }
+
         var details = await _context.ReportDetails.Where(x => x.ReportID == id).ToListAsync();
         _context.ReportDetails.RemoveRange(details);
         _context.Reports.Remove(report);
@@ -343,7 +364,8 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<MessageResult> DeleteLiquidationReport(string id)
     {
-        var report = await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Liquidation);
+        var report =
+            await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Liquidation);
         if (report == null)
         {
             return new MessageResult()
@@ -352,6 +374,7 @@ public class ReportManager : IReportRepository, IDisposable
                 Message = "Không tìm thấy",
             };
         }
+
         var details = await _context.ReportDetails.Where(x => x.ReportID == id).ToListAsync();
         _context.ReportDetails.RemoveRange(details);
         _context.Reports.Remove(report);
@@ -373,27 +396,31 @@ public class ReportManager : IReportRepository, IDisposable
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) < 0 && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) > 0).ToList();
+            query = query.Where(x =>
+                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) < 0 &&
+                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) > 0).ToList();
 
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
         if (request.IsPging)
             data = query
-            .Select(x => x)
-            .Skip((request.PageNumber - 1) * request.PageSize)
-            .Take(request.PageSize).ToList();
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
         else
         {
             data = query.ToList();
         }
+
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<Report>>()
@@ -408,33 +435,37 @@ public class ReportManager : IReportRepository, IDisposable
     {
         var query = await _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x=>x.ReportType == ReportType.Export)
+            .Where(x => x.ReportType == ReportType.Export)
             .ToListAsync();
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) <= 0 && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) >= 0).ToList();
+            query = query.Where(x =>
+                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) <= 0 &&
+                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) >= 0).ToList();
 
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
         if (request.IsPging)
             data = query
-            .Select(x => x)
-            .Skip((request.PageNumber - 1) * request.PageSize)
-            .Take(request.PageSize).ToList();
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
         else
         {
             data = query.ToList();
         }
+
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<Report>>()
@@ -447,17 +478,20 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<string> ExcelExportReport(string branchId, Search request)
     {
-         var query = await _context.Reports
-            .Include(x=>x.Branch)
+        var query = await _context.Reports
+            .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x=>x.ReportType == ReportType.Export && x.BranchID == branchId)
+            .Where(x => x.ReportType == ReportType.Export && x.BranchID == branchId)
             .ToListAsync();
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) <= 0 && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) >= 0).ToList();
+            query = query.Where(x =>
+                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) <= 0 &&
+                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) >= 0).ToList();
 
         var data = new List<Report>();
         if (request.IsPging)
@@ -469,7 +503,7 @@ public class ReportManager : IReportRepository, IDisposable
         {
             data = query.ToList();
         }
-        
+
         var stream = new MemoryStream();
         using (var xlPackage = new ExcelPackage(stream))
         {
@@ -505,19 +539,19 @@ public class ReportManager : IReportRepository, IDisposable
             worksheet.Cells["A4:I4"].Style.Font.Bold = true;
 
             row = 5;
-            foreach (var item in data.Select((value, i)=> new {value, i}))
+            foreach (var item in data.Select((value, i) => new {value, i}))
             {
-                    worksheet.Cells[row, 1].Value = item.i;
-                     worksheet.Cells[row, 2].Value = item.value.Code;
-                     worksheet.Cells[row, 3].Value = item.value.Conclude;
-                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
-                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
-                     worksheet.Cells[row, 6].Value = item.value.Address;
-                     worksheet.Cells[row, 7].Value = item.value.Supplier;
-                     worksheet.Cells[row, 8].Value = item.value.StockName;
-                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
-                    
-                    row++;
+                worksheet.Cells[row, 1].Value = item.i;
+                worksheet.Cells[row, 2].Value = item.value.Code;
+                worksheet.Cells[row, 3].Value = item.value.Conclude;
+                worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                worksheet.Cells[row, 6].Value = item.value.Address;
+                worksheet.Cells[row, 7].Value = item.value.Supplier;
+                worksheet.Cells[row, 8].Value = item.value.StockName;
+                worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+
+                row++;
             }
 
             // set some core property values
@@ -528,27 +562,30 @@ public class ReportManager : IReportRepository, IDisposable
             xlPackage.Save();
             // Response.Clear();
         }
+
         stream.Position = 0;
         var fileName = "temp.xlsx";
-        await _storageService.SaveFileAsync(stream,  fileName);
+        await _storageService.SaveFileAsync(stream, fileName);
         return _storageService.GetPathBE(fileName);
     }
+
     public async Task<string> ExcelLiquidationReport(string branchId, Search request)
     {
-         var query = await _context.Reports
-            .Include(x=>x.Branch)
+        var query = await _context.Reports
+            .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x=>x.ReportType == ReportType.Liquidation && x.BranchID == branchId)
+            .Where(x => x.ReportType == ReportType.Liquidation && x.BranchID == branchId)
             .ToListAsync();
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
             query = query
                 .Where(
-                    x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date!) <= 0 
-                                     && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date!) >= 0)
+                    x => DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) <= 0
+                         && DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) >= 0)
                 .ToList();
 
         var data = new List<Report>();
@@ -561,7 +598,7 @@ public class ReportManager : IReportRepository, IDisposable
         {
             data = query.ToList();
         }
-        
+
         var stream = new MemoryStream();
         using (var xlPackage = new ExcelPackage(stream))
         {
@@ -600,22 +637,22 @@ public class ReportManager : IReportRepository, IDisposable
             worksheet.Cells["A4:L4"].Style.Font.Bold = true;
 
             row = 5;
-            foreach (var item in data.Select((value, i)=> new {value, i}))
+            foreach (var item in data.Select((value, i) => new {value, i}))
             {
-                    worksheet.Cells[row, 1].Value = item.i;
-                     worksheet.Cells[row, 2].Value = item.value.Code;
-                     worksheet.Cells[row, 3].Value = item.value.Conclude;
-                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
-                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
-                     worksheet.Cells[row, 6].Value = item.value.Address;
-                     worksheet.Cells[row, 7].Value = item.value.Supplier;
-                     worksheet.Cells[row, 8].Value = item.value.StockName;
-                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
-                     worksheet.Cells[row, 10].Value = item.value.LiquidationName;
-                     worksheet.Cells[row, 11].Value = item.value.LiquidationRole;
-                     worksheet.Cells[row, 12].Value = item.value.RecoveryValue;
-                    
-                    row++;
+                worksheet.Cells[row, 1].Value = item.i;
+                worksheet.Cells[row, 2].Value = item.value.Code;
+                worksheet.Cells[row, 3].Value = item.value.Conclude;
+                worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                worksheet.Cells[row, 6].Value = item.value.Address;
+                worksheet.Cells[row, 7].Value = item.value.Supplier;
+                worksheet.Cells[row, 8].Value = item.value.StockName;
+                worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+                worksheet.Cells[row, 10].Value = item.value.LiquidationName;
+                worksheet.Cells[row, 11].Value = item.value.LiquidationRole;
+                worksheet.Cells[row, 12].Value = item.value.RecoveryValue;
+
+                row++;
             }
 
             // set some core property values
@@ -626,24 +663,29 @@ public class ReportManager : IReportRepository, IDisposable
             xlPackage.Save();
             // Response.Clear();
         }
+
         stream.Position = 0;
         var fileName = "temp.xlsx";
-        await _storageService.SaveFileAsync(stream,  fileName);
+        await _storageService.SaveFileAsync(stream, fileName);
         return _storageService.GetPathBE(fileName);
     }
+
     public async Task<string> ExcelImportReport(string branchId, Search request)
     {
         var query = await _context.Reports
-            .Include(x=>x.Branch)
+            .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x=>x.ReportType == ReportType.Import && x.BranchID == branchId)
+            .Where(x => x.ReportType == ReportType.Import && x.BranchID == branchId)
             .ToListAsync();
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) <= 0 && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) >= 0).ToList();
+            query = query.Where(x =>
+                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) <= 0 &&
+                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) >= 0).ToList();
 
         var data = new List<Report>();
         if (request.IsPging)
@@ -655,7 +697,7 @@ public class ReportManager : IReportRepository, IDisposable
         {
             data = query.ToList();
         }
-        
+
         var stream = new MemoryStream();
         using (var xlPackage = new ExcelPackage(stream))
         {
@@ -691,19 +733,19 @@ public class ReportManager : IReportRepository, IDisposable
             worksheet.Cells["A4:I4"].Style.Font.Bold = true;
 
             row = 5;
-            foreach (var item in data.Select((value, i)=> new {value, i}))
+            foreach (var item in data.Select((value, i) => new {value, i}))
             {
-                    worksheet.Cells[row, 1].Value = item.i;
-                     worksheet.Cells[row, 2].Value = item.value.Code;
-                     worksheet.Cells[row, 3].Value = item.value.Conclude;
-                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
-                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
-                     worksheet.Cells[row, 6].Value = item.value.Address;
-                     worksheet.Cells[row, 7].Value = item.value.Supplier;
-                     worksheet.Cells[row, 8].Value = item.value.StockName;
-                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
-                    
-                    row++;
+                worksheet.Cells[row, 1].Value = item.i;
+                worksheet.Cells[row, 2].Value = item.value.Code;
+                worksheet.Cells[row, 3].Value = item.value.Conclude;
+                worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                worksheet.Cells[row, 6].Value = item.value.Address;
+                worksheet.Cells[row, 7].Value = item.value.Supplier;
+                worksheet.Cells[row, 8].Value = item.value.StockName;
+                worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+
+                row++;
             }
 
             // set some core property values
@@ -714,26 +756,28 @@ public class ReportManager : IReportRepository, IDisposable
             xlPackage.Save();
             // Response.Clear();
         }
+
         stream.Position = 0;
         var fileName = "temp.xlsx";
-        await _storageService.SaveFileAsync(stream,  fileName);
+        await _storageService.SaveFileAsync(stream, fileName);
         return _storageService.GetPathBE(fileName);
     }
-    
-    public async Task<string> ExcelExportAllReport( Search request)
+
+    public async Task<string> ExcelExportAllReport(Search request)
     {
-         var query = await _context.Reports
-            .Include(x=>x.Branch)
+        var query = await _context.Reports
+            .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x=>x.ReportType == ReportType.Export)
+            .Where(x => x.ReportType == ReportType.Export)
             .ToListAsync();
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) <= 0 
-                                     && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) >= 0)
+            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) <= 0
+                                     && DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) >= 0)
                 .ToList();
 
         var data = new List<Report>();
@@ -746,7 +790,7 @@ public class ReportManager : IReportRepository, IDisposable
         {
             data = query.ToList();
         }
-        
+
         var stream = new MemoryStream();
         using (var xlPackage = new ExcelPackage(stream))
         {
@@ -782,19 +826,19 @@ public class ReportManager : IReportRepository, IDisposable
             worksheet.Cells["A4:I4"].Style.Font.Bold = true;
 
             row = 5;
-            foreach (var item in data.Select((value, i)=> new {value, i}))
+            foreach (var item in data.Select((value, i) => new {value, i}))
             {
-                    worksheet.Cells[row, 1].Value = item.i;
-                     worksheet.Cells[row, 2].Value = item.value.Code;
-                     worksheet.Cells[row, 3].Value = item.value.Conclude;
-                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
-                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
-                     worksheet.Cells[row, 6].Value = item.value.Address;
-                     worksheet.Cells[row, 7].Value = item.value.Supplier;
-                     worksheet.Cells[row, 8].Value = item.value.StockName;
-                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
-                    
-                    row++;
+                worksheet.Cells[row, 1].Value = item.i;
+                worksheet.Cells[row, 2].Value = item.value.Code;
+                worksheet.Cells[row, 3].Value = item.value.Conclude;
+                worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                worksheet.Cells[row, 6].Value = item.value.Address;
+                worksheet.Cells[row, 7].Value = item.value.Supplier;
+                worksheet.Cells[row, 8].Value = item.value.StockName;
+                worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+
+                row++;
             }
 
             // set some core property values
@@ -805,25 +849,28 @@ public class ReportManager : IReportRepository, IDisposable
             xlPackage.Save();
             // Response.Clear();
         }
+
         stream.Position = 0;
         var fileName = "temp.xlsx";
-        await _storageService.SaveFileAsync(stream,  fileName);
+        await _storageService.SaveFileAsync(stream, fileName);
         return _storageService.GetPathBE(fileName);
     }
+
     public async Task<string> ExcelLiquidationAllReport(Search request)
     {
-         var query = await _context.Reports
-            .Include(x=>x.Branch)
+        var query = await _context.Reports
+            .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x=>x.ReportType == ReportType.Liquidation)
+            .Where(x => x.ReportType == ReportType.Liquidation)
             .ToListAsync();
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) <= 0 
-                                     && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date) >= 0)
+            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) <= 0
+                                     && DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) >= 0)
                 .ToList();
 
         var data = new List<Report>();
@@ -836,7 +883,7 @@ public class ReportManager : IReportRepository, IDisposable
         {
             data = query.ToList();
         }
-        
+
         var stream = new MemoryStream();
         using (var xlPackage = new ExcelPackage(stream))
         {
@@ -875,22 +922,22 @@ public class ReportManager : IReportRepository, IDisposable
             worksheet.Cells["A4:L4"].Style.Font.Bold = true;
 
             row = 5;
-            foreach (var item in data.Select((value, i)=> new {value, i}))
+            foreach (var item in data.Select((value, i) => new {value, i}))
             {
-                    worksheet.Cells[row, 1].Value = item.i;
-                     worksheet.Cells[row, 2].Value = item.value.Code;
-                     worksheet.Cells[row, 3].Value = item.value.Conclude;
-                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
-                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
-                     worksheet.Cells[row, 6].Value = item.value.Address;
-                     worksheet.Cells[row, 7].Value = item.value.Supplier;
-                     worksheet.Cells[row, 8].Value = item.value.StockName;
-                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
-                     worksheet.Cells[row, 10].Value = item.value.LiquidationName;
-                     worksheet.Cells[row, 11].Value = item.value.LiquidationRole;
-                     worksheet.Cells[row, 12].Value = item.value.RecoveryValue;
-                    
-                    row++;
+                worksheet.Cells[row, 1].Value = item.i;
+                worksheet.Cells[row, 2].Value = item.value.Code;
+                worksheet.Cells[row, 3].Value = item.value.Conclude;
+                worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                worksheet.Cells[row, 6].Value = item.value.Address;
+                worksheet.Cells[row, 7].Value = item.value.Supplier;
+                worksheet.Cells[row, 8].Value = item.value.StockName;
+                worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+                worksheet.Cells[row, 10].Value = item.value.LiquidationName;
+                worksheet.Cells[row, 11].Value = item.value.LiquidationRole;
+                worksheet.Cells[row, 12].Value = item.value.RecoveryValue;
+
+                row++;
             }
 
             // set some core property values
@@ -901,25 +948,29 @@ public class ReportManager : IReportRepository, IDisposable
             xlPackage.Save();
             // Response.Clear();
         }
+
         stream.Position = 0;
         var fileName = "temp.xlsx";
-        await _storageService.SaveFileAsync(stream,  fileName);
+        await _storageService.SaveFileAsync(stream, fileName);
         return _storageService.GetPathBE(fileName);
     }
+
     public async Task<string> ExcelImportAllReport(Search request)
     {
         var query = await _context.Reports
-            .Include(x=>x.Branch)
+            .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x=>x.ReportType == ReportType.Import)
+            .Where(x => x.ReportType == ReportType.Import)
             .ToListAsync();
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date!) <= 0 
-                                     && DateTime.Compare(x.CreateDate.Date, (DateTime)request.StartDate?.Date!) >= 0).ToList();
+            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) <= 0
+                                     && DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) >= 0)
+                .ToList();
 
         var data = new List<Report>();
         if (request.IsPging)
@@ -931,7 +982,7 @@ public class ReportManager : IReportRepository, IDisposable
         {
             data = query.ToList();
         }
-        
+
         var stream = new MemoryStream();
         using (var xlPackage = new ExcelPackage(stream))
         {
@@ -967,19 +1018,19 @@ public class ReportManager : IReportRepository, IDisposable
             worksheet.Cells["A4:I4"].Style.Font.Bold = true;
 
             row = 5;
-            foreach (var item in data.Select((value, i)=> new {value, i}))
+            foreach (var item in data.Select((value, i) => new {value, i}))
             {
-                    worksheet.Cells[row, 1].Value = item.i;
-                     worksheet.Cells[row, 2].Value = item.value.Code;
-                     worksheet.Cells[row, 3].Value = item.value.Conclude;
-                     worksheet.Cells[row, 4].Value = item.value.Branch.Name;
-                     worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
-                     worksheet.Cells[row, 6].Value = item.value.Address;
-                     worksheet.Cells[row, 7].Value = item.value.Supplier;
-                     worksheet.Cells[row, 8].Value = item.value.StockName;
-                     worksheet.Cells[row, 9].Value = item.value.TotalAmount;
-                    
-                    row++;
+                worksheet.Cells[row, 1].Value = item.i;
+                worksheet.Cells[row, 2].Value = item.value.Code;
+                worksheet.Cells[row, 3].Value = item.value.Conclude;
+                worksheet.Cells[row, 4].Value = item.value.Branch.Name;
+                worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
+                worksheet.Cells[row, 6].Value = item.value.Address;
+                worksheet.Cells[row, 7].Value = item.value.Supplier;
+                worksheet.Cells[row, 8].Value = item.value.StockName;
+                worksheet.Cells[row, 9].Value = item.value.TotalAmount;
+
+                row++;
             }
 
             // set some core property values
@@ -990,24 +1041,27 @@ public class ReportManager : IReportRepository, IDisposable
             xlPackage.Save();
             // Response.Clear();
         }
+
         stream.Position = 0;
         var fileName = "temp.xlsx";
-        await _storageService.SaveFileAsync(stream,  fileName);
+        await _storageService.SaveFileAsync(stream, fileName);
         return _storageService.GetPathBE(fileName);
     }
-     public async Task<string> ExcelImportReportById(string id)
+
+    public async Task<string> ExcelImportReportById(string id)
     {
         var report = await _context.Reports
-            .Include(x=>x.Branch)
+            .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .ThenInclude(x=>x.Material)
+            .ThenInclude(x => x.Material)
             .Include(x => x.ReportDetails)
-            .ThenInclude(x=>x.Measure)
-            .FirstOrDefaultAsync(x=>x.ReportType == ReportType.Import && x.ID == id);
+            .ThenInclude(x => x.Measure)
+            .FirstOrDefaultAsync(x => x.ReportType == ReportType.Import && x.ID == id);
         if (report == null)
         {
             return null;
         }
+
         var stream = new MemoryStream();
         using (var xlPackage = new ExcelPackage(stream))
         {
@@ -1049,25 +1103,26 @@ public class ReportManager : IReportRepository, IDisposable
             worksheet.Cells["A4:O4"].Style.Font.Bold = true;
 
             row = 5;
-            foreach (var item in report.ReportDetails.Select((value, i)=> new {value, i}))
+            foreach (var item in report.ReportDetails.Select((value, i) => new {value, i}))
             {
-                    worksheet.Cells[row, 1].Value = item.i;
-                     worksheet.Cells[row, 2].Value = report.Code;
-                     worksheet.Cells[row, 3].Value = report.CreateDate.ToShortDateString();
-                     worksheet.Cells[row, 4].Value = report.Branch.Name;
-                     worksheet.Cells[row, 5].Value = item.value.Material.Name;
-                     worksheet.Cells[row, 6].Value = item.value.Quantity;
-                     worksheet.Cells[row, 7].Value = item.value.BeginDate.ToShortDateString();
-                     worksheet.Cells[row, 8].Value = item.value.ExpirationDate.ToShortDateString();
-                     worksheet.Cells[row, 9].Value = item.value.Status == 1 ? "Sử dụng" : "";
-                     worksheet.Cells[row, 10].Value = item.value.PriceOfUnit;
-                     worksheet.Cells[row, 11].Value = item.value.Mass;
-                     worksheet.Cells[row, 12].Value = item.value.MeasureType == MeasureType.Mass ? "Khối lượng" : "Trọng lượng";
-                     worksheet.Cells[row, 13].Value = item.value.StandardMass;
-                     worksheet.Cells[row, 14].Value = item.value.Measure.Name;
-                     worksheet.Cells[row, 15].Value = item.value.Description;
-                    
-                    row++;
+                worksheet.Cells[row, 1].Value = item.i;
+                worksheet.Cells[row, 2].Value = report.Code;
+                worksheet.Cells[row, 3].Value = report.CreateDate.ToShortDateString();
+                worksheet.Cells[row, 4].Value = report.Branch.Name;
+                worksheet.Cells[row, 5].Value = item.value.Material.Name;
+                worksheet.Cells[row, 6].Value = item.value.Quantity;
+                worksheet.Cells[row, 7].Value = item.value.BeginDate.ToShortDateString();
+                worksheet.Cells[row, 8].Value = item.value.ExpirationDate.ToShortDateString();
+                worksheet.Cells[row, 9].Value = item.value.Status == 1 ? "Sử dụng" : "";
+                worksheet.Cells[row, 10].Value = item.value.PriceOfUnit;
+                worksheet.Cells[row, 11].Value = item.value.Mass;
+                worksheet.Cells[row, 12].Value =
+                    item.value.MeasureType == MeasureType.Mass ? "Khối lượng" : "Trọng lượng";
+                worksheet.Cells[row, 13].Value = item.value.StandardMass;
+                worksheet.Cells[row, 14].Value = item.value.Measure.Name;
+                worksheet.Cells[row, 15].Value = item.value.Description;
+
+                row++;
             }
 
             // set some core property values
@@ -1078,24 +1133,27 @@ public class ReportManager : IReportRepository, IDisposable
             xlPackage.Save();
             // Response.Clear();
         }
+
         stream.Position = 0;
         var fileName = "temp.xlsx";
-        await _storageService.SaveFileAsync(stream,  fileName);
+        await _storageService.SaveFileAsync(stream, fileName);
         return _storageService.GetPathBE(fileName);
     }
-      public async Task<string> ExcelLiquidationReportById(string id)
+
+    public async Task<string> ExcelLiquidationReportById(string id)
     {
         var report = await _context.Reports
-            .Include(x=>x.Branch)
+            .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .ThenInclude(x=>x.Material)
+            .ThenInclude(x => x.Material)
             .Include(x => x.ReportDetails)
-            .ThenInclude(x=>x.Measure)
-            .FirstOrDefaultAsync(x=>x.ReportType == ReportType.Liquidation && x.ID == id);
+            .ThenInclude(x => x.Measure)
+            .FirstOrDefaultAsync(x => x.ReportType == ReportType.Liquidation && x.ID == id);
         if (report == null)
         {
             return null;
         }
+
         var stream = new MemoryStream();
         using (var xlPackage = new ExcelPackage(stream))
         {
@@ -1137,7 +1195,7 @@ public class ReportManager : IReportRepository, IDisposable
             worksheet.Cells["A4:O4"].Style.Font.Bold = true;
 
             row = 5;
-            foreach (var item in report.ReportDetails.Select((value, i)=> new {value, i}))
+            foreach (var item in report.ReportDetails.Select((value, i) => new {value, i}))
             {
                 worksheet.Cells[row, 1].Value = item.i;
                 worksheet.Cells[row, 2].Value = report.Code;
@@ -1150,11 +1208,12 @@ public class ReportManager : IReportRepository, IDisposable
                 worksheet.Cells[row, 9].Value = item.value.Status == 1 ? "Sử dụng" : "";
                 worksheet.Cells[row, 10].Value = item.value.PriceOfUnit;
                 worksheet.Cells[row, 11].Value = item.value.Mass;
-                worksheet.Cells[row, 12].Value = item.value.MeasureType == MeasureType.Mass ? "Khối lượng" : "Trọng lượng";
+                worksheet.Cells[row, 12].Value =
+                    item.value.MeasureType == MeasureType.Mass ? "Khối lượng" : "Trọng lượng";
                 worksheet.Cells[row, 13].Value = item.value.StandardMass;
                 worksheet.Cells[row, 14].Value = item.value.Measure.Name;
                 worksheet.Cells[row, 15].Value = item.value.Description;
-                    row++;
+                row++;
             }
 
             // set some core property values
@@ -1165,24 +1224,27 @@ public class ReportManager : IReportRepository, IDisposable
             xlPackage.Save();
             // Response.Clear();
         }
+
         stream.Position = 0;
         var fileName = "temp.xlsx";
-        await _storageService.SaveFileAsync(stream,  fileName);
+        await _storageService.SaveFileAsync(stream, fileName);
         return _storageService.GetPathBE(fileName);
     }
-       public async Task<string> ExcelExportReportById(string id)
+
+    public async Task<string> ExcelExportReportById(string id)
     {
         var report = await _context.Reports
-            .Include(x=>x.Branch)
+            .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .ThenInclude(x=>x.Material)
+            .ThenInclude(x => x.Material)
             .Include(x => x.ReportDetails)
-            .ThenInclude(x=>x.Measure)
-            .FirstOrDefaultAsync(x=>x.ReportType == ReportType.Export && x.ID == id);
+            .ThenInclude(x => x.Measure)
+            .FirstOrDefaultAsync(x => x.ReportType == ReportType.Export && x.ID == id);
         if (report == null)
         {
             return null;
         }
+
         var stream = new MemoryStream();
         using (var xlPackage = new ExcelPackage(stream))
         {
@@ -1224,7 +1286,7 @@ public class ReportManager : IReportRepository, IDisposable
             worksheet.Cells["A4:O4"].Style.Font.Bold = true;
 
             row = 5;
-            foreach (var item in report.ReportDetails.Select((value, i)=> new {value, i}))
+            foreach (var item in report.ReportDetails.Select((value, i) => new {value, i}))
             {
                 worksheet.Cells[row, 1].Value = item.i;
                 worksheet.Cells[row, 2].Value = report.Code;
@@ -1237,11 +1299,12 @@ public class ReportManager : IReportRepository, IDisposable
                 worksheet.Cells[row, 9].Value = item.value.Status == 1 ? "Sử dụng" : "";
                 worksheet.Cells[row, 10].Value = item.value.PriceOfUnit;
                 worksheet.Cells[row, 11].Value = item.value.Mass;
-                worksheet.Cells[row, 12].Value = item.value.MeasureType == MeasureType.Mass ? "Khối lượng" : "Trọng lượng";
+                worksheet.Cells[row, 12].Value =
+                    item.value.MeasureType == MeasureType.Mass ? "Khối lượng" : "Trọng lượng";
                 worksheet.Cells[row, 13].Value = item.value.StandardMass;
                 worksheet.Cells[row, 14].Value = item.value.Measure.Name;
                 worksheet.Cells[row, 15].Value = item.value.Description;
-                    row++;
+                row++;
             }
 
             // set some core property values
@@ -1252,11 +1315,13 @@ public class ReportManager : IReportRepository, IDisposable
             xlPackage.Save();
             // Response.Clear();
         }
+
         stream.Position = 0;
         var fileName = "temp.xlsx";
-        await _storageService.SaveFileAsync(stream,  fileName);
+        await _storageService.SaveFileAsync(stream, fileName);
         return _storageService.GetPathBE(fileName);
     }
+
     public async Task<Respond<PagedList<Report>>> GetAllImportReportByBranchID(string branchID, Search request)
     {
         var query = await _context.Reports
@@ -1267,8 +1332,10 @@ public class ReportManager : IReportRepository, IDisposable
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+            query = query.Where(x =>
+                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -1281,12 +1348,13 @@ public class ReportManager : IReportRepository, IDisposable
         {
             data = query.ToList();
         }
+
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<Report>>()
@@ -1301,14 +1369,16 @@ public class ReportManager : IReportRepository, IDisposable
     {
         var query = await _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x=>x.ReportType == ReportType.Import)
+            .Where(x => x.ReportType == ReportType.Import)
             .ToListAsync();
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+            query = query.Where(x =>
+                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -1321,12 +1391,13 @@ public class ReportManager : IReportRepository, IDisposable
         {
             data = query.ToList();
         }
+
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<Report>>()
@@ -1340,15 +1411,17 @@ public class ReportManager : IReportRepository, IDisposable
     public async Task<Respond<PagedList<Report>>> GetAllLiquidationReportByBranchID(string branchID, Search request)
     {
         var query = await _context.Reports
-             .Include(x => x.ReportDetails)
+            .Include(x => x.ReportDetails)
             .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Liquidation)
-             .ToListAsync();
+            .ToListAsync();
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+            query = query.Where(x =>
+                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -1361,12 +1434,13 @@ public class ReportManager : IReportRepository, IDisposable
         {
             data = query.ToList();
         }
+
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<Report>>()
@@ -1380,15 +1454,17 @@ public class ReportManager : IReportRepository, IDisposable
     public async Task<Respond<PagedList<Report>>> GetAllLiquidationReport(Search request)
     {
         var query = await _context.Reports
-             .Include(x => x.ReportDetails)
-             .Where(x=>x.ReportType == ReportType.Liquidation)
-             .ToListAsync();
+            .Include(x => x.ReportDetails)
+            .Where(x => x.ReportType == ReportType.Liquidation)
+            .ToListAsync();
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code)).ToList();
         }
+
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+            query = query.Where(x =>
+                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
         //paging
         int totalRow = query.Count;
         var data = new List<Report>();
@@ -1401,12 +1477,13 @@ public class ReportManager : IReportRepository, IDisposable
         {
             data = query.ToList();
         }
+
         var pagedResult = new PagedList<Report>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<Report>>()
@@ -1455,7 +1532,8 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<Respond<Report>> GetLiquidationReportByID(string id)
     {
-        var result = await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Liquidation);
+        var result =
+            await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Liquidation);
         if (result == null)
             return new Respond<Report>()
             {
@@ -1485,6 +1563,7 @@ public class ReportManager : IReportRepository, IDisposable
     {
         throw new NotImplementedException();
     }
+
     private async Task<string> SaveFileIFormFile(IFormFile file)
     {
         var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim();
@@ -1492,6 +1571,7 @@ public class ReportManager : IReportRepository, IDisposable
         await _storageService.SaveFileAsync(file.OpenReadStream(), UserContentFolderName + "/" + fileName);
         return fileName;
     }
+
     public void Dispose()
     {
         GC.Collect(2, GCCollectionMode.Forced, true);
