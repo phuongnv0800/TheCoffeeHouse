@@ -65,6 +65,10 @@
                                         <RadzenAxisTitle Text="Tổng doanh thu" />
                                     </RadzenValueA98-xis>
                                 </RadzenChart>
+                                <div class="text-end d-flex mt-5">
+                                    <h1>Tổng doanh thu:  </h1>
+                                    <h1 class="text-primary ms-2">@Sum</h1>
+                                </div>
                             </div>
                         </div>
                         <div class="col-12">
@@ -199,6 +203,7 @@
     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
     private ApplicationUser User;
     private DateRequest dateRequest;
+    private double Sum;
     class DataItem
     {
         public DateTime Date { get; set; }
@@ -256,6 +261,7 @@
                 var respond = await orderService.GetAllOrdersInBranch(false, 10, 1,BranchId, User.Id, date, date);
                 List<Order> orders = respond.Data.Items;
                 double sum = orders.Sum(x => x.TotalAmount);
+                Sum += sum;
                 DataItem item = new DataItem
                     {
                         Date = date,

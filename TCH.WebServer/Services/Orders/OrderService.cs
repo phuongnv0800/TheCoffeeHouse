@@ -15,7 +15,10 @@ namespace TCH.WebServer.Services.Orders
         Task<ResponseLogin<PagedList<Order>>> GetAllOrdersInBranch(bool IsPaging, int pageSize, int pageNumber,string BranchId,string id, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<Order>> AddOrder(OrderRequest branch);
         Task<ResponseLogin<Order>> GetOrderById(string id);
+        Task<double> GetSum(DateTime? FromDate, DateTime? ToDate);
+        Task<double> GetSumInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<Order>> UpdateOrder(OrderRequest branch);
+        
         Task<string> PrintPDF(string id);
         Task DeleteOrder(string id);
     }
@@ -171,6 +174,42 @@ namespace TCH.WebServer.Services.Orders
                 {
                     return null;
                 }
+                return response;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<double> GetSum( DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetFromJsonAsync<double>($"/api/Orders/all-money?" + fromDate
+                        + toDate);
+                return response;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<double> GetSumInBranch( string BranchId, DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetFromJsonAsync<double>($"/api/Orders/all-money/{BranchId}?" + fromDate
+                        + toDate);
                 return response;
             }
             catch

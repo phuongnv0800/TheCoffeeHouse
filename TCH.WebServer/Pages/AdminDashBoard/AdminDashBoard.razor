@@ -73,6 +73,11 @@
                             <RadzenAxisTitle Text="Tổng doanh thu" />
                         </RadzenValueAxis>
                     </RadzenChart>
+
+                    <div class="text-end d-flex mt-5">
+                        <h1>Tổng doanh thu:  </h1>
+                        <h1 class="text-primary ms-2">@Sum</h1>
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,7 +113,7 @@
             navigationManager.NavigateTo("admin-dashboard");
             var response = await userServices.GetUserInfo();
             User = response.Data;
-            Sum = await 
+            //Sum = await orderService.GetSum(dateRequest.FromDate, dateRequest.ToDate);
             await Get(1);
             base.OnParametersSet();
         }
@@ -129,6 +134,7 @@
                 var respond = await orderService.GetAllOrders(false, 10, 1, date, date);
                 List<Order> orders = respond.Data.Items;
                 double sum = orders.Sum(x => x.TotalAmount);
+                Sum += sum;
                 DataItem item = new DataItem
                     {
                         Date = date,

@@ -14,6 +14,7 @@ using VMU.Components;
 using TCH.WebServer.Services.StockMaterials;
 using TCH.WebServer.Services.Units;
 using TCH.WebServer.Services.Recipes;
+using TCH.WebServer.Services.Customers;
 
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
@@ -41,6 +42,7 @@ builder.Services.AddTransient<IReportService, ReportService>();
 builder.Services.AddTransient<IStockService, StockService>();
 builder.Services.AddTransient<IUnitService, UnitService>();
 builder.Services.AddTransient<IRecipeService, RecipeService>();
+builder.Services.AddTransient<ICustomerService, CustomerService>();
 
 builder.Services.AddScoped<IUserApiClient, UserApiClient>();
 builder.Services.AddScoped<IRoleApiClient, RoleApiClient>();
