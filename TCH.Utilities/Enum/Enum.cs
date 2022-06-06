@@ -113,8 +113,9 @@ public enum PaymentType
 
 public enum ProductType
 {
-    Drink,
-    Food,
+    Drink,//đồ uống
+    Food,// đồ ăn
+    InDay,// đồ dùng trong ngày
     Other
 }
 

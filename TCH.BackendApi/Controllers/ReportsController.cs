@@ -23,7 +23,7 @@ public class ReportsController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet("import/{branchID}")]
+    [HttpGet("import-by-branch-id/{branchID}")]
     public async Task<IActionResult> GetAllImportByBranchID(string branchID, [FromQuery] Search search)
     {
         try
@@ -308,7 +308,7 @@ public class ReportsController : ControllerBase
         }
     }
 
-    [HttpGet("export/{branchID}")]
+    [HttpGet("export-by-branch-id/{branchID}")]
     public async Task<IActionResult> GetAllExport(string branchID, [FromQuery] Search search)
     {
         try
@@ -346,7 +346,7 @@ public class ReportsController : ControllerBase
         }
     }
 
-    [HttpGet("liquidation/{branchID}")]
+    [HttpGet("liquidation-by-branch-id/{branchID}")]
     public async Task<IActionResult> GetAllLiquidationByBranchID(string branchID, [FromQuery] Search search)
     {
         try
