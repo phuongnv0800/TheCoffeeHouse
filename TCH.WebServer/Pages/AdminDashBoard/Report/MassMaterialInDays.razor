@@ -1,4 +1,4 @@
-﻿@page "/reports-liquid-branch"
+﻿@page "/mass-in-day"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -16,7 +16,7 @@
 @inject IReportService reportService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
-@inject IToastService toastService;
+@inject IToastService toastService
 @inject IJSRuntime jsRuntime;
 @attribute [Authorize]
 
@@ -50,25 +50,7 @@
                 </div>
                 <div class="card-body pt-0">
                     <div class="row">
-                        <div class="col-12">
-                            <div class="card-body pt-0">
-                                <RadzenChart>
-                                    <RadzenLineSeries Smooth="true" Data="@items" CategoryProperty="Date" Title="Tháng 6/2022" ValueProperty="Revenue">
-                                        <RadzenMarkers MarkerType="MarkerType.Square" />
-                                    </RadzenLineSeries>
-
-                                    <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}" />
-                                    <RadzenValueA98-xis>
-                                        @*<RadzenGridLines Visible="true" />*@
-                                        <RadzenAxisTitle Text="Lượng hàng bị thanh lý" />
-                                    </RadzenValueA98-xis>
-                                </RadzenChart>
-                                <div class="text-end d-flex mt-5">
-
-                                    <button class="btn btn-success ms-5" onclick="@(() => ExportExcel())">Xuất Excel</button>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="col-12">
                             <div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                 <div class="table-responsive">
@@ -81,10 +63,13 @@
                                                     </div>
                                                 </th>
                                                 <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                    Tên phiếu nhập
+                                                    Tên nguyên liệu
                                                 </th>
-                                                <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
-                                                    Thao tác
+                                                <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Khối lượng tiêu chuẩn
+                                                </th>
+                                                <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Loại hình tính
                                                 </th>
                                             </tr>
                                         </thead>
@@ -93,7 +78,7 @@
                                             {
                                                 foreach (var product in ProductsList)
                                                 {
-                                                    string href = "/materials/" + product.ID.ToString();
+                                                    
                                                     <tr class="odd">
                                                         <td>
                                                             <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -103,26 +88,28 @@
                                                         <td>
                                                             <div class="d-flex align-items-center">
                                                                 <div class="ms-5">
-                                                                    <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                    <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
                                                                         @product.Name
                                                                     </a>
-                                                                    <div class="text-muted fs-7 fw-bolder">@product.BranchID</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                         <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="ms-5">
+                                                                    <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                        @product.StandardMass
+                                                                    </a>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            @*if(product.Category.Name != null){
-                                                                <div class="badge badge-light-success">@product.Category.Name</div>
-                                                                }*@
-                                                        </td>
-                                                        <td class="text-end">
-                                                            <div class="dropdown">
-                                                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    Thao tác
-                                                                </button>
-                                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                                    <li><a class="dropdown-item" onclick="@(() => Delete(@product.ID.ToString()))">Xóa</a></li>
-                                                                </ul>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="ms-5">
+                                                                    <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                        @((product.StandardUnitType == StandardUnitType.g) ? "gam" : "ml")
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -194,8 +181,7 @@
 
 
 @code {
-    [Parameter] public string BranchId { get; set; }
-    public List<Report>? ProductsList = new List<Report>();
+    public List<MassMaterial>? ProductsList = new List<MassMaterial>();
     private string? token;
     public string Name;
     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
@@ -215,8 +201,7 @@
     {
         try
         {
-            navigationManager.NavigateTo("reports-liquid-branch");
-            BranchId = GbParameter.GbParameter.BranchId;
+            navigationManager.NavigateTo("mass-in-day");
             dateRequest = new DateRequest()
                 {
                     FromDate = new DateTime(2022, 06, 01),
@@ -225,58 +210,31 @@
             var response = await userServices.GetUserInfo();
             User = response.Data;
             await Get(1);
-            await GetChart();
             base.OnParametersSet();
         }
         catch (Exception e)
         {
-            toastService.ShowError("có lỗi");
+            toastService.ShowError("Có lỗi");
         }
     }
     public async Task Get(int pageNumber)
     {
         try
         {
-            var response = await reportService.GetAllLiquidInBranch(true, pagination.pageSize, pageNumber, BranchId, dateRequest.FromDate, dateRequest.ToDate);
+            var response = await reportService.GetMassMaterialInDay(true, pagination.pageSize, pageNumber, dateRequest.FromDate, dateRequest.ToDate);
             pagination.PageNumber = response.Data.CurrentPage;
             ProductsList = response.Data.Items.ToList();
             pagination.totalPage = response.Data.TotalPages;
         }
         catch (Exception e)
         {
-            toastService.ShowError("có lỗi");
+            toastService.ShowError("Có lỗi");
         }
     }
-    public async Task GetChart()
-    {
-        try
-        {
-            for (var date = dateRequest.FromDate.Date; date <= dateRequest.ToDate.Date; date = date.AddDays(1))
-            {
-
-                //int daysInMonth = DateTime.DaysInMonth(year: 2022, month: date);
-                //var lastDayOfMonth = new DateTime(2022, date, daysInMonth);
-                var respond = await reportService.GetAllLiquidInBranch(false, 10, 1,BranchId, date, date);
-                List<Report> orders = respond.Data.Items;
-                double sum = orders.Sum(x => x.TotalAmount);
-                Sum += sum;
-                DataItem item = new DataItem
-                    {
-                        Date = date,
-                        Revenue = sum
-                    };
-                items.Add(item);
-            }
-
-        }
-        catch (Exception ex)
-        {
-            toastService.ShowError(ex.ToString());
-        }
-    }
+    
     public async void Delete(string id)
     {
-        await reportService.DeleteLiquid(id);
+        await reportService.DeleteImport(id);
     }
     public async void Change(int link)
     {
@@ -288,19 +246,8 @@
     {
         await Get(pagination.PageNumber);
     }
-    public async Task ExportExcel()
-    {
-        try{
-            var fileName = $"LiquidationReport.xlsx";
-        var bytes = await reportService.ExcelImportInBranch(BranchId,dateRequest.FromDate, dateRequest.ToDate);
-        await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(bytes));
-        }
-        catch (Exception ex)
-        {
-            toastService.ShowError(ex.ToString());
-        }
-    }
 }
+
 
 @code {
     public class DateRequest

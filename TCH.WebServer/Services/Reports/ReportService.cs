@@ -29,6 +29,8 @@ namespace TCH.WebServer.Services.Reports
         Task<Byte[]> ExcelExportInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<Byte[]> ExcelImportInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<Byte[]> ExcelLiquidInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
+        Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDay(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate);
+        Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDayByBranchId(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task DeleteImport(string id);
         Task DeleteExport(string id);
         Task DeleteLiquid(string id);
@@ -395,6 +397,36 @@ namespace TCH.WebServer.Services.Reports
         public Task<ResponseLogin<Report>> GetLiquidById(string id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDay(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate) 
+        {
+            CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+            string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<MassMaterial>>>("/api/Reports/get-mass-material-in-day?IsPging=" + IsPaging.ToString()
+                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate + toDate);
+            if (response.Result != 1)
+            {
+                return null;
+            }
+            return response;
+        }
+
+        public async Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDayByBranchId(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
+        {
+            CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+            string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<MassMaterial>>>($"/api/Reports/get-mass-material-in-day-by-branch/{BranchId}?IsPging=" + IsPaging.ToString()
+                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate + toDate);
+            if (response.Result != 1)
+            {
+                return null;
+            }
+            return response;
         }
     }
 }
