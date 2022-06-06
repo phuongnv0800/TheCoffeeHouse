@@ -11,18 +11,21 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/TCH.ViewModel/SubModels/MassMaterial.cs" afterDir="false" />
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="add mass material">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/ReportsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/ReportsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ReportManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ReportManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IReportRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IReportRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Utilities/Enum/Enum.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Utilities/Enum/Enum.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
   </component>
   <component name="DisabledMethodsStorage">
     <option name="disabledMethods">
@@ -197,7 +200,7 @@
       <workItem from="1649681132928" duration="610000" />
       <workItem from="1654094646231" duration="4820000" />
       <workItem from="1654404505866" duration="645000" />
-      <workItem from="1654519806393" duration="5109000" />
+      <workItem from="1654519806393" duration="7981000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -269,7 +272,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654402467260</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add mass material">
+      <created>1654527155865</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1654527155866</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,7 +311,8 @@
     <MESSAGE value="report" />
     <MESSAGE value="done" />
     <MESSAGE value="add report order" />
-    <option name="LAST_COMMIT_MESSAGE" value="add report order" />
+    <MESSAGE value="add mass material" />
+    <option name="LAST_COMMIT_MESSAGE" value="add mass material" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
