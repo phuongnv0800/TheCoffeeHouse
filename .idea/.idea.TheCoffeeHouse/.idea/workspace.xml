@@ -11,10 +11,12 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="add mass material">
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="nomessage">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/ReportsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/ReportsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.Utilities/Enum/Enum.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Utilities/Enum/Enum.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IStockRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IStockRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,16 +67,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.smartKeys_rider",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.smartKeys_rider&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.TCH.BackendApi">
     <configuration name="TCH.BackendApi: FolderProfile" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish publish_profile="FolderProfile.pubxml" pubxml_path="$PROJECT_DIR$/TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml" uuid_high="-3772649467511487652" uuid_low="-6946827706269875391" />
@@ -200,7 +202,7 @@
       <workItem from="1649681132928" duration="610000" />
       <workItem from="1654094646231" duration="4820000" />
       <workItem from="1654404505866" duration="645000" />
-      <workItem from="1654519806393" duration="7981000" />
+      <workItem from="1654519806393" duration="9758000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -279,7 +281,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654527155866</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="nomessage">
+      <created>1654531259929</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1654531259929</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -312,7 +321,8 @@
     <MESSAGE value="done" />
     <MESSAGE value="add report order" />
     <MESSAGE value="add mass material" />
-    <option name="LAST_COMMIT_MESSAGE" value="add mass material" />
+    <MESSAGE value="nomessage" />
+    <option name="LAST_COMMIT_MESSAGE" value="nomessage" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -325,16 +335,42 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/TCH.BackendApi/Program.cs</url>
-          <line>147</line>
+          <line>148</line>
           <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" initialLine="137" containingFunctionPresentation="">
             <startOffsets>
-              <option value="5662" />
+              <option value="5724" />
             </startOffsets>
             <endOffsets>
-              <option value="5723" />
+              <option value="5785" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs</url>
+          <line>51</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs" initialLine="51" containingFunctionPresentation="method 'GetAllStockExpireByBranchID'">
+            <startOffsets>
+              <option value="1699" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1729" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs</url>
+          <line>203</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" initialLine="203" containingFunctionPresentation="method 'GetAllStockExpire'">
+            <startOffsets>
+              <option value="8381" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8421" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
