@@ -11,12 +11,12 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="done">
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/TCH.ViewModel/SubModels/MassMaterial.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/ReportsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/ReportsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ReportManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ReportManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IOrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IOrderRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IReportRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IReportRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,24 +44,11 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2f7b3b6e2f3c491c91283c8624ab32661ce200/1f/48011b47/HttpDeleteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bebd253e21dcf766929bfdfd74615bfe46e6e1693b289273dbdb82152893/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/CustomersController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/OrdersController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/OrdersController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/OrdersController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d4f98ebdd878db4fbd98872756eb7be6ad9e468fe5cd6b16385d8c4993109a/List.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Controllers/ProductsController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/RecipesController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Controllers/ReportsController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/EF/Seed.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/RecipeManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataRepository/ICustomerRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataRepository/IOrderRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Projects/TheCoffeeHouse/TCH.BackendApi/Repositories/DataRepository/IRecipeRepository.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -77,8 +64,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.smartKeys_rider",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -206,6 +196,8 @@
       <workItem from="1649591693999" duration="2142000" />
       <workItem from="1649681132928" duration="610000" />
       <workItem from="1654094646231" duration="4820000" />
+      <workItem from="1654404505866" duration="645000" />
+      <workItem from="1654519806393" duration="5109000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -270,7 +262,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654396712060</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add report order">
+      <created>1654402467260</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1654402467260</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,14 +300,15 @@
     <MESSAGE value="no message" />
     <MESSAGE value="report" />
     <MESSAGE value="done" />
-    <option name="LAST_COMMIT_MESSAGE" value="done" />
+    <MESSAGE value="add report order" />
+    <option name="LAST_COMMIT_MESSAGE" value="add report order" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs</url>
-          <line>174</line>
+          <line>211</line>
           <properties documentPath="D:\Tốt nghiệp\TheCoffeeHouse\TCH.BackendApi\Controllers\OrdersController.cs" initialLine="133" containingFunctionPresentation="method 'PrintImg'" />
           <option name="timeStamp" value="3" />
         </line-breakpoint>

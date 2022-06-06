@@ -563,4 +563,42 @@ public class ReportsController : ControllerBase
             return BadRequest(new {result = -2, message = e.Message});
         }
     }
+    [HttpGet("get-mass-material-in-day")]
+    public async Task<IActionResult> GetMassMaterialInDay([FromQuery] Search search)
+    {
+        try
+        {
+            var respond = await _repository.GetMassMaterialInDay(search);
+            return Ok(respond);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new {result = -1, message = e.Message});
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new {result = -2, message = e.Message});
+        }
+    }
+
+    [HttpGet("get-mass-material-in-day-by-branch/{branchID}")]
+    public async Task<IActionResult> GetMassMaterialInDayByBranchId(string branchID, [FromQuery] Search search)
+    {
+        try
+        {
+            var respond = await _repository.GetMassMaterialInDayByBranchId(branchID, search);
+            return Ok(respond);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new {result = -1, message = e.Message});
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new {result = -2, message = e.Message});
+        }
+    }
+
 }

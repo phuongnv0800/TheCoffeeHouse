@@ -38,4 +38,7 @@ public interface IReportRepository
     Task<Respond<Report>> GetLiquidationReportByID(string id);
     Task<Respond<PagedList<Report>>> GetAllLiquidationReport(Search request);
     Task<Respond<PagedList<Report>>> GetAllLiquidationReportByBranchID(string branchID, Search request);
+
+    Task<Respond<PagedList<MassMaterial>>> GetMassMaterialInDay(Search request);
+    Task<Respond<PagedList<MassMaterial>>> GetMassMaterialInDayByBranchId(string branchId, Search request);
 }
