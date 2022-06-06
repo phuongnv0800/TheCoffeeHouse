@@ -15,8 +15,11 @@ namespace TCH.WebServer.Services.Orders
         Task<ResponseLogin<PagedList<Order>>> GetAllOrdersInBranch(bool IsPaging, int pageSize, int pageNumber,string BranchId,string id, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<Order>> AddOrder(OrderRequest branch);
         Task<ResponseLogin<Order>> GetOrderById(string id);
+        
         Task<double> GetSum(DateTime? FromDate, DateTime? ToDate);
         Task<double> GetSumInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
+        Task<byte[]> GetExcel(DateTime? FromDate, DateTime? ToDate);
+        Task<byte[]> GetExcelInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<Order>> UpdateOrder(OrderRequest branch);
         
         Task<string> PrintPDF(string id);
@@ -211,6 +214,42 @@ namespace TCH.WebServer.Services.Orders
                 var response = await httpClient.GetFromJsonAsync<double>($"/api/Orders/all-money/{BranchId}?" + fromDate
                         + toDate);
                 return response;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<byte[]> GetExcel(DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetAsync($"/api/Orders/excel-all?" + fromDate
+                        + toDate);
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<byte[]> GetExcelInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetAsync($"/api/Orders/excel-by-branchID/{BranchId}?" + fromDate
+                        + toDate);
+                return await response.Content.ReadAsByteArrayAsync();
             }
             catch
             {

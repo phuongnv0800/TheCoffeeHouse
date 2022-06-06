@@ -101,6 +101,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="_content/VMU.Components/custom.js"></script>
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+    <script>
+        var saveAsFile = function (filename, bytesBase64) {
+            var link = document.createElement('a');
+            link.download = filename;
+            link.href = "data:application/octet-stream;base64," + bytesBase64;
+            document.body.appendChild(link); // Needed for Firefox
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
     <!--end::Global Scripts-->
     <script>
         window.main = {
@@ -114,6 +124,7 @@
                 });
             },
         };
+        
     </script>
 </body>
 </html>

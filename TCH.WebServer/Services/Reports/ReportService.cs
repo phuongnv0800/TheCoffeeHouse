@@ -23,6 +23,12 @@ namespace TCH.WebServer.Services.Reports
         Task<ResponseLogin<Report>> GetImportnById(string id);
         Task<ResponseLogin<Report>> GetExportnById(string id);
         Task<ResponseLogin<Report>> GetLiquidById(string id);
+        Task<Byte[]> ExcelExport(DateTime? FromDate, DateTime? ToDate);
+        Task<Byte[]> ExcelImport(DateTime? FromDate, DateTime? ToDate);
+        Task<Byte[]> ExcelLiquid(DateTime? FromDate, DateTime? ToDate);
+        Task<Byte[]> ExcelExportInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
+        Task<Byte[]> ExcelImportInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
+        Task<Byte[]> ExcelLiquidInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task DeleteImport(string id);
         Task DeleteExport(string id);
         Task DeleteLiquid(string id);
@@ -171,6 +177,114 @@ namespace TCH.WebServer.Services.Reports
                         return;
                     }
                 }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<byte[]> ExcelExport(DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetAsync($"/api/Reports/excel-export-all?" + fromDate
+                        + toDate);
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<byte[]> ExcelExportInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetAsync($"/api/Reports/excel-export/{BranchId}?" + fromDate
+                        + toDate);
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<byte[]> ExcelImport(DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetAsync($"/api/Reports/excel-import-all?" + fromDate
+                        + toDate);
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<byte[]> ExcelImportInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetAsync($"/api/Reports/excel-import/{BranchId}?" + fromDate
+                        + toDate);
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<byte[]> ExcelLiquid(DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetAsync($"/api/Reports/excel-liquidation-all?" + fromDate
+                        + toDate);
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<byte[]> ExcelLiquidInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetAsync($"/api/Reports/excel-liquidation/{BranchId}?" + fromDate
+                        + toDate);
+                return await response.Content.ReadAsByteArrayAsync();
             }
             catch
             {

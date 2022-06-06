@@ -68,6 +68,7 @@
                                 <div class="text-end d-flex mt-5">
                                     <h1>Tổng doanh thu:  </h1>
                                     <h1 class="text-primary ms-2">@Sum</h1>
+                                    <button class="btn btn-success ms-5" onclick="@(() => ExportExcel())">Xuất Excel</button>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +96,7 @@
                                             {
                                                 foreach (var product in ProductsList)
                                                 {
-                                                    string href = "/materials/" + product.ID.ToString();
+                                                    string href = "/orders/" + product.ID.ToString();
                                                     <tr class="odd">
                                                         <td>
                                                             <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -289,6 +290,18 @@
     public async Task SearchByText()
     {
         await Get(pagination.PageNumber);
+    }
+    public async Task ExportExcel()
+    {
+        try{
+            var fileName = $"OrderReport.xlsx";
+        var bytes = await orderService.GetExcelInBranch(BranchId,dateRequest.FromDate, dateRequest.ToDate);
+        await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(bytes));
+        }
+        catch (Exception ex)
+        {
+            toastService.ShowError(ex.ToString());
+        }
     }
 }
 
