@@ -38,10 +38,10 @@ public class StockManager : IDisposable, IStockRepository
                     join b in _context.Branches on c.BranchID equals b.ID
                     join m in _context.Materials on c.MaterialID equals m.ID
                     join mea in _context.Measures on c.MeasureID equals mea.ID
-                    where c.BranchID == branchID
+                    where c.BranchID == branchID && DateTime.Compare(c.ExpirationDate, DateTime.Now) >= 0
                     select new { c, b, m, mea };
         if (request.StartDate != null)
-            query = query.Where(x => DateTime.Compare(x.c.BeginDate, (DateTime)request.StartDate) < 0);
+            query = query.Where(x => DateTime.Compare(x.c.BeginDate, (DateTime)request.StartDate) <= 0);
 
         //paging
         int totalRow = await query.CountAsync();
@@ -112,12 +112,175 @@ public class StockManager : IDisposable, IStockRepository
             Message = "Thành công",
         };
     }
+    public async Task<Respond<PagedList<StockVm>>> GetAllStockExpireByBranchID(string branchID, Search request)
+    {
+        var query = from c in _context.StockMaterials
+                    join b in _context.Branches on c.BranchID equals b.ID
+                    join m in _context.Materials on c.MaterialID equals m.ID
+                    join mea in _context.Measures on c.MeasureID equals mea.ID
+                    where c.BranchID == branchID &&  DateTime.Compare(c.ExpirationDate, DateTime.Now) < 0
+                    select new { c, b, m, mea };
+        if (!string.IsNullOrEmpty(request.Name))
+        {
+            query = query.Where(x => x.m.Name.Contains(request.Name));
+        }
+        //paging
+        int totalRow = await query.CountAsync();
+        List<StockVm> data = new List<StockVm>();
+        if (request.IsPging == true)
+        {
+            data = await query.Select(x =>
+                 new StockVm()
+                 {
+                     BranchID = branchID,
+                     BranchName = x.c.Branch.Name,
+                     MaterialName = x.m.Name,
+                     Quantity = x.c.Quantity,
+                     BeginDate = x.c.BeginDate,
+                     ExpirationDate = x.c.ExpirationDate,
+                     Status = x.c.Status,
+                     PriceOfUnit = x.c.PriceOfUnit,
+                     IsDelete = x.c.IsDelete,
+                     Mass = x.c.Mass,
+                     StandardMass = x.c.StandardMass,
+                     MeasureName = x.mea.Name,
+                     MeasureType = x.c.MeasureType,
+                     Description = x.c.Description,
+                     MaterialID = x.c.MaterialID,
+                     MeasureID = x.c.MeasureID,
+                 }
+            )
+           .Skip((request.PageNumber - 1) * request.PageSize)
+           .Take(request.PageSize)
+           .ToListAsync();
+        }
+        else
+            data = await query.Select(x =>
+                 new StockVm()
+                 {
+                     BranchID = branchID,
+                     BranchName = x.c.Branch.Name,
+                     MaterialName = x.m.Name,
+                     Quantity = x.c.Quantity,
+                     BeginDate = x.c.BeginDate,
+                     ExpirationDate = x.c.ExpirationDate,
+                     Status = x.c.Status,
+                     PriceOfUnit = x.c.PriceOfUnit,
+                     IsDelete = x.c.IsDelete,
+                     Mass = x.c.Mass,
+                     StandardMass = x.c.StandardMass,
+                     MeasureName = x.mea.Name,
+                     MeasureType = x.c.MeasureType,
+                     Description = x.c.Description,
+                     MaterialID = x.c.MaterialID,
+                     MeasureID = x.c.MeasureID,
+                 }
+            ).ToListAsync();
+
+        // select
+        var pagedResult = new PagedList<StockVm>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<StockVm>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+    public async Task<Respond<PagedList<StockVm>>> GetAllStockExpire(Search request)
+    {
+        var query = from c in _context.StockMaterials
+                    join b in _context.Branches on c.BranchID equals b.ID
+                    join m in _context.Materials on c.MaterialID equals m.ID
+                    join mea in _context.Measures on c.MeasureID equals mea.ID
+                    where DateTime.Compare(c.ExpirationDate, DateTime.Now) < 0
+                    select new { c, b, m, mea };
+        if (!string.IsNullOrEmpty(request.Name))
+        {
+            query = query.Where(x => x.m.Name.Contains(request.Name));
+        }
+        //paging
+        int totalRow = await query.CountAsync();
+        List<StockVm> data = new List<StockVm>();
+        if (request.IsPging == true)
+        {
+            data = await query.Select(x =>
+                 new StockVm()
+                 {
+                     BranchID =x.b.ID,
+                     BranchName = x.c.Branch.Name,
+                     MaterialName = x.m.Name,
+                     Quantity = x.c.Quantity,
+                     BeginDate = x.c.BeginDate,
+                     ExpirationDate = x.c.ExpirationDate,
+                     Status = x.c.Status,
+                     PriceOfUnit = x.c.PriceOfUnit,
+                     IsDelete = x.c.IsDelete,
+                     Mass = x.c.Mass,
+                     StandardMass = x.c.StandardMass,
+                     MeasureName = x.mea.Name,
+                     MeasureType = x.c.MeasureType,
+                     Description = x.c.Description,
+                     MaterialID = x.c.MaterialID,
+                     MeasureID = x.c.MeasureID,
+                 }
+            )
+           .Skip((request.PageNumber - 1) * request.PageSize)
+           .Take(request.PageSize)
+           .ToListAsync();
+        }
+        else
+            data = await query.Select(x =>
+                 new StockVm()
+                 {
+                     BranchID = x.b.ID,
+                     BranchName = x.c.Branch.Name,
+                     MaterialName = x.m.Name,
+                     Quantity = x.c.Quantity,
+                     BeginDate = x.c.BeginDate,
+                     ExpirationDate = x.c.ExpirationDate,
+                     Status = x.c.Status,
+                     PriceOfUnit = x.c.PriceOfUnit,
+                     IsDelete = x.c.IsDelete,
+                     Mass = x.c.Mass,
+                     StandardMass = x.c.StandardMass,
+                     MeasureName = x.mea.Name,
+                     MeasureType = x.c.MeasureType,
+                     Description = x.c.Description,
+                     MaterialID = x.c.MaterialID,
+                     MeasureID = x.c.MeasureID,
+                 }
+            ).ToListAsync();
+
+        // select
+        var pagedResult = new PagedList<StockVm>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<StockVm>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
     public async Task<Respond<PagedList<StockVm>>> GetAllStock(Search request)
     {
         var query = from c in _context.StockMaterials
                     join b in _context.Branches on c.BranchID equals b.ID
                     join m in _context.Materials on c.MaterialID equals m.ID
                     join mea in _context.Measures on c.MeasureID equals mea.ID
+                    where DateTime.Compare(c.ExpirationDate, DateTime.Now) >= 0
                     select new { c, b, m, mea };
         if (request.StartDate != null)
             query = query.Where(x => DateTime.Compare(x.c.BeginDate, (DateTime)request.StartDate) < 0);

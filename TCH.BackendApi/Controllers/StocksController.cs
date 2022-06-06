@@ -42,6 +42,48 @@ public class StocksController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
+    [HttpGet("expire-by-branch/{branchId}")]
+    public async Task<IActionResult> GetAllStockExpireByBranchID(string branchId, [FromQuery] Search search)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.GetAllStockExpireByBranchID(branchId, search);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
+    [HttpGet("expire-all")]
+    public async Task<IActionResult> GetAllStockExpire([FromQuery] Search search)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.GetAllStockExpire( search);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
     [Authorize(Roles = Permission.Branch)]
     [HttpGet("get-all")]
     public async Task<IActionResult> GetAll([FromQuery] Search search)
