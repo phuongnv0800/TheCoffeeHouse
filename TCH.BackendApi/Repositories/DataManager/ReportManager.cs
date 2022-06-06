@@ -1564,6 +1564,197 @@ public class ReportManager : IReportRepository, IDisposable
         throw new NotImplementedException();
     }
 
+    public async Task<Respond<PagedList<MassMaterial>>> GetMassMaterialInDay(Search request)
+    {
+        var result = await _context
+            .Orders
+            .Include(x => x.OrderDetails)
+            .ToListAsync();
+        if (result == null || result.Count == 0)
+        {
+            return new Respond<PagedList<MassMaterial>>
+            {
+                Data = new(),
+                Result = 1,
+                Message = "Thành công",
+            };
+        }
+
+        if (!string.IsNullOrEmpty(request.Name))
+            result = result.Where(x => x.Code.Contains(request.Name)).ToList();
+        if (request.StartDate != null && request.EndDate != null)
+            result = result.Where(x =>
+                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+        var orderDetails = new List<OrderDetail>();
+        foreach (var order in result)
+        {
+            if (order.OrderDetails.Count > 0 && order.OrderDetails != null)
+            {
+                orderDetails.AddRange(order.OrderDetails);
+            }
+        }
+
+        var data = new List<MassMaterial>();
+        foreach (var item in orderDetails)
+        {
+            var recipes = await _context
+                .RecipeDetails
+                .Include(x => x.Material)
+                .Where(x => x.ProductID == item.ProductID && x.SizeID == item.SizeID)
+                .ToListAsync();
+            if (recipes != null)
+            {
+                foreach (var recipe in recipes)
+                {
+                    bool add = true;
+                    foreach (var i in data)
+                    {
+                        if (i.MaterialID == recipe.MaterialID)
+                        {
+                            add = false;
+                            i.StandardMass += item.Quantity * recipe.Weight;
+                        }
+                    }
+
+                    if (add)
+                    {
+                        data.Add(new MassMaterial()
+                        {
+                            MaterialID = recipe.MaterialID,
+                            Name = recipe.Material.Name,
+                            Description = item.Description,
+                            StandardUnitType = recipe.StandardUnitType,
+                            StandardMass = recipe.Weight * item.Quantity,
+                            DateStart = request.StartDate,
+                            DateEnd = request.EndDate,
+                        });
+                    }
+                }
+            }
+        }
+
+        //paging
+        int totalRow = data.Count();
+        if (request.IsPging)
+        {
+            data = data.Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        }
+        else
+            data = data.ToList();
+
+        var pagedResult = new PagedList<MassMaterial>
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<MassMaterial>>
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+
+    public async Task<Respond<PagedList<MassMaterial>>> GetMassMaterialInDayByBranchId(string branchId, Search request)
+    {
+        var result = await _context
+            .Orders
+            .Include(x => x.OrderDetails)
+            .Where(x => x.BranchID == branchId)
+            .ToListAsync();
+        if (result == null || result.Count == 0)
+        {
+            return new Respond<PagedList<MassMaterial>>
+            {
+                Data = new(),
+                Result = 1,
+                Message = "Thành công",
+            };
+        }
+
+        if (!string.IsNullOrEmpty(request.Name))
+            result = result.Where(x => x.Code.Contains(request.Name)).ToList();
+        if (request.StartDate != null && request.EndDate != null)
+            result = result.Where(x =>
+                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+        var orderDetails = new List<OrderDetail>();
+        foreach (var order in result)
+        {
+            if (order.OrderDetails.Count > 0 && order.OrderDetails != null)
+            {
+                orderDetails.AddRange(order.OrderDetails);
+            }
+        }
+
+        var data = new List<MassMaterial>();
+        foreach (var item in orderDetails)
+        {
+            var recipes = await _context
+                .RecipeDetails
+                .Include(x => x.Material)
+                .Where(x => x.ProductID == item.ProductID && x.SizeID == item.SizeID)
+                .ToListAsync();
+            if (recipes != null)
+            {
+                foreach (var recipe in recipes)
+                {
+                    bool add = true;
+                    foreach (var i in data)
+                    {
+                        if (i.MaterialID == recipe.MaterialID)
+                        {
+                            add = false;
+                            i.StandardMass += item.Quantity * recipe.Weight;
+                        }
+                    }
+
+                    if (add)
+                    {
+                        data.Add(new MassMaterial()
+                        {
+                            MaterialID = recipe.MaterialID,
+                            Name = recipe.Material.Name,
+                            Description = item.Description,
+                            StandardUnitType = recipe.StandardUnitType,
+                            StandardMass = recipe.Weight * item.Quantity,
+                            DateStart = request.StartDate,
+                            DateEnd = request.EndDate,
+                        });
+                    }
+                }
+            }
+        }
+
+        //paging
+        int totalRow = data.Count();
+        if (request.IsPging)
+        {
+            data = data.Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        }
+        else
+            data = data.ToList();
+
+        var pagedResult = new PagedList<MassMaterial>
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<MassMaterial>>
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+
     private async Task<string> SaveFileIFormFile(IFormFile file)
     {
         var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim();
