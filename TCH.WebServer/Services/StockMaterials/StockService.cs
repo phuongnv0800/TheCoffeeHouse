@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System.Globalization;
 using System.Net.Http.Headers;
 using TCH.Data.Entities;
 using TCH.Utilities.Paginations;
+using TCH.ViewModel.SubModels;
 using TCH.WebServer.Models;
 
 namespace TCH.WebServer.Services.StockMaterials
@@ -9,6 +11,8 @@ namespace TCH.WebServer.Services.StockMaterials
     public interface IStockService
     {
         Task<ResponseLogin<PagedList<StockMaterial>>> GetStockMaterials(bool IsPaging, int pageSize, int pageNumber, string name, string BranchId);
+        Task<ResponseLogin<PagedList<StockVm>>> GetAllStockExpire(bool IsPaging, int pageSize, int pageNumber, string name, DateTime? FromDate, DateTime? ToDate);
+        Task<ResponseLogin<PagedList<StockVm>>> GetAllStockExpireInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, string name, DateTime? FromDate, DateTime? ToDate);
         Task DeleteAStockMaterial(string id);
     }
     public class StockService : IStockService
@@ -42,6 +46,56 @@ namespace TCH.WebServer.Services.StockMaterials
             }
         }
 
+        public async Task<ResponseLogin<PagedList<StockVm>>> GetAllStockExpire(bool IsPaging, int pageSize, int pageNumber, string name, DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                List<StockMaterial> Products;
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<StockVm>>>($"/api/Stocks/expire-all?IsPging=" + IsPaging.ToString()
+                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&Name=" + name + fromDate + toDate);
+                if (response.Result != 1)
+                {
+                    return null;
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<ResponseLogin<PagedList<StockVm>>> GetAllStockExpireInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, string name, DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                List<StockMaterial> Products;
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<StockVm>>>($"/api/Stocks/expire-by-branch?IsPging=" + IsPaging.ToString()
+                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&Name=" + name + fromDate + toDate);
+                if (response.Result != 1)
+                {
+                    return null;
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<ResponseLogin<PagedList<StockMaterial>>> GetStockMaterials(bool IsPaging, int pageSize, int pageNumber, string name, string BranchId)
         {
             try
@@ -50,7 +104,7 @@ namespace TCH.WebServer.Services.StockMaterials
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<StockMaterial>>>($"/api/Stocks/get-by-branch/{BranchId}?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&Name=" + name);
+                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&Name=" + name );
                 if (response.Result != 1)
                 {
                     return null;

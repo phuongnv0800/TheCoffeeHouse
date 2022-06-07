@@ -1,4 +1,4 @@
-﻿@page "/mass-in-day-in-branch"
+﻿@page "/expired"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -8,12 +8,12 @@
 @using TCH.Data.Entities
 @using TCH.WebServer.Models
 @using TCH.WebServer.Models.Pagination
-@using TCH.WebServer.Services.Reports
+@using TCH.WebServer.Services.StockMaterials
 @using TCH.WebServer.Services.Users
 
 @inject HttpClient httpClient
 @inject ILocalStorageService localStorage;
-@inject IReportService reportService;
+@inject IStockService stockService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
 @inject IToastService toastService
@@ -38,7 +38,8 @@
                             {
                                 <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
                                     <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu" />
-                                    <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith" />
+                                    <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuối" />
+                                    <InputText @bind-Value="searchText" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="tên nguyên liệu" />
                                     <button onclick="@(() => SearchByText())"
                                         class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                         Tìm kiếm
@@ -66,10 +67,13 @@
                                                     Tên nguyên liệu
                                                 </th>
                                                 <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                    Khối lượng tiêu chuẩn
+                                                    Ngày nhập
                                                 </th>
                                                 <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                    Loại hình tính
+                                                    Ngày hết hạn
+                                                </th>
+                                                <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Số lượng
                                                 </th>
                                             </tr>
                                         </thead>
@@ -89,7 +93,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div class="ms-5">
                                                                     <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                        @product.Name
+                                                                        @product.MaterialName
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -98,7 +102,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div class="ms-5">
                                                                     <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                        @product.StandardMass
+                                                                        @product.BeginDate
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -107,7 +111,16 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div class="ms-5">
                                                                     <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                        @((product.StandardUnitType == StandardUnitType.g) ? "gam" : "ml")
+                                                                        @product.ExpirationDate
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="ms-5">
+                                                                    <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                        @product.Quantity
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -156,14 +169,14 @@
 
 
 @code {
-    public List<MassMaterial>? ProductsList = new List<MassMaterial>();
+    public List<StockVm>? ProductsList = new List<StockVm>();
     private string? token;
     public string Name;
-    private string BranchId;
     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
     private ApplicationUser User;
     private DateRequest dateRequest;
     private double Sum;
+    private string searchText = "";
     class DataItem
     {
         public DateTime Date { get; set; }
@@ -177,13 +190,12 @@
     {
         try
         {
-            navigationManager.NavigateTo("mass-in-day-in-branch");
+            navigationManager.NavigateTo("expired");
             dateRequest = new DateRequest()
                 {
                     FromDate = new DateTime(2022, 06, 01),
                     ToDate = DateTime.Now
                 };
-            BranchId = GbParameter.GbParameter.BranchId;
             var response = await userServices.GetUserInfo();
             User = response.Data;
             await Get(1);
@@ -198,7 +210,7 @@
     {
         try
         {
-            var response = await reportService.GetMassMaterialInDayByBranchId(true, pagination.pageSize, pageNumber, BranchId, dateRequest.FromDate, dateRequest.ToDate);
+            var response = await stockService.GetAllStockExpire(true, pagination.pageSize, pageNumber, searchText, dateRequest.FromDate, dateRequest.ToDate);
             pagination.PageNumber = response.Data.CurrentPage;
             ProductsList = response.Data.Items.ToList();
             pagination.totalPage = response.Data.TotalPages;
@@ -208,10 +220,10 @@
             toastService.ShowError("Có lỗi");
         }
     }
-
+    
     public async void Delete(string id)
     {
-        await reportService.DeleteImport(id);
+        //await stockService.DeleteImport(id);
     }
     public async void Change(int link)
     {

@@ -16,10 +16,6 @@
         <EditForm class="form w-100 " Model="@loginModel" id="kt_sign_in_form" OnSubmit="HandleLogin">
             <div class="text-center mb-10">
                 <h1 class="text-dark mb-3">Đăng nhập vào The Coffee House</h1>
-                <div class="text-gray-400 fw-bold fs-4">
-                    New Here?
-                    <a href="" class="link-primary fw-bolder">Tạo tài khoản mới</a>
-                </div>
             </div>
             <div class="fv-row mb-10 fv-plugins-icon-container">
                 <label class="form-label fs-6 fw-bolder text-dark">Tài khoản</label>
@@ -29,18 +25,18 @@
             <div class="fv-row mb-10 fv-plugins-icon-container">
                 <div class="d-flex flex-stack mb-2">
                     <label class="form-label fw-bolder text-dark fs-6 mb-0">Mật khẩu</label>
-                    <a href="../../demo1/dist/authentication/layouts/basic/password-reset.html" class="link-primary fs-6 fw-bolder">Quên mật khẩu ?</a>
                 </div>
                 <InputText class="form-control form-control-lg form-control-solid" type="password" name="password" id="password" @bind-Value="@loginModel.Password" autocomplete="off"></InputText>
                 <div class="fv-plugins-message-container invalid-feedback"></div>
             </div>
             <div class="text-center">
                 <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-                    <span class="indicator-label">Continue</span>
-                    <span class="indicator-progress">
-                        Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
+                    @if(showLogin){
+                        <span class="indicator-label">Đăng nhập</span>
+                    }
+                    else{
+                        <span class="indicator-label">Xin vui lòng đợi...</span>
+                    }
                 </button>
 
             </div>
@@ -77,6 +73,7 @@
     private async Task HandleLogin()
     {
         loginModel.RememberMe = true;
+        showLogin = false;
         var result = await authService.Login(loginModel);
         if (result)
         {
@@ -99,6 +96,7 @@
         else
         {
             ToastService.ShowError("Đăng nhập thất bại", "Thông báo");
+            showLogin = true;
         }
     }
     private void HandleShowForgetPassword()

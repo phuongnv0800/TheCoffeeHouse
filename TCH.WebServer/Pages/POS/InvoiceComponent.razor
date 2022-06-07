@@ -259,23 +259,29 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        order = GbParameter.GbParameter.Order;
-        if (order == null)
-        {
-            order = new OrderRequest();
-            order.OrderItems = new List<OrderItem>();
-            GbParameter.GbParameter.Order = order;
+        try{
+            order = GbParameter.GbParameter.Order;
+            if (order == null)
+            {
+                order = new OrderRequest();
+                order.OrderItems = new List<OrderItem>();
+                GbParameter.GbParameter.Order = order;
+            }
+
+            var response = await userServices.GetUserInfo();
+            User = response.Data;
+
+            foreach (var or in order.OrderItems)
+            {
+                order.TotalAmount += or.SubAmount;
+            }
+
+            base.OnParametersSet();
         }
-
-        var response = await userServices.GetUserInfo();
-        User = response.Data;
-
-        foreach (var or in order.OrderItems)
+        catch(Exception e)
         {
-            order.TotalAmount += or.SubAmount;
+            toastService.ShowError("có lỗi");
         }
-
-        base.OnParametersSet();
     }
     public async Task ShowPopUp()
     {
