@@ -158,7 +158,7 @@
                                 <!--end::Input group-->
                             </EditForm>
                         </div>
-                        <div class="table-responsive">
+                        <div class="table-responsive mx-2">
                             <!--begin::Table-->
                             <table class="table align-middle gs-0 gy-4 my-0">
                                 <!--begin::Table head-->
@@ -166,6 +166,7 @@
                                     <tr class="fs-7 fw-bolder text-gray-500">
                                         <th class="p-0 min-w-150px d-block pt-3">Tên</th>
                                         <th class="text-end min-w-140px pt-3">Trạng thái</th>
+                                        <th class="text-end min-w-140px pt-3">Kích cỡ</th>
                                         <th class="pe-0 text-end min-w-120px pt-3">Giá</th>
                                         <th class="pe-0 text-end min-w-120px pt-3">Số lượng</th>
                                     </tr>
@@ -179,13 +180,13 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    <span class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">@topping.Product.Name</span>
+                                                    <span class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">@(topping.Product != null ? topping.Product.Name : "unknow")</span>
                                                 </td>
                                                 <td class="text-end">
                                                     <span class="badge badge-light-success fs-7 fw-bolder">Còn hàng</span>
                                                 </td>
                                                 <td class="text-end">
-                                                    <span class="text-gray-800 fw-bolder d-block fs-6">@topping.Size.Name</span>
+                                                    <span class="text-gray-800 fw-bolder d-block fs-6">@(topping.Size != null ? topping.Size.Name : "unknow")</span>
                                                 </td>
                                                 <td class="text-end">
                                                     <span class="text-gray-800 fw-bolder d-block fs-6">@topping.SubAmount</span>
