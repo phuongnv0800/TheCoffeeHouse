@@ -93,8 +93,8 @@ public class ProductManager : IProductRepository, IDisposable
         {
             var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
             var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
-            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).ToList();
+            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x=>x.SubPrice).ToList();
+            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x=>x.SubPrice).ToList();
         }
         var pagedResult = new PagedList<ProductVm>()
         {
