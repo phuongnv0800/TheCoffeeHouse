@@ -97,7 +97,7 @@
 
 @code {
     [Parameter] public string Title { get; set; }
-    [Parameter] public string? ProductId { get; set; }
+    [Parameter] public string? CustomerId { get; set; }
 
     private CustomerRequest editProduct = null;
 
@@ -109,13 +109,20 @@
     protected override async Task OnParametersSetAsync()
     {
 
-        if (string.IsNullOrEmpty(ProductId))
+        if (string.IsNullOrEmpty(CustomerId))
         {
             editProduct = new CustomerRequest();
         }
         else
         {
-            
+            var responseC = await customerService.GetCustomerById(CustomerId);
+            var customer = responseC.Data;
+            editProduct.FullName = customer.FullName;
+            editProduct.Address = customer.Address;
+            editProduct.DateOfBirth = customer.DateOfBirth;
+            editProduct.Email = customer.Email;
+            editProduct.Gender = customer.Gender;
+            editProduct.Phone = customer.Phone;
         }
     }
 }
@@ -131,7 +138,11 @@
         try{
             ResponseLogin<Customer> response = new ResponseLogin<Customer>();
             
-            response = await customerService.AddCustomer(editProduct);
+            if(CustomerId == null)
+                response = await customerService.AddCustomer(editProduct);
+            else{
+                response = await customerService.UpdateCustomer(editProduct, CustomerId);
+            }
 
             if(response != null)
             {
@@ -141,6 +152,7 @@
                     await BlazoredModal.CloseAsync(ModalResult.Ok(true));
                 }
             }
+            _toastService.ShowSuccess("Không thành công");
         }
         catch(Exception ex)
         {

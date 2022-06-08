@@ -16,7 +16,6 @@
   <ItemGroup>
     <Content Remove="C:\Users\Admin\.nuget\packages\vmu\8.0.36.2\contentFiles\any\net6.0\wwwroot\css\style.bundle.css" />
     <Content Remove="C:\Users\Admin\.nuget\packages\vmu\8.0.36.2\contentFiles\any\net6.0\wwwroot\css\style.bundle.rtl.css" />
-    <Content Remove="Pages\AdminDashBoard\CategoriesTable.razor" />
     <Content Remove="wwwroot\images\1640270462_combo-qua-tet.webp" />
     <Content Remove="wwwroot\images\24-lon-cpsd.webp" />
     <Content Remove="wwwroot\images\2combo2-cforiginal.webp" />
@@ -128,7 +127,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\AdminDashBoard\CategoriesTable.razor" />
     <None Include="wwwroot\images\1640270462_combo-qua-tet.webp" />
     <None Include="wwwroot\images\24-lon-cpsd.webp" />
     <None Include="wwwroot\images\2combo2-cforiginal.webp" />
@@ -259,14 +257,6 @@
     <Folder Include="Pages\Branchs\Menus\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="Services\Promotions\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\AdminDashBoard\CategoriesTable.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\AdminDashBoard\CategoriesTable.razor" />
   </ItemGroup>
 
   <ItemGroup>

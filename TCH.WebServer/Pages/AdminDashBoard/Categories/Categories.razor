@@ -1,5 +1,5 @@
 ﻿@page "/categories"
-@using Blazored.LocalStorage
+
 @using Blazored.Toast.Services
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -78,7 +78,7 @@
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div class="ms-5">
-                                                            <a href="../../demo1/dist/apps/ecommerce/catalog/edit-category.html" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                            <a class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
                                                                 @product.Name
                                                             </a>
                                                             <div class="text-muted fs-7 fw-bolder">@product.Description</div>
@@ -122,9 +122,9 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                            <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-md-end">
                                 <div class="dataTables_paginate paging_simple_numbers" id="kt_ecommerce_category_table_paginate">
-                                    <Pagination Count="@(pagination.totalPage / pagination.pageSize + (pagination.totalPage % pagination.pageSize > 1 ? 1 : 0))" SelectedChanged="Change" />
+                                    <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
                                 </div>
                             </div>
                         </div>
@@ -148,7 +148,7 @@
     {
         try
         {
-            navigationManager.NavigateTo("/categories");
+            //navigationManager.NavigateTo("categories-table");
             var response = await userService.GetUserInfo();
             User = response.Data;
             await Get(1);
@@ -167,6 +167,7 @@
             pagination.PageNumber = response.Data.CurrentPage;
             CategoryList = response.Data.Items.ToList();
             pagination.totalPage = response.Data.TotalPages;
+            StateHasChanged();
         }
         catch (Exception e)
         {
@@ -175,7 +176,7 @@
     }
     public async void Add()
     {
-        //Modal.Show<AddProduct>("Thêm sản phẩm");
+        Modal.Show<AddCategory>("Thêm loại sản phẩm");
         //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
     }
     public async void Update(string id)

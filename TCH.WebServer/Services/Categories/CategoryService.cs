@@ -15,13 +15,13 @@ namespace TCH.WebServer.Services.Categories
         {
             this.httpClient = httpClient;
         }
-        public async Task<ResponseLogin<Category>> AddCategory(MultipartFormDataContent category)
+        public async Task<ResponseLogin<Category>> AddCategory(Category category)
         {
             try
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                //var httpContent = new StringContent(JsonConvert.SerializeObject(category), Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync($"/api/Categories/", category);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(category), Encoding.UTF8, "application/json");
+                var response = await httpClient.PostAsync($"/api/Categories/", httpContent);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -116,13 +116,13 @@ namespace TCH.WebServer.Services.Categories
             }
         }
 
-        public async Task<ResponseLogin<Category>> UpdateCategory(MultipartFormDataContent category)
+        public async Task<ResponseLogin<Category>> UpdateCategory(Category category)
         {
             try
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                //var httpContent = new StringContent(JsonConvert.SerializeObject(category), Encoding.UTF8, "application/json");
-                var response = await httpClient.PutAsync($"/api/Products/", category);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(category), Encoding.UTF8, "application/json");
+                var response = await httpClient.PutAsync($"/api/Products/", httpContent);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
