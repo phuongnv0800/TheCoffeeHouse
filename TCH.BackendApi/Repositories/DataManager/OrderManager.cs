@@ -900,6 +900,10 @@ public class OrderManager : IOrderRepository, IDisposable
         var order = await _context.Orders
             .Include(x => x.OrderDetails)
             .ThenInclude(x => x.OrderToppingDetails)
+            .Include(x => x.OrderDetails)
+            .ThenInclude(x => x.Product)
+            .Include(x => x.OrderDetails)
+            .ThenInclude(x => x.Size)
             .FirstOrDefaultAsync(x => x.ID == orderID);
         if (order == null)
             return new Respond<Order>
