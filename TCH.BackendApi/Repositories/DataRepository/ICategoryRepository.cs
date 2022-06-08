@@ -9,6 +9,7 @@ public interface ICategoryRepository
 {
     Task<MessageResult> Create(CategoryVm request);
     Task<MessageResult> Delete(string id);
+    Task<Respond<CategoryVm>> GetById(string id);
     Task<Respond<PagedList<CategoryVm>>> GetAll(Search request);
     Task<MessageResult> Update(string id, CategoryVm name);
 }

@@ -21,6 +21,28 @@ public class CategoryManager : ICategoryRepository, IDisposable
         _mapper = mapper;
     }
 
+    public async Task<Respond<CategoryVm>> GetById(string id)
+    {
+        var categories = await _context.Categories.FindAsync(id);
+        if (categories == null)
+        {
+            return new Respond<CategoryVm>()
+            {
+                Result = 0,
+                Message = "Thất bại",
+                Data = null,
+            };
+        }
+
+        var categoryVm = _mapper.Map<CategoryVm>(categories);
+        return new Respond<CategoryVm>()
+        {
+            Result = 1,
+            Message = "Thành công",
+            Data = categoryVm,
+        };
+    }
+
     public async Task<Respond<PagedList<CategoryVm>>> GetAll(Search request)
     {
         var query = from c in _context.Categories select c;

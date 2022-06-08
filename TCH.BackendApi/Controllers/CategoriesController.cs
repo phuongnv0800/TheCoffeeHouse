@@ -41,6 +41,27 @@ public class CategoriesController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    [HttpGet("/{id}")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetAll(string id)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _category.GetById(id);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
     [HttpPost]
     [Authorize(Roles = Permission.Branch)]
     public async Task<IActionResult> Create([FromBody] CategoryVm name)
