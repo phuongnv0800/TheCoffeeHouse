@@ -1,4 +1,6 @@
-﻿@inject IToastService ToastService
+﻿@using TCH.Data.Entities
+@using TCH.Utilities.SubModels
+@inject IToastService ToastService
 @inject IUserApiClient UserApiClient
 @inject IJSRuntime JS
 @attribute [Authorize]
@@ -22,7 +24,8 @@
             </div>
             <div class="modal-body">
                 <div class="scroll-y me-n7 pe-7">
-                    <EditForm Model="user" OnValidSubmit="OnSubmit" class="form">
+                    @if(user != null){
+                        <EditForm Model="user" OnValidSubmit="OnSubmit" class="form">
                         <DataAnnotationsValidator />
                         <div class="fv-row mb-7">
                             <label class="required fs-6 fw-bold mb-2" for="validationCustom01">
@@ -141,6 +144,7 @@
                             <button class="btn btn-danger mr-2" @onclick="OnCancel">Đóng</button>
                         </div>
                     </EditForm>
+                    }
                 </div>
             </div>
         </div>
@@ -149,12 +153,30 @@
 
 @code {
     [Parameter] public string Title { get; set; }
+    [Parameter]public string UserId { get; set; }
 
     public MultipartFormDataContent content = new MultipartFormDataContent();
     public RegisterRequest user { set; get; }
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        user = new RegisterRequest();
+        if(UserId == null)
+            user = new RegisterRequest();
+        else
+        {
+            user = new RegisterRequest();
+            var res = await UserApiClient.GetById(UserId);
+            AppUser aUser = res.Data;
+            user.Address = aUser.Address;
+            user.branchID = aUser.BranchID;
+            user.DateOfBirth = aUser.DateOfBirth;
+            user.Email = aUser.Email;
+            user.FirstName = aUser.FirstName;
+            user.Gender = aUser.Gender;
+            user.LastName = aUser.LastName;
+            user.PhoneNumber = aUser.PhoneNumber;
+            user.UserName = aUser.UserName;
+
+        }
     }
 }
 
@@ -166,19 +188,30 @@
 
     private async Task OnSubmit()
     {
+        MessageResult result = new MessageResult();
+        if(user.FirstName != null)
         content.Add(new StringContent(user.FirstName), "firstName");
+        if(user.LastName != null)
         content.Add(new StringContent(user.LastName), "lastName");
         content.Add(new StringContent(user.DateOfBirth.ToString()), "dateOfBirth");
+        if(user.Email != null)
         content.Add(new StringContent(user.Email), "email");
+        if(user.PhoneNumber != null)
         content.Add(new StringContent(user.PhoneNumber), "phoneNumber");
+        if(user.Address != null)
         content.Add(new StringContent(user.Address), "address");
         content.Add(new StringContent(user.Gender.ToString()), "gender");
         content.Add(new StringContent(user.UserName.ToString()), "userName");
-        content.Add(new StringContent(user.Password.ToString()), "password");
-        content.Add(new StringContent(user.ConfirmPassword.ToString()), "confirmPassword");
-
-        var result = await UserApiClient.Register(content);
-
+        if(!string.IsNullOrEmpty(user.Password) && !string.IsNullOrEmpty(user.ConfirmPassword)){
+            content.Add(new StringContent(user.Password.ToString()), "password");
+            content.Add(new StringContent(user.ConfirmPassword.ToString()), "confirmPassword");
+        }
+        if(UserId == null)
+             result = await UserApiClient.Register(content);
+        else
+        {
+             result = await UserApiClient.Update(UserId, content);
+        }
         if (result.Result == 1)
         {
             _toastService.ShowSuccess(result.Message);
