@@ -13,11 +13,10 @@
   <component name="ChangeListManager">
     <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="nomessage">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IStockRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IStockRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/UsersController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IUserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IUserRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.ViewModel/RequestModel/UserUpdateRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.ViewModel/RequestModel/UserUpdateRequest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +36,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/dev_seed" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
@@ -50,10 +54,12 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2f7b3b6e2f3c491c91283c8624ab32661ce200/1f/48011b47/HttpDeleteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5a5ae644fdbadec9bdc495c592ec7c1ba2fa382751f78a221412bfe43af5ce0/HttpResponseMessage.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bebd253e21dcf766929bfdfd74615bfe46e6e1693b289273dbdb82152893/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d4f98ebdd878db4fbd98872756eb7be6ad9e468fe5cd6b16385d8c4993109a/List.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Controllers/ProductsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/EF/Seed.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/TCH.WebServer/wwwroot/assets/js/custom/apps/subscriptions/list/list.js.map" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -62,7 +68,9 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="27MMZ4XHzN4mnVF07vJSaoPxuWD" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -338,39 +346,94 @@
           <line>148</line>
           <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" initialLine="137" containingFunctionPresentation="">
             <startOffsets>
-              <option value="5724" />
+              <option value="5723" />
             </startOffsets>
             <endOffsets>
-              <option value="5785" />
+              <option value="5784" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs</url>
-          <line>51</line>
-          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs" initialLine="51" containingFunctionPresentation="method 'GetAllStockExpireByBranchID'">
+          <url>file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs</url>
+          <line>38</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" initialLine="38" containingFunctionPresentation="method 'Create'">
             <startOffsets>
-              <option value="1699" />
+              <option value="1373" />
             </startOffsets>
             <endOffsets>
-              <option value="1729" />
+              <option value="1879" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="12" />
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs</url>
-          <line>203</line>
-          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" initialLine="203" containingFunctionPresentation="method 'GetAllStockExpire'">
+          <url>file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs</url>
+          <line>264</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs" initialLine="267" containingFunctionPresentation="method 'Register'">
             <startOffsets>
-              <option value="8381" />
+              <option value="8822" />
             </startOffsets>
             <endOffsets>
-              <option value="8421" />
+              <option value="8886" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor</url>
+          <line>219</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor" initialLine="187" isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
+            <startOffsets>
+              <option value="-1" />
+            </startOffsets>
+            <endOffsets>
+              <option value="-1" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor</url>
+          <line>226</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor" initialLine="189" isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
+            <startOffsets>
+              <option value="-1" />
+            </startOffsets>
+            <endOffsets>
+              <option value="-1" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.WebServer/Services/BaseApiClient.cs</url>
+          <line>164</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Services/BaseApiClient.cs" initialLine="164" containingFunctionPresentation="method 'CreateAsync'">
+            <startOffsets>
+              <option value="5512" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5568" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor</url>
+          <line>206</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor" initialLine="176" isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
+            <startOffsets>
+              <option value="-1" />
+            </startOffsets>
+            <endOffsets>
+              <option value="-1" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

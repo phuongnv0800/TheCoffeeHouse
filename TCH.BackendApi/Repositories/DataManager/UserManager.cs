@@ -12,9 +12,9 @@ using TCH.Utilities.Searchs;
 using TCH.Utilities.Paginations;
 using TCH.ViewModel.SubModels;
 using TCH.BackendApi.EF;
-using System.Text.Json;
 using TCH.Utilities.Enum;
 using TCH.Utilities.Claims;
+using TCH.ViewModel.RequestModel;
 
 namespace TCH.BackendApi.Repositories.DataManager;
 
@@ -26,7 +26,7 @@ public class UserManager : IUserRepository, IDisposable
     private readonly APIContext _context;
     private readonly IConfiguration _config;
     private readonly IStorageService _storageService;
-    private const string USER_CONTENT_FOLDER_NAME = "users";
+    private const string UserContentFolderName = "users";
 
 
     public UserManager(UserManager<AppUser> userManager,
@@ -79,7 +79,7 @@ public class UserManager : IUserRepository, IDisposable
         //claims.Add(new Claim(ClaimValue.Role, JsonSerializer.Serialize(roles)),
 
 
-        if (roles != null && claims != null)
+        if (roles != null)
         {
             foreach (var role in roles)
             {
@@ -115,7 +115,7 @@ public class UserManager : IUserRepository, IDisposable
                 Result = -1,
                 Message = "Tài khoản không tồn tại",
             };
-        await _storageService.DeleteFileAsync(USER_CONTENT_FOLDER_NAME + "/" + user.Avatar);
+        await _storageService.DeleteFileAsync(UserContentFolderName + "/" + user.Avatar);
         var result = await _userManager.DeleteAsync(user);//xoa user
         if (result.Succeeded)
             return new MessageResult()
@@ -132,13 +132,13 @@ public class UserManager : IUserRepository, IDisposable
 
     public async Task<Respond<AppUser>> GetById(string id)
     {
-        var user = await _context.AppUsers.Include(x => x.Branch).Where(x => x.Id == id).FirstOrDefaultAsync();
+        var user = await _context.AppUsers.Where(x => x.Id == id).FirstOrDefaultAsync();
         if (user == null)
             return new Respond<AppUser>()
             {
                 Result = 0,
                 Message = "Tài khoản không tồn tại",
-                Data = null,
+                Data = new(),
             };
 
 
@@ -151,32 +151,29 @@ public class UserManager : IUserRepository, IDisposable
     }
     public async Task<Respond<UserVm>> GetByIdVm(string id)
     {
-        var user = await _userManager.FindByIdAsync(id.ToString());
+        var user = await _userManager.FindByIdAsync(id);
         if (user == null)
             return new Respond<UserVm>()
             {
                 Result = 0,
                 Message = "Tài khoản không tồn tại",
-                Data = null,
+                Data = new(),
             };
 
         var roles = await _userManager.GetRolesAsync(user);
         var userVm = new UserVm()
         {
             Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
+            FirstName = user.FirstName ?? "",
+            LastName = user.LastName ?? "",
             Id = user.Id,
             DateOfBirth = user.DateOfBirth,
             PhoneNumber = user.PhoneNumber,
             UserName = user.UserName,
             Gender = user.Gender,
-            Address = user.Address,
+            Address = user.Address ?? "",
             Roles = roles,
         };
-       
-
-
         return new Respond<UserVm>()
         {
             Result = 1,
@@ -187,13 +184,13 @@ public class UserManager : IUserRepository, IDisposable
 
     public async Task<Respond<AppUser>> GetByUserName(string userName)
     {
-        var user = await _context.AppUsers.Include(x => x.Branch).Where(x => x.UserName == userName).FirstOrDefaultAsync();
+        var user = await _context.AppUsers.Where(x => x.UserName == userName).FirstOrDefaultAsync();
         if (user == null)
             return new Respond<AppUser>()
             {
                 Result = 0,
                 Message = "Tài khoản không tồn tại",
-                Data = null,
+                Data = new(),
             };
 
 
@@ -204,9 +201,9 @@ public class UserManager : IUserRepository, IDisposable
             Data = user,
         };
     }
-    public async Task<Respond<PagedList<AppUser>>> GetAllByBranchID(string branchID, Search request)
+    public async Task<Respond<PagedList<AppUser>>> GetAllByBranchID(string branchId, Search request)
     {
-        var query = await _context.AppUsers.Include(x => x.Branch).Where(x => x.BranchID == branchID).ToListAsync();
+        var query = await _context.AppUsers.Where(x => x.BranchID == branchId).ToListAsync();
         if (!string.IsNullOrEmpty(request.Name))
         {
             query = query.Where(x => x.UserName.Contains(request.Name)).ToList();
@@ -235,7 +232,7 @@ public class UserManager : IUserRepository, IDisposable
     }
     public async Task<Respond<PagedList<AppUser>>> GetAll(Search request)
     {
-        var query = await _context.AppUsers.Include(x => x.Branch).ToListAsync();
+        var query = await _context.AppUsers.ToListAsync();
         if (!string.IsNullOrEmpty(request.Name))
         {
             query = query.Where(x => x.UserName.Contains(request.Name)).ToList();
@@ -325,7 +322,7 @@ public class UserManager : IUserRepository, IDisposable
         //await _userManager.RemoveFromRolesAsync(user, removedRoles);
         foreach (var roleName in removedRoles)
         {
-            if (await _userManager.IsInRoleAsync(user, roleName) == true)
+            if (await _userManager.IsInRoleAsync(user, roleName))
                 await _userManager.RemoveFromRoleAsync(user, roleName);
         }
 
@@ -352,8 +349,8 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Không thể cập nhật thông tin"
             };
         }
-        var user = await _userManager.FindByIdAsync(id.ToString());
-        user.DateOfBirth = request.Dob;
+        var user = await _userManager.FindByIdAsync(id);
+        user.DateOfBirth = request.DateOfBirth;
         user.Email = request.Email;
         user.FirstName = request.FirstName;
         user.LastName = request.LastName;
@@ -362,7 +359,7 @@ public class UserManager : IUserRepository, IDisposable
         user.Address = request.Address;
         if (request.AvatarFile != null)
         {
-            await _storageService.DeleteFileAsync(USER_CONTENT_FOLDER_NAME + "/" + user.Avatar);
+            await _storageService.DeleteFileAsync(UserContentFolderName + "/" + user.Avatar);
             user.Avatar = await SaveFileIFormFile(request.AvatarFile);
         }
         var result = await _userManager.UpdateAsync(user);
@@ -390,7 +387,7 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Không tồn tại tài khoản"
             };
         }
-        var user = await _userManager.FindByIdAsync(id.ToString());
+        var user = await _userManager.FindByIdAsync(id);
         user.Status = Status.Deactivate;
         await _userManager.UpdateAsync(user);
         return new MessageResult()
@@ -446,9 +443,9 @@ public class UserManager : IUserRepository, IDisposable
 
     private async Task<string> SaveFileIFormFile(IFormFile file)
     {
-        var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+        var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName?.Trim('"');
         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
-        await _storageService.SaveFileAsync(file.OpenReadStream(), USER_CONTENT_FOLDER_NAME + "/" + fileName);
+        await _storageService.SaveFileAsync(file.OpenReadStream(), UserContentFolderName + "/" + fileName);
         return fileName;
     }
 
