@@ -18,9 +18,8 @@ public class CustomerManager : IDisposable, ICustomerRepository
     private readonly APIContext _context;
     private readonly IStorageService _storageService;
     private readonly IMapper _mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly string? UserID;
-    private const string USER_CONTENT_FOLDER_NAME = "customers";
+    private readonly string? _userId;
+    private const string UserContentFolderName = "customers";
     public CustomerManager(APIContext context, 
         IMapper mapper, 
         IHttpContextAccessor httpContextAccessor,
@@ -29,8 +28,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
         _context = context;
         _mapper = mapper;
         _storageService = storageService;
-        _httpContextAccessor = httpContextAccessor;
-        UserID = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
+        _userId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
     }
 
     public async Task<MessageResult> Create(CustomerRequest request)
@@ -295,7 +293,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
     {
         var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
-        await _storageService.SaveFileAsync(file.OpenReadStream(), USER_CONTENT_FOLDER_NAME + "/" + fileName);
+        await _storageService.SaveFileAsync(file.OpenReadStream(), UserContentFolderName + "/" + fileName);
         return fileName;
     }
     

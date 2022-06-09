@@ -17,7 +17,7 @@ public class BranchManager : IDisposable, IBranchRepository
 {
     private readonly APIContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly string? UserID;
+    private readonly string? _userId;
     private readonly string _accessToken;
     private readonly IMapper _mapper;
     private const string Upload = "branch";
@@ -29,7 +29,7 @@ public class BranchManager : IDisposable, IBranchRepository
         _httpContextAccessor = httpContext;
         _storageService = storageService;
         _mapper = mapper;
-        UserID = httpContext != null ? httpContext?.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value : "";
+        _userId = httpContext?.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
         _accessToken = httpContext?.HttpContext != null ? httpContext.HttpContext.Request.Headers["Authorization"] : "";
     }
     public async Task<Respond<PagedList<Branch>>> GetAll(Search request)
@@ -42,7 +42,7 @@ public class BranchManager : IDisposable, IBranchRepository
         //paging
         int totalRow = await query.CountAsync();
         List<Branch> data = new List<Branch>();
-        if (request.IsPging == true)
+        if (request.IsPging)
         {
             data = await query
            .Skip((request.PageNumber - 1) * request.PageSize)
@@ -68,10 +68,10 @@ public class BranchManager : IDisposable, IBranchRepository
             Message = "Thành công",
         };
     }
-    public async Task<MessageResult> AddUserToBranch(string userID, string branchID)
+    public async Task<MessageResult> AddUserToBranch(string userId, string branchId)
     {
-        var entity = await _context.Branches.FindAsync(branchID);
-        var user = await _context.Users.FindAsync(userID);
+        var entity = await _context.Branches.FindAsync(branchId);
+        var user = await _context.Users.FindAsync(userId);
         if (user == null)
             return new MessageResult()
             {
@@ -95,10 +95,10 @@ public class BranchManager : IDisposable, IBranchRepository
             Message = "Tạo thành công",
         };
     }
-    public async Task<MessageResult> RemoveUserToBranch(string userID, string branchID)
+    public async Task<MessageResult> RemoveUserToBranch(string userId, string branchId)
     {
-        var entity = await _context.Branches.FindAsync(branchID);
-        var user = await _context.Users.FindAsync(userID);
+        var entity = await _context.Branches.FindAsync(branchId);
+        var user = await _context.Users.FindAsync(userId);
         if (user == null)
             return new MessageResult()
             {
@@ -135,8 +135,8 @@ public class BranchManager : IDisposable, IBranchRepository
         entity.ID = Guid.NewGuid().ToString();
         entity.UpdateDate = DateTime.Now;
         entity.CreateDate = DateTime.Now;
-        entity.UserCreateID = UserID;
-        entity.UserUpdateID = UserID;
+        entity.UserCreateID = _userId;
+        entity.UserUpdateID = _userId;
         entity.Headercontent = "www.thecoffeehouse.com";
         entity.TitleInvoice = "THE COFFEE HOUSE";
         entity.Footercontent = "Giá sản phẩm đã bao gồm phí VAT 10%|Password wifi: thecoffeehouse|Miễn phí giao hàng hoá đơn trên 50.000 VNĐ|Đặt hàng tại www.thecoffeehouse.com hoặc gọi 1800 6936";
@@ -176,11 +176,11 @@ public class BranchManager : IDisposable, IBranchRepository
                 Message = "Không tìm thấy",
             };
         }
-        entity.Name = request.Name ?? entity.Name;
-        entity.City = request.City ?? entity.City;
+        entity.Name = request.Name;
+        entity.City = request.City;
         entity.Email = request.Email ?? entity.Email;
-        entity.District = request.District ?? entity.District;
-        entity.Adderss = request.Adderss ?? entity.Adderss;
+        entity.District = request.District;
+        entity.Adderss = request.Adderss;
         entity.UpdateDate = DateTime.Now; 
         if (request.ImageUpload != null)
         {
@@ -237,14 +237,14 @@ public class BranchManager : IDisposable, IBranchRepository
             Message = "Xoá thành công",
         };
     }
-    public async Task<Respond<Branch>> GetByID(string branchID)
+    public async Task<Respond<Branch>> GetByID(string branchId)
     {
-        var branch = await _context.Branches.FindAsync(branchID);
+        var branch = await _context.Branches.FindAsync(branchId);
         if(branch == null)
         {
             return new Respond<Branch>()
             {
-                Data = null,
+                Data = new(),
                 Message = "Không tồn tại",
                 Result = 0,
             };
@@ -258,7 +258,7 @@ public class BranchManager : IDisposable, IBranchRepository
     }
     private async Task<string> SaveFileIFormFile(IFormFile file)
     {
-        var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+        var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName?.Trim('"');
         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
         await _storageService.SaveFileAsync(file.OpenReadStream(), Upload + "/" + fileName);
         return fileName;
