@@ -13,7 +13,7 @@
 @inject IConfiguration Configuration
 @attribute [Authorize]
 
-<TCH.WebServer.Shared.Header.Header User="@User"></TCH.WebServer.Shared.Header.Header>
+
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Toolbar-->
     <div class="toolbar" id="kt_toolbar">
@@ -40,7 +40,7 @@
                     </li>
                     <!--end::Item-->
                     <!--begin::Item-->
-                    <li class="breadcrumb-item text-muted"><a href="/admin-dashboard">Products</a></li>
+                    <li class="breadcrumb-item text-muted"><a href="/admin-dashboard">Danh sách chi nhánh</a></li>
 
                     <!--begin::Item-->
                     <li class="breadcrumb-item">
@@ -48,7 +48,7 @@
                     </li>
                     <!--end::Item-->
                     <!--begin::Item-->
-                    <li class="breadcrumb-item text-dark">Add Category</li>
+                    <li class="breadcrumb-item text-dark">Chỉnh sửa thông tin chi nhánh</li>
                     <!--end::Item-->
                 </ul>
                 <!--end::Breadcrumb-->
@@ -178,35 +178,38 @@
                         <!--end::Card header-->
                         <!--begin::Card body-->
                         <div class="card-body text-center pt-0">
-                            <EditForm Model="@editBranch">
-                                <!--begin::Image input-->
-                                <div class="image-input image-input-outline mb-3 image-input-changed" data-kt-image-input="true" style="background-image: url(assets/media/svg/files/blank-image.svg)">
-                                    <!--begin::Preview existing avatar-->
-                                    <div class="image-input-wrapper w-150px h-150px" style="background-image: url(@(Configuration["BackendApiUrl"]+"/Uploads/" + editBranch.LinkImage))"></div>  @*assets/media/svg/files/blank-image.svg*@
-                                    <!--end::Preview existing avatar-->
-                                    <!--begin::Label-->
-                                    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="" data-bs-original-title="Change avatar">
-                                        <!--begin::Icon-->
-                                        <i class="bi bi-pencil-fill fs-7"></i>
-                                        <!--end::Icon-->
-                                        <!--begin::Inputs-->
-                                        <InputFile OnChange="HandleSelection"></InputFile>
-                                        <input type="hidden" name="avatar_remove">
-                                        <!--end::Inputs-->
-                                    </label>
-                                    <!--end::Label-->
-                                    <!--begin::Cancel-->
-                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="" data-bs-original-title="Cancel avatar">
-                                        <i class="bi bi-x fs-2"></i>
-                                    </span>
-                                    <!--end::Cancel-->
-                                    <!--begin::Remove-->
-                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="" data-bs-original-title="Remove avatar">
-                                        <i class="bi bi-x fs-2"></i>
-                                    </span>
-                                    <!--end::Remove-->
-                                </div>
-                            </EditForm>
+                            @if(editBranch != null && vesselDB != null)
+                            {
+                                <EditForm Model="@editBranch">
+                                    <!--begin::Image input-->
+                                    <div class="image-input image-input-outline mb-3 image-input-changed" data-kt-image-input="true" style="background-image: url(assets/media/svg/files/blank-image.svg)">
+                                        <!--begin::Preview existing avatar-->
+                                        <div class="image-input-wrapper w-150px h-150px" style="background-image: url(@(Configuration["BackendApiUrl"]+"/Uploads/" + vesselDB.LinkImage))"></div>  @*assets/media/svg/files/blank-image.svg*@
+                                        <!--end::Preview existing avatar-->
+                                        <!--begin::Label-->
+                                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="" data-bs-original-title="Change avatar">
+                                            <!--begin::Icon-->
+                                            <i class="bi bi-pencil-fill fs-7"></i>
+                                            <!--end::Icon-->
+                                            <!--begin::Inputs-->
+                                            <InputFile OnChange="HandleSelection"></InputFile>
+                                            <input type="hidden" name="avatar_remove">
+                                            <!--end::Inputs-->
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Cancel-->
+                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="" data-bs-original-title="Cancel avatar">
+                                            <i class="bi bi-x fs-2"></i>
+                                        </span>
+                                        <!--end::Cancel-->
+                                        <!--begin::Remove-->
+                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="" data-bs-original-title="Remove avatar">
+                                            <i class="bi bi-x fs-2"></i>
+                                        </span>
+                                        <!--end::Remove-->
+                                    </div>
+                                </EditForm>
+                            }
                             <!--end::Image input-->
                             <!--begin::Description-->
                             <div class="text-muted fs-7">Chọn ảnh đại diện sản phẩm</div>
@@ -337,102 +340,6 @@
                                 <!--end::Input group-->
                                 <div class="mb-10 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required form-label">Nội dung Footer</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <InputText @bind-Value="editBranch.Footercontent" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => editBranch.Footercontent)" />
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                    <label class="required form-label">Nội dung Header</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <InputText @bind-Value="editBranch.Headercontent" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => editBranch.Headercontent)" />
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                    <label class="required form-label">Kiểu</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <InputNumber @bind-Value="editBranch.LayoutType" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => editBranch.LayoutType)" />
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                    <label class="required form-label">Logo</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <InputText @bind-Value="editBranch.LogoInvoice" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => editBranch.LogoInvoice)" />
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                    <label class="required form-label">Điện thoại</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <InputText @bind-Value="editBranch.Phone" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => editBranch.Phone)" />
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                    <label class="required form-label">Tên cửa hàng</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <InputText @bind-Value="editBranch.RestaurantName" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => editBranch.RestaurantName)" />
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                    <label class="required form-label">Title Inventory</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <InputText @bind-Value="editBranch.TitleInventory" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => editBranch.TitleInventory)" />
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                    <label class="required form-label">Title Invoice</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <InputText @bind-Value="editBranch.TitleInvoice" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => editBranch.TitleInvoice)" />
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-                                <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
                                     <label class="required form-label">Giá sale</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
@@ -476,13 +383,14 @@
     [Parameter] public string? BranchId { get; set; }
     public String Url { get; set; }
     private ApplicationUser User;
-    private Branch editBranch = null;
+    private BranchRequest editBranch = null;
+    private Branch vesselDB = null;
 
     protected async override Task OnInitializedAsync()
     {
         try{
             Url=  Configuration.GetSection("BackendApiUrl").Value;
-            editBranch = new Branch();
+            editBranch = new BranchRequest();
             var response = await userService.GetUserInfo();
             User = response.Data;
         }
@@ -496,26 +404,17 @@
         try{
             if (string.IsNullOrEmpty(BranchId))
             {
-                editBranch = new Branch();
+                editBranch = new BranchRequest();
             }
             else
             {
                 var responseP = await _branchService.GetBranchById(BranchId);
-                var vesselDB = responseP.Data;
+                vesselDB = responseP.Data;
                 editBranch.Name = vesselDB.Name;
                 editBranch.Adderss = vesselDB.Adderss;
                 editBranch.City = vesselDB.City;
                 editBranch.District = vesselDB.District;
                 editBranch.Email = vesselDB.Email;
-                editBranch.Footercontent = vesselDB.Footercontent;
-                editBranch.LinkImage = vesselDB.LinkImage;
-                editBranch.Headercontent = vesselDB.Headercontent;
-                editBranch.LayoutType = vesselDB.LayoutType;
-                editBranch.LogoInvoice = vesselDB.LogoInvoice;
-                editBranch.Phone = vesselDB.Phone;
-                editBranch.RestaurantName = vesselDB.RestaurantName;
-                editBranch.TitleInventory = vesselDB.TitleInventory;
-                editBranch.TitleInvoice = vesselDB.TitleInvoice;
             }
         }
         catch(Exception e){
@@ -541,15 +440,6 @@
             content.Add(new StringContent(editBranch.City), "City");
             content.Add(new StringContent(editBranch.District.ToString()), "District");
             content.Add(new StringContent(editBranch.Email.ToString()), "Email");
-            content.Add(new StringContent(editBranch.Footercontent.ToString()), "FooterContent");
-            content.Add(new StringContent(editBranch.LinkImage.ToString()), "LinkImage");
-            content.Add(new StringContent(editBranch.Headercontent.ToString()), "Headercontent");
-            content.Add(new StringContent(editBranch.LayoutType.ToString()), "LayoutType");
-            content.Add(new StringContent(editBranch.LogoInvoice.ToString()), "LogoInvoice");
-            content.Add(new StringContent(editBranch.Phone.ToString()), "Phone");
-            content.Add(new StringContent(editBranch.RestaurantName.ToString()), "RestaurantName");
-            content.Add(new StringContent(editBranch.TitleInventory.ToString()), "TitleInventory");
-            content.Add(new StringContent(editBranch.TitleInvoice.ToString()), "TitleInvoice");
             if (string.IsNullOrEmpty(BranchId))
             {
                 response = await _branchService.AddBranch(content);

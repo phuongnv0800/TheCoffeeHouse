@@ -69,62 +69,6 @@
                             </div>
 						</div>
                         <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Nội dung footer</label>
-                            <InputText @bind-Value="editBranch.Footercontent" class="form-control form-control-solid col-sm-6" />
-                            <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editBranch.Footercontent)" />
-                            </div>
-						</div>
-                        <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Nội dung Header</label>
-                            <InputText @bind-Value="editBranch.Headercontent" class="form-control form-control-solid col-sm-6" />
-                            <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editBranch.Headercontent)" />
-                            </div>
-						</div>
-                        <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Kiểu</label>
-                            <InputNumber @bind-Value="editBranch.LayoutType" class="form-control form-control-solid col-sm-6" />
-                            <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editBranch.LayoutType)" />
-                            </div>
-						</div>
-                        <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">logo</label>
-                            <InputText @bind-Value="editBranch.LogoInvoice" class="form-control form-control-solid col-sm-6" />
-                            <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editBranch.LogoInvoice)" />
-                            </div>
-						</div>
-                         <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Số điện thoại</label>
-                            <InputText @bind-Value="editBranch.Phone" class="form-control form-control-solid col-sm-6" />
-                            <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editBranch.Phone)" />
-                            </div>
-						</div>
-                         <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Tên cửa hàng</label>
-                            <InputText @bind-Value="editBranch.RestaurantName" class="form-control form-control-solid col-sm-6" />
-                            <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editBranch.RestaurantName)" />
-                            </div>
-						</div>
-                         <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Title Inventory</label>
-                            <InputText @bind-Value="editBranch.TitleInventory" class="form-control form-control-solid col-sm-6" />
-                            <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editBranch.TitleInventory)" />
-                            </div>
-						</div>
-                         <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Title Invoice</label>
-                            <InputText @bind-Value="editBranch.TitleInvoice" class="form-control form-control-solid col-sm-6" />
-                            <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editBranch.TitleInvoice)" />
-                            </div>
-						</div>
-                        <div class="fv-row mb-7">
 							<label class="fs-6 fw-bold mb-2">Hình ảnh</label>
                             <InputFile OnChange="HandleSelection"></InputFile>
 						</div>
@@ -143,19 +87,19 @@
     [Parameter] public string Title { get; set; }
     [Parameter] public string? BranchId { get; set; }
 
-    private Branch editBranch = null;
+    private BranchRequest editBranch = null;
 
     protected override void OnInitialized()
     {
-        editBranch = new Branch();
+        editBranch = new BranchRequest();
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        
+
         if (string.IsNullOrEmpty(BranchId))
         {
-            editBranch = new Branch();
+            editBranch = new BranchRequest();
         }
         else
         {
@@ -166,15 +110,6 @@
             editBranch.City = vesselDB.City;
             editBranch.District = vesselDB.District;
             editBranch.Email = vesselDB.Email;
-            editBranch.Footercontent = vesselDB.Footercontent;
-            editBranch.LinkImage = vesselDB.LinkImage;
-            editBranch.Headercontent = vesselDB.Headercontent;
-            editBranch.LayoutType = vesselDB.LayoutType;
-            editBranch.LogoInvoice = vesselDB.LogoInvoice;
-            editBranch.Phone = vesselDB.Phone;
-            editBranch.RestaurantName = vesselDB.RestaurantName;
-            editBranch.TitleInventory = vesselDB.TitleInventory;
-            editBranch.TitleInvoice = vesselDB.TitleInvoice;
         }
     }
 }
@@ -195,15 +130,7 @@
             content.Add(new StringContent(editBranch.City), "City");
             content.Add(new StringContent(editBranch.District.ToString()), "District");
             content.Add(new StringContent(editBranch.Email.ToString()), "Email");
-            content.Add(new StringContent(editBranch.Footercontent.ToString()), "FooterContent");
-            content.Add(new StringContent(editBranch.LinkImage.ToString()), "LinkImage");
-            content.Add(new StringContent(editBranch.Headercontent.ToString()), "Headercontent");
-            content.Add(new StringContent(editBranch.LayoutType.ToString()), "LayoutType");
-            content.Add(new StringContent(editBranch.LogoInvoice.ToString()), "LogoInvoice");
-            content.Add(new StringContent(editBranch.Phone.ToString()), "Phone");
-            content.Add(new StringContent(editBranch.RestaurantName.ToString()), "RestaurantName");
-            content.Add(new StringContent(editBranch.TitleInventory.ToString()), "TitleInventory");
-            content.Add(new StringContent(editBranch.TitleInvoice.ToString()), "TitleInvoice");
+
             if (string.IsNullOrEmpty(BranchId))
             {
                 response = await _branchService.AddBranch(content);

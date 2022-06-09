@@ -240,6 +240,7 @@
         order = new OrderRequest();
         order.OrderItems = new List<OrderItem>();
         GbParameter.GbParameter.Order = order;
+        StateHasChanged();
     }
     public async void OnSubmit()
     {

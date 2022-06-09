@@ -43,18 +43,6 @@
                                     <!--end::Input-->
                             </div>
                                 <!--end::Input group-->
-                            <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                <label class="required form-label">Địa chỉ</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                <InputText @bind-Value="newReport.Address" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => newReport.Address)" />
-                                    </div>
-                                    <!--end::Input-->
-                            </div>
-                                <!--end::Input group-->
                                 @*<div class="mb-10 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
                                     <label class="required form-label">Đơn vị</label>
@@ -75,18 +63,6 @@
                                 <InputText @bind-Value="newReport.Reason" class="form-control form-control-solid col-sm-6" />
                                     <div class="fv-plugins-message-container invalid-feedback">
                                         <ValidationMessage For="@(() => newReport.Reason)" />
-                                    </div>
-                                    <!--end::Input-->
-                            </div>
-                                <!--end::Input group-->
-                            <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                <label class="required form-label">Giá</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                <InputNumber @bind-Value="newReport.Depreciation" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => newReport.Depreciation)" />
                                     </div>
                                     <!--end::Input-->
                             </div>
