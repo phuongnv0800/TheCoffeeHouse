@@ -203,25 +203,32 @@ public class UserManager : IUserRepository, IDisposable
     }
     public async Task<Respond<PagedList<AppUser>>> GetAllByBranchID(string branchId, Search request)
     {
-        var query = await _context.AppUsers.Where(x => x.BranchID == branchId).ToListAsync();
+        var query = _context
+            .AppUsers
+            .Where(x => x.BranchID == branchId);
         if (!string.IsNullOrEmpty(request.Name))
         {
-            query = query.Where(x => x.UserName.Contains(request.Name)).ToList();
+            query = query.Where(x => x.UserName.Contains(request.Name));
         }
         //paging
-        int totalRow = query.Count;
+        int totalRow =await query.CountAsync();
+        List<AppUser> data = new List<AppUser>();
         if (request.IsPging)
-            query = query
+            data = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .ToList();
+                .ToListAsync();
+        else
+        {
+            data = await query.ToListAsync();
+        }
         var pagedResult = new PagedList<AppUser>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
             TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
-            Items = query,
+            Items = data,
         };
         return new Respond<PagedList<AppUser>>()
         {
@@ -232,25 +239,68 @@ public class UserManager : IUserRepository, IDisposable
     }
     public async Task<Respond<PagedList<AppUser>>> GetAll(Search request)
     {
-        var query = await _context.AppUsers.ToListAsync();
+        var query = _context
+            .AppUsers
+            .Where(x => x.UserName.Contains(request.Name ?? ""));
         if (!string.IsNullOrEmpty(request.Name))
         {
-            query = query.Where(x => x.UserName.Contains(request.Name)).ToList();
+            query = query.Where(x => x.UserName.Contains(request.Name));
         }
         //paging
-        int totalRow = query.Count;
+        int totalRow =await query.CountAsync();
+        List<AppUser> data = new List<AppUser>();
         if (request.IsPging)
-            query = query
+            data = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .ToList();
+                .ToListAsync();
+        else
+        {
+            data = await query.ToListAsync();
+        }
         var pagedResult = new PagedList<AppUser>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
             TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
-            Items = query,
+            Items = data,
+        };
+        return new Respond<PagedList<AppUser>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Success",
+        };
+    }
+    public async Task<Respond<PagedList<AppUser>>> GetUserByBranchId(string branchId, Search request)
+    {
+        var query = _context
+            .AppUsers
+            .Where(x => x.BranchID == branchId);
+        if (!string.IsNullOrEmpty(request.Name))
+        {
+            query = query.Where(x => x.UserName.Contains(request.Name));
+        }
+        //paging
+        int totalRow =await query.CountAsync();
+        List<AppUser> data = new List<AppUser>();
+        if (request.IsPging)
+            data = await query
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync();
+        else
+        {
+            data = await query.ToListAsync();
+        }
+        var pagedResult = new PagedList<AppUser>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            Items = data,
         };
         return new Respond<PagedList<AppUser>>()
         {

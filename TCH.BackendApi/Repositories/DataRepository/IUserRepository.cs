@@ -17,6 +17,7 @@ public interface IUserRepository
     Task<Respond<AppUser>> GetByUserName(string userName);
 
     Task<Respond<PagedList<AppUser>>> GetAll(Search request);
+    Task<Respond<PagedList<AppUser>>> GetUserByBranchId(string branchId, Search request);
 
     Task<MessageResult> Register(RegisterRequest request);
     Task<MessageResult> LockUser(string id);
