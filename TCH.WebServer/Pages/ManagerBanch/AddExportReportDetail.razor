@@ -10,6 +10,7 @@
 @inject IStockService stockService
 @inject IMaterialService materialService
 @inject IUnitService unitService
+@attribute [Authorize]
 
 <div class="modal fade show d-block" tabindex="-1" role="dialog">
     <div class="modal-backdrop fade show" @onclick="OnCancel"></div>

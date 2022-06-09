@@ -9,8 +9,9 @@
 @inject ICategoryService _categoryService
 @inject IUserService userService
 @inject IToastService toastService
+@inject IConfiguration Configuration
+@attribute [Authorize]
 
-<TCH.WebServer.Shared.Header.Header User="@User"></TCH.WebServer.Shared.Header.Header>
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Toolbar-->
     <div class="toolbar" id="kt_toolbar">
@@ -179,7 +180,7 @@
                                 <!--begin::Image input-->
                                 <div class="image-input image-input-outline mb-3 image-input-changed" data-kt-image-input="true" style="background-image: url(assets/media/svg/files/blank-image.svg)">
                                     <!--begin::Preview existing avatar-->
-                                    <div class="image-input-wrapper w-150px h-150px" style="background-image: url(@("http://localhost:82/uploads" + editProduct.LinkImage))"></div>  @*assets/media/svg/files/blank-image.svg*@
+                                    <div class="image-input-wrapper w-150px h-150px" style="background-image: url(@(Configuration["BackendApiUrl"]+"/Uploads/" + editProduct.LinkImage))"></div>  @*assets/media/svg/files/blank-image.svg*@
                                     <!--end::Preview existing avatar-->
                                     <!--begin::Label-->
                                     <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="" data-bs-original-title="Change avatar">
@@ -397,12 +398,14 @@
     [Parameter] public string Title { get; set; }
     [Parameter] public string ProductId { get; set; }
     private ApplicationUser User;
+    private string Url;
     private ProductVm editProduct = null;
     public List<Category> categories = new List<Category>();
 
     protected async override Task OnInitializedAsync()
     {
         try{
+            Url=  Configuration.GetSection("BackendApiUrl").Value;
             editProduct = new ProductVm();
             var response = await userService.GetUserInfo();
             User = response.Data;

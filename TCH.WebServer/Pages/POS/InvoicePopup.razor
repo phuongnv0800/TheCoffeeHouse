@@ -1,6 +1,7 @@
 ﻿@using TCH.WebServer.Services.Orders
 @inject IToastService toastService;
 @inject IOrderService orderService;
+@attribute [Authorize]
 
 @if (myMarkup != null)
 {

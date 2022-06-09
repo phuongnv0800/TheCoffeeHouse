@@ -1,6 +1,7 @@
 ﻿@using TCH.Data.Entities
 @using TCH.WebServer.Models
 @inject NavigationManager NavManager
+@attribute [Authorize]
 
 <div class="card card-flush mb-2 cursor-pointer" onclick="@(() => NavManager.NavigateTo("/product-detail"))" style="height:auto !important; padding: 1rem">
     <div class="card-header" style="padding: 0 0 !important; min-height: 0!important;">

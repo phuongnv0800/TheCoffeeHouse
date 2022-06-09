@@ -20,6 +20,7 @@
 @inject NavigationManager navigationManager;
 @inject IJSRuntime jsRuntime;
 @inject IToastService toastService;
+@inject IConfiguration Configuration
 @attribute [Authorize]
 
 <div class="page d-flex flex-row flex-column-fluid">
@@ -74,7 +75,7 @@
                                     {
                                         foreach (var product in ProductsList)
                                         {
-                                            string fileImage = "http://localhost:82/uploads" + product.LinkImage;
+                                            string fileImage = Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage;
                                             string href = "/products/" + product.ID.ToString();
                                             <tr class="odd">
                                                 <td>

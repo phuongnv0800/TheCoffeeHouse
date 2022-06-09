@@ -11,8 +11,9 @@
 @inject ICategoryService _categoryService
 @inject IUserService userService
 @inject IToastService _toastService
+@attribute [Authorize]
 
-<TCH.WebServer.Shared.Header.Header User="@User"></TCH.WebServer.Shared.Header.Header>
+
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Toolbar-->
     <div class="toolbar" id="kt_toolbar">

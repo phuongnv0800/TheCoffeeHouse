@@ -13,6 +13,8 @@
 @inject NavigationManager NavManager
 @inject IToastService toastService
 @inject IOrderService orderService
+@inject IConfiguration Configuration
+
 @attribute [Authorize]
 
 <div class="page d-flex flex-row flex-column-fluid">
@@ -30,9 +32,9 @@
                                     <!--begin::Hot sales post-->
                             <div class="card-xl-stretch me-md-6">
                                         <!--begin::Overlay-->
-                                <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@("http://localhost:82/uploads" + product.LinkImage)">
+                                <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@(Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage)">
                                             <!--begin::Image-->
-                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(@("http://localhost:82/uploads" + product.LinkImage))"></div>
+                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(@(Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage))"></div>
                                             <!--end::Image-->
                                             <!--begin::Action-->
                                     <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
@@ -106,7 +108,7 @@
                                                     {
                                                         <tr>
                                                             @*<td>
-                                                                <img src="@("http://localhost:82/uploads" + orderDetail..LinkImage)" class="w-50px ms-n1" alt="">
+                                                                <img src="@(Configuration["BackendApiUrl"]+"/Uploads/" + orderDetail..LinkImage)" class="w-50px ms-n1" alt="">
                                                                 </td>*@
                                                             <td class="ps-0">
                                                                 <a href="/product-detail/@@orderDetail.ProductID" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6 text-start pe-0">@orderDetail.NameProduct</a>
@@ -182,6 +184,7 @@
     public List<ProductVm>? ProductsList = new List<ProductVm>();
     [CascadingParameter] public IModalService Modal { get; set; }
     [Parameter] public string BranchId { get; set; }
+    private string Url;
     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
     private List<Category> categories = new List<Category>();
     private ApplicationUser User;
@@ -190,6 +193,7 @@
     protected override async Task OnParametersSetAsync()
     {
         try{
+            Url=  Configuration.GetSection("BackendApiUrl").Value;
             order = GbParameter.GbParameter.Order;
             if (order == null)
             {

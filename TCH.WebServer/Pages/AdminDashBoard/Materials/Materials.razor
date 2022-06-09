@@ -18,6 +18,7 @@
 @inject NavigationManager navigationManager;
 @inject IToastService toastService
 @inject IJSRuntime jsRuntime;
+@inject IConfiguration Configuration
 @attribute [Authorize]
 
     <div class="page d-flex flex-row flex-column-fluid">
@@ -69,7 +70,7 @@
                                     {
                                         foreach (var product in ProductsList)
                                         {
-                                            string fileImage = "http://localhost:82/uploads" + product.LinkImage;
+                                            string fileImage = Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage;
                                             string href = "/materials/" + product.ID.ToString();
                                             <tr class="odd">
                                                 <td>
@@ -145,6 +146,7 @@
 
 
 @code {
+    private string Url;
     public List<Material>? ProductsList = new List<Material>();
     private string? token;
     public string Name;
@@ -157,6 +159,7 @@
     protected override async Task OnParametersSetAsync()
     {
         try{
+            Url=  Configuration.GetSection("BackendApiUrl").Value;
             navigationManager.NavigateTo("materials");
             var response = await userServices.GetUserInfo();
             User = response.Data;

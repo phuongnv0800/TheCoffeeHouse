@@ -8,6 +8,7 @@
 @inject ICategoryService _categoryService
 @inject IToastService _toastService
 @inject ICustomerService customerService
+@attribute [Authorize]
 
 <div class="modal fade show d-block" tabindex="-1" role="dialog">
     <div class="modal-backdrop fade show" @onclick="OnCancel"></div>
