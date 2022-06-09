@@ -96,7 +96,7 @@ public class PromotionManager : IDisposable, IPromotionRepository
         }
         var result = await _context.Promotions
             .Include(x => x.PromotionGifts)
-            .FirstOrDefaultAsync(x => x.Code.Contains(code));
+            .FirstOrDefaultAsync(x => x.Code ==code);
         if (result == null)
         {
             return new Respond<dynamic>()
@@ -215,7 +215,9 @@ public class PromotionManager : IDisposable, IPromotionRepository
         promotion.ID = Guid.NewGuid().ToString();
         promotion.CreateDate = DateTime.Now;
         await _context.Promotions.AddAsync(promotion);
-        if (request.PromotionLists != null && request.PromotionLists.Count != 0)
+        if (request.PromotionLists != null 
+            && request.PromotionLists.Count != 0 
+            && request.PromotionObject == PromotionObject.Food)
             foreach (var item in request.PromotionLists)
             {
                 var promotionGift = new PromotionGift()
