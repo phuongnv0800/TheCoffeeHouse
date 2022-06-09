@@ -1,7 +1,9 @@
 ﻿@using TCH.Data.Entities
 @using TCH.Utilities.SubModels
+@using TCH.WebServer.Services.Brands
 @inject IToastService ToastService
 @inject IUserApiClient UserApiClient
+@inject IBrandService _brandService
 @inject IJSRuntime JS
 @attribute [Authorize]
 
@@ -81,6 +83,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="fv-row mb-7">
+                                <label class="fs-6 fw-bold mb-2 requied">Chọn công ty</label>
+                            <InputSelect @bind-Value="user.branchID" class="form-control">
+                                @if (Branches != null)
+                                {
+                                    @foreach (var dept in Branches)
+                                    {
+                                        <option value="@dept.ID">@dept.Name</option>
+                                    }
+                                }
+                            </InputSelect>
+                        </div>
                         <div class="row mb-7">
                             <div class="col-6">
                                 <label class="fs-6 fw-bold mb-2">Điện thoại</label>
@@ -126,19 +140,7 @@
                                 <InputDate class="form-control" id="Dob" @bind-Value="@user.DateOfBirth" />
                             </div>
                         </div>
-                        <div class="mb-3 row">
-                            <label class="col-lg-4 col-form-label">
-                                <a href="javascript:void()">Terms &amp; Conditions</a> <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-lg-8">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="validationCustom12" required>
-                                    <label class="form-check-label" for="validationCustom12">
-                                        Agree to terms and conditions
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="card-footer p-2">
                             <button type="submit" class="btn btn-primary mr-2">Thêm mới</button>
                             <button class="btn btn-danger mr-2" @onclick="OnCancel">Đóng</button>
@@ -155,12 +157,16 @@
     [Parameter] public string Title { get; set; }
     [Parameter]public string UserId { get; set; }
 
-    public MultipartFormDataContent content = new MultipartFormDataContent();
-    public RegisterRequest user { set; get; }
+    private MultipartFormDataContent content = new ();
+    private RegisterRequest user { set; get; }
+    public List<Branch> Branches { get; set; } = new();
     protected override async Task OnInitializedAsync()
     {
-        if(UserId == null)
+        if (UserId == null)
+        {
+           
             user = new RegisterRequest();
+        }
         else
         {
             user = new RegisterRequest();
@@ -176,7 +182,10 @@
             user.PhoneNumber = aUser.PhoneNumber;
             user.UserName = aUser.UserName;
 
-        }
+        } 
+        var result = await _brandService.GetAll();
+        Branches = result.Data.Items;
+        user.branchID = Branches[0].ID;
     }
 }
 
@@ -198,7 +207,7 @@
         content.Add(new StringContent(user.Email), "email");
         if(user.PhoneNumber != null)
         content.Add(new StringContent(user.PhoneNumber), "phoneNumber");
-        if(user.Address != null)
+        content.Add(new StringContent(user.branchID), "branchID");
         content.Add(new StringContent(user.Address), "address");
         content.Add(new StringContent(user.Gender.ToString()), "gender");
         content.Add(new StringContent(user.UserName.ToString()), "userName");
