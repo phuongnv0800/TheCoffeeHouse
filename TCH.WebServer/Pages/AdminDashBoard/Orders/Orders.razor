@@ -65,6 +65,13 @@
                                         <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
                                             Tên phiếu nhập
                                         </th>
+                                        <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                            Tổng tiền
+                                        </th>
+                                        <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                            Thời gian tạo
+                                        </th>
+                                        
                                         <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
                                             Thao tác
                                         </th>
@@ -93,9 +100,21 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    @*if(product.Category.Name != null){
-                                                        <div class="badge badge-light-success">@product.Category.Name</div>
-                                                        }*@
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ms-5">
+                                                            <div class="text-muted fs-7 fw-bolder">@product.TotalAmount</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ms-5">
+                                                            <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                @product.Code
+                                                            </a>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.CreateDate</div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td class="text-end">
                                                     <div class="dropdown">
@@ -134,9 +153,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
-                                <div class="dataTables_paginate paging_simple_numbers" id="kt_ecommerce_category_table_paginate">
-                                    <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
-                                </div>
+                                <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
                             </div>
                         </div>
                     </div>
