@@ -8,7 +8,8 @@ public class PromotionRequest
 {
     public string Code { get; set; }
     public string Name { get; set; }
-    public IFormFile File { get; set; }
+    
+    public IFormFile? File { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public PromotionType PromotionType { get; set; }
@@ -19,5 +20,5 @@ public class PromotionRequest
     public int Status { get; set; }
     public string? Description { get; set; }
     public int Quantity { get; set; }
-    public List<PromotionList> PromotionLists { get; set; }
+    public List<PromotionList>? PromotionLists { get; set; }
 }
