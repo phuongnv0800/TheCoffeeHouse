@@ -1,18 +1,5 @@
 ﻿@page "/admin-dashboard"
-@using Blazored.LocalStorage
-@using Microsoft.AspNetCore.Identity
-@using Newtonsoft.Json
-@using System.Net.Http.Headers
-
-@using System.Security.Claims
-@using TCH.Data.Entities
-@using TCH.WebServer.Models
-@using TCH.WebServer.Models.Pagination
-@using TCH.WebServer.Services.Brands
-@using TCH.WebServer.Services.Orders
-@using TCH.WebServer.Services.Reports
-@using TCH.WebServer.Services.Users
-
+@inject IConfiguration Configuration
 @inject HttpClient httpClient
 @inject ILocalStorageService localStorage;
 @inject IOrderService orderService;
@@ -48,10 +35,10 @@
                                     @if (dateRequest != null)
                                     {
                                         <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
-                                            <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu" />
-                                            <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith" />
+                                            <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu"/>
+                                            <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith"/>
                                             <button onclick="@(() => SearchByText())"
-                                                class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Tìm kiếm
                                             </button>
                                         </EditForm>
@@ -64,32 +51,31 @@
 
                 </div>
                 <div class="card-body pt-0">
-                    
-                        <RadzenChart>
-                            <RadzenLineSeries Smooth="@smooth" Data="@items" CategoryProperty="Date" Title="Tổng doanh thu" ValueProperty="Revenue">
-                                    <RadzenMarkers MarkerType="MarkerType.Square" />
-                                </RadzenLineSeries>
+
+                    <RadzenChart>
+                        <RadzenLineSeries Smooth="@smooth" Data="@items" CategoryProperty="Date" Title="Tổng doanh thu" ValueProperty="Revenue">
+                            <RadzenMarkers MarkerType="MarkerType.Square"/>
+                        </RadzenLineSeries>
                         @if (lists != null)
                         {
                             @foreach (var iteml in lists)
                             {
                                 <RadzenLineSeries Smooth="@smooth" Data="@iteml.listItems" CategoryProperty="Date" Title="@iteml.branch.Name" ValueProperty="Revenue">
-                                    <RadzenMarkers MarkerType="MarkerType.Square" />
+                                    <RadzenMarkers MarkerType="MarkerType.Square"/>
                                 </RadzenLineSeries>
                             }
-
                         }
 
-                            <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}"/>
-                            <RadzenValueAxis>
-                                @*<RadzenGridLines Visible="true" />*@
-                                <RadzenAxisTitle Text="Tổng doanh thu" />
-                            </RadzenValueAxis>
-                        </RadzenChart>
-                    
+                        <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}"/>
+                        <RadzenValueAxis>
+                            @*<RadzenGridLines Visible="true" />*@
+                            <RadzenAxisTitle Text="Tổng doanh thu"/>
+                        </RadzenValueAxis>
+                    </RadzenChart>
+
 
                     <div class="text-end d-flex mt-5">
-                        <h1>Tổng doanh thu:  </h1>
+                        <h1>Tổng doanh thu: </h1>
                         <h1 class="text-primary ms-2">@Sum</h1>
                         <button class="btn btn-success ms-5" onclick="@(() => ExportExcel())">Xuất Excel</button>
 
@@ -107,7 +93,7 @@
                                 </svg>
                             </span>
                             <EditForm Model="searchText" OnValidSubmit="SearchByText">
-                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm chinh nhánh theo tên" />
+                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-450px ps-14" placeholder="Tìm kiếm chinh nhánh theo tên"/>
                             </EditForm>
                         </div>
                     </div>
@@ -118,61 +104,73 @@
                         <div class="table-responsive">
                             <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
                                 <thead>
-                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                        <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
-                                            <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                                <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
-                                            </div>
-                                        </th>
-                                        <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                            Cửa hàng
-                                        </th>
-                                        <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending" style="width: 159.297px;">
-
-                                        </th>
-                                        <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
-                                            Thao tác
-                                        </th>
-                                    </tr>
+                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                            <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
+                                        </div>
+                                    </th>
+                                    <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                        Cửa hàng
+                                    </th>
+                                    <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending" style="width: 159.297px;">
+                                        Thành phố
+                                    </th>
+                                    <th class="min-w-150px  sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
+                                        Số điện thoại
+                                    </th>
+                                    <th class="min-w-150px  sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
+                                        Email
+                                    </th>
+                                </tr>
                                 </thead>
                                 <tbody class="fw-bold text-gray-600">
-                                    @if (BranchList.Count != 0)
+                                @if (BranchList.Count != 0)
+                                {
+                                    foreach (var branch in BranchList)
                                     {
-                                        foreach (var branch in BranchList)
-                                        {
-                                            string fileImage = "http://localhost:82/uploads/" + branch.LinkImage;
-                                            string href = "/branchs/" + branch.ID.ToString();
-                                            <tr class="odd">
-                                                <td>
-                                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input type="checkbox" class="form-check-input" @onchange="@(e => { SelectBranch(@branch.ID, e.Value); })">
+                                        string fileImage = Configuration["BackendApiUrl"] + "/Uploads/" + branch.LinkImage;
+                                        string href = "/branchs/" + branch.ID.ToString();
+                                        <tr class="odd">
+                                            <td>
+                                                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                    <input type="checkbox" class="form-check-input" @onchange="@(e => { SelectBranch(@branch.ID, e.Value); })">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img height="40" width="40" src="@fileImage">
+                                                    <div class="ms-5">
+                                                        <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                            @branch.Name
+                                                        </a>
+                                                        <div class="text-muted fs-7 fw-bolder">@branch.Adderss </div>
                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img height="40" width="40" src="@fileImage">
-                                                        <div class="ms-5">
-                                                            <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                @branch.Name
-                                                            </a>
-                                                            <div class="text-muted fs-7 fw-bolder">@branch.Adderss </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    @*if(product.Category.Name != null){
-                                                        <div class="badge badge-light-success">@product.Category.Name</div>
-                                                        }*@
-                                                </td>
-
-                                            </tr>
-                                        }
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    @branch.City
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    @branch.Phone
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    @branch.Email
+                                                </div>
+                                            </td>
+                                        </tr>
                                     }
+                                }
                                 </tbody>
                             </table>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                            <div class="col-sm-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-start">
                                 <div class="dataTables_length" id="kt_ecommerce_category_table_length">
                                     <label>
                                         <EditForm Model="pagination">
@@ -186,9 +184,9 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
-                                <div class="dataTables_paginate paging_simple_numbers" id="kt_ecommerce_category_table_paginate">
-                                    <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
+                            <div class="col-sm-12 col-md-10 d-flex align-items-center justify-content-center justify-content-md-end">
+                                <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
+                                    <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change"/>
                                 </div>
                             </div>
                         </div>
@@ -200,18 +198,22 @@
 </div>
 
 @code {
+    public String Url { get; set; }
     bool smooth = true;
+
     class DataItem
     {
         public DateTime Date { get; set; }
         public double Revenue { get; set; }
     }
+
     class ListDataItem
     {
-        public Branch branch{ get; set; }
+        public Branch branch { get; set; }
 
         public List<DataItem> listItems { get; set; }
     }
+
     private List<DataItem> items = new List<DataItem>();
     private List<ListDataItem> lists = new List<ListDataItem>();
     public List<Order>? ProductsList = new List<Order>();
@@ -223,23 +225,26 @@
     private DateRequest dateRequest;
     private string searchText = "";
     private double Sum;
-    [CascadingParameter] public IModalService Modal { get; set; }
+
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
         try
         {
+            Url = Configuration.GetSection("BackendApiUrl").Value;
             dateRequest = new DateRequest()
-                {
-                    FromDate = new DateTime(2022, 06, 01),
-                    ToDate = DateTime.Now
-                };
+            {
+                FromDate = new DateTime(2022, 06, 01),
+                ToDate = DateTime.Now
+            };
             navigationManager.NavigateTo("admin-dashboard");
             var response = await userServices.GetUserInfo();
             User = response.Data;
             var res = await branchService.GetAllBranchs(searchText);
             BranchList = res.Data.Items;
-            //Sum = await orderService.GetSum(dateRequest.FromDate, dateRequest.ToDate);
+    //Sum = await orderService.GetSum(dateRequest.FromDate, dateRequest.ToDate);
             await Get(1);
             base.OnParametersSet();
         }
@@ -248,35 +253,37 @@
             toastService.ShowError("có lỗi");
         }
     }
+
     public async Task Get(int pageNumber)
     {
         try
         {
             for (var date = dateRequest.FromDate.Date; date <= dateRequest.ToDate.Date; date = date.AddDays(1))
             {
-
-                //int daysInMonth = DateTime.DaysInMonth(year: 2022, month: date);
-                //var lastDayOfMonth = new DateTime(2022, date, daysInMonth);
+    //int daysInMonth = DateTime.DaysInMonth(year: 2022, month: date);
+    //var lastDayOfMonth = new DateTime(2022, date, daysInMonth);
                 var respond = await orderService.GetAllOrders(false, 10, 1, date, date);
                 List<Order> orders = respond.Data.Items;
                 double sum = orders.Sum(x => x.TotalAmount);
                 Sum += sum;
                 DataItem item = new DataItem
-                    {
-                        Date = date,
-                        Revenue = sum
-                    };
+                {
+                    Date = date,
+                    Revenue = sum
+                };
                 items.Add(item);
             }
-
         }
         catch (Exception ex)
         {
             toastService.ShowError(ex.ToString());
         }
     }
-    public async Task GetChartBranch(string BranchId){
-        try{
+
+    public async Task GetChartBranch(string BranchId)
+    {
+        try
+        {
             List<DataItem> ite = new List<DataItem>();
             var res = await branchService.GetBranchById(BranchId);
             for (var date = dateRequest.FromDate.Date; date <= dateRequest.ToDate.Date; date = date.AddDays(1))
@@ -286,38 +293,42 @@
                 double sum = orders.Sum(x => x.TotalAmount);
                 Sum += sum;
                 DataItem item = new DataItem
-                    {
-                        Date = date,
-                        Revenue = sum
-                    };
-                ite.Add(item);
-                
-            }
-            ListDataItem newlist = new ListDataItem{
-                    branch = res.Data,
-                    listItems = ite,
+                {
+                    Date = date,
+                    Revenue = sum
                 };
-                lists.Add(newlist);
+                ite.Add(item);
+            }
+            ListDataItem newlist = new ListDataItem
+            {
+                branch = res.Data,
+                listItems = ite,
+            };
+            lists.Add(newlist);
         }
         catch (Exception ex)
         {
             toastService.ShowError("có lỗi");
         }
     }
+
     public async void Delete(string id)
     {
         await orderService.DeleteOrder(id);
     }
+
     public async void Change(int link)
     {
         pagination.PageNumber = link;
         await Get(link);
         StateHasChanged();
     }
+
     public async Task SearchByText()
     {
         await Get(pagination.PageNumber);
     }
+
     public async Task ExportExcel()
     {
         try
@@ -331,9 +342,10 @@
             toastService.ShowError(ex.ToString());
         }
     }
+
     public async Task SelectBranch(string toppingId, object checkedValue)
     {
-        if  ((bool)checkedValue)
+        if ((bool) checkedValue)
 
         {
             await GetChartBranch(toppingId);
@@ -346,11 +358,15 @@
             lists.Remove(selectBranch);
         }
     }
+
 }
+
 @code {
+
     public class DateRequest
     {
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
     }
+
 }

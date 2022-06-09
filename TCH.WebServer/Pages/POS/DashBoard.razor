@@ -1,12 +1,4 @@
 ﻿@page "/dashboard"
-@using TCH.Data.Entities
-@using TCH.ViewModel.RequestModel
-@using TCH.WebServer.Models
-@using TCH.WebServer.Models.Pagination
-@using TCH.WebServer.Services.Categories
-@using TCH.WebServer.Services.Orders
-@using TCH.WebServer.Services.Products
-@using TCH.WebServer.Services.Users
 @inject NavigationManager navigationManager
 @inject IProductService productServices
 @inject IUserService userServices
@@ -31,45 +23,45 @@
                             {
                                 <div class="col-md-4 p-5">
                                     <!--begin::Hot sales post-->
-                            <div class="card-xl-stretch me-md-6">
+                                    <div class="card-xl-stretch me-md-6">
                                         <!--begin::Overlay-->
-                                <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@(Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage)">
+                                        <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@(Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage)">
                                             <!--begin::Image-->
-                                    <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(@(Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage))"></div>
+                                            <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(@(Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage))"></div>
                                             <!--end::Image-->
                                             <!--begin::Action-->
-                                    <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                            <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
                                                 <i class="bi bi-eye-fill fs-2x text-white"></i>
                                             </div>
                                             <!--end::Action-->
-                                </a>
+                                        </a>
                                         <!--end::Overlay-->
                                         <!--begin::Body-->
-                                <div class="mt-5">
+                                        <div class="mt-5">
                                             <!--begin::Title-->
-                                    <a href="/product-detail/@product.ID" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
+                                            <a href="/product-detail/@product.ID" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
                                             <!--end::Title-->
                                             <!--begin::Text-->
-                                    <a class="fw-bold text-gray-600 text-dark mt-3 d-block" href="/recipes/@product.ID">Xem công thức</a>
+                                            <a class="fw-bold text-gray-600 text-dark mt-3 d-block" href="/recipes/@product.ID">Xem công thức</a>
                                             <!--end::Text-->
                                             <!--begin::Text-->
-                                    <div class="fs-6 fw-bolder mt-5 d-flex flex-stack">
+                                            <div class="fs-6 fw-bolder mt-5 d-flex flex-stack">
                                                 <!--begin::Label-->
 
-                                        <span class="badge border border-dashed text-primary p-2">
+                                                <span class="badge border border-dashed text-primary p-2">
                                                     <span class="text-primary text-gray-400">đ</span>@((product.IsSale) ? product.Price - product.PriceSale : product.Price)
                                                 </span>
                                                 <!--end::Label-->
                                                 <!--begin::Action-->
-                                        <button onclick="@(() => NavManager.NavigateTo($"/product-detail/{@product.ID}"))" class="btn btn-sm btn-primary">Purchase</button>
+                                                <button onclick="@(() => NavManager.NavigateTo($"/product-detail/{@product.ID}"))" class="btn btn-sm btn-primary">Purchase</button>
                                                 <!--end::Action-->
-                                    </div>
+                                            </div>
                                             <!--end::Text-->
-                                </div>
+                                        </div>
                                         <!--end::Body-->
-                            </div>
+                                    </div>
                                     <!--end::Hot sales post-->
-                        </div>
+                                </div>
                             }
                         }
                     </div>
@@ -78,7 +70,7 @@
                     <div div class="card card-xl-stretch mb-xl-8">
                         <div class="card-header align-items-center border-0 mt-4">
                             <EditForm Model="searchText" OnValidSubmit="SearchByText">
-                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm loại sản phẩm" />
+                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm loại sản phẩm"/>
                             </EditForm>
                             <button onclick="" class="btn btn-primary right mt-5">
                                 Tạo mới
@@ -94,35 +86,35 @@
                                         <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
                                             <!--begin::Table head-->
                                             <thead>
-                                                <tr class="fs-7 fw-bolder text-gray-500 border-bottom-0">
-                                                    <th class="ps-0 w-50px">ITEM</th>
-                                                    <th class="text-end min-w-140px">QTY</th>
-                                                    <th class="pe-0 text-end min-w-120px">PRICE</th>
-                                                </tr>
+                                            <tr class="fs-7 fw-bolder text-gray-500 border-bottom-0">
+                                                <th class="ps-0 w-50px">ITEM</th>
+                                                <th class="text-end min-w-140px">QTY</th>
+                                                <th class="pe-0 text-end min-w-120px">PRICE</th>
+                                            </tr>
                                             </thead>
                                             <!--end::Table head-->
                                             <!--begin::Table body-->
                                             <tbody>
-                                                @if (order != null && order.OrderItems != null)
+                                            @if (order != null && order.OrderItems != null)
+                                            {
+                                                foreach (var orderDetail in order.OrderItems)
                                                 {
-                                                    foreach (var orderDetail in order.OrderItems)
-                                                    {
-                                                        <tr>
-                                                            @*<td>
+                                                    <tr>
+                                                        @*<td>
                                                                 <img src="@(Configuration["BackendApiUrl"]+"/Uploads/" + orderDetail..LinkImage)" class="w-50px ms-n1" alt="">
                                                                 </td>*@
-                                                            <td class="ps-0">
-                                                                <a href="/product-detail/@@orderDetail.ProductID" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6 text-start pe-0">@orderDetail.NameProduct</a>
-                                                            </td>
-                                                            <td>
-                                                                <span class="text-gray-800 fw-bolder d-block fs-6 ps-0 text-end">x@(orderDetail.Quantity)</span>
-                                                            </td>
-                                                            <td class="text-end pe-0">
-                                                                <span class="text-gray-800 fw-bolder d-block fs-6">@orderDetail.SubAmount</span>
-                                                            </td>
-                                                        </tr>
-                                                    }
+                                                        <td class="ps-0">
+                                                            <a href="/product-detail/@@orderDetail.ProductID" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6 text-start pe-0">@orderDetail.NameProduct</a>
+                                                        </td>
+                                                        <td>
+                                                            <span class="text-gray-800 fw-bolder d-block fs-6 ps-0 text-end">x@(orderDetail.Quantity)</span>
+                                                        </td>
+                                                        <td class="text-end pe-0">
+                                                            <span class="text-gray-800 fw-bolder d-block fs-6">@orderDetail.SubAmount</span>
+                                                        </td>
+                                                    </tr>
                                                 }
+                                            }
                                             </tbody>
                                             <!--end::Table body-->
                                         </table>
@@ -155,9 +147,9 @@
     </div>
 </div>
 
-<div class="col-sm-12 col-md-12 d-flex">
-    <div class="row">
-        <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-start justify-content-md-start">
+<div class="col-sm-10 col-md-9 d-flex">
+    <div class="row w-100">
+        <div class="col-sm-12 col-md-2 d-flex align-items-center justify-content-start justify-content-md-start">
             <div class="dataTables_length" id="kt_ecommerce_category_table_length">
                 <label>
                     <EditForm Model="pagination">
@@ -171,30 +163,34 @@
                 </label>
             </div>
         </div>
-        <div class="col-sm-12 col-md-7 d-flex justify-content-end justify-content-md-end">
-            <div class="dataTables_paginate paging_simple_numbers" id="kt_ecommerce_category_table_paginate">
-                <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
-            </div>
+        <div class="col-sm-12 col-md-10">
+            <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change"/>
         </div>
     </div>
 </div>
 
 
-
 @code {
-    public List<ProductVm>? ProductsList = new List<ProductVm>();
-    [CascadingParameter] public IModalService Modal { get; set; }
-    [Parameter] public string BranchId { get; set; }
+    public List<ProductVm>? ProductsList = new ();
+
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
+
+    [Parameter]
+    public string BranchId { get; set; }
+
     private string Url;
-    private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
-    private List<Category> categories = new List<Category>();
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new ();
+    private List<Category> categories = new ();
     private ApplicationUser User;
     private OrderRequest order;
     private string searchText = "";
+
     protected override async Task OnParametersSetAsync()
     {
-        try{
-            Url=  Configuration.GetSection("BackendApiUrl").Value;
+        try
+        {
+            Url = Configuration.GetSection("BackendApiUrl").Value;
             order = GbParameter.GbParameter.Order;
             if (order == null)
             {
@@ -215,15 +211,16 @@
 
             base.OnParametersSet();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             toastService.ShowError("có lỗi");
         }
     }
+
     public async Task Get(int pageNumber)
     {
         var response = await productServices.GetProductsByBranch(true, pagination.pageSize, pageNumber, User.BranchId, searchText);
-        //var response = await productServices.GetProducts(true, pagination.pageSize, pageNumber);
+    //var response = await productServices.GetProducts(true, pagination.pageSize, pageNumber);
         pagination.PageNumber = response.Data.CurrentPage;
         ProductsList = response.Data.Items.ToList();
         pagination.totalPage = response.Data.TotalPages;
@@ -236,6 +233,7 @@
         await Get(link);
         StateHasChanged();
     }
+
     public async void CreateOrder()
     {
         order = new OrderRequest();
@@ -243,12 +241,15 @@
         GbParameter.GbParameter.Order = order;
         StateHasChanged();
     }
+
     public async void OnSubmit()
     {
         navigationManager.NavigateTo($"/invoice");
     }
+
     public async Task SearchByText()
     {
         await Get(pagination.PageNumber);
     }
+
 }
