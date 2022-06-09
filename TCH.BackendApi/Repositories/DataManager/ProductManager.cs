@@ -44,16 +44,16 @@ public class ProductManager : IProductRepository, IDisposable
         int totalRow = await query.CountAsync();
         var data = new List<ProductVm>();
         var item1 = from sp in _context.SizeInProducts
-                    join s in _context.Sizes on sp.SizeID equals s.ID
+                    join s in _context.Sizes on sp.SizeID equals s.SizeID
                     select new { s, sp, };
         var item2 = from tp in _context.ToppingInProducts
-                    join t in _context.Toppings on tp.ToppingID equals t.ID
+                    join t in _context.Toppings on tp.ToppingID equals t.ToppingID
                     select new { t, tp, };
         if (request.IsPging)
         {
             data = await query.Select(x => new ProductVm()
             {
-                ID = x.ID,
+                ID = x.ProductID,
                 Name = x.Name,
                 ProductType = x.ProductType,
                 CreateDate = x.CreateDate,
@@ -74,7 +74,7 @@ public class ProductManager : IProductRepository, IDisposable
         {
             data = await query.Select(x => new ProductVm()
             {
-                ID = x.ID,
+                ID = x.ProductID,
                 Name = x.Name,
                 ProductType = x.ProductType,
                 CreateDate = x.CreateDate,
@@ -206,16 +206,16 @@ public class ProductManager : IProductRepository, IDisposable
         int totalRow = await query.CountAsync();
         var data = new List<ProductVm>();
         var item1 = from sp in _context.SizeInProducts
-                    join s in _context.Sizes on sp.SizeID equals s.ID
+                    join s in _context.Sizes on sp.SizeID equals s.SizeID
                     select new { s, sp, };
         var item2 = from tp in _context.ToppingInProducts
-                    join t in _context.Toppings on tp.ToppingID equals t.ID
+                    join t in _context.Toppings on tp.ToppingID equals t.ToppingID
                     select new { t, tp, };
         if (request.IsPging)
         {
             data = await query.Select(x => new ProductVm()
             {
-                ID = x.ID,
+                ID = x.ProductID,
                 Name = x.Name,
                 ProductType = x.ProductType,
                 CreateDate = x.CreateDate,
@@ -236,7 +236,7 @@ public class ProductManager : IProductRepository, IDisposable
         {
             data = await query.Select(x => new ProductVm()
             {
-                ID = x.ID,
+                ID = x.ProductID,
                 Name = x.Name,
                 ProductType = x.ProductType,
                 CreateDate = x.CreateDate,
@@ -253,8 +253,16 @@ public class ProductManager : IProductRepository, IDisposable
         }
         foreach (var item in data)
         {
-            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
-            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
+            var sizes = await item1
+                .Where(x => x.sp.ProductID == item.ID)
+                .Select(x => x.s)
+                .IgnoreAutoIncludes()
+                .ToListAsync();
+            var toppings = await item2
+                .Where(x => x.tp.ProductID == item.ID)
+                .Select(x => x.t)
+                .IgnoreAutoIncludes()
+                .ToListAsync();
             item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
             item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).ToList();
         }
@@ -282,16 +290,16 @@ public class ProductManager : IProductRepository, IDisposable
         int totalRow = await query.CountAsync();
         var data = new List<ProductVm>();
         var item1 = from sp in _context.SizeInProducts
-                    join s in _context.Sizes on sp.SizeID equals s.ID
+                    join s in _context.Sizes on sp.SizeID equals s.SizeID
                     select new { s, sp, };
         var item2 = from tp in _context.ToppingInProducts
-                    join t in _context.Toppings on tp.ToppingID equals t.ID
+                    join t in _context.Toppings on tp.ToppingID equals t.ToppingID
                     select new { t, tp, };
         if (request.IsPging)
         {
             data = await query.Select(x => new ProductVm()
             {
-                ID = x.ID,
+                ID = x.ProductID,
                 Name = x.Name,
                 ProductType = x.ProductType,
                 CreateDate = x.CreateDate,
@@ -312,7 +320,7 @@ public class ProductManager : IProductRepository, IDisposable
         {
             data = await query.Select(x => new ProductVm()
             {
-                ID = x.ID,
+                ID = x.ProductID,
                 Name = x.Name,
                 ProductType = x.ProductType,
                 CreateDate = x.CreateDate,
@@ -397,7 +405,7 @@ public class ProductManager : IProductRepository, IDisposable
             };
         }
         var product = _mapper.Map<Product>(request);
-        product.ID = Guid.NewGuid().ToString();
+        product.ProductID = Guid.NewGuid().ToString();
         product.CreateDate = DateTime.Now;
         product.UpdateDate = DateTime.Now;
         product.Description = request.Description ?? "Sản phẩm mới của chuỗi cửa hàng";
@@ -472,7 +480,7 @@ public class ProductManager : IProductRepository, IDisposable
         {
             var history = new HistoryPriceUpdate()
             {
-                ID = Guid.NewGuid().ToString(),
+                HistoryPriceUpdateID = Guid.NewGuid().ToString(),
                 Name = product.Name,
                 UpdateDate = product.UpdateDate,
                 CreateDate = DateTime.UtcNow,
@@ -540,7 +548,7 @@ public class ProductManager : IProductRepository, IDisposable
                 Message = "Không tìm thấy danh mục",
             };
         }
-        product.CategoryID = category.ID;
+        product.CategoryID = category.CategoryID;
         product.Category = category;
         _context.Products.Update(product);
         await _context.SaveChangesAsync();
@@ -554,14 +562,14 @@ public class ProductManager : IProductRepository, IDisposable
     public async Task<Respond<ProductVm>> GetById(string productID)
     {
         var item1 = from sp in _context.SizeInProducts
-                    join s in _context.Sizes on sp.SizeID equals s.ID
+                    join s in _context.Sizes on sp.SizeID equals s.SizeID
                     select new { s, sp, };
         var item2 = from tp in _context.ToppingInProducts
-                    join t in _context.Toppings on tp.ToppingID equals t.ID
+                    join t in _context.Toppings on tp.ToppingID equals t.ToppingID
                     select new { t, tp, };
-        var product = await _context.Products.Where(x => x.ID == productID).Select(x => new ProductVm()
+        var product = await _context.Products.Where(x => x.ProductID == productID).Select(x => new ProductVm()
         {
-            ID = x.ID,
+            ID = x.ProductID,
             Name = x.Name,
             ProductType = x.ProductType,
             CreateDate = x.CreateDate,
@@ -611,7 +619,7 @@ public class ProductManager : IProductRepository, IDisposable
         }
         var productImage = new ProductImage()
         {
-            ID = Guid.NewGuid().ToString(),
+            ProductImageID = Guid.NewGuid().ToString(),
             Caption = request.Caption,
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
@@ -764,7 +772,7 @@ public class ProductManager : IProductRepository, IDisposable
         {
             var history = new HistoryPriceUpdate()
             {
-                ID = Guid.NewGuid().ToString(),
+                HistoryPriceUpdateID = Guid.NewGuid().ToString(),
                 Name = request.Name,
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.UtcNow,
@@ -795,7 +803,7 @@ public class ProductManager : IProductRepository, IDisposable
 
     public async Task<MessageResult> CreateSize(Size size)
     {
-        size.ID = Guid.NewGuid().ToString();
+        size.SizeID = Guid.NewGuid().ToString();
         size.CreateDate = DateTime.Now;
         size.UpdateDate = DateTime.Now;
         size.UserCreateID = _userID;
@@ -868,7 +876,7 @@ public class ProductManager : IProductRepository, IDisposable
         {
             var history = new HistoryPriceUpdate()
             {
-                ID = Guid.NewGuid().ToString(),
+                HistoryPriceUpdateID = Guid.NewGuid().ToString(),
                 Name = request.Name,
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.UtcNow,
@@ -901,7 +909,7 @@ public class ProductManager : IProductRepository, IDisposable
 
     public async Task<MessageResult> CreateTopping(Topping topping)
     {
-        topping.ID = Guid.NewGuid().ToString();
+        topping.ToppingID = Guid.NewGuid().ToString();
         topping.CreateDate = DateTime.Now;
         topping.UpdateDate = DateTime.Now;
         topping.UserCreateID = _userID;

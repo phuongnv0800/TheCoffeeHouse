@@ -9,7 +9,7 @@ public class BranchConfig : IEntityTypeConfiguration<Branch>
     public void Configure(EntityTypeBuilder<Branch> builder)
     {
         builder.ToTable("Branchs");
-        builder.HasKey(x => x.ID);
+        builder.HasKey(x => x.BranchID);
         builder.Property(x => x.Adderss).IsRequired().HasMaxLength(255);
         builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
         builder.Property(x => x.City).IsRequired().HasMaxLength(255);

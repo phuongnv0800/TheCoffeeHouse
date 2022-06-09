@@ -9,7 +9,7 @@ public class ToppingConfiguration : IEntityTypeConfiguration<Topping>
     public void Configure(EntityTypeBuilder<Topping> builder)
     {
         builder.ToTable("Toppings");
-        builder.HasKey(x => x.ID);
+        builder.HasKey(x => x.ToppingID);
         builder.Property(x => x.SubPrice).IsRequired().HasColumnType("decimal(18,2)");
     }
 }

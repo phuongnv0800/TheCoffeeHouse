@@ -105,7 +105,7 @@ public class OrderManager : IOrderRepository, IDisposable
 
         var orderRe = new Order
         {
-            ID = Guid.NewGuid().ToString(),
+            OrderID = Guid.NewGuid().ToString(),
             TableNum = request.TableNum,
             Cashier = request.Cashier,
             Code = "ORDER.N0" + DateTime.Now.Minute + "-" + DateTime.Now.Day,
@@ -152,8 +152,8 @@ public class OrderManager : IOrderRepository, IDisposable
                         orderToppingDetail.Add(new OrderToppingDetail
                         {
                             ToppingID = topping.ToppingID,
-                            OrderID = orderRe.ID,
-                            ProductID = productDb.ID,
+                            OrderID = orderRe.OrderID,
+                            ProductID = productDb.ProductID,
                             SubPrice = toppingDb.SubPrice,
                             Name = toppingDb.Name
                         });
@@ -164,15 +164,15 @@ public class OrderManager : IOrderRepository, IDisposable
 
                 var orderDetail = new OrderDetail
                 {
-                    OrderID = orderRe.ID,
+                    OrderID = orderRe.OrderID,
                     Quantity = item.Quantity,
                     PriceProduct = item.PriceProduct,
                     Description = item.Description,
                     SugarType = item.SugarType,
                     IcedType = item.IcedType,
                     PriceSize = item.PriceSize,
-                    SizeID = sizeDb.ID,
-                    ProductID = productDb.ID,
+                    SizeID = sizeDb.SizeID,
+                    ProductID = productDb.ProductID,
                     OrderToppingDetails = orderToppingDetail,
                 };
                 orderDetails.Add(orderDetail);
@@ -181,14 +181,14 @@ public class OrderManager : IOrderRepository, IDisposable
             {
                 orderDetails.Add(new OrderDetail
                 {
-                    OrderID = orderRe.ID,
+                    OrderID = orderRe.OrderID,
                     Quantity = item.Quantity,
                     PriceProduct = item.PriceProduct,
                     Description = item.Description,
                     SugarType = item.SugarType,
                     PriceSize = item.PriceSize,
                     SizeID = item.SizeID,
-                    ProductID = productDb.ID,
+                    ProductID = productDb.ProductID,
                 });
             }
         }
@@ -230,9 +230,9 @@ public class OrderManager : IOrderRepository, IDisposable
     public async Task<string> PrintInvoicePaymented(string invoiceID)
     {
         //Invoice invoice = await _context.Invoices.Include(e => e.InvoiceDetails).FirstOrDefaultAsync(e => e.ID == invoiceID);
-        var invoice = await _context.Orders.FirstOrDefaultAsync(x => x.ID == invoiceID);
+        var invoice = await _context.Orders.FirstOrDefaultAsync(x => x.OrderID == invoiceID);
         if (invoice == null) throw new CustomException("Không tìm thấy thông tin hóa đơn");
-        var branch = await _context.Branches.FirstOrDefaultAsync(x => x.ID == invoice.BranchID);
+        var branch = await _context.Branches.FirstOrDefaultAsync(x => x.BranchID == invoice.BranchID);
         if (branch == null) throw new CustomException("Không tìm thấy thông tin cửa hàng");
 
         //await this.CheckMappingBranch(invoice.BranchID);
@@ -301,13 +301,13 @@ public class OrderManager : IOrderRepository, IDisposable
 
 
         XmlElement elementDetail = (XmlElement) doc.SelectSingleNode("/Invoice/Detail");
-        var orderDetails = await _context.OrderDetails.Include(x => x.Size).Where(x => x.OrderID == invoice.ID)
+        var orderDetails = await _context.OrderDetails.Include(x => x.Size).Where(x => x.OrderID == invoice.OrderID)
             .ToListAsync();
         foreach (var item in orderDetails)
         {
             // using (var _context = new APIContext())
             // {
-            var food = _context.Products.FirstOrDefault(e => e.ID == item.ProductID);
+            var food = _context.Products.FirstOrDefault(e => e.ProductID == item.ProductID);
             if (food != null)
             {
                 item.Product = food;
@@ -904,7 +904,7 @@ public class OrderManager : IOrderRepository, IDisposable
             .ThenInclude(x => x.Product)
             .Include(x => x.OrderDetails)
             .ThenInclude(x => x.Size)
-            .FirstOrDefaultAsync(x => x.ID == orderID);
+            .FirstOrDefaultAsync(x => x.OrderID == orderID);
         if (order == null)
             return new Respond<Order>
             {
@@ -923,7 +923,7 @@ public class OrderManager : IOrderRepository, IDisposable
     public async Task<MessageResult> UpdateStatus(string orderID, OrderStatus status)
     {
         var order = await _context.Orders
-            .FirstOrDefaultAsync(x => x.ID == orderID);
+            .FirstOrDefaultAsync(x => x.OrderID == orderID);
         if (order == null)
             return new MessageResult
             {
@@ -945,7 +945,7 @@ public class OrderManager : IOrderRepository, IDisposable
         var order = await _context.Orders
             .Include(x => x.OrderDetails)
             .ThenInclude(x => x.OrderToppingDetails)
-            .FirstOrDefaultAsync(x => x.ID == orderID);
+            .FirstOrDefaultAsync(x => x.OrderID == orderID);
         if (order == null)
             return new MessageResult
             {

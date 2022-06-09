@@ -67,7 +67,7 @@ public class UnitManager : IDisposable, IUnitRepository
     public async Task<MessageResult> Create(UnitRequest request)
     {
         var category = _mapper.Map<Measure>(request);
-        category.ID = Guid.NewGuid().ToString();
+        category.MeasureID = Guid.NewGuid().ToString();
         category.UpdateDate = DateTime.Now;
         category.CreateDate = DateTime.Now;
         category.UserCreateID = UserID;

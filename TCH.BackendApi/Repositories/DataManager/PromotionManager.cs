@@ -67,7 +67,7 @@ public class PromotionManager : IDisposable, IPromotionRepository
     {
         var result = await _context.Promotions
             .Include(x => x.PromotionGifts)
-            .FirstOrDefaultAsync(x => x.Code.Contains(code) || x.ID.Contains(code));
+            .FirstOrDefaultAsync(x => x.Code.Contains(code) || x.PromotionID.Contains(code));
         if (result == null)
             new Respond<Promotion>()
             {
@@ -212,7 +212,7 @@ public class PromotionManager : IDisposable, IPromotionRepository
             };
         }
         var promotion = _mapper.Map<Promotion>(request);
-        promotion.ID = Guid.NewGuid().ToString();
+        promotion.PromotionID = Guid.NewGuid().ToString();
         promotion.CreateDate = DateTime.Now;
         await _context.Promotions.AddAsync(promotion);
         if (request.PromotionLists != null && request.PromotionLists.Count != 0)
@@ -222,7 +222,7 @@ public class PromotionManager : IDisposable, IPromotionRepository
                 {
                     ProductID = item.ProductID,
                     Description = item.Description,
-                    PromotionID = promotion.ID,
+                    PromotionID = promotion.PromotionID,
                     ReduceAmount = item.ReduceAmount,
                     ReducePercent = item.ReducePercent,
                     IsRequired = item.IsRequired,
@@ -241,7 +241,7 @@ public class PromotionManager : IDisposable, IPromotionRepository
     {
         var result = await _context.Promotions
             .Include(x => x.PromotionGifts)
-            .FirstOrDefaultAsync(x => x.ID == promotionID);
+            .FirstOrDefaultAsync(x => x.PromotionID == promotionID);
         if (result == null)
             return new MessageResult()
             {

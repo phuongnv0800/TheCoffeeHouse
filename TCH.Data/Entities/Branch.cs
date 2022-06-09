@@ -2,7 +2,7 @@
 
 public class Branch
 {
-    public string ID { get; set; }
+    public string BranchID { get; set; }
     public string Name { get; set; }
     public string City { get; set; } = "Hải Phòng";
     public string District { get; set; }

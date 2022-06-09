@@ -33,7 +33,7 @@ public class MaterialManager : IMaterialRepository, IDisposable
     {
         var material = new Material()
         {
-            ID = Guid.NewGuid().ToString(),
+            MaterialID = Guid.NewGuid().ToString(),
             Name = request.Name,
             Description = request.Description,
             CreateDate = DateTime.Now,
@@ -65,7 +65,7 @@ public class MaterialManager : IMaterialRepository, IDisposable
     {
         var materialType = new MaterialType()
         {
-            ID = Guid.NewGuid().ToString(),
+            MaterialTypeID = Guid.NewGuid().ToString(),
             Name = request.Name,
             Description = request.Description,
             CreateDate = DateTime.Now,
@@ -243,7 +243,7 @@ public class MaterialManager : IMaterialRepository, IDisposable
 
     public async Task<Respond<Material>> GetMaterialByID(string id)
     {
-        var product = await _context.Materials.FirstOrDefaultAsync(x => x.ID == id);
+        var product = await _context.Materials.FirstOrDefaultAsync(x => x.MaterialID == id);
         if (product == null)
             return new Respond<Material>()
             {
@@ -261,7 +261,7 @@ public class MaterialManager : IMaterialRepository, IDisposable
 
     public async Task<Respond<MaterialType>> GetMaterialTypeByID(string id)
     {
-        var product = await _context.MaterialTypes.FirstOrDefaultAsync(x => x.ID == id);
+        var product = await _context.MaterialTypes.FirstOrDefaultAsync(x => x.MaterialTypeID == id);
         if (product == null)
             return new Respond<MaterialType>()
             {

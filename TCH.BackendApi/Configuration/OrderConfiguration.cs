@@ -9,7 +9,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
     public void Configure(EntityTypeBuilder<Order> builder)
     {
         builder.ToTable("Orders");
-        builder.HasKey(x => x.ID);
+        builder.HasKey(x => x.OrderID);
         builder.Property(z => z.Code).IsRequired().HasMaxLength(50);
         builder.Property(z => z.SubAmount).IsRequired().HasColumnType("decimal(18,2)");
         builder.Property(z => z.TotalAmount).IsRequired().HasColumnType("decimal(18,2)");

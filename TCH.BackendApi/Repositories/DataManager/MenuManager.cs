@@ -38,7 +38,7 @@ public class MenuManager : IDisposable, IMenuRepository
         }
         var menu = new Menu()
         {
-            ID = Guid.NewGuid().ToString(),
+            MenuID = Guid.NewGuid().ToString(),
             Name = request.Name,
             UpdateDate = DateTime.Now,
             CreateDate = DateTime.Now,
@@ -54,9 +54,9 @@ public class MenuManager : IDisposable, IMenuRepository
             {
                 IsActive = true,
                 Product = item,
-                ProductID = item.ID,
+                ProductID = item.ProductID,
                 Menu = menu,
-                MenuID = menu.ID
+                MenuID = menu.MenuID
             };
             _context.ProductInMenus.Add(productInMenu);
         }

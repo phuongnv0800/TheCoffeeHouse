@@ -6,7 +6,7 @@ namespace TCH.Data.Entities;
 public class Menu
 {
     [Key]
-    public string ID { get; set; }
+    public string MenuID { get; set; }
     [Required, MaxLength(255)]
     public string Name { get; set; }
     public string? Description { get; set; }

@@ -7,7 +7,7 @@ namespace TCH.Data.Entities;
 public class HistoryPriceUpdate
 {
     [Key]
-    public string ID { get; set; }
+    public string HistoryPriceUpdateID { get; set; }
     public string? Name { get; set; }
     public DateTime UpdateDate { get; set; }
     public DateTime CreateDate { get; set; }

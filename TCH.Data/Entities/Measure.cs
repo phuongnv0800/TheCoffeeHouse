@@ -6,7 +6,7 @@ namespace TCH.Data.Entities;
 public class Measure
 {
     [Key]
-    public string ID { get; set; }
+    public string MeasureID { get; set; }
 
     public string Code { get; set; }
 

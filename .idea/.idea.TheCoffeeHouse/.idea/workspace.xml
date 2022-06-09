@@ -11,23 +11,61 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="nomessage">
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220609094831_InitialCreate.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220609094831_InitialCreate.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/BranchConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/BranchConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/CategoryConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/CategoryConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/CustomerConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/CustomerConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MaterialConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MaterialConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MaterialTypeConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MaterialTypeConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MemberTypeConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/MemberTypeConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/OrderConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/OrderConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductImageConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ProductImageConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/PromotionConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/PromotionConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ToppingConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/ToppingConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/UnitConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/UnitConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Configuration/UnitConversionConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Configuration/UnitConversionConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/EF/Seed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/EF/Seed.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/APIContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Migrations/APIContextModelSnapshot.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/BranchManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/BranchManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CategoryManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CategoryManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/MaterialManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/MaterialManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/MenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/MenuManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ProductManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ProductManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/PromotionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/PromotionManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ReportManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ReportManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IStockRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IStockRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UnitManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UnitManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Bean.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Bean.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Branch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Branch.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Category.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Customer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Customer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/HistoryPriceUpdate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/HistoryPriceUpdate.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Material.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Material.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/MaterialType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/MaterialType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Measure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Measure.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Menu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Menu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Order.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Order.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Product.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Product.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/ProductImage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/ProductImage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Promotion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Promotion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Report.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Report.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Size.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Size.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Topping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Topping.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/UnitConversion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/UnitConversion.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ChangesViewManager">
-    <option name="groupingKeys">
-      <option value="directory" />
-    </option>
   </component>
   <component name="DisabledMethodsStorage">
     <option name="disabledMethods">
@@ -37,6 +75,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
@@ -50,10 +93,12 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2f7b3b6e2f3c491c91283c8624ab32661ce200/1f/48011b47/HttpDeleteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5a5ae644fdbadec9bdc495c592ec7c1ba2fa382751f78a221412bfe43af5ce0/HttpResponseMessage.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bebd253e21dcf766929bfdfd74615bfe46e6e1693b289273dbdb82152893/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d4f98ebdd878db4fbd98872756eb7be6ad9e468fe5cd6b16385d8c4993109a/List.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Controllers/ProductsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/EF/Seed.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/TCH.WebServer/wwwroot/assets/js/custom/apps/subscriptions/list/list.js.map" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -62,18 +107,21 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="27MMZ4XHzN4mnVF07vJSaoPxuWD" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.smartKeys_rider&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;HotReloadSettingsPage&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -202,7 +250,15 @@
       <workItem from="1649681132928" duration="610000" />
       <workItem from="1654094646231" duration="4820000" />
       <workItem from="1654404505866" duration="645000" />
-      <workItem from="1654519806393" duration="9758000" />
+      <workItem from="1654519806393" duration="10564000" />
+      <workItem from="1654588095275" duration="129000" />
+      <workItem from="1654590978976" duration="35000" />
+      <workItem from="1654595485013" duration="11394000" />
+      <workItem from="1654650355346" duration="711000" />
+      <workItem from="1654694604157" duration="404000" />
+      <workItem from="1654695055160" duration="9762000" />
+      <workItem from="1654740986231" duration="22000" />
+      <workItem from="1654763206647" duration="5872000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -288,7 +344,63 @@
       <option name="project" value="LOCAL" />
       <updated>1654531259929</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="report expire">
+      <created>1654533028061</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1654533028061</updated>
+    </task>
+    <task id="LOCAL-00014" summary="seed">
+      <created>1654637943066</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1654637943066</updated>
+    </task>
+    <task id="LOCAL-00015" summary="join product size">
+      <created>1654650455260</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1654650455260</updated>
+    </task>
+    <task id="LOCAL-00016" summary="add getbyid">
+      <created>1654696784769</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1654696784770</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix">
+      <created>1654699333686</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1654699333686</updated>
+    </task>
+    <task id="LOCAL-00018" summary="api">
+      <created>1654703667380</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1654703667380</updated>
+    </task>
+    <task id="LOCAL-00019" summary="add">
+      <created>1654703709019</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1654703709019</updated>
+    </task>
+    <task id="LOCAL-00020" summary="id branch">
+      <created>1654740993390</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1654740993390</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -309,12 +421,12 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="add order, customer controller" />
     <MESSAGE value="add print pdf" />
     <MESSAGE value="add layout print" />
     <MESSAGE value="add DI for program" />
-    <MESSAGE value="fix" />
     <MESSAGE value=" value" />
     <MESSAGE value="no message" />
     <MESSAGE value="report" />
@@ -322,7 +434,15 @@
     <MESSAGE value="add report order" />
     <MESSAGE value="add mass material" />
     <MESSAGE value="nomessage" />
-    <option name="LAST_COMMIT_MESSAGE" value="nomessage" />
+    <MESSAGE value="report expire" />
+    <MESSAGE value="seed" />
+    <MESSAGE value="join product size" />
+    <MESSAGE value="add getbyid" />
+    <MESSAGE value="fix" />
+    <MESSAGE value="api" />
+    <MESSAGE value="add" />
+    <MESSAGE value="id branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="id branch" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -338,39 +458,94 @@
           <line>148</line>
           <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" initialLine="137" containingFunctionPresentation="">
             <startOffsets>
-              <option value="5724" />
+              <option value="5723" />
             </startOffsets>
             <endOffsets>
-              <option value="5785" />
+              <option value="5784" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs</url>
-          <line>51</line>
-          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs" initialLine="51" containingFunctionPresentation="method 'GetAllStockExpireByBranchID'">
+          <url>file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs</url>
+          <line>38</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" initialLine="38" containingFunctionPresentation="method 'Create'">
             <startOffsets>
-              <option value="1699" />
+              <option value="1373" />
             </startOffsets>
             <endOffsets>
-              <option value="1729" />
+              <option value="1891" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="12" />
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs</url>
-          <line>203</line>
-          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" initialLine="203" containingFunctionPresentation="method 'GetAllStockExpire'">
+          <url>file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs</url>
+          <line>267</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs" initialLine="267" containingFunctionPresentation="method 'Register'">
             <startOffsets>
-              <option value="8381" />
+              <option value="8928" />
             </startOffsets>
             <endOffsets>
-              <option value="8421" />
+              <option value="8992" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor</url>
+          <line>216</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor" initialLine="187" isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
+            <startOffsets>
+              <option value="-1" />
+            </startOffsets>
+            <endOffsets>
+              <option value="-1" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor</url>
+          <line>223</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor" initialLine="189" isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
+            <startOffsets>
+              <option value="-1" />
+            </startOffsets>
+            <endOffsets>
+              <option value="-1" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.WebServer/Services/BaseApiClient.cs</url>
+          <line>164</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Services/BaseApiClient.cs" initialLine="164" containingFunctionPresentation="method 'CreateAsync'">
+            <startOffsets>
+              <option value="5512" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5568" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor</url>
+          <line>203</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Pages/User/UserCreate.razor" initialLine="176" isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
+            <startOffsets>
+              <option value="-1" />
+            </startOffsets>
+            <endOffsets>
+              <option value="-1" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

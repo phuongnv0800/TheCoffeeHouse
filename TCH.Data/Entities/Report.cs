@@ -7,7 +7,7 @@ namespace TCH.Data.Entities;
 public class Report
 {
     [Key]
-    public string ID { get; set; }
+    public string ReportID { get; set; }
     public string Name { get; set; }
     public string Code { get; set; }
     public string Reason { get; set; }

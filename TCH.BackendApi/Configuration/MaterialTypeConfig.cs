@@ -9,7 +9,7 @@ public class MaterialTypeConfig : IEntityTypeConfiguration<MaterialType>
     public void Configure(EntityTypeBuilder<MaterialType> builder)
     {
         builder.ToTable("MaterialTypes");
-        builder.HasKey(x => x.ID);
+        builder.HasKey(x => x.MaterialTypeID);
         builder.Property(x => x.Name).IsRequired();
         builder.HasMany(x => x.Materials).WithOne(x => x.MaterialType).HasForeignKey(z => z.MaterialTypeID);
     }

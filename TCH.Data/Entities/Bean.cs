@@ -4,7 +4,7 @@ namespace TCH.Data.Entities;
 
 public class Bean
 {
-    public string ID { get; set; }
+    public string BeanID { get; set; }
     public string Name { get; set; }
     public BeanType Code { get; set; }
     public int MinPoint { get; set; }

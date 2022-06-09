@@ -5,7 +5,7 @@ namespace TCH.Data.Entities;
 
 public class Customer
 {
-    public string ID { get; set; }
+    public string CustomerID { get; set; }
 
     public string? FullName { get; set; }
 

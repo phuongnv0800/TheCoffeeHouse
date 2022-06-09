@@ -9,7 +9,7 @@ public class UnitConversionConfig : IEntityTypeConfiguration<UnitConversion>
     public void Configure(EntityTypeBuilder<UnitConversion> builder)
     {
         builder.ToTable("UnitConversions");
-        builder.HasKey(x => x.ID);
+        builder.HasKey(x => x.UnitConversionID);
 
     }
 }

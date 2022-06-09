@@ -35,9 +35,9 @@ public class StockManager : IDisposable, IStockRepository
     public async Task<Respond<PagedList<StockVm>>> GetAllStockByBranchID(string branchID, Search request)
     {
         var query = from c in _context.StockMaterials
-                    join b in _context.Branches on c.BranchID equals b.ID
-                    join m in _context.Materials on c.MaterialID equals m.ID
-                    join mea in _context.Measures on c.MeasureID equals mea.ID
+                    join b in _context.Branches on c.BranchID equals b.BranchID
+                    join m in _context.Materials on c.MaterialID equals m.MaterialID
+                    join mea in _context.Measures on c.MeasureID equals mea.MeasureID
                     where c.BranchID == branchID && DateTime.Compare(c.ExpirationDate, DateTime.Now) >= 0
                     select new { c, b, m, mea };
         if (request.StartDate != null)
@@ -115,9 +115,9 @@ public class StockManager : IDisposable, IStockRepository
     public async Task<Respond<PagedList<StockVm>>> GetAllStockExpireByBranchID(string branchID, Search request)
     {
         var query = from c in _context.StockMaterials
-                    join b in _context.Branches on c.BranchID equals b.ID
-                    join m in _context.Materials on c.MaterialID equals m.ID
-                    join mea in _context.Measures on c.MeasureID equals mea.ID
+                    join b in _context.Branches on c.BranchID equals b.BranchID
+                    join m in _context.Materials on c.MaterialID equals m.MaterialID
+                    join mea in _context.Measures on c.MeasureID equals mea.MeasureID
                     where c.BranchID == branchID &&  DateTime.Compare(c.ExpirationDate, DateTime.Now) < 0
                     select new { c, b, m, mea };
         if (!string.IsNullOrEmpty(request.Name))
@@ -196,9 +196,9 @@ public class StockManager : IDisposable, IStockRepository
     public async Task<Respond<PagedList<StockVm>>> GetAllStockExpire(Search request)
     {
         var query = from c in _context.StockMaterials
-                    join b in _context.Branches on c.BranchID equals b.ID
-                    join m in _context.Materials on c.MaterialID equals m.ID
-                    join mea in _context.Measures on c.MeasureID equals mea.ID
+                    join b in _context.Branches on c.BranchID equals b.BranchID
+                    join m in _context.Materials on c.MaterialID equals m.MaterialID
+                    join mea in _context.Measures on c.MeasureID equals mea.MeasureID
                     where DateTime.Compare(c.ExpirationDate, DateTime.Now) < 0
                     select new { c, b, m, mea };
         if (!string.IsNullOrEmpty(request.Name))
@@ -213,7 +213,7 @@ public class StockManager : IDisposable, IStockRepository
             data = await query.Select(x =>
                  new StockVm()
                  {
-                     BranchID =x.b.ID,
+                     BranchID =x.b.BranchID,
                      BranchName = x.c.Branch.Name,
                      MaterialName = x.m.Name,
                      Quantity = x.c.Quantity,
@@ -239,7 +239,7 @@ public class StockManager : IDisposable, IStockRepository
             data = await query.Select(x =>
                  new StockVm()
                  {
-                     BranchID = x.b.ID,
+                     BranchID = x.b.BranchID,
                      BranchName = x.c.Branch.Name,
                      MaterialName = x.m.Name,
                      Quantity = x.c.Quantity,
@@ -277,9 +277,9 @@ public class StockManager : IDisposable, IStockRepository
     public async Task<Respond<PagedList<StockVm>>> GetAllStock(Search request)
     {
         var query = from c in _context.StockMaterials
-                    join b in _context.Branches on c.BranchID equals b.ID
-                    join m in _context.Materials on c.MaterialID equals m.ID
-                    join mea in _context.Measures on c.MeasureID equals mea.ID
+                    join b in _context.Branches on c.BranchID equals b.BranchID
+                    join m in _context.Materials on c.MaterialID equals m.MaterialID
+                    join mea in _context.Measures on c.MeasureID equals mea.MeasureID
                     where DateTime.Compare(c.ExpirationDate, DateTime.Now) >= 0
                     select new { c, b, m, mea };
         if (request.StartDate != null)
@@ -293,7 +293,7 @@ public class StockManager : IDisposable, IStockRepository
             data = await query.Select(x =>
                  new StockVm()
                  {
-                     BranchID = x.b.ID,
+                     BranchID = x.b.BranchID,
                      BranchName = x.c.Branch.Name,
                      MaterialName = x.m.Name,
                      Quantity = x.c.Quantity,
@@ -319,7 +319,7 @@ public class StockManager : IDisposable, IStockRepository
             data = await query.Select(x =>
                  new StockVm()
                  {
-                     BranchID = x.b.ID,
+                     BranchID = x.b.BranchID,
                      BranchName = x.c.Branch.Name,
                      MaterialName = x.m.Name,
                      Quantity = x.c.Quantity,

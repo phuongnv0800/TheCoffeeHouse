@@ -83,7 +83,7 @@ public class CategoryManager : ICategoryRepository, IDisposable
     public async Task<MessageResult> Create(CategoryVm request)
     {
         var category = _mapper.Map<Category>(request);
-        category.ID = Guid.NewGuid().ToString();
+        category.CategoryID = Guid.NewGuid().ToString();
         category.UpdateDate = DateTime.Now;
         category.CreateDate = DateTime.Now;
         _context.Categories.Add(category);

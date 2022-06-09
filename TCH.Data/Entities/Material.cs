@@ -2,7 +2,7 @@
 
 public class Material
 {
-    public string ID { get; set; }
+    public string MaterialID { get; set; }
     public string Name { get; set; }
     public DateTime CreateDate { get; set; }
     public DateTime UpdateDate { get; set; }

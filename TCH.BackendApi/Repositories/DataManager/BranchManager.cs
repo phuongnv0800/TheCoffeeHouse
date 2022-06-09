@@ -85,7 +85,7 @@ public class BranchManager : IDisposable, IBranchRepository
                 Result = 0,
                 Message = "Chi nhánh không tồn tại",
             };
-        user.BranchID = entity.ID;
+        user.BranchID = entity.BranchID;
         user.Branch = entity;
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
@@ -112,7 +112,7 @@ public class BranchManager : IDisposable, IBranchRepository
                 Result = 0,
                 Message = "Chi nhánh không tồn tại",
             };
-        if ((user.BranchID ?? "") != entity.ID)
+        if ((user.BranchID ?? "") != entity.BranchID)
         {
             return new MessageResult()
             {
@@ -132,7 +132,7 @@ public class BranchManager : IDisposable, IBranchRepository
     public async Task<MessageResult> Create(BranchRequest request)
     {
         var entity = _mapper.Map<Branch>(request);
-        entity.ID = Guid.NewGuid().ToString();
+        entity.BranchID = Guid.NewGuid().ToString();
         entity.UpdateDate = DateTime.Now;
         entity.CreateDate = DateTime.Now;
         entity.UserCreateID = UserID;

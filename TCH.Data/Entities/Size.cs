@@ -6,7 +6,7 @@ namespace TCH.Data.Entities;
 public class Size
 {
     [Key]
-    public string ID { get; set; }
+    public string SizeID { get; set; }
     public string Name { get; set; }
     public double SubPrice { get; set; }
     public DateTime? CreateDate { get; set; }

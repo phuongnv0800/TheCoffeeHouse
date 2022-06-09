@@ -19,7 +19,7 @@ public static class Seed
         {
             new Measure()
             {
-                ID = Guid.NewGuid().ToString(),
+                MeasureID = Guid.NewGuid().ToString(),
                 Name = "Tấn",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -30,7 +30,7 @@ public static class Seed
             },
             new Measure()
             {
-                ID = Guid.NewGuid().ToString(),
+                MeasureID = Guid.NewGuid().ToString(),
                 Name = "Tạ",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -41,7 +41,7 @@ public static class Seed
             },
             new Measure()
             {
-                ID = Guid.NewGuid().ToString(),
+                MeasureID = Guid.NewGuid().ToString(),
                 Name = "Yến",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -52,7 +52,7 @@ public static class Seed
             },
             new Measure()
             {
-                ID = Guid.NewGuid().ToString(),
+                MeasureID = Guid.NewGuid().ToString(),
                 Name = "Ki-lô-gam",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -63,7 +63,7 @@ public static class Seed
             },
             new Measure()
             {
-                ID = Guid.NewGuid().ToString(),
+                MeasureID = Guid.NewGuid().ToString(),
                 Name = "Gam",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -74,7 +74,7 @@ public static class Seed
             },
             new Measure()
             {
-                ID = Guid.NewGuid().ToString(),
+                MeasureID = Guid.NewGuid().ToString(),
                 Name = "Lít",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -85,7 +85,7 @@ public static class Seed
             },
             new Measure()
             {
-                ID = Guid.NewGuid().ToString(),
+                MeasureID = Guid.NewGuid().ToString(),
                 Name = "Mi-li-lít",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -104,7 +104,7 @@ public static class Seed
         {
             new Category()
             {
-                ID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
+                CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
                 Name = "Cà Phê Việt Nam",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -112,7 +112,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
+                CategoryID = "3287ce53-a833-4d4c-b821-a2d5b5cbced5",
                 Name = "Cà Phê Máy",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -120,7 +120,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "0e91fcb8-fa59-4a86-9af9-e608d3175caa",
+                CategoryID = "0e91fcb8-fa59-4a86-9af9-e608d3175caa",
                 Name = "Cold Brew",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -128,7 +128,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
+                CategoryID = "4047a9ea-36a5-4b6b-a293-e3a914281736",
                 Name = "Trà trái cây",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -136,7 +136,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
+                CategoryID = "6a53708b-87bc-4b17-8fea-2a7bb856ba9b",
                 Name = "Trà sữa Macchiato",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -144,7 +144,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
+                CategoryID = "5922b0dc-51ef-48de-9d9f-48bfff9c2552",
                 Name = "Đá xay",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -152,7 +152,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "134aac36-958e-4a30-9887-85996c2a9771",
+                CategoryID = "134aac36-958e-4a30-9887-85996c2a9771",
                 Name = "Matcha - Sô cô la",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -160,7 +160,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
+                CategoryID = "44e2f99f-cd95-4b89-a3d3-553cf86ff173",
                 Name = "Bánh mặn",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -168,7 +168,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
+                CategoryID = "a93ba116-4a2c-4d0a-aa79-a7b37cd48cb8",
                 Name = "Bánh ngọt",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -176,7 +176,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "3b9db312-c2e6-4d71-b7f3-406c6182eb5d",
+                CategoryID = "3b9db312-c2e6-4d71-b7f3-406c6182eb5d",
                 Name = "Snack",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -184,7 +184,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
+                CategoryID = "2d79d339-660c-468b-9d40-ef62cc9a5baa",
                 Name = "Cà phê tại nhà",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -192,7 +192,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
+                CategoryID = "ea108c9e-ae7a-4e0f-a1d0-f7d14c079cff",
                 Name = "Trà tại nhà",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -200,7 +200,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
+                CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
                 Name = "Bộ sưu tập quà tặng",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -208,7 +208,7 @@ public static class Seed
             },
             new Category()
             {
-                ID = "4f0a40b1-b135-4f50-ba4c-8568e7d5e089",
+                CategoryID = "4f0a40b1-b135-4f50-ba4c-8568e7d5e089",
                 Name = "Combo",
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.Now,
@@ -224,19 +224,19 @@ public static class Seed
         {
             new Size()
             {
-                ID = Guid.NewGuid().ToString(),
+                SizeID = Guid.NewGuid().ToString(),
                 Name = "S",
                 SubPrice = 0,
             },
             new Size()
             {
-                ID = Guid.NewGuid().ToString(),
+                SizeID = Guid.NewGuid().ToString(),
                 Name = "M",
                 SubPrice = 6000,
             },
             new Size()
             {
-                ID = Guid.NewGuid().ToString(),
+                SizeID = Guid.NewGuid().ToString(),
                 Name = "S",
                 SubPrice = 10000,
             },
@@ -250,49 +250,49 @@ public static class Seed
         {
             new Topping()
             {
-                ID = Guid.NewGuid().ToString(),
+                ToppingID = Guid.NewGuid().ToString(),
                 Name = "Sen ngâm",
                 SubPrice = 10000,
             },
             new Topping()
             {
-                ID = Guid.NewGuid().ToString(),
+                ToppingID = Guid.NewGuid().ToString(),
                 Name = "Nhãn ngâm",
                 SubPrice = 10000,
             },
             new Topping()
             {
-                ID = Guid.NewGuid().ToString(),
+                ToppingID = Guid.NewGuid().ToString(),
                 Name = "Trân châu trắng",
                 SubPrice = 10000,
             },
             new Topping()
             {
-                ID = Guid.NewGuid().ToString(),
+                ToppingID = Guid.NewGuid().ToString(),
                 Name = "Trân châu trắng",
                 SubPrice = 10000,
             },
             new Topping()
             {
-                ID = Guid.NewGuid().ToString(),
+                ToppingID = Guid.NewGuid().ToString(),
                 Name = "Trân châu đen",
                 SubPrice = 10000,
             },
             new Topping()
             {
-                ID = Guid.NewGuid().ToString(),
+                ToppingID = Guid.NewGuid().ToString(),
                 Name = "Extra foam",
                 SubPrice = 10000,
             },
             new Topping()
             {
-                ID = Guid.NewGuid().ToString(),
+                ToppingID = Guid.NewGuid().ToString(),
                 Name = "Espresso",
                 SubPrice = 10000,
             },
             new Topping()
             {
-                ID = Guid.NewGuid().ToString(),
+                ToppingID = Guid.NewGuid().ToString(),
                 Name = "Sauce Caramel ",
                 SubPrice = 10000,
             },
@@ -306,7 +306,7 @@ public static class Seed
         {
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Latte Táo Lê Quế Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -322,7 +322,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Latte Táo Lê Quế Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -338,7 +338,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Latte Táo Lê Quế Chai Fresh 500ml",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -354,9 +354,8 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mocha Nóng",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
@@ -371,7 +370,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mocha Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -387,7 +386,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Espresso Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -403,7 +402,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Espresso Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -419,7 +418,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cappuccino Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -435,7 +434,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cappuccino Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -451,7 +450,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Americano Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -467,7 +466,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Latte Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -483,7 +482,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Caramel Macchiato Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -499,7 +498,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Caramel Macchiato Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -515,7 +514,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Latte Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -531,7 +530,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Americano Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -547,7 +546,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Bạc Sỉu Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -563,7 +562,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Bạc Sỉu Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -579,7 +578,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Đen Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -595,7 +594,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Đen Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -611,7 +610,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Sữa Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -627,7 +626,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Sữa Đá Chai Fresh 250ml",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -643,7 +642,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Sữa Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -659,7 +658,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cold Brew Sữa Tươi",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -675,7 +674,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cold Brew Truyền Thống",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -691,7 +690,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Dưa Đào Sung Túc",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -707,7 +706,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Sen Nhãn Sum Vầy",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -723,7 +722,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Long Nhãn Hạt Chia",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -739,7 +738,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Long Nhãn Hạt Chia Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -755,7 +754,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Hạt Sen Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -771,7 +770,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Hạt Sen Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -787,7 +786,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Đào Cam Sả Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -803,7 +802,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Đào Cam Sả Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -819,7 +818,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Đào Cam Sả Chai Fresh 500ml",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -835,7 +834,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Caramel Macchiato Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -851,7 +850,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Hồng Trà Latte Macchiato",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -867,7 +866,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Hồng Trà Sữa Nóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -883,7 +882,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Hồng Trà Sữa Trân Châu",
 
                 ProductType = ProductType.Drink,
@@ -903,7 +902,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Latte Táo Lê Quế Đá",
 
                 ProductType = ProductType.Drink,
@@ -923,7 +922,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Đen Macchiato",
 
                 ProductType = ProductType.Drink,
@@ -943,7 +942,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Sữa Mắc Ca Trân Châu Trắng",
 
                 ProductType = ProductType.Drink,
@@ -963,7 +962,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà sữa Masala Chai Nóng",
 
                 ProductType = ProductType.Drink,
@@ -983,7 +982,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà sữa Masala Chai Trân Châu Chai Fresh 500ml",
 
                 ProductType = ProductType.Drink,
@@ -1003,7 +1002,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà sữa Masala Chai Trân Châu Đá",
 
                 ProductType = ProductType.Drink,
@@ -1023,7 +1022,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Sữa Oolong Nướng Nóng",
 
                 ProductType = ProductType.Drink,
@@ -1043,7 +1042,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Sữa Oolong Nướng Trân Châu",
 
                 ProductType = ProductType.Drink,
@@ -1063,7 +1062,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà sữa Oolong Nướng Trân Châu Chai 500ml",
 
                 ProductType = ProductType.Drink,
@@ -1083,7 +1082,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Đá Xay",
 
                 ProductType = ProductType.Drink,
@@ -1103,7 +1102,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Chanh Sả Đá Xay",
 
                 ProductType = ProductType.Drink,
@@ -1120,7 +1119,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Chocolate Đá Xay",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1136,7 +1135,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cookie Đá Xay",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1152,7 +1151,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Đào Việt Quất Đá Xay",
 
                 ProductType = ProductType.Drink,
@@ -1169,7 +1168,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Matcha Đá Xay",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1185,7 +1184,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Sinh Tố Việt Quất",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1201,7 +1200,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Chocolate Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1217,7 +1216,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Chocolate Đá Xay",
 
                 ProductType = ProductType.Drink,
@@ -1237,7 +1236,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Chocolate Nóng",
 
                 ProductType = ProductType.Drink,
@@ -1257,7 +1256,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Matcha Latte Đá",
 
                 ProductType = ProductType.Drink,
@@ -1277,7 +1276,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Matcha Latte Nóng",
 
                 ProductType = ProductType.Drink,
@@ -1297,7 +1296,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Bánh Mì Que Pate",
 
                 ProductType = ProductType.Drink,
@@ -1317,7 +1316,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Bánh Mì Que Pate Cay",
 
                 ProductType = ProductType.Drink,
@@ -1337,7 +1336,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Bánh Mì Thịt Nguội",
 
                 ProductType = ProductType.Drink,
@@ -1357,7 +1356,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Chà Bông Phô Mai",
 
                 ProductType = ProductType.Drink,
@@ -1377,7 +1376,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Croissant Trứng Muối",
 
                 ProductType = ProductType.Drink,
@@ -1397,7 +1396,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mochi Kem Chocolate",
 
                 ProductType = ProductType.Drink,
@@ -1417,7 +1416,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mochi Kem Dừa Dứa",
 
                 ProductType = ProductType.Drink,
@@ -1437,7 +1436,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mochi Kem Matcha",
 
                 ProductType = ProductType.Drink,
@@ -1457,7 +1456,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mochi Kem Việt Quất",
 
                 ProductType = ProductType.Drink,
@@ -1477,7 +1476,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mochi Kem Xoài",
 
                 ProductType = ProductType.Drink,
@@ -1497,7 +1496,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mochi Kem Phúc Bồn Tử",
 
                 ProductType = ProductType.Drink,
@@ -1517,7 +1516,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mousse Gấu Chocolate",
 
                 ProductType = ProductType.Drink,
@@ -1537,7 +1536,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mousse Passion Cheese",
 
                 ProductType = ProductType.Drink,
@@ -1557,7 +1556,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mousse Red Velvet",
 
                 ProductType = ProductType.Drink,
@@ -1577,7 +1576,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mousse Tiramisu",
 
                 ProductType = ProductType.Drink,
@@ -1597,7 +1596,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Mít Sấy",
 
                 ProductType = ProductType.Drink,
@@ -1617,7 +1616,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Rang Xay Original 1 Túi 1KG",
 
                 ProductType = ProductType.Drink,
@@ -1637,7 +1636,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Rang Xay Original 1 250gr",
 
                 ProductType = ProductType.Drink,
@@ -1657,7 +1656,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Hòa Tan Đậm Vị Việt Túi 40x16G",
 
                 ProductType = ProductType.Drink,
@@ -1677,7 +1676,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Sữa Đá Hòa Tan Hộp 10 gói ",
 
                 ProductType = ProductType.Drink,
@@ -1697,7 +1696,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Sữa Đá Hòa Tan Đậm Vị Hộp 18 gói x 16gr",
 
                 ProductType = ProductType.Drink,
@@ -1717,7 +1716,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Sữa Đá Hòa Tan Túi 25 x 22gr",
 
                 ProductType = ProductType.Drink,
@@ -1737,7 +1736,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Rich Finish Gu Đậm Tinh Tế 350gr",
 
                 ProductType = ProductType.Drink,
@@ -1757,7 +1756,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Peak Flavor Hương Thơm Đỉnh Cao 350gr",
 
                 ProductType = ProductType.Drink,
@@ -1777,7 +1776,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà Phê Arabica",
 
                 ProductType = ProductType.Drink,
@@ -1797,7 +1796,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cà phê sữa đá pack 6 lon",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1813,7 +1812,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Thùng 24 Lon Cà Phê Sữa Đá",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1829,7 +1828,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Combo 3 Hộp Cà Phê Sữa Đá Hòa Tan Đậm Vị Hộp 18 gói x 16gr",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1848,7 +1847,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Combo 3 Hộp Cà Phê Sữa Đá Hòa Tan",
 
                 ProductType = ProductType.Drink,
@@ -1868,7 +1867,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Combo 2 Café Rang Xay Original 1 250gr",
 
                 ProductType = ProductType.Drink,
@@ -1888,7 +1887,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Giftset Trà Tearoma",
 
                 ProductType = ProductType.Drink,
@@ -1908,7 +1907,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Combo 3 hộp trà Lài túi lọc Tearoma",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1924,7 +1923,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Combo 3 hộp trà Oolong túi lọc Tearoma",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -1940,7 +1939,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Combo 3 hộp trà Đào túi lọc Tearoma",
 
                 ProductType = ProductType.Drink,
@@ -1960,7 +1959,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Combo 3 hộp trà Sen túi lọc Tearoma",
 
                 ProductType = ProductType.Drink,
@@ -1980,7 +1979,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Đào Túi Lọc Tearoma 20 x 2gr",
 
                 ProductType = ProductType.Drink,
@@ -2000,7 +1999,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Lài Túi Lọc Tearoma 20 x 2gr",
 
                 ProductType = ProductType.Drink,
@@ -2020,7 +2019,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Olong Túi Lọc Tearoma 20 x 2gr",
 
                 ProductType = ProductType.Drink,
@@ -2040,7 +2039,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Sen Túi Lọc Tearoma 20 x 2gr",
 
                 ProductType = ProductType.Drink,
@@ -2060,7 +2059,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Xanh Lá Tearoma 100gr",
 
                 ProductType = ProductType.Drink,
@@ -2080,7 +2079,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Sen Lá Tearoma 100gr",
 
                 ProductType = ProductType.Drink,
@@ -2100,7 +2099,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Oolong Lá Tearoma 100gr",
 
                 ProductType = ProductType.Drink,
@@ -2120,7 +2119,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Trà Lài Lá Tearoma 100gr",
 
                 ProductType = ProductType.Drink,
@@ -2140,7 +2139,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Bình Giữ Nhiệt Inox Trắng Đen 500ML",
 
                 ProductType = ProductType.Drink,
@@ -2160,7 +2159,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Bình Giữ Nhiệt Inox Xám Cam 473ML",
 
                 ProductType = ProductType.Drink,
@@ -2180,7 +2179,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Bộ Ống Hút Inox",
 
                 ProductType = ProductType.Drink,
@@ -2200,7 +2199,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cốc Sứ The Coffee House Gợn Sóng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -2216,7 +2215,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Cốc Sứ The Coffee House Sọc Ngang",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -2232,7 +2231,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Túi Canvan Đà Nẵng",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -2248,7 +2247,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Túi Canvan Hà Nội",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -2264,7 +2263,7 @@ public static class Seed
             },
             new Product()
             {
-                ID = Guid.NewGuid().ToString(),
+                ProductID = Guid.NewGuid().ToString(),
                 Name = "Túi Canvan Trăng Nhà Sung Túc",
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
@@ -2285,20 +2284,20 @@ public static class Seed
             context.Products.Add(item);
             context.SizeInProducts.Add(new SizeInProduct()
             {
-                ProductID = item.ID,
-                SizeID = sizes[0].ID,
+                ProductID = item.ProductID,
+                SizeID = sizes[0].SizeID,
             });
-            if (item.CategoryID == categories[3].ID
-                || item.CategoryID == categories[4].ID
-                || item.CategoryID == categories[5].ID
-                || item.CategoryID == categories[6].ID)
+            if (item.CategoryID == categories[3].CategoryID
+                || item.CategoryID == categories[4].CategoryID
+                || item.CategoryID == categories[5].CategoryID
+                || item.CategoryID == categories[6].CategoryID)
             {
                 for (var i = 1; i < sizes.Length; i++)
                 {
                     context.SizeInProducts.Add(new SizeInProduct()
                     {
-                        ProductID = item.ID,
-                        SizeID = sizes[i].ID,
+                        ProductID = item.ProductID,
+                        SizeID = sizes[i].SizeID,
                     });
                 }
 
@@ -2306,8 +2305,8 @@ public static class Seed
                 {
                     context.ToppingInProducts.Add(new ToppingInProduct()
                     {
-                        ProductID = item.ID,
-                        ToppingID = topping.ID,
+                        ProductID = item.ProductID,
+                        ToppingID = topping.ToppingID,
                     });
                 }
             }
@@ -2317,7 +2316,7 @@ public static class Seed
         {
             new Branch()
             {
-                ID = Guid.NewGuid().ToString(),
+                BranchID = Guid.NewGuid().ToString(),
                 Name = "HP Đỗ Nhuận",
                 City = "Hải phòng",
                 Email = "thecoffeehouse@coffee.com",
@@ -2338,7 +2337,7 @@ public static class Seed
             },
             new Branch()
             {
-                ID = Guid.NewGuid().ToString(),
+                BranchID = Guid.NewGuid().ToString(),
                 Name = "HP Lạch Tray",
                 City = "Hải phòng",
                 Email = "thecoffeehouse@coffee.com",
@@ -2359,7 +2358,7 @@ public static class Seed
             },
             new Branch()
             {
-                ID = Guid.NewGuid().ToString(),
+                BranchID = Guid.NewGuid().ToString(),
                 Name = "HP Cát Bi Plaza",
                 City = "Hải phòng",
                 Email = "thecoffeehouse@coffee.com",
@@ -2380,7 +2379,7 @@ public static class Seed
             },
             new Branch()
             {
-                ID = Guid.NewGuid().ToString(),
+                BranchID = Guid.NewGuid().ToString(),
                 Name = "HP Aeon Mall Lê Chân",
                 City = "Hải phòng",
                 Email = "thecoffeehouse@coffee.com",
@@ -2401,7 +2400,7 @@ public static class Seed
             },
             new Branch()
             {
-                ID = Guid.NewGuid().ToString(),
+                BranchID = Guid.NewGuid().ToString(),
                 Name = "HP Cầu Đất 2",
                 City = "Hải phòng",
                 Email = "thecoffeehouse@coffee.com",
@@ -2422,7 +2421,7 @@ public static class Seed
             },
             new Branch()
             {
-                ID = Guid.NewGuid().ToString(),
+                BranchID = Guid.NewGuid().ToString(),
                 Name = "HP Trần Quang Khải",
                 City = "Hải phòng",
                 Email = "thecoffeehouse@coffee.com",
@@ -2443,7 +2442,7 @@ public static class Seed
             },
             new Branch()
             {
-                ID = Guid.NewGuid().ToString(),
+                BranchID = Guid.NewGuid().ToString(),
                 Name = "HP Trần Phú",
                 City = "Hải phòng",
                 Email = "thecoffeehouse@coffee.com",
@@ -2464,7 +2463,7 @@ public static class Seed
             },
             new Branch()
             {
-                ID = Guid.NewGuid().ToString(),
+                BranchID = Guid.NewGuid().ToString(),
                 Name = "HP Điện Biên Phủ",
                 City = "Hải phòng",
                 Email = "thecoffeehouse@coffee.com",
@@ -2493,7 +2492,7 @@ public static class Seed
         {
             new Bean()
             {
-                ID = Guid.NewGuid().ToString(),
+                BeanID = Guid.NewGuid().ToString(),
                 Name = "Thành viên mới",
                 Code = BeanType.New,
                 MinPoint = 0,
@@ -2507,7 +2506,7 @@ public static class Seed
             },
             new Bean()
             {
-                ID = Guid.NewGuid().ToString(),
+                BeanID = Guid.NewGuid().ToString(),
                 Name = "Thành viên Đồng",
                 Code = BeanType.Bronze,
                 MinPoint = 100,
@@ -2521,7 +2520,7 @@ public static class Seed
             },
             new Bean()
             {
-                ID = Guid.NewGuid().ToString(),
+                BeanID = Guid.NewGuid().ToString(),
                 Name = "Thành viên Bạc",
                 Code = BeanType.Silver,
                 MinPoint = 199,
@@ -2535,7 +2534,7 @@ public static class Seed
             },
             new Bean()
             {
-                ID = Guid.NewGuid().ToString(),
+                BeanID = Guid.NewGuid().ToString(),
                 Name = "Thành viên vàng",
                 Code = BeanType.Gold,
                 MinPoint = 500,
@@ -2549,7 +2548,7 @@ public static class Seed
             },
             new Bean()
             {
-                ID = Guid.NewGuid().ToString(),
+                BeanID = Guid.NewGuid().ToString(),
                 Name = "Thành viên kim cương",
                 Code = BeanType.Diamond,
                 MinPoint = 3000,
@@ -2571,7 +2570,7 @@ public static class Seed
         {
             var customer = new Customer()
             {
-                ID = Guid.NewGuid().ToString(),
+                CustomerID = Guid.NewGuid().ToString(),
                 FullName = "Khách hàng " + i,
                 Phone = "0965654078",
                 Email = "custormer" + i + "@gmail.com",
@@ -2580,7 +2579,7 @@ public static class Seed
                 DateOfBirth = DateTime.Now,
                 MemberID = "CODEKH" + i,
                 Point = 0,
-                BeanID = memberTypes[0].ID,
+                BeanID = memberTypes[0].BeanID,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
             };
@@ -2591,7 +2590,7 @@ public static class Seed
         {
             new MaterialType()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialTypeID = Guid.NewGuid().ToString(),
                 Name = "Đồ khô",
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
@@ -2599,7 +2598,7 @@ public static class Seed
             },
             new MaterialType()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialTypeID = Guid.NewGuid().ToString(),
                 Name = "Đồ tươi",
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
@@ -2615,287 +2614,287 @@ public static class Seed
         {
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Cốc thuỷ tinh",
                 UpdateDate = DateTime.Now,
                 LinkImage = "",
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Thìa nhựa",
                 UpdateDate = DateTime.Now,
                 LinkImage = "",
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Ống hút",
                 UpdateDate = DateTime.Now,
                 LinkImage = "",
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Túi mang đi",
                 UpdateDate = DateTime.Now,
                 LinkImage = "",
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Cà Phê Rang Xay Original",
                 UpdateDate = DateTime.Now,
                 LinkImage = "",
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Bột cafe",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Sữa đặc",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Đường",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Đá viên, Đá xay",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Sữa tươi không đường",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Trà lài",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Trà sen",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Kem béo",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Bột cacao",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Bột Onemix",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Bột socola",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Kem Rich",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Kem Base",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Kem Van",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Bột Matcha",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Sốt socola",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Sốt caramel",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Sữa chua không đườn",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Siro các vị đào",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Siro các vị việt quất",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Siro các vị dâu",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Siro các vị khoai môn",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Siro các vị táo xanh",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Siro các vị xoài",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Siro các vị nho đen",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
             new Material()
             {
-                ID = Guid.NewGuid().ToString(),
+                MaterialID = Guid.NewGuid().ToString(),
                 Description = "Mặc định",
                 CreateDate = DateTime.Now,
                 Name = "Mứt đào",
                 UpdateDate = DateTime.Now,
-                MaterialTypeID = materialTypes[0].ID,
+                MaterialTypeID = materialTypes[0].MaterialTypeID,
             },
         };
         foreach (var item in materials)
@@ -2907,7 +2906,7 @@ public static class Seed
         {
             new Promotion()
             {
-                ID = Guid.NewGuid().ToString(),
+                PromotionID = Guid.NewGuid().ToString(),
                 Name = "Giảm giá 10K cho hoá đơn lớn hơn 100K",
                 Code = "GIAM10K",
                 StartDate = DateTime.Now,
@@ -2935,27 +2934,27 @@ public static class Seed
             {
                 new RecipeDetail()
                 {
-                    ProductID = item.ID,
-                    MaterialID = materials[rnd.Next(0, 10)].ID,
-                    SizeID = sizes[0].ID,
+                    ProductID = item.ProductID,
+                    MaterialID = materials[rnd.Next(0, 10)].MaterialID,
+                    SizeID = sizes[0].SizeID,
                     Weight = 30,
                     Unit = "Gam",
                     StandardUnitType = StandardUnitType.g,
                 },
                 new RecipeDetail()
                 {
-                    ProductID = item.ID,
-                    MaterialID = materials[rnd.Next(11, 20)].ID,
-                    SizeID = sizes[0].ID,
+                    ProductID = item.ProductID,
+                    MaterialID = materials[rnd.Next(11, 20)].MaterialID,
+                    SizeID = sizes[0].SizeID,
                     Weight = 20,
                     Unit = "Mililit",
                     StandardUnitType = StandardUnitType.ml,
                 },
                 new RecipeDetail()
                 {
-                    ProductID = item.ID,
-                    MaterialID = materials[rnd.Next(21, 30)].ID,
-                    SizeID = sizes[0].ID,
+                    ProductID = item.ProductID,
+                    MaterialID = materials[rnd.Next(21, 30)].MaterialID,
+                    SizeID = sizes[0].SizeID,
                     Weight = 100,
                     Unit = "Mililit",
                     StandardUnitType = StandardUnitType.ml,
@@ -2966,7 +2965,7 @@ public static class Seed
 
         var order = new Order()
         {
-            ID = Guid.NewGuid().ToString(),
+            OrderID = Guid.NewGuid().ToString(),
             TableNum = 15,
             Cashier = "Nam Phuong",
             Code = "ORDER.N0" + DateTime.Now.Minute + "-" + DateTime.Now.Day,
@@ -2985,27 +2984,27 @@ public static class Seed
             UserCreateID = null,
             PaymentType = PaymentType.Credit,
             CustomerID = null,
-            BranchID = branches[0].ID,
+            BranchID = branches[0].BranchID,
         };
         context.Orders.Add(order);
         var orderDetail = new OrderDetail()
         {
-            OrderID = order.ID,
+            OrderID = order.OrderID,
             Quantity = 1,
             PriceProduct = 58000,
             Description = "Mô tả",
             SugarType = SugarType.OneHundredPercent,
             IcedType = IcedType.OneHundredPercent,
             PriceSize = 0,
-            SizeID = sizes[0].ID,
-            ProductID = products[0].ID
+            SizeID = sizes[0].SizeID,
+            ProductID = products[0].ProductID
         };
         context.OrderDetails.Add(orderDetail);
         var orderToppingDetail = new OrderToppingDetail()
         {
-            ToppingID = toppings[0].ID,
-            OrderID = order.ID,
-            ProductID = products[0].ID,
+            ToppingID = toppings[0].ToppingID,
+            OrderID = order.OrderID,
+            ProductID = products[0].ProductID,
             OrderDetail = orderDetail,
             SubPrice = 10000,
             Name = toppings[0].Name,
@@ -3018,7 +3017,7 @@ public static class Seed
             int indexPro = rnd.Next(1, 100);
             var ordertemp = new Order()
             {
-                ID = Guid.NewGuid().ToString(),
+                OrderID = Guid.NewGuid().ToString(),
                 TableNum = i,
                 Cashier = i % 2 == 0 ? "Phuong" : "Long",
                 Code = "ORDER.N0"
@@ -3041,20 +3040,20 @@ public static class Seed
                 UserCreateID = null,
                 PaymentType = PaymentType.Credit,
                 CustomerID = null,
-                BranchID = branches[rnd.Next(1, 7)].ID,
+                BranchID = branches[rnd.Next(1, 7)].BranchID,
             };
             context.Orders.Add(ordertemp);
             var orderDetailTemp = new OrderDetail()
             {
-                OrderID = ordertemp.ID,
+                OrderID = ordertemp.OrderID,
                 Quantity = (i % 2 == 0 ? 1 : 2),
                 PriceProduct = products[indexPro].Price,
                 Description = "Mô tả",
                 SugarType = SugarType.OneHundredPercent,
                 IcedType = IcedType.OneHundredPercent,
                 PriceSize = sizes[i % 2].SubPrice,
-                SizeID = sizes[i % 2].ID,
-                ProductID = products[indexPro].ID
+                SizeID = sizes[i % 2].SizeID,
+                ProductID = products[indexPro].ProductID
             };
             context.OrderDetails.Add(orderDetailTemp);
         }
@@ -3064,10 +3063,10 @@ public static class Seed
             Random rnd = new Random();
             var report = new Report()
             {
-                ID = Guid.NewGuid().ToString(),
+                ReportID = Guid.NewGuid().ToString(),
                 Address = branches[rnd.Next(0, 7)].Adderss,
                 Name = "Bao cao",
-                BranchID = branches[rnd.Next(0, 7)].ID,
+                BranchID = branches[rnd.Next(0, 7)].BranchID,
                 Code = "N0."
                        + (new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28))).Minute
                        + "-"
@@ -3088,14 +3087,14 @@ public static class Seed
             context.Reports.Add(report);
             var reportDetail = new ReportDetail()
             {
-                ReportID = report.ID,
+                ReportID = report.ReportID,
                 BeginDate = DateTime.Now,
                 Description = "Moo ta",
                 ExpirationDate = DateTime.Now.AddDays(100),
                 IsDelete = false,
                 Mass = 10,
-                MaterialID = materials[rnd.Next(0, 30)].ID,
-                MeasureID = units[0].ID,
+                MaterialID = materials[rnd.Next(0, 30)].MaterialID,
+                MeasureID = units[0].MeasureID,
                 Status = 1,
                 StandardMass = 1000,
                 PriceOfUnit = 10000,
@@ -3151,7 +3150,7 @@ public static class Seed
             FirstName = "Nguyễn",
             LastName = "Phương",
             DateOfBirth = new DateTime(2000, 8, 17),
-            BranchID = branches[0].ID,
+            BranchID = branches[0].BranchID,
             Status = Status.Active,
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
@@ -3169,7 +3168,7 @@ public static class Seed
             FirstName = "Vũ",
             LastName = "Long",
             DateOfBirth = new DateTime(2000, 8, 17),
-            BranchID = branches[0].ID,
+            BranchID = branches[0].BranchID,
             Status = Status.Active,
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
@@ -3216,7 +3215,7 @@ public static class Seed
                 FirstName = "Người dùng",
                 LastName = i.ToString(),
                 DateOfBirth = new DateTime(1900 + i, 1, 1),
-                BranchID = branches[(new Random()).Next(0, 7)].ID,
+                BranchID = branches[(new Random()).Next(0, 7)].BranchID,
                 Status = Status.Active,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,

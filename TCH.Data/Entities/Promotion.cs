@@ -6,7 +6,7 @@ namespace TCH.Data.Entities;
 public class Promotion
 {
     [Key]
-    public string ID { get; set; }
+    public string PromotionID { get; set; }
     public string Code { get; set; }
     public string Name { get; set; }
     public string? Image { get; set; }

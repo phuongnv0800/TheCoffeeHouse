@@ -4,7 +4,7 @@ namespace TCH.Data.Entities;
 
 public class UnitConversion
 {
-    public string ID { get; set; }
+    public string UnitConversionID { get; set; }
     public string SourceUnitID { get; set; }//đơn vị nguồn
 
     public string DestinationUnitID { get; set; }//đơn vị đích

@@ -38,7 +38,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
         var memberType = await _context.Beans.FirstOrDefaultAsync(x=>x.Code == BeanType.New);
         var customer = new Customer()
         {
-            ID = Guid.NewGuid().ToString(),
+            CustomerID = Guid.NewGuid().ToString(),
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
             FullName = request.FullName,
@@ -49,7 +49,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
             DateOfBirth  = request.DateOfBirth,
             MemberID = request.Phone,
             Point  = 0,
-            BeanID = memberType!.ID,
+            BeanID = memberType!.BeanID,
         };
         if (request.File != null)
         {
@@ -84,7 +84,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
     }
     public async Task<Respond<Customer>> GetByID(string id)
     {
-        var result = await _context.Customers.FirstOrDefaultAsync(x => x.ID == id);
+        var result = await _context.Customers.FirstOrDefaultAsync(x => x.CustomerID == id);
         if (result == null)
             return new Respond<Customer>()
             {
@@ -177,7 +177,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
     {
         var customer = new Bean()
         {
-            ID = Guid.NewGuid().ToString(),
+            BeanID = Guid.NewGuid().ToString(),
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
             Name = request.Name,
@@ -217,7 +217,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
     }
     public async Task<Respond<Bean>> GetMemberTypeByID(string id)
     {
-        var result = await _context.Beans.FirstOrDefaultAsync(x => x.ID == id);
+        var result = await _context.Beans.FirstOrDefaultAsync(x => x.BeanID == id);
         if (result == null)
             return new Respond<Bean>()
             {

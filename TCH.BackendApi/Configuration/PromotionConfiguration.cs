@@ -9,7 +9,7 @@ public class PromotionConfiguration : IEntityTypeConfiguration<Promotion>
     public void Configure(EntityTypeBuilder<Promotion> builder)
     {
         builder.ToTable("Promotions");
-        builder.HasKey(x => x.ID);
+        builder.HasKey(x => x.PromotionID);
         builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
         builder.Property(x => x.Description);
         builder.Property(x => x.Quantity).IsRequired();

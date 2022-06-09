@@ -2,7 +2,7 @@
 
 public class ProductImage
 {
-    public string ID { get; set; }
+    public string ProductImageID { get; set; }
     public string Name { get; set; }
     public string ImagePath { get; set; }
     public bool IsShowHome { get; set; }

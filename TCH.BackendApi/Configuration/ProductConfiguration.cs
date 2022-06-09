@@ -9,7 +9,7 @@ namespace TCH.BackendApi.Configuration
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.ToTable("Products");
-            builder.HasKey(x => x.ID);
+            builder.HasKey(x => x.ProductID);
             builder.Property(x => x.Price).IsRequired().HasColumnType("decimal(18,2)");
             builder.Property(x=>x.Name).IsRequired();
             builder.HasOne(x => x.Category).WithMany(x => x.Products).HasForeignKey(y => y.CategoryID);

@@ -6,7 +6,7 @@ namespace TCH.Data.Entities;
 public class Product
 {
     [Key]
-    public string ID { get; set; }
+    public string ProductID { get; set; }
     public string Name { get; set; }
     public ProductType ProductType { get; set; } = ProductType.Drink;
     public DateTime CreateDate { get; set; }

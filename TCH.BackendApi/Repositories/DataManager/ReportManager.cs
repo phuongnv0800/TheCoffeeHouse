@@ -37,7 +37,7 @@ public class ReportManager : IReportRepository, IDisposable
     {
         var export = new Report()
         {
-            ID = Guid.NewGuid().ToString(),
+            ReportID = Guid.NewGuid().ToString(),
             CreateDate = DateTime.Now,
             Supplier = request.Supplier,
             StockName = request.StockName,
@@ -56,7 +56,10 @@ public class ReportManager : IReportRepository, IDisposable
             UserCreateID = _userId,
         };
         await _context.Reports.AddAsync(export);
-        var stockDetails = await _context.StockMaterials.Where(x => x.BranchID == request.BranchID).ToListAsync();
+        var stockDetails = await _context
+            .StockMaterials
+            .Where(x => x.BranchID == request.BranchID)
+            .ToListAsync();
         if (stockDetails == null)
         {
             return new MessageResult()
@@ -95,7 +98,7 @@ public class ReportManager : IReportRepository, IDisposable
 
             var exportMaterial = new ReportDetail()
             {
-                ReportID = export.ID,
+                ReportID = export.ReportID,
                 MaterialID = item.MaterialID,
                 BeginDate = item.BeginDate,
                 ExpirationDate = item.ExpirationDate,
@@ -125,7 +128,7 @@ public class ReportManager : IReportRepository, IDisposable
     {
         var report = new Report()
         {
-            ID = Guid.NewGuid().ToString(),
+            ReportID = Guid.NewGuid().ToString(),
             CreateDate = DateTime.Now,
             Supplier = request.Supplier,
             StockName = request.StockName,
@@ -201,7 +204,7 @@ public class ReportManager : IReportRepository, IDisposable
 
             var exportMaterial = new ReportDetail()
             {
-                ReportID = report.ID,
+                ReportID = report.ReportID,
                 MaterialID = item.MaterialID,
                 BeginDate = item.BeginDate,
                 ExpirationDate = item.ExpirationDate,
@@ -231,7 +234,7 @@ public class ReportManager : IReportRepository, IDisposable
     {
         var report = new Report()
         {
-            ID = Guid.NewGuid().ToString(),
+            ReportID = Guid.NewGuid().ToString(),
             CreateDate = DateTime.Now,
             Supplier = request.Supplier,
             StockName = request.StockName,
@@ -290,7 +293,7 @@ public class ReportManager : IReportRepository, IDisposable
 
             var exportMaterial = new ReportDetail()
             {
-                ReportID = report.ID,
+                ReportID = report.ReportID,
                 MaterialID = item.MaterialID,
                 BeginDate = item.BeginDate,
                 ExpirationDate = item.ExpirationDate,
@@ -318,7 +321,7 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<MessageResult> DeleteExportReport(string id)
     {
-        var report = await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Export);
+        var report = await _context.Reports.FirstOrDefaultAsync(x => x.ReportID == id && x.ReportType == ReportType.Export);
         if (report == null)
         {
             return new MessageResult()
@@ -341,7 +344,7 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<MessageResult> DeleteImportReport(string id)
     {
-        var report = await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Import);
+        var report = await _context.Reports.FirstOrDefaultAsync(x => x.ReportID == id && x.ReportType == ReportType.Import);
         if (report == null)
         {
             return new MessageResult()
@@ -365,7 +368,7 @@ public class ReportManager : IReportRepository, IDisposable
     public async Task<MessageResult> DeleteLiquidationReport(string id)
     {
         var report =
-            await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Liquidation);
+            await _context.Reports.FirstOrDefaultAsync(x => x.ReportID == id && x.ReportType == ReportType.Liquidation);
         if (report == null)
         {
             return new MessageResult()
@@ -1056,7 +1059,7 @@ public class ReportManager : IReportRepository, IDisposable
             .ThenInclude(x => x.Material)
             .Include(x => x.ReportDetails)
             .ThenInclude(x => x.Measure)
-            .FirstOrDefaultAsync(x => x.ReportType == ReportType.Import && x.ID == id);
+            .FirstOrDefaultAsync(x => x.ReportType == ReportType.Import && x.ReportID == id);
         if (report == null)
         {
             return null;
@@ -1148,7 +1151,7 @@ public class ReportManager : IReportRepository, IDisposable
             .ThenInclude(x => x.Material)
             .Include(x => x.ReportDetails)
             .ThenInclude(x => x.Measure)
-            .FirstOrDefaultAsync(x => x.ReportType == ReportType.Liquidation && x.ID == id);
+            .FirstOrDefaultAsync(x => x.ReportType == ReportType.Liquidation && x.ReportID == id);
         if (report == null)
         {
             return null;
@@ -1239,7 +1242,7 @@ public class ReportManager : IReportRepository, IDisposable
             .ThenInclude(x => x.Material)
             .Include(x => x.ReportDetails)
             .ThenInclude(x => x.Measure)
-            .FirstOrDefaultAsync(x => x.ReportType == ReportType.Export && x.ID == id);
+            .FirstOrDefaultAsync(x => x.ReportType == ReportType.Export && x.ReportID == id);
         if (report == null)
         {
             return null;
@@ -1496,7 +1499,8 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<Respond<Report>> GetExportReportByID(string id)
     {
-        var result = await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Export);
+        var result = await _context.Reports
+            .FirstOrDefaultAsync(x => x.ReportID == id && x.ReportType == ReportType.Export);
         if (result == null)
             return new Respond<Report>()
             {
@@ -1514,7 +1518,8 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<Respond<Report>> GetImportReportByID(string id)
     {
-        var result = await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Import);
+        var result = await _context.Reports
+            .FirstOrDefaultAsync(x => x.ReportID == id && x.ReportType == ReportType.Import);
         if (result == null)
             return new Respond<Report>()
             {
@@ -1533,7 +1538,8 @@ public class ReportManager : IReportRepository, IDisposable
     public async Task<Respond<Report>> GetLiquidationReportByID(string id)
     {
         var result =
-            await _context.Reports.FirstOrDefaultAsync(x => x.ID == id && x.ReportType == ReportType.Liquidation);
+            await _context.Reports
+                .FirstOrDefaultAsync(x => x.ReportID == id && x.ReportType == ReportType.Liquidation);
         if (result == null)
             return new Respond<Report>()
             {
