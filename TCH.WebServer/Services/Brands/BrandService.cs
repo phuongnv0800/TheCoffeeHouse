@@ -14,6 +14,7 @@ namespace TCH.WebServer.Services.Brands
         Task<ResponseLogin<Branch>> GetBranchById(string id);
         Task<ResponseLogin<Branch>> Update(MultipartFormDataContent branch);
         Task DeleteBranch(string id);
+        Task<ResponseLogin<PagedList<Branch>>> GetAll();
     }
     public class BrandService: IBrandService
     {
@@ -99,6 +100,15 @@ namespace TCH.WebServer.Services.Brands
             if (response.Result != 1)
             {
                 return null;
+            }
+            return response;
+        }
+        public async Task<ResponseLogin<PagedList<Branch>>> GetAll()
+        {
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Branch>>>("/api/Branchs");
+            if (response.Result != 1)
+            {
+                return new();
             }
             return response;
         }

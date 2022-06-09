@@ -30,7 +30,7 @@ public class RegisterRequest
 
     public string Address { get; set; }
 
-    public IFormFile AvatarFile { get; set; }
+    public IFormFile? AvatarFile { get; set; }
     
     public string branchID { get; set; }
     

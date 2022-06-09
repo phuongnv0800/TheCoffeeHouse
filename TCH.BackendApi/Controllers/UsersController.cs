@@ -27,11 +27,7 @@ public class UsersController : ControllerBase
     {
         try
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             var result = await _repository.Authenicate(request);
-            if (result.Result != 1)
-                return BadRequest(result);
             return Ok(result);
         }
         catch (CustomException e)
@@ -48,16 +44,14 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("create")]
+    [Consumes("multipart/form-data")]//nhận kiểu dữ liệu truyền lên là form data
     [Authorize(Roles = Permission.Admin + "," + Permission.Branch + "," + Permission.Manage)]
     public async Task<IActionResult> Register([FromForm] RegisterRequest request)
     {
         try
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            
             var result = await _repository.Register(request);
-            if (result.Result != 1)
-                return BadRequest(result);
             return Ok(result);
         }
         catch (CustomException e)
@@ -79,11 +73,8 @@ public class UsersController : ControllerBase
     {
         try
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             var result = await _repository.LockUser(id:id);
-            if (result.Result != 1)
-                return BadRequest(result);
+            
             return Ok(result);
         }
         catch (CustomException e)
@@ -149,13 +140,7 @@ public class UsersController : ControllerBase
     {
         try
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             var result = await _repository.Update(id, request);
-            if (result.Result != 1)
-            {
-                return BadRequest(result);
-            }
             return Ok(result);
         }
         catch (CustomException e)
@@ -254,14 +239,7 @@ public class UsersController : ControllerBase
     {
         try
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             var result = await _repository.RoleAssign(id, request);
-            if (result.Result != 1)
-            {
-                return BadRequest(result);
-            }
             return Ok(result);
         }
         catch (CustomException e)
@@ -281,11 +259,7 @@ public class UsersController : ControllerBase
     {
         try
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             var result = await _repository.ChangePasword(req: request);
-
-
             return Ok(result);
         }
         catch (CustomException e)
