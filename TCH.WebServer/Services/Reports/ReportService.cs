@@ -384,19 +384,35 @@ namespace TCH.WebServer.Services.Reports
             return response;
         }
 
-        public Task<ResponseLogin<Report>> GetExportnById(string id)
+        public async Task<ResponseLogin<Report>> GetExportnById(string id)
         {
-            throw new NotImplementedException();
+            
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<Report>>($"/api/Reports/export/{id}");
+            if (response.Result != 1)
+            {
+                return null;
+            }
+            return response;
         }
 
-        public Task<ResponseLogin<Report>> GetImportnById(string id)
+        public async Task<ResponseLogin<Report>> GetImportnById(string id)
         {
-            throw new NotImplementedException();
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<Report>>($"/api/Reports/import/{id}");
+            if (response.Result != 1)
+            {
+                return null;
+            }
+            return response;
         }
 
-        public Task<ResponseLogin<Report>> GetLiquidById(string id)
+        public async Task<ResponseLogin<Report>> GetLiquidById(string id)
         {
-            throw new NotImplementedException();
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<Report>>($"/api/Reports/liquid/{id}");
+            if (response.Result != 1)
+            {
+                return null;
+            }
+            return response;
         }
 
         public async Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDay(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate) 
