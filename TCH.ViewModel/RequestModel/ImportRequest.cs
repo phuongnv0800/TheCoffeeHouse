@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using TCH.Utilities.Enum;
+﻿using TCH.ViewModel.SubModels;
 
-namespace TCH.ViewModel.SubModels;
+namespace TCH.ViewModel.RequestModel;
 
 public class ImportRequest
 {
@@ -19,5 +18,5 @@ public class ImportRequest
     public double TotalAmount { get; set; }= 0;
     public string BranchID { get; set; }= "";
 
-    public List<ImportDetail> ReportDetails { get; set; } = new List<ImportDetail>();
+    public List<ImportDetail> ReportDetails { get; set; } = new ();
 }

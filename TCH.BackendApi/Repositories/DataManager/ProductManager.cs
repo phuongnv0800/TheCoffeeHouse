@@ -11,6 +11,7 @@ using TCH.Utilities.Searchs;
 using AutoMapper;
 using TCH.Utilities.Claims;
 using TCH.Utilities.Enum;
+using TCH.ViewModel.RequestModel;
 
 namespace TCH.BackendApi.Repositories.DataManager;
 

@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using TCH.Data.Entities;
+using TCH.ViewModel.RequestModel;
 using TCH.ViewModel.SubModels;
 
 namespace TCH.WebServer.GbParameter

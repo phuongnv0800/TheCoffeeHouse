@@ -1,6 +1,7 @@
 ﻿using TCH.Utilities.Enum;
+using TCH.ViewModel.SubModels;
 
-namespace TCH.ViewModel.SubModels;
+namespace TCH.ViewModel.RequestModel;
 
 public class OrderRequest
 {

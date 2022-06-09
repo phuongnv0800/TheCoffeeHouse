@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using TCH.Utilities.Enum;
 
-namespace TCH.ViewModel.SubModels;
+namespace TCH.ViewModel.RequestModel;
 
 public class ProductRequest
 {

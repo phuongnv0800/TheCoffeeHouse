@@ -1,4 +1,6 @@
-﻿namespace TCH.ViewModel.SubModels;
+﻿using TCH.ViewModel.SubModels;
+
+namespace TCH.ViewModel.RequestModel;
 
 public class ExportRequest
 {

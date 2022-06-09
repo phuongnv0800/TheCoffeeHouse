@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using TCH.Utilities.Enum;
+using TCH.ViewModel.SubModels;
 
-namespace TCH.ViewModel.SubModels;
+namespace TCH.ViewModel.RequestModel;
 
 public class PromotionRequest
 {

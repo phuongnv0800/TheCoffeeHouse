@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Text;
 using System.Globalization;
+using TCH.ViewModel.RequestModel;
 
 namespace TCH.WebServer.Services.Orders
 {

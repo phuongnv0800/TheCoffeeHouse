@@ -12,6 +12,7 @@ using TCH.Utilities.Enum;
 using TCH.Utilities.Paginations;
 using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;
+using TCH.ViewModel.RequestModel;
 using TCH.ViewModel.SubModels;
 
 namespace TCH.BackendApi.Repositories.DataManager;
@@ -631,7 +632,7 @@ public class ReportManager : IReportRepository, IDisposable
             worksheet.Cells["I4"].Value = "Tổng giá trị";
             worksheet.Cells["J4"].Value = "Tên người thanh lý";
             worksheet.Cells["K4"].Value = "Vai trò";
-            worksheet.Cells["L4"].Value = "Giá trị khoi phục";
+            worksheet.Cells["L4"].Value = "Giá trị khôi phục";
             worksheet.Cells["A4:L4"].Style.Fill.PatternType = ExcelFillStyle.Solid;
             worksheet.Cells["A4:L4"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
             worksheet.Cells["A4:L4"].Style.Font.Bold = true;
@@ -684,8 +685,8 @@ public class ReportManager : IReportRepository, IDisposable
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) <= 0 &&
-                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) >= 0).ToList();
+                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) <= 0 &&
+                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) >= 0).ToList();
 
         var data = new List<Report>();
         if (request.IsPging)

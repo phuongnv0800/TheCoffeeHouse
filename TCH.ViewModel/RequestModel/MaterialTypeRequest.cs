@@ -1,4 +1,4 @@
-﻿namespace TCH.ViewModel.SubModels;
+﻿namespace TCH.ViewModel.RequestModel;
 
 public class MaterialTypeRequest
 {

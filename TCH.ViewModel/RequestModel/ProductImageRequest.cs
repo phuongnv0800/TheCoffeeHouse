@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace TCH.ViewModel.SubModels;
+namespace TCH.ViewModel.RequestModel;
 
 public class ProductImageRequest
 {

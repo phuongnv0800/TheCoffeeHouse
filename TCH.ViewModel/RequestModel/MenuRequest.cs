@@ -1,8 +1,7 @@
-﻿namespace TCH.ViewModel.SubModels
+﻿namespace TCH.ViewModel.RequestModel;
+
+public class MenuRequest
 {
-    public class MenuRequest
-    {
-        public string Name { get; set; }
-        public string? Description { get; set; }
-    }
+    public string Name { get; set; }
+    public string? Description { get; set; }
 }
