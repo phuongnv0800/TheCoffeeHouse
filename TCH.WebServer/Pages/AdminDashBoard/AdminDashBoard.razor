@@ -8,6 +8,7 @@
 @using TCH.Data.Entities
 @using TCH.WebServer.Models
 @using TCH.WebServer.Models.Pagination
+@using TCH.WebServer.Services.Brands
 @using TCH.WebServer.Services.Orders
 @using TCH.WebServer.Services.Reports
 @using TCH.WebServer.Services.Users
@@ -19,6 +20,7 @@
 @inject NavigationManager navigationManager;
 @inject IToastService toastService
 @inject IJSRuntime jsRuntime;
+@inject IBrandService branchService
 @attribute [Authorize]
 
 <div class="page d-flex flex-row flex-column-fluid">
@@ -62,22 +64,35 @@
 
                 </div>
                 <div class="card-body pt-0">
-                    <RadzenChart>
-                        <RadzenLineSeries Smooth="@smooth" Data="@items" CategoryProperty="Date" Title="Tháng 6/2022" ValueProperty="Revenue">
-                            <RadzenMarkers MarkerType="MarkerType.Square" />
-                        </RadzenLineSeries>
+                    
+                        <RadzenChart>
+                            <RadzenLineSeries Smooth="@smooth" Data="@items" CategoryProperty="Date" Title="Tổng doanh thu" ValueProperty="Revenue">
+                                    <RadzenMarkers MarkerType="MarkerType.Square" />
+                                </RadzenLineSeries>
+                        @if (lists != null)
+                        {
+                            @foreach (var iteml in lists)
+                            {
+                                <RadzenLineSeries Smooth="@smooth" Data="@iteml.listItems" CategoryProperty="Date" Title="@iteml.branch.Name" ValueProperty="Revenue">
+                                    <RadzenMarkers MarkerType="MarkerType.Square" />
+                                </RadzenLineSeries>
+                            }
 
-                        <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}" />
-                        <RadzenValueAxis>
-                            @*<RadzenGridLines Visible="true" />*@
-                            <RadzenAxisTitle Text="Tổng doanh thu" />
-                        </RadzenValueAxis>
-                    </RadzenChart>
+                        }
+
+                            <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}"/>
+                            <RadzenValueAxis>
+                                @*<RadzenGridLines Visible="true" />*@
+                                <RadzenAxisTitle Text="Tổng doanh thu" />
+                            </RadzenValueAxis>
+                        </RadzenChart>
+                    
 
                     <div class="text-end d-flex mt-5">
                         <h1>Tổng doanh thu:  </h1>
                         <h1 class="text-primary ms-2">@Sum</h1>
                         <button class="btn btn-success ms-5" onclick="@(() => ExportExcel())">Xuất Excel</button>
+
                     </div>
                 </div>
             </div>
@@ -92,7 +107,7 @@
                                 </svg>
                             </span>
                             <EditForm Model="searchText" OnValidSubmit="SearchByText">
-                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm loại sản phẩm" />
+                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm chinh nhánh theo tên" />
                             </EditForm>
                         </div>
                     </div>
@@ -130,7 +145,7 @@
                                             <tr class="odd">
                                                 <td>
                                                     <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="1">
+                                                        <input type="checkbox" class="form-check-input" @onchange="@(e => { SelectBranch(@branch.ID, e.Value); })">
                                                     </div>
                                                 </td>
                                                 <td>
@@ -191,7 +206,14 @@
         public DateTime Date { get; set; }
         public double Revenue { get; set; }
     }
+    class ListDataItem
+    {
+        public Branch branch{ get; set; }
+
+        public List<DataItem> listItems { get; set; }
+    }
     private List<DataItem> items = new List<DataItem>();
+    private List<ListDataItem> lists = new List<ListDataItem>();
     public List<Order>? ProductsList = new List<Order>();
     public List<Branch>? BranchList = new List<Branch>();
     private string? token;
@@ -215,6 +237,8 @@
             navigationManager.NavigateTo("admin-dashboard");
             var response = await userServices.GetUserInfo();
             User = response.Data;
+            var res = await branchService.GetAllBranchs(searchText);
+            BranchList = res.Data.Items;
             //Sum = await orderService.GetSum(dateRequest.FromDate, dateRequest.ToDate);
             await Get(1);
             base.OnParametersSet();
@@ -251,6 +275,35 @@
             toastService.ShowError(ex.ToString());
         }
     }
+    public async Task GetChartBranch(string BranchId){
+        try{
+            List<DataItem> ite = new List<DataItem>();
+            var res = await branchService.GetBranchById(BranchId);
+            for (var date = dateRequest.FromDate.Date; date <= dateRequest.ToDate.Date; date = date.AddDays(1))
+            {
+                var respond = await orderService.GetAllOrdersInBranch(false, 10, 1, BranchId, User.Id, date, date);
+                List<Order> orders = respond.Data.Items;
+                double sum = orders.Sum(x => x.TotalAmount);
+                Sum += sum;
+                DataItem item = new DataItem
+                    {
+                        Date = date,
+                        Revenue = sum
+                    };
+                ite.Add(item);
+                
+            }
+            ListDataItem newlist = new ListDataItem{
+                    branch = res.Data,
+                    listItems = ite,
+                };
+                lists.Add(newlist);
+        }
+        catch (Exception ex)
+        {
+            toastService.ShowError("có lỗi");
+        }
+    }
     public async void Delete(string id)
     {
         await orderService.DeleteOrder(id);
@@ -276,6 +329,21 @@
         catch (Exception ex)
         {
             toastService.ShowError(ex.ToString());
+        }
+    }
+    public async Task SelectBranch(string toppingId, object checkedValue)
+    {
+        if  ((bool)checkedValue)
+
+        {
+            await GetChartBranch(toppingId);
+
+            StateHasChanged();
+        }
+        else
+        {
+            var selectBranch = lists.FirstOrDefault(x => x.branch.ID == toppingId);
+            lists.Remove(selectBranch);
         }
     }
 }
