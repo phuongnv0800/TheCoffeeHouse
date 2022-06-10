@@ -101,7 +101,7 @@ public class ProductsController : ControllerBase
     }
 
     //https://localhost:port/product/1
-    //[Authorize(Roles = Permission.Admin)]
+    [Authorize(Roles = Permission.Branch)]
     [HttpPost]
     [Consumes("multipart/form-data")]//nhận kiểu dữ liệu truyền lên là form data
     public async Task<IActionResult> Create([FromForm] ProductRequest request)
@@ -126,7 +126,28 @@ public class ProductsController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    [Authorize]
+    [HttpPut("update-available/{productID}")]
+    public async Task<IActionResult> Update(string productID, bool isAvailable)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _productRepository.UpdateAvailable(productID, isAvailable);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
 
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
     //[Authorize(Roles = Permission.Admin)]
     [HttpPut("{productID}")]
     public async Task<IActionResult> Update(string productID, [FromForm] ProductRequest request)

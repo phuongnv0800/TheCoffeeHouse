@@ -521,6 +521,26 @@ public class ProductManager : IProductRepository, IDisposable
             Message = "Cập nhật sản phẩm thành công",
         };
     }
+public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvailable)
+    {
+        var product = await _context.Products.FindAsync(productID);
+        if (product == null)
+            return new MessageResult()
+            {
+                Result = -1,
+                Message = "Không tìm thấy sản phẩm",
+            };
+
+        product.IsAvailable = IsAvailable;
+        _context.Products.Update(product);
+
+        await _context.SaveChangesAsync();
+        return new MessageResult()
+        {
+            Result = 1,
+            Message = "Cập nhật trạng thái sản phẩm thành công",
+        };
+    }
 
     public async Task<MessageResult> CategoryAssign(string productID, string categoryID)
     {
