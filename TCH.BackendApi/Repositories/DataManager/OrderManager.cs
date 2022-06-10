@@ -233,8 +233,8 @@ public class OrderManager : IOrderRepository, IDisposable
         //Invoice invoice = await _context.Invoices.Include(e => e.InvoiceDetails).FirstOrDefaultAsync(e => e.ID == invoiceID);
         var invoice = await _context.Orders
             .Include(x => x.OrderDetails)
-            .ThenInclude(x=>x.OrderToppingDetails)
-            .ThenInclude(x=>x.Topping)
+            .ThenInclude(x => x.OrderToppingDetails)
+            .ThenInclude(x => x.Topping)
             .FirstOrDefaultAsync(x => x.ID == invoiceID);
         if (invoice == null) throw new CustomException("Không tìm thấy thông tin hóa đơn");
         var branch = await _context.Branches.FirstOrDefaultAsync(x => x.ID == invoice.BranchID);
@@ -309,7 +309,7 @@ public class OrderManager : IOrderRepository, IDisposable
         var orderDetails = await _context
             .OrderDetails
             .Include(x => x.Size)
-            .Include(x=>x.OrderToppingDetails)
+            .Include(x => x.OrderToppingDetails)
             .Where(x => x.OrderID == invoice.ID)
             .ToListAsync();
         foreach (var item in invoice.OrderDetails)
@@ -434,25 +434,16 @@ public class OrderManager : IOrderRepository, IDisposable
 
     public async Task<Respond<object>> GetAllMoneyByBranchId(string branhID, Search request)
     {
-        var result = await _context.Orders.Include(x => x.OrderDetails).ThenInclude(e => e.OrderToppingDetails)
-            .Where(x => x.BranchID == branhID).ToListAsync();
+        var queryable = _context
+            .Orders
+            .Where(x => x.BranchID == branhID);
 
         if (request.StartDate != null && request.EndDate != null)
-            result = result.Where(x =>
-                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+            queryable = queryable.Where(x =>
+                x.CreateDate <= request.EndDate && x.CreateDate >= request.StartDate);
         //paging
-        int totalRow = result.Count();
-        var data = new List<Order>();
-        if (request.IsPging)
-        {
-            data = result
-                .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
-        }
-        else
-            data = result.ToList();
+        var moneyAll = await queryable.SumAsync(x => x.TotalAmount);
 
-        var moneyAll = data.Sum(x => x.TotalAmount);
         return new Respond<object>
         {
             Data = moneyAll,
@@ -461,30 +452,85 @@ public class OrderManager : IOrderRepository, IDisposable
         };
     }
 
-    public async Task<Respond<object>> GetAllMoney(Search request)
+    public async Task<Respond<MoneyByDay>> GetChartMoney(Search request)
     {
-        var result = await _context
+        var queryable = _context
             .Orders
-            .Include(x => x.OrderDetails)
-            .ThenInclude(e => e.OrderToppingDetails)
-            .ToListAsync();
+            .AsQueryable();
 
         if (request.StartDate != null && request.EndDate != null)
-            result = result.Where(x =>
-                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
-        //paging
-        int totalRow = result.Count();
-        var data = new List<Order>();
-        if (request.IsPging)
+            queryable = queryable.Where(x =>
+                request.EndDate != null
+                && x.CreateDate.Date <= request.EndDate.Value.Date
+                && request.StartDate != null
+                && x.CreateDate.Date >= request.StartDate.Value.Date);
+        var moneyByDayDetails = await queryable
+            .GroupBy(x => x.CreateDate.Date)
+            .Select(x => new MoneyByDayDetail()
+            {
+                DateTime = x.Key.Date,
+                Revenue = x.Sum(z => z.TotalAmount),
+            })
+            .ToListAsync();
+        var moneyByday = new MoneyByDay()
         {
-            data = result
-                .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
-        }
-        else
-            data = result.ToList();
+            MoneyByDayDetails = moneyByDayDetails,
+            Branch = null,
+            TotalAmount = moneyByDayDetails.Sum(x => x.Revenue),
+        };
 
-        var moneyAll = data.Sum(x => x.TotalAmount);
+        return new Respond<MoneyByDay>
+        {
+            Data = moneyByday,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+
+    public async Task<Respond<MoneyByDay>> GetChartMoneyByBranchId(string branhID, Search request)
+    {
+        var queryable = _context
+            .Orders
+            .Where(x => x.BranchID == branhID);
+
+        if (request.StartDate != null && request.EndDate != null)
+            queryable = queryable.Where(x =>
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date &&
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date);
+        var moneyByDayDetails = await queryable
+            .GroupBy(x => x.CreateDate.Date)
+            .Select(x => new MoneyByDayDetail()
+            {
+                DateTime = x.Key.Date,
+                Revenue = x.Sum(z => z.TotalAmount),
+            })
+            .ToListAsync();
+        var branch = await _context.Branches.FindAsync(branhID);
+        var moneyByDay = new MoneyByDay()
+        {
+            MoneyByDayDetails = moneyByDayDetails,
+            Branch = _mapper.Map<BranchVm>(branch),
+            TotalAmount = moneyByDayDetails.Sum(x => x.Revenue),
+        };
+
+        return new Respond<MoneyByDay>
+        {
+            Data = moneyByDay,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+
+    public async Task<Respond<object>> GetAllMoney(Search request)
+    {
+        var queryable = _context.Orders.AsQueryable();
+
+        if (request.StartDate != null && request.EndDate != null)
+            queryable = queryable.Where(x =>
+                x.CreateDate <= request.EndDate && x.CreateDate >= request.StartDate);
+        //paging
+        var moneyAll = await queryable.SumAsync(x => x.TotalAmount);
+
         return new Respond<object>
         {
             Data = moneyAll,

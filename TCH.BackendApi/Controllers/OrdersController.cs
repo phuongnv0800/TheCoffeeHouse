@@ -47,6 +47,44 @@ public class OrdersController : ControllerBase
         }
     }
     [AllowAnonymous]
+    [HttpGet("get-revenue")]
+    public async Task<IActionResult> GetChartMoney([FromQuery] Search request)
+    {
+        try
+        {
+            var orders = await _repository.GetChartMoney(request);
+            return Ok(orders);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new {result = -1, message = e.Message});
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new {result = -2, message = e.Message});
+        }
+    }
+    [AllowAnonymous]
+    [HttpGet("get-revenue-branch/{branchId}")]
+    public async Task<IActionResult> GetChartMoneyByBranchId(string branchId, [FromQuery] Search request)
+    {
+        try
+        {
+            var orders = await _repository.GetChartMoneyByBranchId(branchId, request);
+            return Ok(orders);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new {result = -1, message = e.Message});
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new {result = -2, message = e.Message});
+        }
+    }
+    [AllowAnonymous]
     [HttpGet("get-product-branch-all/{productId}")]
     public async Task<IActionResult> GetProductInOrderAllBranch(string productId, [FromQuery] Search request)
     {
