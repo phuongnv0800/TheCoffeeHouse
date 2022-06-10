@@ -434,31 +434,30 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<Respond<PagedList<Report>>> GetAllExportReport(Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x => x.ReportType == ReportType.Export)
-            .ToListAsync();
+            .Where(x => x.ReportType == ReportType.Export);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) <= 0 &&
-                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) >= 0).ToList();
+                x.CreateDate.Date >= (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)! &&
+                x.CreateDate.Date<=(request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!);
 
         //paging
-        int totalRow = query.Count;
+        int totalRow =await query.CountAsync();
         var data = new List<Report>();
         if (request.IsPging)
-            data = query
+            data =await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data =await query.ToListAsync();
         }
 
         var pagedResult = new PagedList<Report>()

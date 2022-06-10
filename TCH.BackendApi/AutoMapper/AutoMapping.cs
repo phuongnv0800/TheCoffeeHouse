@@ -18,6 +18,9 @@ public class AutoMapping : Profile
         CreateMap<ProductRequest, Product>();
         CreateMap<Size, SizeVm>();
         CreateMap<SizeVm, Size>();
+        
+        CreateMap<Branch, BranchVm>();
+        CreateMap<BranchVm, Branch>();
 
         CreateMap<Topping, ToppingVm>();
         CreateMap<ToppingVm, Topping>();

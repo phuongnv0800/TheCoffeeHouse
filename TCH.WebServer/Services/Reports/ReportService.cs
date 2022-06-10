@@ -303,10 +303,6 @@ namespace TCH.WebServer.Services.Reports
             string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
             var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>("/api/Reports/export?IsPging=" + IsPaging.ToString()
                     + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate + toDate);
-            if (response.Result != 1)
-            {
-                return null;
-            }
             return response;
         }
 
@@ -318,10 +314,6 @@ namespace TCH.WebServer.Services.Reports
             string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
             var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>($"/api/Reports/export-by-branch-id/{BranchId}?IsPging=" + IsPaging.ToString()
                     + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() +fromDate + toDate);
-            if (response.Result != 1)
-            {
-                return null;
-            }
             return response;
         }
 
@@ -333,10 +325,7 @@ namespace TCH.WebServer.Services.Reports
             string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
             var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>("/api/Reports/import?IsPging=" + IsPaging.ToString()
                     + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate + toDate);
-            if (response.Result != 1)
-            {
-                return null;
-            }
+            
             return response;
         }
 

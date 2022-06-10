@@ -226,7 +226,7 @@
 
                 //int daysInMonth = DateTime.DaysInMonth(year: 2022, month: date);
                 //var lastDayOfMonth = new DateTime(2022, date, daysInMonth);
-                var respond = await reportService.GetAllExport(false, 10, 1, date, date);
+                var respond = await reportService.GetAllExport(true, 10, 1, date, date);
                 List<Report> orders = respond.Data.Items;
                 double sum = orders.Sum(x => x.TotalAmount);
                 Sum += sum;

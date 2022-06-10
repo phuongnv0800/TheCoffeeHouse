@@ -1,6 +1,4 @@
 ﻿@page "/orders"
-@inject HttpClient httpClient
-@inject ILocalStorageService localStorage;
 @inject IOrderService orderService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
@@ -11,7 +9,7 @@
 
 <div class="page d-flex flex-row flex-column-fluid">
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-        
+
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
             <div class="card card-flush " style="margin-top:65px">
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
@@ -26,10 +24,10 @@
                             @if (dateRequest != null)
                             {
                                 <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
-                                    <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu" />
-                                    <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith" />
-                                    <button onclick = "@(() => SearchByText())"
-                                    class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu"/>
+                                    <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith"/>
+                                    <button onclick="@(() => SearchByText())"
+                                            class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                         Tìm kiếm
                                     </button>
                                 </EditForm>
@@ -43,94 +41,116 @@
                         <div class="table-responsive">
                             <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
                                 <thead>
-                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                        <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
-                                            <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                                <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
-                                            </div>
-                                        </th>
-                                        <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                            Code
-                                        </th>
-                                        <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                            Thời gian tạo
-                                        </th>
-                                        <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                            Tổng tiền
-                                        </th>
-                                        <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
-                                            Thao tác
-                                        </th>
-                                    </tr>
+                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                            <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
+                                        </div>
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                        Code
+                                    </th>
+                                    <th class=" sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                        Số bàn
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                        Kiểu hoá đơn
+                                    </th>
+                                    <th class=" sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                        Thời gian tạo
+                                    </th>
+                                    <th class=" sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                        Tổng tiền
+                                    </th>
+                                    <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
+                                        Thao tác
+                                    </th>
+                                </tr>
                                 </thead>
                                 <tbody class="fw-bold text-gray-600">
-                                    @if (ProductsList!.Count != 0 && ProductsList != null)
+                                @if (ProductsList!.Count != 0 && ProductsList != null)
+                                {
+                                    foreach (var product in ProductsList)
                                     {
-                                        foreach (var product in ProductsList)
-                                        {
-                                            string href = "/orders/" + product.ID.ToString();
-                                            <tr class="odd">
-                                                <td>
-                                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="1">
+                                        string href = "/orders/" + product.ID;
+                                        <tr class="odd">
+                                            <td>
+                                                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="checkbox" value="1">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                            @product.Code
+                                                        </a>
+                                                        <div class="text-muted fs-7 fw-bolder">@product.Cashier</div>
                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="ms-5">
-                                                            <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                @product.Code
-                                                            </a>
-                                                            <div class="text-muted fs-7 fw-bolder">@product.Cashier</div>
-                                                        </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        <div class="text-muted fs-7 fw-bolder">@product.TableNum</div>
                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="ms-5">
-                                                            <div class="text-muted fs-7 fw-bolder">@product.CreateDate</div>
-                                                        </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        <div class="text-muted fs-7 fw-bolder">@(product.OrderType == OrderType.InPlace ? "Tại cửa hàng" : product.OrderType == OrderType.TakeAway ? "Mang đi" : "Ship")</div>
                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="ms-5">
-                                                            <div class="text-muted fs-7 fw-bolder">@product.TotalAmount</div>
-                                                        </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        <div class="text-muted fs-7 fw-bolder">@product.CreateDate</div>
                                                     </div>
-                                                </td>
-                                                <td class="text-end">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                            Thao tác
-                                                        </button>
-                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                            <li><a class="dropdown-item" onclick="@(() => Delete(@product.ID.ToString()))">Xóa</a></li>
-                                                        </ul>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        <div class="text-muted fs-7 fw-bolder">@String.Format("{0:0,0 vnđ}", product.TotalAmount)</div>
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        }
+                                                </div>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Thao tác
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li>
+                                                            <a class="dropdown-item" onclick="@(() => Delete(@product.ID.ToString()))">Xóa</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     }
-                                     else
-                                            {
-                                                <tr class="odd">
-                                                    <td colspan="9">
-                                                        <div class="d-flex justify-content-center align-items-center">
-                                                            <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
-                                                                <defs>
-                                                                    <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
-                                                                        <stop offset="0%" stop-color="hsl(193,90%,55%)"/>
-                                                                        <stop offset="100%" stop-color="hsl(223,90%,55%)"/>
-                                                                    </linearGradient>
-                                                                </defs>
-                                                                <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round"/>
-                                                                <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10"/>
-                                                            </svg>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            }
+                                }
+                                else
+                                {
+                                    <tr class="odd">
+                                        <td colspan="9">
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+                                                    <defs>
+                                                        <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+                                                            <stop offset="0%" stop-color="hsl(193,90%,55%)"/>
+                                                            <stop offset="100%" stop-color="hsl(223,90%,55%)"/>
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round"/>
+                                                    <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10"/>
+                                                </svg>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
                                 </tbody>
                             </table>
                         </div>
@@ -171,11 +191,13 @@
     private ApplicationUser User;
     private DateRequest dateRequest;
 
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        try{
+        try
+        {
             dateRequest = new DateRequest()
             {
                 FromDate = DateTime.Now,
@@ -185,43 +207,52 @@
             await Get(1);
             base.OnParametersSet();
         }
-        catch(Exception ex){
+        catch (Exception ex)
+        {
             toastService.ShowError("có lỗi");
         }
     }
+
     public async Task Get(int pageNumber)
     {
-        try{
+        try
+        {
             var response = await orderService.GetAllOrders(true, pagination.pageSize, pageNumber, dateRequest.FromDate, dateRequest.ToDate);
             pagination.PageNumber = response.Data.CurrentPage;
             ProductsList = response.Data.Items.ToList();
             pagination.totalPage = response.Data.TotalPages;
         }
-        catch(Exception ex){
+        catch (Exception ex)
+        {
             toastService.ShowError("có lỗi");
         }
     }
+
     public async void Delete(string id)
     {
         await orderService.DeleteOrder(id);
     }
+
     public async void Change(int link)
     {
         pagination.PageNumber = link;
         await Get(link);
         StateHasChanged();
     }
+
     public async Task SearchByText()
     {
         await Get(pagination.PageNumber);
     }
+
 }
 
 @code {
+
     public class DateRequest
     {
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
     }
-}
 
+}

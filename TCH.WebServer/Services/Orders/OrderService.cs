@@ -1,12 +1,14 @@
 ﻿using TCH.Utilities.Paginations;
 using TCH.WebServer.Models;
 using TCH.Data.Entities;
-using TCH.ViewModel.SubModels;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Text;
 using System.Globalization;
+using TCH.Utilities.SubModels;
 using TCH.ViewModel.RequestModel;
+using TCH.ViewModel.SubModels;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace TCH.WebServer.Services.Orders
 {
@@ -26,6 +28,9 @@ namespace TCH.WebServer.Services.Orders
         Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProductsByBranch( string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<string> PrintPDF(string id);
         Task DeleteOrder(string id);
+        
+        Task<Respond<MoneyByDay>> GetChartMoney(DateTime? FromDate, DateTime? ToDate);
+        Task<Respond<MoneyByDay>> GetChartMoneyByBranchId(string BranchId, DateTime? FromDate, DateTime? ToDate);
     }
     public class OrderService : IOrderService
     {
@@ -81,6 +86,44 @@ namespace TCH.WebServer.Services.Orders
                 throw;
             }
         }
+
+        public async Task<Respond<MoneyByDay>> GetChartMoney(DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                // CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                // Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetFromJsonAsync<Respond<MoneyByDay>>($"/api/Orders/get-revenue?" + fromDate + toDate);
+                return response;
+            }
+            catch(Exception e)
+            {
+                throw;
+                return new Respond<MoneyByDay>();
+            }
+        }
+
+        public async Task<Respond<MoneyByDay>> GetChartMoneyByBranchId(string BranchId, DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                // CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                // Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetFromJsonAsync<Respond<MoneyByDay>>($"/api/Orders/get-revenue-branch/{BranchId}?" + fromDate
+                    + toDate);
+                return response;
+            }
+            catch
+            {
+                throw;
+                return new Respond<MoneyByDay>();
+            }
+        }
+
         public async Task<ResponseLogin<Order>> UpdateOrder(OrderRequest Order)
         {
             try
