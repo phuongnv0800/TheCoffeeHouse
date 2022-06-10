@@ -1,8 +1,4 @@
-﻿@using System.Security.Claims
-@using TCH.Data.Entities
-@using TCH.ViewModel.SubModels
-@using TCH.WebServer.Services
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 @inject IUserApiClient userApiClient
 @inject NavigationManager NavigationManager
 @attribute [Authorize]
@@ -54,6 +50,10 @@
             {
                 NavigationManager.NavigateTo("/login");
             }
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/login");
         }
     }
 }
