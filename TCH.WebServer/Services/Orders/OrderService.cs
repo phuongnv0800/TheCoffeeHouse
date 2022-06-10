@@ -17,8 +17,8 @@ namespace TCH.WebServer.Services.Orders
         Task<ResponseLogin<Order>> AddOrder(OrderRequest branch);
         Task<ResponseLogin<Order>> GetOrderById(string id);
         
-        Task<double> GetSum(DateTime? FromDate, DateTime? ToDate);
-        Task<double> GetSumInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
+        Task<ResponseLogin<object>> GetSum(DateTime? FromDate, DateTime? ToDate);
+        Task<ResponseLogin<object>> GetSumInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<byte[]> GetExcel(DateTime? FromDate, DateTime? ToDate);
         Task<byte[]> GetExcelInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<Order>> UpdateOrder(OrderRequest branch);
@@ -186,7 +186,7 @@ namespace TCH.WebServer.Services.Orders
             }
         }
 
-        public async Task<double> GetSum( DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<object>> GetSum( DateTime? FromDate, DateTime? ToDate)
         {
             try
             {
@@ -194,9 +194,19 @@ namespace TCH.WebServer.Services.Orders
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-                var response = await httpClient.GetFromJsonAsync<double>($"/api/Orders/all-money?" + fromDate
+                var response = await httpClient.GetAsync($"/api/Orders/all-money?" + fromDate
                         + toDate);
-                return response;
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<object> respond = JsonConvert.DeserializeObject<ResponseLogin<object>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+                    return null;
+                }
+                return null;
             }
             catch
             {
@@ -204,7 +214,7 @@ namespace TCH.WebServer.Services.Orders
             }
         }
 
-        public async Task<double> GetSumInBranch( string BranchId, DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<object>> GetSumInBranch( string BranchId, DateTime? FromDate, DateTime? ToDate)
         {
             try
             {
@@ -212,9 +222,19 @@ namespace TCH.WebServer.Services.Orders
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-                var response = await httpClient.GetFromJsonAsync<double>($"/api/Orders/all-money/{BranchId}?" + fromDate
+                var response = await httpClient.GetAsync($"/api/Orders/all-money/{BranchId}?" + fromDate
                         + toDate);
-                return response;
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<object> respond = JsonConvert.DeserializeObject<ResponseLogin<object>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+                    return null;
+                }
+                return null;
             }
             catch
             {

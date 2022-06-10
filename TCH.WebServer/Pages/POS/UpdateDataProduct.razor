@@ -1,4 +1,4 @@
-﻿@page "/products"
+﻿@*@page "/products"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -97,10 +97,10 @@
                                             </tr>
                                         }
                                     }
-                                    @*else
+                                    else
                                         {
                                         <div class="spinner" ></div>
-                                        }*@
+                                        }
 
                                 </tbody>
                             </table>
@@ -174,7 +174,7 @@
 
     public async void Update(string id)
     {
-        var response = 
+        var response = await productServices.Update(id,)
     }
 
     public async Task Change(int link)
@@ -188,3 +188,4 @@
         await Get(pagination.PageNumber);
     }
 }
+*@
