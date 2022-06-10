@@ -1,4 +1,4 @@
-﻿@page "/orders/{BranchId}"
+﻿@page "/orders/{OrderId}"
 @using TCH.Data.Entities
 @using TCH.WebServer.Models
 @using TCH.WebServer.Pages.POS
@@ -235,7 +235,7 @@
 
 @code {
     [Parameter] public string Title { get; set; }
-    [Parameter] public string BranchId { get; set; }
+    [Parameter] public string OrderId { get; set; }
 
     private ApplicationUser User;
     private Order editBranch = null;
@@ -255,7 +255,14 @@
             _toastService.ShowError("có lỗi");
         }
     }
+    public async Task ShowPopUp()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(InvoicePopup.Id), OrderId);
 
+        var modal = Modal.Show<InvoicePopup>("Hóa đơn", parameters);
+        var result = await modal.Result;
+    }
     protected override async Task OnParametersSetAsync()
     {
         try
