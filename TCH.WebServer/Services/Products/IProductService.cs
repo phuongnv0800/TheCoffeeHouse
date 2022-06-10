@@ -1,5 +1,6 @@
 ﻿using TCH.Data.Entities;
 using TCH.Utilities.Paginations;
+using TCH.Utilities.SubModels;
 using TCH.ViewModel.SubModels;
 using TCH.WebServer.Models;
 
@@ -16,6 +17,7 @@ namespace TCH.WebServer.Services.Products
         Task<PagedList<Topping>> GetToppings();
         Task<ResponseLogin<ProductVm>> AddProduct(MultipartFormDataContent product);
         Task<ResponseLogin<ProductVm>> UpdateProduct(MultipartFormDataContent product);
+        Task<MessageResult> Update(string productId, bool isAvailable);
         Task DeleteProduct(string id);
     }
 }

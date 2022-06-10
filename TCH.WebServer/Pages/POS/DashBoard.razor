@@ -47,7 +47,11 @@
                                             <!--begin::Text-->
                                             <div class="fs-3 fw-bolder mt-5 d-flex flex-stack">
                                                 <!--begin::Label-->
-
+                                                @if(!product.IsAvailable){
+                                                    <span class="badge badge-danger border-dashed text-primary p-2">
+                                                        Hết hàng
+                                                    </span>
+                                                }
                                                 <span class="badge border border-dashed text-primary p-2">
                                                     @((product.IsSale) ? product.Price - product.PriceSale : product.Price)<span class="text-primary text-gray-400">vnđ</span>
                                                 </span>

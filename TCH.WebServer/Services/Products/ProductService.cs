@@ -7,6 +7,7 @@ using System.Net.Http.Json;
 using System.Text;
 using TCH.Data.Entities;
 using TCH.Utilities.Paginations;
+using TCH.Utilities.SubModels;
 using TCH.ViewModel.SubModels;
 using TCH.WebServer.Models;
 
@@ -239,6 +240,31 @@ namespace TCH.WebServer.Services.Products
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     ResponseLogin<ProductVm> respond = JsonConvert.DeserializeObject<ResponseLogin<ProductVm>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<MessageResult> Update(string productId, bool isAvailable)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(isAvailable), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"/api/update-available/{productId}", httpContent);
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    MessageResult respond = JsonConvert.DeserializeObject<MessageResult>(content);
                     if (respond.Result == 1)
                     {
                         return respond;
