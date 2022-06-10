@@ -398,7 +398,7 @@ public class OrderManager : IOrderRepository, IDisposable
                 XmlElement ValueElement = doc.CreateElement("Value");
                 ValueElement.InnerText = Convert.ToString(line);
                 LineElement.AppendChild(ValueElement);
-                InvoiceRestaurantFootercontent.AppendChild(LineElement);
+                InvoiceRestaurantFootercontent?.AppendChild(LineElement);
             }
         }
 
@@ -895,7 +895,131 @@ public class OrderManager : IOrderRepository, IDisposable
         await _storageService.SaveFileAsync(stream, fileName);
         return _storageService.GetPathBE(fileName);
     }
+    public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrder(string? branchId, string productId, Search search)
+    {
+        var orders = await _context.Orders
+            .Include(x => x.OrderDetails)
+            .ThenInclude(x => x.Product)
+            .Where(x => x.BranchID == branchId)
+            .ToListAsync();
+        var orderDetails = new List<OrderDetail>();
+        if (orders != null && orders.Count > 0)
+        {
+            foreach (var item in orders)
+            {
+                orderDetails.AddRange(item.OrderDetails);
+            }
+        }
 
+        List<ProductQuantityVm> reponds =new List<ProductQuantityVm>();
+        foreach (var item in orderDetails)
+        {
+            bool isAdd = true;
+            foreach (var repond in reponds)
+            {
+                if (repond.ProductID == item.ProductID)
+                {
+                    repond.Quantity += item.Quantity;
+                    isAdd = false;
+                }
+            }
+            if (isAdd)
+            {
+                reponds.Add(new ProductQuantityVm()
+                {
+                    ProductID = item.ProductID,
+                    Quantity = item.Quantity,
+                    ProductName = item.Product.Name,
+                });
+            }
+        }
+        int totalRow = reponds.Count();
+        if (search.IsPging)
+        {
+            reponds = reponds
+                .Skip((search.PageNumber - 1) * search.PageSize)
+                .Take(search.PageSize)
+                .ToList();
+        }
+       
+        // select
+        var pagedResult = new PagedList<ProductQuantityVm>()
+        {
+            TotalRecord = totalRow,
+            PageSize = search.PageSize,
+            CurrentPage = search.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / search.PageSize),
+            Items = reponds,
+        };
+        return new Respond<PagedList<ProductQuantityVm>>
+        {
+            Message = "Thành công",
+            Result = 1,
+            Data = pagedResult,
+        };
+    }
+     public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrderAllBranch(string productId, Search search)
+    {
+        var orders = await _context.Orders
+            .Include(x => x.OrderDetails)
+            .ThenInclude(x => x.Product)
+            .ToListAsync();
+        var orderDetails = new List<OrderDetail>();
+        if (orders != null && orders.Count > 0)
+        {
+            foreach (var item in orders)
+            {
+                orderDetails.AddRange(item.OrderDetails);
+            }
+        }
+
+        List<ProductQuantityVm> reponds =new List<ProductQuantityVm>();
+        foreach (var item in orderDetails)
+        {
+            bool isAdd = true;
+            foreach (var repond in reponds)
+            {
+                if (repond.ProductID == item.ProductID)
+                {
+                    repond.Quantity += item.Quantity;
+                    isAdd = false;
+                }
+            }
+            if (isAdd)
+            {
+                reponds.Add(new ProductQuantityVm()
+                {
+                    ProductID = item.ProductID,
+                    Quantity = item.Quantity,
+                    ProductName = item.Product.Name,
+                });
+            }
+        }
+        int totalRow = reponds.Count();
+        if (search.IsPging)
+        {
+            reponds = reponds
+                .Skip((search.PageNumber - 1) * search.PageSize)
+                .Take(search.PageSize)
+                .ToList();
+        }
+       
+        // select
+        var pagedResult = new PagedList<ProductQuantityVm>()
+        {
+            TotalRecord = totalRow,
+            PageSize = search.PageSize,
+            CurrentPage = search.PageNumber,
+            TotalPages = (int)Math.Ceiling((double)totalRow / search.PageSize),
+            Items = reponds,
+        };
+        return new Respond<PagedList<ProductQuantityVm>>
+        {
+            Message = "Thành công",
+            Result = 1,
+            Data = pagedResult,
+        };
+    }
     public async Task<Respond<Order>> GetById(string orderID)
     {
         var order = await _context.Orders
