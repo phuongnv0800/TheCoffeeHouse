@@ -231,7 +231,11 @@ public class OrderManager : IOrderRepository, IDisposable
     public async Task<string> PrintInvoicePaymented(string invoiceID)
     {
         //Invoice invoice = await _context.Invoices.Include(e => e.InvoiceDetails).FirstOrDefaultAsync(e => e.ID == invoiceID);
-        var invoice = await _context.Orders.FirstOrDefaultAsync(x => x.ID == invoiceID);
+        var invoice = await _context.Orders
+            .Include(x => x.OrderDetails)
+            .ThenInclude(x=>x.OrderToppingDetails)
+            .ThenInclude(x=>x.Topping)
+            .FirstOrDefaultAsync(x => x.ID == invoiceID);
         if (invoice == null) throw new CustomException("Không tìm thấy thông tin hóa đơn");
         var branch = await _context.Branches.FirstOrDefaultAsync(x => x.ID == invoice.BranchID);
         if (branch == null) throw new CustomException("Không tìm thấy thông tin cửa hàng");
@@ -302,9 +306,13 @@ public class OrderManager : IOrderRepository, IDisposable
 
 
         XmlElement elementDetail = (XmlElement) doc.SelectSingleNode("/Invoice/Detail");
-        var orderDetails = await _context.OrderDetails.Include(x => x.Size).Where(x => x.OrderID == invoice.ID)
+        var orderDetails = await _context
+            .OrderDetails
+            .Include(x => x.Size)
+            .Include(x=>x.OrderToppingDetails)
+            .Where(x => x.OrderID == invoice.ID)
             .ToListAsync();
-        foreach (var item in orderDetails)
+        foreach (var item in invoice.OrderDetails)
         {
             // using (var _context = new APIContext())
             // {
@@ -312,41 +320,45 @@ public class OrderManager : IOrderRepository, IDisposable
             if (food != null)
             {
                 item.Product = food;
+                // var toppingDetail = await _context.OrderToppingDetails
+                //     .Include(x => x.Topping)
+                //     .Where(x => x.OrderID == item.OrderID && x.ProductID == item.ProductID).ToListAsync();
+
+                XmlElement UnitElement = doc.CreateElement("Unit");
+                UnitElement.InnerText = "";
+                double amountTopping = 0;
+                if (item.OrderToppingDetails != null)
+                {
+                    foreach (var topping in item.OrderToppingDetails)
+                    {
+                        amountTopping += topping.Quantity * topping.SubPrice;
+                        UnitElement.InnerText += Convert.ToString(topping.Topping.Name) + $" x{topping.Quantity},";
+                    }
+                }
+
                 XmlElement InvoiceDetailElement = doc.CreateElement("InvoiceDetail");
 
                 XmlElement FoodNameElement = doc.CreateElement("FoodName");
                 FoodNameElement.InnerText = Convert.ToString(item.Product.Name + "(" + item.Size.Name + ")");
-                XmlElement UnitElement = doc.CreateElement("Unit");
-                UnitElement.InnerText = Convert.ToString("Cốc");
                 XmlElement QuantityElement = doc.CreateElement("Quantity");
                 QuantityElement.InnerText = Convert.ToString(item.Quantity);
-                XmlElement DecimalFactorElement = doc.CreateElement("DecimalFactor");
-                DecimalFactorElement.InnerText = Convert.ToString(item.PriceProduct);
+                // XmlElement DecimalFactorElement = doc.CreateElement("DecimalFactor");
+                // DecimalFactorElement.InnerText = Convert.ToString(item.PriceProduct);
                 XmlElement PriceElement = doc.CreateElement("Price");
-                PriceElement.InnerText = Convert.ToString(item.PriceProduct + item.PriceSize);
+                PriceElement.InnerText = Convert.ToString(item.PriceProduct + item.PriceSize + amountTopping);
 
 
                 XmlElement AmountElement = doc.CreateElement("Amount");
-                //AmountElement.InnerText = Convert.ToString(item.Quantity * item.Price);
-                var toppingDetail = await _context.OrderToppingDetails
-                    .Where(x => x.OrderID == item.OrderID && x.ProductID == item.ProductID).ToListAsync();
-                double amountTopping = 0;
-                if (toppingDetail != null)
-                {
-                    foreach (var topping in toppingDetail)
-                    {
-                        amountTopping += topping.Quantity * topping.SubPrice;
-                    }
-                }
+                // AmountElement.InnerText = Convert.ToString(item.Quantity * (item.PriceProduct + item.PriceSize));
 
-                AmountElement.InnerText = ((Convert.ToDecimal(item.PriceProduct) + Convert.ToDecimal(item.PriceSize)) *
-                                           Convert.ToDecimal(item.Quantity)
-                                           * Convert.ToDecimal(amountTopping)).ToString();
+                AmountElement.InnerText = ((Convert.ToDecimal(item.PriceProduct) + Convert.ToDecimal(item.PriceSize)
+                                               + Convert.ToDecimal(amountTopping)) *
+                                           Convert.ToDecimal(item.Quantity)).ToString();
 
                 InvoiceDetailElement.AppendChild(FoodNameElement);
                 InvoiceDetailElement.AppendChild(UnitElement);
                 InvoiceDetailElement.AppendChild(QuantityElement);
-                InvoiceDetailElement.AppendChild(DecimalFactorElement);
+                // InvoiceDetailElement.AppendChild(DecimalFactorElement);
                 InvoiceDetailElement.AppendChild(PriceElement);
                 InvoiceDetailElement.AppendChild(AmountElement);
 
@@ -895,7 +907,9 @@ public class OrderManager : IOrderRepository, IDisposable
         await _storageService.SaveFileAsync(stream, fileName);
         return _storageService.GetPathBE(fileName);
     }
-    public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrder(string? branchId, string productId, Search search)
+
+    public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrder(string? branchId, string productId,
+        Search search)
     {
         var orders = await _context.Orders
             .Include(x => x.OrderDetails)
@@ -911,7 +925,7 @@ public class OrderManager : IOrderRepository, IDisposable
             }
         }
 
-        List<ProductQuantityVm> reponds =new List<ProductQuantityVm>();
+        List<ProductQuantityVm> reponds = new List<ProductQuantityVm>();
         foreach (var item in orderDetails)
         {
             bool isAdd = true;
@@ -923,6 +937,7 @@ public class OrderManager : IOrderRepository, IDisposable
                     isAdd = false;
                 }
             }
+
             if (isAdd)
             {
                 reponds.Add(new ProductQuantityVm()
@@ -933,6 +948,7 @@ public class OrderManager : IOrderRepository, IDisposable
                 });
             }
         }
+
         int totalRow = reponds.Count();
         if (search.IsPging)
         {
@@ -941,14 +957,14 @@ public class OrderManager : IOrderRepository, IDisposable
                 .Take(search.PageSize)
                 .ToList();
         }
-       
+
         // select
         var pagedResult = new PagedList<ProductQuantityVm>()
         {
             TotalRecord = totalRow,
             PageSize = search.PageSize,
             CurrentPage = search.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / search.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / search.PageSize),
             Items = reponds,
         };
         return new Respond<PagedList<ProductQuantityVm>>
@@ -958,7 +974,8 @@ public class OrderManager : IOrderRepository, IDisposable
             Data = pagedResult,
         };
     }
-     public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrderAllBranch(string productId, Search search)
+
+    public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrderAllBranch(string productId, Search search)
     {
         var orders = await _context.Orders
             .Include(x => x.OrderDetails)
@@ -973,7 +990,7 @@ public class OrderManager : IOrderRepository, IDisposable
             }
         }
 
-        List<ProductQuantityVm> reponds =new List<ProductQuantityVm>();
+        List<ProductQuantityVm> reponds = new List<ProductQuantityVm>();
         foreach (var item in orderDetails)
         {
             bool isAdd = true;
@@ -985,6 +1002,7 @@ public class OrderManager : IOrderRepository, IDisposable
                     isAdd = false;
                 }
             }
+
             if (isAdd)
             {
                 reponds.Add(new ProductQuantityVm()
@@ -995,6 +1013,7 @@ public class OrderManager : IOrderRepository, IDisposable
                 });
             }
         }
+
         int totalRow = reponds.Count();
         if (search.IsPging)
         {
@@ -1003,14 +1022,14 @@ public class OrderManager : IOrderRepository, IDisposable
                 .Take(search.PageSize)
                 .ToList();
         }
-       
+
         // select
         var pagedResult = new PagedList<ProductQuantityVm>()
         {
             TotalRecord = totalRow,
             PageSize = search.PageSize,
             CurrentPage = search.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / search.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / search.PageSize),
             Items = reponds,
         };
         return new Respond<PagedList<ProductQuantityVm>>
@@ -1020,6 +1039,7 @@ public class OrderManager : IOrderRepository, IDisposable
             Data = pagedResult,
         };
     }
+
     public async Task<Respond<Order>> GetById(string orderID)
     {
         var order = await _context.Orders

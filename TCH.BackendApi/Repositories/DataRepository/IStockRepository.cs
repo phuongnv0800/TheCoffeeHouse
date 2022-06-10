@@ -12,7 +12,7 @@ public interface IStockRepository
     Task<MessageResult> DeleteStockMaterial(string branchID, string materialID);
     Task<Respond<PagedList<StockVm>>> GetAllStock(Search request);
     Task<Respond<PagedList<StockVm>>> GetAllStockByBranchID(string branchID, Search request);
-    Task<MessageResult> UpdateStockMaterial(StockRequest request);
+    Task<MessageResult> UpdateStockMaterial(string Id, StockRequest request);
     Task<Respond<PagedList<StockVm>>> GetAllStockExpireByBranchID(string branchID, Search request);
     Task<Respond<PagedList<StockVm>>> GetAllStockExpire(Search request);
 }

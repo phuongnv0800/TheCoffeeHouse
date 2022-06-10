@@ -2903,30 +2903,26 @@ public static class Seed
             context.Materials.Add(item);
         }
 
-        var promotions = new Promotion[]
+        for (int i = 0; i < 100; i++)
         {
-            new Promotion()
+            var promotion = new Promotion()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = "Giảm giá 10K cho hoá đơn lớn hơn 100K",
-                Code = "GIAM10K",
+                Name = $"Giảm giá {i}K cho hoá đơn lớn hơn {i * 10}K",
+                Code = $"GIAM{i}K",
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(30),
                 CreateDate = DateTime.Now,
                 PromotionType = PromotionType.SumAmount,
                 PromotionObject = PromotionObject.Invoice,
-                ReduceAmount = 10000,
+                ReduceAmount = i * 1000,
                 ReducePercent = 0,
                 Status = 1,
-                Description = "Giảm giá 10K cho hoá đơn lớn hơn 100K trong sự kiện mùa hè",
-                Quantity = 999,
-            }
-        };
-        foreach (var item in promotions)
-        {
-            context.Promotions.Add(item);
+                Description = $"Giảm giá {i}K cho hoá đơn lớn hơn {i * 10}K trong sự kiện mùa hè",
+                Quantity = 10,
+            };
+            context.Promotions.Add(promotion);
         }
-
 
         foreach (var item in products)
         {
@@ -2966,17 +2962,17 @@ public static class Seed
 
         var order = new Order()
         {
-            ID = Guid.NewGuid().ToString(),
+            ID = "1a6966bf-1a0b-4642-9984-873e9e4eb7d5",
             TableNum = 15,
             Cashier = "Nam Phuong",
             Code = "ORDER.N0" + DateTime.Now.Minute + "-" + DateTime.Now.Day,
-            SubAmount = 68000,
-            TotalAmount = 58000,
+            SubAmount = (products[0].Price + sizes[0].SubPrice + toppings[0].SubPrice * 1)* 2,
+            TotalAmount = (products[0].Price + sizes[0].SubPrice + toppings[0].SubPrice * 1)* 2 -10000,
             Status = OrderStatus.Open,
             OrderType = OrderType.InPlace,
             ReducePromotion = 10000,
             ReduceAmount = 0,
-            CustomerPut = 68000,
+            CustomerPut = (products[0].Price + sizes[0].SubPrice + toppings[0].SubPrice * 1)* 2,
             CustomerReceive = 10000,
             ShippingFee = 0,
             CreateDate = DateTime.Now,
@@ -2991,12 +2987,12 @@ public static class Seed
         var orderDetail = new OrderDetail()
         {
             OrderID = order.ID,
-            Quantity = 1,
-            PriceProduct = 58000,
+            Quantity = 2,
+            PriceProduct = products[0].Price,
             Description = "Mô tả",
             SugarType = SugarType.OneHundredPercent,
             IcedType = IcedType.OneHundredPercent,
-            PriceSize = 0,
+            PriceSize = sizes[0].SubPrice,
             SizeID = sizes[0].ID,
             ProductID = products[0].ID
         };
@@ -3007,7 +3003,7 @@ public static class Seed
             OrderID = order.ID,
             ProductID = products[0].ID,
             OrderDetail = orderDetail,
-            SubPrice = 10000,
+            SubPrice = toppings[0].SubPrice,
             Name = toppings[0].Name,
             Quantity = 1,
         };
@@ -3020,18 +3016,18 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 TableNum = i,
-                Cashier = i % 2 == 0 ? "Phuong" : "Long",
+                Cashier = (i % 2 == 0 ? "Phuong " : "Long ") + i,
                 Code = "ORDER.N0"
-                       + (new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28))).Minute
+                       + (new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28))).Millisecond
                        + "-"
                        + (new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28))).Day,
-                SubAmount = products[indexPro].Price * sizes[i % 2].SubPrice * (i % 2 == 0 ? 1 : 2),
-                TotalAmount = products[indexPro].Price * sizes[i % 2].SubPrice * (i % 2 == 0 ? 1 : 2),
+                SubAmount = (products[indexPro].Price + sizes[i % 2].SubPrice) * (i % 2 == 0 ? 1 : 2),
+                TotalAmount = (products[indexPro].Price + sizes[i % 2].SubPrice) * (i % 2 == 0 ? 1 : 2),
                 Status = OrderStatus.Open,
                 OrderType = i % 2 == 0 ? OrderType.InPlace : OrderType.TakeAway,
                 ReducePromotion = 0,
                 ReduceAmount = 0,
-                CustomerPut = products[indexPro].Price * sizes[i % 2].SubPrice * (i % 2 == 0 ? 1 : 2),
+                CustomerPut = (products[indexPro].Price + sizes[i % 2].SubPrice) * (i % 2 == 0 ? 1 : 2),
                 CustomerReceive = 0,
                 ShippingFee = 0,
                 CreateDate = new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28)),
@@ -3059,6 +3055,33 @@ public static class Seed
             context.OrderDetails.Add(orderDetailTemp);
         }
 
+        for (int i = 0; i < branches.Length; i++)
+        {
+            for (int j = 0; j < materials.Length; j++)
+            {
+                Random random = new();
+                var num = random.Next(10, 999);
+                var stock = new StockMaterial()
+                {
+                    ID = Guid.NewGuid().ToString(),
+                    BranchID = branches[i].ID,
+                    BeginDate = DateTime.Now,
+                    Description = "Chi tiết nguyên liệu " + materials[i].Name,
+                    ExpirationDate = DateTime.Now.AddDays(30),
+                    IsDelete = false,
+                    Mass = num,
+                    MaterialID = materials[j].ID,
+                    MeasureID = units[3].ID,
+                    Status = 1,
+                    PriceOfUnit = 20000,
+                    StandardMass = num * units[3].ConversionFactor,
+                    Quantity = 10,
+                };
+                context.StockMaterials.Add(stock);
+            }
+        }
+
+
         for (int i = 0; i < 1000; i++)
         {
             Random rnd = new Random();
@@ -3079,7 +3102,7 @@ public static class Seed
                 LiquidationRole = "Quản lý",
                 Supplier = "HÀ NỘI",
                 StockName = branches[rnd.Next(0, 7)].Name,
-                TotalAmount = 100000,
+                TotalAmount = 100000 + i,
                 Reason = "",
                 RecoveryValue = 0,
                 UserCreateID = null,
@@ -3148,6 +3171,7 @@ public static class Seed
             EmailConfirmed = true,
             PasswordHash = hasher.HashPassword(null, "123123aA@"),
             SecurityStamp = Guid.NewGuid().ToString(),
+            Address = "Hải Phòng, Việt Nam",
             FirstName = "Nguyễn",
             LastName = "Phương",
             DateOfBirth = new DateTime(2000, 8, 17),
@@ -3166,6 +3190,7 @@ public static class Seed
             EmailConfirmed = true,
             PasswordHash = hasher.HashPassword(null, "123123aA@"),
             SecurityStamp = Guid.NewGuid().ToString(),
+            Address = "Hải Phòng, Việt Nam",
             FirstName = "Vũ",
             LastName = "Long",
             DateOfBirth = new DateTime(2000, 8, 17),
@@ -3215,6 +3240,9 @@ public static class Seed
                 SecurityStamp = Guid.NewGuid().ToString(),
                 FirstName = "Người dùng",
                 LastName = i.ToString(),
+                PhoneNumber = "0999999999",
+                PhoneNumberConfirmed = true,
+                Address = "Hải Phòng, Việt Nam",
                 DateOfBirth = new DateTime(1900 + i, 1, 1),
                 BranchID = branches[(new Random()).Next(0, 7)].ID,
                 Status = Status.Active,

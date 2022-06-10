@@ -127,14 +127,14 @@ public class StocksController : ControllerBase
         }
     }
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
-    [HttpPut("{branchId}")]
-    public async Task<IActionResult> Update(string branchId, [FromBody] StockRequest search)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(string id, [FromBody] StockRequest search)
     {
         try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _repository.UpdateStockMaterial(search);
+            var result = await _repository.UpdateStockMaterial(id, search);
             return Ok(result);
         }
         catch (CustomException e)

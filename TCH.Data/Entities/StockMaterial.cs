@@ -4,6 +4,7 @@ namespace TCH.Data.Entities;
 
 public class StockMaterial
 {
+    public string ID { get; set; }
     public string BranchID { get; set; }
     public Branch Branch{ get; set; }
     public string MaterialID { get; set; }

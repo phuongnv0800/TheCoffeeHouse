@@ -12,8 +12,8 @@ using TCH.BackendApi.EF;
 namespace TCH.BackendApi.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20220529082754_updatedb")]
-    partial class updatedb
+    [Migration("20220610083241_updatestock")]
+    partial class updatestock
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -748,12 +748,6 @@ namespace TCH.BackendApi.Migrations
                     b.Property<double>("PriceSize")
                         .HasColumnType("float");
 
-                    b.Property<double>("PriceToppping1")
-                        .HasColumnType("float");
-
-                    b.Property<double>("PriceToppping2")
-                        .HasColumnType("float");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -767,20 +761,8 @@ namespace TCH.BackendApi.Migrations
                     b.Property<int>("SugarType")
                         .HasColumnType("int");
 
-                    b.Property<string>("Topping1Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Topping2Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ToppingID")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ToppingID1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ToppingID2")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderID", "ProductID");
 
@@ -1209,14 +1191,15 @@ namespace TCH.BackendApi.Migrations
 
             modelBuilder.Entity("TCH.Data.Entities.StockMaterial", b =>
                 {
-                    b.Property<string>("BranchID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MaterialID")
+                    b.Property<string>("ID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("BeginDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("BranchID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -1229,6 +1212,10 @@ namespace TCH.BackendApi.Migrations
 
                     b.Property<double>("Mass")
                         .HasColumnType("float");
+
+                    b.Property<string>("MaterialID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MeasureID")
                         .IsRequired()
@@ -1249,7 +1236,9 @@ namespace TCH.BackendApi.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("BranchID", "MaterialID");
+                    b.HasKey("ID");
+
+                    b.HasIndex("BranchID");
 
                     b.HasIndex("MaterialID");
 

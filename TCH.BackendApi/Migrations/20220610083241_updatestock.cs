@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TCH.BackendApi.Migrations
 {
-    public partial class updatedb : Migration
+    public partial class updatestock : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -548,6 +548,7 @@ namespace TCH.BackendApi.Migrations
                 name: "StockMaterials",
                 columns: table => new
                 {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BranchID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MaterialID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
@@ -564,7 +565,7 @@ namespace TCH.BackendApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StockMaterials", x => new { x.BranchID, x.MaterialID });
+                    table.PrimaryKey("PK_StockMaterials", x => x.ID);
                     table.ForeignKey(
                         name: "FK_StockMaterials_Branchs_BranchID",
                         column: x => x.BranchID,
@@ -666,12 +667,6 @@ namespace TCH.BackendApi.Migrations
                     SugarType = table.Column<int>(type: "int", nullable: false),
                     IcedType = table.Column<int>(type: "int", nullable: false),
                     PriceSize = table.Column<double>(type: "float", nullable: false),
-                    ToppingID1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Topping1Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PriceToppping1 = table.Column<double>(type: "float", nullable: false),
-                    ToppingID2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Topping2Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PriceToppping2 = table.Column<double>(type: "float", nullable: false),
                     ToppingID = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -1059,6 +1054,11 @@ namespace TCH.BackendApi.Migrations
                 name: "IX_SizeInProducts_SizeID",
                 table: "SizeInProducts",
                 column: "SizeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StockMaterials_BranchID",
+                table: "StockMaterials",
+                column: "BranchID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StockMaterials_MaterialID",

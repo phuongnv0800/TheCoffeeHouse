@@ -34,4 +34,8 @@
     <ProjectReference Include="..\TCH.ViewModel\TCH.ViewModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\APIContextModelSnapshot.cs" />
+  </ItemGroup>
+
 </Project>

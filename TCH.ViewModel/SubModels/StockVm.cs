@@ -4,6 +4,7 @@ namespace TCH.ViewModel.SubModels;
 
 public class StockVm
 {
+    public string ID { get; set; }
     public string BranchID { get; set; }
     public string BranchName { get; set; }
     public string MaterialID { get; set; }
