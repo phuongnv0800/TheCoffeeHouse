@@ -190,8 +190,7 @@
         try
         {
             navigationManager.NavigateTo("branchs");
-            var response = await userService.GetUserInfo();
-            User = response.Data;
+            
             await Get(1);
             base.OnParametersSet();
         }

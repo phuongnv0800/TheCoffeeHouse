@@ -163,8 +163,7 @@
         try{
             Url=  Configuration.GetSection("BackendApiUrl").Value;
             navigationManager.NavigateTo("materials");
-            var response = await userServices.GetUserInfo();
-            User = response.Data;
+           
             await Get(1);
             base.OnParametersSet();
         }

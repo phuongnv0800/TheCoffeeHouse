@@ -172,8 +172,7 @@
     {
         try{
             navigationManager.NavigateTo("promotions");
-            var response = await userServices.GetUserInfo();
-            User = response.Data;
+            
             await Get(1);
             base.OnParametersSet();
         }

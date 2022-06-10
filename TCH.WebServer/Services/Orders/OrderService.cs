@@ -22,7 +22,8 @@ namespace TCH.WebServer.Services.Orders
         Task<byte[]> GetExcel(DateTime? FromDate, DateTime? ToDate);
         Task<byte[]> GetExcelInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<Order>> UpdateOrder(OrderRequest branch);
-        
+        Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProducts( DateTime? FromDate, DateTime? ToDate);
+        Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProductsByBranch( string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<string> PrintPDF(string id);
         Task DeleteOrder(string id);
     }
@@ -271,6 +272,62 @@ namespace TCH.WebServer.Services.Orders
                 var response = await httpClient.GetAsync($"/api/Orders/excel-by-branchID/{BranchId}?" + fromDate
                         + toDate);
                 return await response.Content.ReadAsByteArrayAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProducts( DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetAsync($"/api/Orders/get-product-branch-all?" + fromDate
+                        + toDate);
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<PagedList<ProductQuantityVm>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<ProductQuantityVm>>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProductsByBranch(string BranchId, DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetAsync($"/api/Orders/get-product-branch/{BranchId}?" + fromDate
+                        + toDate);
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<PagedList<ProductQuantityVm>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<ProductQuantityVm>>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+                    return null;
+                }
+                return null;
             }
             catch
             {

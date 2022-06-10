@@ -1,0 +1,279 @@
+﻿@inject HttpClient httpClient
+@inject ILocalStorageService localStorage;
+@inject IProductService productServices;
+@inject IUserService userServices;
+@inject IUserApiClient userApiClient;
+@inject NavigationManager navigationManager;
+@inject IJSRuntime jsRuntime;
+@inject IToastService toastService;
+@inject IConfiguration Configuration
+@inject IToastService _toastService
+@attribute [Authorize]
+
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="OnCancel"></div>
+    <div class="modal-dialog modal-dialog-centered mw-650px" style="z-index: 1050">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="fw-bolder">Chọn sản phẩm khuyến mãi</h5>
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" @onclick="OnCancel">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-body">
+
+                <EditForm Model="@amount">
+                    @if(type == PromotionType.Amount){
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label required">Giá giảm</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <InputNumber @bind-Value="amount" class="form-control">
+
+                            </InputNumber>
+                            <!--end::Input-->
+                        </div>
+                    }
+                    else{
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label required">% giảm</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <InputNumber @bind-Value="amount" class="form-control">
+
+                            </InputNumber>
+                            <!--end::Input-->
+                        </div>
+                    }
+                </EditForm>
+                <div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                    <div class="table-responsive">
+                        <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
+                            <thead>
+                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                            <input class="form-check-input" type="checkbox" value="1">
+                                        </div>
+                                    </th>
+                                    <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" style="width: 637.234px;">
+                                        Sản phẩm
+                                    </th>
+                                    <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" style="width: 159.297px;">
+                                        Trạng thái
+                                    </th>
+                                    <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
+                                        Thao tác
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-bold text-gray-600">
+                                @if (ProductsList.Count != 0)
+                                {
+                                    foreach (var product in ProductsList)
+                                    {
+                                        string fileImage = Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage;
+                                        string href = "/products/" + product.ID.ToString();
+                                        <tr class="odd">
+                                            <td>
+                                                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                    <input type="checkbox" class="form-check-input" @onchange="@(e => { SelectBranch(@product.ID, e.Value); })">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img height="40" width="40" src="@fileImage">
+
+                                                    <div class="ms-5">
+                                                        <a class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                            @product.Name
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ms-5">
+
+                                                    @if (product.IsActive)
+                                                    {
+                                                        <p class=" fs-5 fw-bolder mb-1" style="color: green">Đang hoạt động</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class=" fs-5 fw-bolder mb-1" style="color:red">Chưa hoạt động</p>
+                                                    }
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr class="odd">
+                                        <td colspan="4">
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+                                                    <defs>
+                                                        <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+                                                            <stop offset="0%" stop-color="hsl(193,90%,55%)" />
+                                                            <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round" />
+                                                    <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10" />
+                                                </svg>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-primary" onclick="@(() => OnSubmit())">Hoàn thành</button>
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-1 d-flex align-items-center justify-content-center justify-content-md-start">
+                            <div class="dataTables_length" id="kt_ecommerce_category_table_length">
+                                <label>
+                                    <EditForm Model="pagination">
+                                        <InputSelect @bind-Value="pagination.pageSize" name="kt_ecommerce_category_table_length" aria-controls="kt_ecommerce_category_table" class="form-select form-select-sm form-select-solid">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </InputSelect>
+                                    </EditForm>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-11 d-flex align-items-center justify-content-center justify-content-md-end">
+                            <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
+                                <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    [Parameter] public PromotionType type{ get; set; }
+    private async Task OnCancel() => await BlazoredModal.CancelAsync();
+    public List<ProductVm>? ProductsList = new List<ProductVm>();
+    private string? token;
+    public string Name;
+    private string searchText = "";
+    private double amount = 0;
+    private PromotionRequest Promotion;
+    private List<PromotionList> PromotionList = new List<PromotionList>();
+
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
+    private ApplicationUser User;
+
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //navigationManager.NavigateTo("admin-dashboard");
+        try
+        {
+            Promotion = GbParameter.GbParameter.Promotion;
+            await Get(1);
+            base.OnParametersSet();
+        }
+        catch (Exception e)
+        {
+            toastService.ShowError("Có lỗi");
+        }
+    }
+    public async Task Get(int pageNumber)
+    {
+        try
+        {
+            var response = await productServices.GetProducts(true, pagination.pageSize, pageNumber, searchText);
+            pagination.PageNumber = response.Data.CurrentPage;
+            ProductsList = response.Data.Items.ToList();
+            pagination.totalPage = response.Data.TotalPages;
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            toastService.ShowError("Có lỗi");
+        }
+    }
+    public async void Add()
+    {
+        var modal = Modal.Show<AddProduct>("Thêm sản phẩm");
+        var result = await modal.Result;
+        if (!result.Cancelled)
+        {
+            await Change(1);
+        }
+        //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
+    }
+    public async Task SelectBranch(string toppingId, object checkedValue)
+    {
+        if ((bool)checkedValue)
+
+        {
+            PromotionList prol = new PromotionList();
+            if(type == PromotionType.Amount){
+                prol = new PromotionList() {
+                        ProductID = toppingId,
+                        ReduceAmount = amount,
+                };
+            }if(type == PromotionType.Percent){
+                prol = new PromotionList()
+                    {
+                        ProductID = toppingId,
+                        ReducePercent = amount,
+                    };
+            }
+            PromotionList.Add(prol);
+            StateHasChanged();
+        }
+        else
+        {
+            var pro = PromotionList.FirstOrDefault(x => x.ProductID == toppingId);
+            PromotionList.Remove(pro);
+        }
+    }
+    public async Task Change(int link)
+    {
+        pagination.PageNumber = link;
+        await Get(link);
+        StateHasChanged();
+    }
+    public async Task SearchByText()
+    {
+        await Get(pagination.PageNumber);
+    }
+    private async Task OnSubmit()
+    {
+        try{
+            GbParameter.GbParameter.Promotion.PromotionLists = PromotionList;
+            await BlazoredModal.CloseAsync(ModalResult.Ok(true));
+        }
+        catch(Exception ex)
+        {
+            _toastService.ShowError(ex.ToString());
+        }
+    }
+}
+

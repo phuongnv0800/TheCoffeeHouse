@@ -17,5 +17,6 @@ namespace TCH.WebServer.GbParameter
         public static ImportRequest ReportImport { get; set; }
         public static ExportRequest ReportExport { get; set; }
         public static IEnumerable<Claim> claims { get; set; }
+        public static PromotionRequest Promotion { get; set; }
     }
 }

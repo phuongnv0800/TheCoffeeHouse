@@ -182,8 +182,6 @@
                 ToDate = DateTime.Now.AddDays(10),
             };
             navigationManager.NavigateTo("orders");
-            var response = await userServices.GetUserInfo();
-            User = response.Data;
             await Get(1);
             base.OnParametersSet();
         }

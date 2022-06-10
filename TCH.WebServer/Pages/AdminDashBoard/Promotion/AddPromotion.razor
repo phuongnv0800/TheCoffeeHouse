@@ -53,7 +53,7 @@
 
                         <div class="fv-row mb-7">
 							<label class="fs-6 fw-bold mb-2 requied">Chọn loại hình khuyến mãi</label>
-                            <InputSelect @bind-Value="editPromotion.PromotionObject" class="form-control" @onchange="@((ChangeEventArgs e) => isFood = e.Value.ToString())">
+                            <InputSelect @bind-Value="editPromotion.PromotionObject" class="form-control">
                                 @foreach (var country in Enum.GetValues(typeof(PromotionObject)))
                                 {
                                     <option value="@country">@country</option>
@@ -62,8 +62,7 @@
                             </InputSelect>
 						</div>
 
-                        if(isFood == "Food"){
-                            <div class="fv-row mb-7">
+                        <div class="fv-row mb-7">
 							    <label class="fs-6 fw-bold mb-2 requied">Chọn loại hình khuyến mãi</label>
                                 <InputSelect @bind-Value="editPromotion.PromotionType" class="form-control">
                                     @foreach (var country in Enum.GetValues(typeof(PromotionType)))
@@ -73,25 +72,8 @@
 
                                 </InputSelect>
 						    </div>
-                            <div class="fv-row mb-7">
-							    <label class="fs-6 fw-bold mb-2 requied">Chọn loại hình khuyến mãi</label>
-                                <InputSelect @bind-Value="editPromotion.PromotionType" class="form-control">
-                                    @foreach (var country in products)
-                                    {
-                                        <option value="@country.ID">@country.Name</option>
-                                    }
+                        <button class="btn btn-primary" onclick="@(() => Pick())">Chọn sản phẩm</button>
 
-                                </InputSelect>
-						    </div>
-                            <div class="fv-row mb-7">
-							    <label class="required fs-6 fw-bold mb-2">Số lượng</label>
-                                <InputNumber @bind-Value="editPromotion.PromotionLists" class="form-control form-control-solid col-sm-6" />
-                                <div class="fv-plugins-message-container invalid-feedback">
-                                    <ValidationMessage For="@(() => editPromotion.Quantity)" />
-                                </div>
-						    </div>
-                        }
-                        
                         <div class="fv-row mb-7">
 							<label class="required fs-6 fw-bold mb-2">Mã đợt khuyến mãi</label>
                             <InputText @bind-Value="editPromotion.Code" class="form-control form-control-solid col-sm-6" />
@@ -156,13 +138,16 @@
 
     private List<PromotionType> types = new List<PromotionType>();
     private PromotionRequest editPromotion = null;
-    private string isFood ;
+    private bool isFood ;
     private List<ProductVm> products;
     [CascadingParameter] public IModalService Modal { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
-        editPromotion = new PromotionRequest();
+        if(GbParameter.GbParameter.Promotion == null)
+            editPromotion = new PromotionRequest();
+        else
+            editPromotion = GbParameter.GbParameter.Promotion;
     }
 
     protected override async Task OnParametersSetAsync()
@@ -204,7 +189,7 @@
     {
         try{
             ResponseLogin<Promotion> response = new ResponseLogin<Promotion>();
-            
+
             if (string.IsNullOrEmpty(PromotionId))
             {
                 response = await _promotionService.AddPromotion(editPromotion);
@@ -225,6 +210,21 @@
         catch(Exception ex)
         {
             _toastService.ShowError(ex.ToString());
+        }
+    }
+    private async Task Pick(){
+        if(editPromotion.PromotionObject == PromotionObject.Food){
+            GbParameter.GbParameter.Promotion = new PromotionRequest();
+            GbParameter.GbParameter.Promotion.PromotionLists = new List<PromotionList>();
+            var parameters = new ModalParameters();
+            parameters.Add(nameof(ProductsInPromotion.type), editPromotion.PromotionType);
+
+            var modal = Modal.Show<ProductsInPromotion>("Thêm sản phẩm", parameters);
+            var result = await modal.Result;
+            if (!result.Cancelled)
+            {
+                StateHasChanged();
+            }
         }
     }
 }
