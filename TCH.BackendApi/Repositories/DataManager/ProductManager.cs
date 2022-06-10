@@ -38,7 +38,7 @@ public class ProductManager : IProductRepository, IDisposable
     }
     public async Task<Respond<PagedList<ProductVm>>> GetAllByBranchID(string branchID, Search request)
     {
-        var query = from c in _context.Products where c.IsAvailable == true select c;
+        var query = from c in _context.Products select c;
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.Name.Contains(request.Name));
         //paging
@@ -200,7 +200,7 @@ public class ProductManager : IProductRepository, IDisposable
 
     public async Task<Respond<PagedList<ProductVm>>> GetAll(Search request)
     {
-        var query = from c in _context.Products  where c.IsAvailable == true select c;
+        var query = from c in _context.Products select c;
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.Name.Contains(request.Name));
         //paging
@@ -277,7 +277,7 @@ public class ProductManager : IProductRepository, IDisposable
     public async Task<Respond<PagedList<ProductVm>>> GetProductByCategoryID(string categoryID, Search request)
     {
         var query = from c in _context.Products 
-            where c.IsAvailable == true && c.CategoryID == categoryID select c;
+            where c.CategoryID == categoryID select c;
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.Name.Contains(request.Name));
         //paging
