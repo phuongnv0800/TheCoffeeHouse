@@ -1021,7 +1021,7 @@ public class OrderManager : IOrderRepository, IDisposable
         };
     }
 
-    public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrderAllBranch(string productId, Search search)
+    public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrderAllBranch(Search search)
     {
         var orders = await _context.Orders
             .Include(x => x.OrderDetails)
