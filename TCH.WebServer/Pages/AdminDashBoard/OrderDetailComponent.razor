@@ -1,4 +1,4 @@
-﻿@page "/orders/{BranchId}"
+﻿@page "/orders-by-branch/{BranchId}"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -17,6 +17,7 @@
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
 @inject IToastService toastService;
+@inject IBrandService branchService
 @inject IJSRuntime jsRuntime;
 @attribute [Authorize]
 
@@ -66,8 +67,12 @@
                                     </RadzenValueA98-xis>
                                 </RadzenChart>
                                 <div class="text-end d-flex mt-5">
+                                    <h1>@Title </h1>
+                                    
+                                </div>
+                                <div class="text-end d-flex mt-5">
                                     <h1>Tổng doanh thu:  </h1>
-                                    <h1 class="text-primary ms-2">@Sum</h1>
+                                    <h1 class="text-primary ms-2">@Sum vnd</h1>
                                     <button class="btn btn-success ms-5" onclick="@(() => ExportExcel())">Xuất Excel</button>
                                 </div>
                             </div>
@@ -175,6 +180,7 @@
     [Parameter]public string BranchId { get; set; }
     public List<Order>? ProductsList = new List<Order>();
     private string? token;
+    private string Title;
     public string Name;
     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
     private ApplicationUser User;
@@ -199,9 +205,11 @@
                     FromDate = new DateTime(2022, 06, 01),
                     ToDate = DateTime.Now
                 };
-
-            var response = await userServices.GetUserInfo();
-            User = response.Data;
+            var responseI = await userServices.GetUserInfo();
+            User = responseI.Data;
+            var response = await branchService.GetBranchById(BranchId);
+            Title = response.Data.Name;
+            StateHasChanged();
             await Get(1);
             await GetChart();
             base.OnParametersSet();
