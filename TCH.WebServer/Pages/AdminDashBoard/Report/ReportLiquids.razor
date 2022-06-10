@@ -149,10 +149,26 @@
                                                 </tr>
                                             }
                                         }
-                                            @*else
-                                                {
-                                                <div class="spinner" ></div>
-                                                }*@
+                                        else
+                                        {
+                                            <tr class="odd">
+                                                <td colspan="9">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+                                                            <defs>
+                                                                <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+                                                                    <stop offset="0%" stop-color="hsl(193,90%,55%)"/>
+                                                                    <stop offset="100%" stop-color="hsl(223,90%,55%)"/>
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round"/>
+                                                            <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10"/>
+                                                        </svg>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
@@ -192,8 +208,7 @@
     public List<Report>? ProductsList = new List<Report>();
     private string? token;
     public string Name;
-    private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
-    private ApplicationUser User;
+    private Models.Pagination.Pagination pagination = new ();
     private DateRequest dateRequest;
     private double Sum;
 
@@ -212,14 +227,11 @@
     {
         try
         {
-            navigationManager.NavigateTo("reports-liquid");
             dateRequest = new DateRequest()
             {
-                FromDate = new DateTime(2022, 06, 01),
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 01),
                 ToDate = DateTime.Now
             };
-            var response = await userServices.GetUserInfo();
-            User = response.Data;
             await Get(1);
             await GetChart();
             base.OnParametersSet();
@@ -251,8 +263,6 @@
         {
             for (var date = dateRequest.FromDate.Date; date <= dateRequest.ToDate.Date; date = date.AddDays(1))
             {
-    //int daysInMonth = DateTime.DaysInMonth(year: 2022, month: date);
-    //var lastDayOfMonth = new DateTime(2022, date, daysInMonth);
                 var respond = await reportService.GetAllLiquid(false, 10, 1, date, date);
                 List<Report> orders = respond.Data.Items;
                 double sum = orders.Sum(x => x.TotalAmount);

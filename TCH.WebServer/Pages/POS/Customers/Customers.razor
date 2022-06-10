@@ -1,7 +1,7 @@
 ﻿@page "/customers"
 @using TCH.Data.Entities
 @using TCH.WebServer.Services.Customers
-@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@attribute [Authorize]
 @inject PageContainer _page
 @inject IToastService _toastService
 
@@ -13,9 +13,9 @@
 
 <div class="page d-flex flex-row flex-column-fluid">
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-        
+
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-            <div class="card card-flush " style="">
+            <div class="card card-flush " style="margin-top: 45px">
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                     <div class="card-title">
                         <div class="d-flex align-items-center position-relative my-1">
@@ -39,47 +39,73 @@
                         <div class="table-responsive">
                             <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
                                 <thead>
-                                    <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                                        <th class="min-w-125px">Họ tên</th>
-                                        <th class="min-w-125px">Ngày sinh</th>
-                                        <th class="min-w-125px">Email</th>
-                                        <th class="min-w-125px">Giới tính</th>
-                                        <th class="min-w-125px">Số điện thoại</th>
-                                        <th class="min-w-125px">Địa chỉ</th>
-                                        <th class="text-end min-w-100px"> </th>
-                                    </tr>
+                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="min-w-125px">Họ tên</th>
+                                    <th class="min-w-125px">Ngày sinh</th>
+                                    <th class="min-w-125px">Email</th>
+                                    <th class="min-w-125px">Giới tính</th>
+                                    <th class="min-w-125px">Số điện thoại</th>
+                                    <th class="min-w-125px">Địa chỉ</th>
+                                    <th class="text-end min-w-100px"> </th>
+                                </tr>
                                 </thead>
                                 <tbody class="fw-bold text-gray-600">
-                                    @if (users != null)
+                                @if (users != null && users.Count != 0)
+                                {
+                                    foreach (var item in users)
                                     {
-                                        foreach (var item in users)
-                                        {
-                                            <tr>
-                                                <td> <a href="/customers/@item.ID">@item.FullName </a></td>
-                                                <td>@item.DateOfBirth</td>
-                                                <td>@item.Email</td>
-                                                <td>@(item.Gender  == Gender.Male ? "Nam": "Nữ")</td>
-                                                <td>@item.Phone</td>
-                                                <td>@item.Address</td>
-                                                <td class="text-end">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                            Thao tác
-                                                        </button>
-                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                            <li><a class="dropdown-item" onclick="@(() => OnEdit(item.ID.ToString()))">Sửa</a></li>
-                                                            <li><a class="dropdown-item" onclick="@(() => OnRemove(item.ID.ToString()))">Xóa</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        }
+                                        <tr>
+                                            <td>
+                                                <a href="/customers/@item.ID">@item.FullName </a>
+                                            </td>
+                                            <td>@item.DateOfBirth</td>
+                                            <td>@item.Email</td>
+                                            <td>@(item.Gender == Gender.Male ? "Nam" : "Nữ")</td>
+                                            <td>@item.Phone</td>
+                                            <td>@item.Address</td>
+                                            <td class="text-end">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Thao tác
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li>
+                                                            <a class="dropdown-item" onclick="@(() => OnEdit(item.ID.ToString()))">Sửa</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" onclick="@(() => OnRemove(item.ID.ToString()))">Xóa</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     }
+                                }
+                                else
+                                {
+                                    <tr class="odd">
+                                        <td colspan="7">
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+                                                    <defs>
+                                                        <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+                                                            <stop offset="0%" stop-color="hsl(193,90%,55%)"/>
+                                                            <stop offset="100%" stop-color="hsl(223,90%,55%)"/>
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round"/>
+                                                    <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10"/>
+                                                </svg>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                }
                                 </tbody>
                             </table>
                         </div>
                         <div class="row">
-                            <Pagination Count="@(total / pageSize + (total % pageSize > 1 ? 1 : 0))" SelectedChanged="OnSelectedChanged" />
+                            <Pagination Count="@(total / pageSize + (total % pageSize > 1 ? 1 : 0))" SelectedChanged="OnSelectedChanged"/>
                         </div>
                     </div>
                 </div>
@@ -94,13 +120,15 @@
     private int total = 0;
     private string searchContent = "";
     private int PageIndex;
+
     private Search search = new Search()
-        {
-            Name = "",
-            IsPging = true,
-            PageNumber = 1,
-            PageSize = 10
-        };
+    {
+        Name = "",
+        IsPging = true,
+        PageNumber = 1,
+        PageSize = 10
+    };
+
     protected override void OnInitialized()
     {
         _page.Config("Quản lý tài khoản");
@@ -116,25 +144,29 @@
     {
         if (e.Key == "Enter" || e.Key == "NumpadEnter") await OnSelectedChanged(1);
     }
+
 }
 
 @code {
+
     private async Task OnSelectedChanged(int pageIndex)
     {
-        try{
+        try
+        {
             PageIndex = pageIndex;
             search.PageNumber = PageIndex;
             var result = await customerService.GetAllCustomer(search.IsPging, search.PageSize, search.PageNumber, search.Name);
             total = result.Data.TotalRecord;
             users = result.Data.Items;
-
         }
-        catch(Exception e){
+        catch (Exception e)
+        {
             throw;
         }
     }
 
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
 
     private async Task OnNew()
     {
@@ -142,9 +174,9 @@
         parameters.Add(nameof(AddCustomer.Title), "Thêm mới khách hàng thành viên");
 
         var modal = Modal.Show<AddCustomer>(string.Empty, parameters, options: new ModalOptions
-            {
-                UseCustomLayout = true
-            });
+        {
+            UseCustomLayout = true
+        });
 
         var result = await modal.Result;
 
@@ -172,14 +204,17 @@
             await OnSelectedChanged(PageIndex);
         }
     }
+
     private async Task OnRemove(string id)
     {
-        try{
+        try
+        {
             await customerService.DeleCustomer(id);
         }
-        catch(Exception){
+        catch (Exception)
+        {
             _toastService.ShowError("Không xóa thành công");
         }
-
     }
+
 }

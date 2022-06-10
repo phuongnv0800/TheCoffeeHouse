@@ -8,15 +8,35 @@
     <projectFile profileName="IIS Express">TCH.Web/TCH.Web.csproj</projectFile>
     <projectFile profileName="TCH.WebServer">TCH.WebServer/TCH.WebServer.csproj</projectFile>
     <projectFile profileName="IIS Express">TCH.WebServer/TCH.WebServer.csproj</projectFile>
+    <projectFile profileName="TCH.WebServerV2">TCH.WebServer/TCH.WebServer.csproj</projectFile>
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="commit">
-      <change afterPath="$PROJECT_DIR$/TCH.ViewModel/SubModels/ProductQuantityVm.cs" afterDir="false" />
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="remove image">
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ExportReportInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ImportReportInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/LiquidReportInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/MassMaterialInDaysInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/OrdersInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/StockInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/POS/Customers/Customers.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Shared/Page404.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IOrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IOrderRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/App.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/App.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Orders/Orders.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Orders/Orders.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/Authentication/Login.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/Authentication/Login.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddImportReportDetail.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddImportReportDetail.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ExportReportInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ExportReportInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ImportReportInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ImportReportInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/LiquidReportInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/LiquidReportInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/MassMaterialInDaysInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/MassMaterialInDaysInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/OrdersInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/OrdersInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/StockInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/StockInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/POS/Customers/Customers.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/POS/Customers/Customers.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Shared/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Shared/MainLayout.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Shared/NavMenu.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/_Imports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/_Imports.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,6 +54,13 @@
       <set>
         <option value="System.Linq : System.Linq.SystemCore_EnumerableDebugView&lt;T&gt; : get_Items ()" />
       </set>
+    </option>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
     </option>
   </component>
   <component name="Git.Settings">
@@ -54,14 +81,17 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Controllers/OrdersController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Controllers/ProductsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/EF/Seed.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/ProductManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/AdminDashBoard/Brands/Brands.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/AdminDashBoard/Orders/OrderComponent.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.WebServer/wwwroot/assets/js/custom/apps/subscriptions/list/list.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2f7b3b6e2f3c491c91283c8624ab32661ce200/1f/48011b47/HttpDeleteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/52497164c20e48fe99d13ce8b06ca9817c00/60/9a300f2c/Pagination.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/52497164c20e48fe99d13ce8b06ca9817c00/be/1b4838d6/AsideFooter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5a5ae644fdbadec9bdc495c592ec7c1ba2fa382751f78a221412bfe43af5ce0/HttpResponseMessage.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bebd253e21dcf766929bfdfd74615bfe46e6e1693b289273dbdb82152893/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d4f98ebdd878db4fbd98872756eb7be6ad9e468fe5cd6b16385d8c4993109a/List.cs" root0="SKIP_HIGHLIGHTING" />
@@ -80,17 +110,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CodeLensConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "list.type.of.created.stylesheet": "CSS",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "CodeLensConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.TCH.BackendApi">
+}]]></component>
+  <component name="RunManager" selected=".NET Launch Settings Profile.TCH.WebServer">
     <configuration name="TCH.BackendApi: FolderProfile" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish publish_profile="FolderProfile.pubxml" pubxml_path="$PROJECT_DIR$/TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml" uuid_high="-3772649467511487652" uuid_low="-6946827706269875391" />
       <method v="2" />
@@ -121,6 +152,7 @@
       <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
       <option name="SEND_DEBUG_REQUEST" value="1" />
       <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <option name="RUNTIME_TYPE" value="coreclr" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -170,8 +202,23 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="TCH.WebServer: TCH.WebServerV2" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/TCH.WebServer/TCH.WebServer.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
+      <option name="LAUNCH_PROFILE_NAME" value="TCH.WebServerV2" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
     <configuration name="TCH.Web: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
-      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/TCH.Web/TCH.Web.csproj" />
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/TCH.WebServer/TCH.WebServer.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
       <option name="LAUNCH_PROFILE_NAME" value="IIS Express" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
@@ -217,7 +264,7 @@
       <workItem from="1654404505866" duration="645000" />
       <workItem from="1654519806393" duration="9758000" />
       <workItem from="1654780881902" duration="3404000" />
-      <workItem from="1654822592824" duration="2995000" />
+      <workItem from="1654822592824" duration="17127000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -352,7 +399,42 @@
       <option name="project" value="LOCAL" />
       <updated>1654825988948</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="on">
+      <created>1654828342589</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1654828342589</updated>
+    </task>
+    <task id="LOCAL-00021" summary="update">
+      <created>1654828997122</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1654828997122</updated>
+    </task>
+    <task id="LOCAL-00022" summary="update availabel">
+      <created>1654829625057</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1654829625057</updated>
+    </task>
+    <task id="LOCAL-00023" summary="update route and add spinner">
+      <created>1654838841655</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1654838841655</updated>
+    </task>
+    <task id="LOCAL-00024" summary="remove image">
+      <created>1654838861970</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1654838861970</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -399,13 +481,17 @@
     <MESSAGE value="add mass material" />
     <MESSAGE value="nomessage" />
     <MESSAGE value="update user" />
-    <MESSAGE value="update" />
     <MESSAGE value="pẻom" />
     <MESSAGE value="model" />
     <MESSAGE value="pussh" />
     <MESSAGE value="add" />
     <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value="on" />
+    <MESSAGE value="update" />
+    <MESSAGE value="update availabel" />
+    <MESSAGE value="update route and add spinner" />
+    <MESSAGE value="remove image" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove image" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

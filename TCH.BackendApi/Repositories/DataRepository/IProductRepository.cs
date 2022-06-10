@@ -16,6 +16,7 @@ public interface IProductRepository
     Task<Respond<PagedList<ProductVm>>> GetProductByCategoryID(string categoryID, Search request);
 
     Task<Respond<PagedList<HistoryPriceUpdate>>> GetHistoryPriceByID(string iD, Search request);
+    Task<MessageResult> UpdateAvailable(string productID, bool IsAvailable);
 
     Task<MessageResult> Create(ProductRequest request);
 

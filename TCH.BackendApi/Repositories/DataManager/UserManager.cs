@@ -70,7 +70,7 @@ public class UserManager : IUserRepository, IDisposable
 
         claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
         claims.Add(new Claim(ClaimTypes.Email, user.Email ?? ""));
-        claims.Add(new Claim(ClaimTypes.GivenName, user.FirstName ?? "" + " " + user.LastName));
+        claims.Add(new Claim(ClaimTypes.GivenName, (user.FirstName ?? "") + " " + (user.LastName ?? "")));
         //claims.Add( new Claim(ClaimTypes.Role, string.Join(";", roles)),
         claims.Add(new Claim(ClaimTypes.Name, request.UserName));
         claims.Add(new Claim(ClaimValue.Displayname, user.LastName ?? ""));
@@ -116,7 +116,7 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Tài khoản không tồn tại",
             };
         await _storageService.DeleteFileAsync(UserContentFolderName + "/" + user.Avatar);
-        var result = await _userManager.DeleteAsync(user);//xoa user
+        var result = await _userManager.DeleteAsync(user); //xoa user
         if (result.Succeeded)
             return new MessageResult()
             {
@@ -149,6 +149,7 @@ public class UserManager : IUserRepository, IDisposable
             Data = user,
         };
     }
+
     public async Task<Respond<UserVm>> GetByIdVm(string id)
     {
         var user = await _userManager.FindByIdAsync(id);
@@ -201,6 +202,7 @@ public class UserManager : IUserRepository, IDisposable
             Data = user,
         };
     }
+
     public async Task<Respond<PagedList<AppUser>>> GetAllByBranchID(string branchId, Search request)
     {
         var query = _context
@@ -210,8 +212,9 @@ public class UserManager : IUserRepository, IDisposable
         {
             query = query.Where(x => x.UserName.Contains(request.Name));
         }
+
         //paging
-        int totalRow =await query.CountAsync();
+        int totalRow = await query.CountAsync();
         List<AppUser> data = new List<AppUser>();
         if (request.IsPging)
             data = await query
@@ -222,12 +225,13 @@ public class UserManager : IUserRepository, IDisposable
         {
             data = await query.ToListAsync();
         }
+
         var pagedResult = new PagedList<AppUser>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<AppUser>>()
@@ -237,6 +241,7 @@ public class UserManager : IUserRepository, IDisposable
             Message = "Success",
         };
     }
+
     public async Task<Respond<PagedList<AppUser>>> GetAll(Search request)
     {
         var query = _context
@@ -246,8 +251,9 @@ public class UserManager : IUserRepository, IDisposable
         {
             query = query.Where(x => x.UserName.Contains(request.Name));
         }
+
         //paging
-        int totalRow =await query.CountAsync();
+        int totalRow = await query.CountAsync();
         List<AppUser> data = new List<AppUser>();
         if (request.IsPging)
             data = await query
@@ -258,12 +264,13 @@ public class UserManager : IUserRepository, IDisposable
         {
             data = await query.ToListAsync();
         }
+
         var pagedResult = new PagedList<AppUser>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<AppUser>>()
@@ -273,6 +280,7 @@ public class UserManager : IUserRepository, IDisposable
             Message = "Success",
         };
     }
+
     public async Task<Respond<PagedList<AppUser>>> GetUserByBranchId(string branchId, Search request)
     {
         var query = _context
@@ -282,8 +290,9 @@ public class UserManager : IUserRepository, IDisposable
         {
             query = query.Where(x => x.UserName.Contains(request.Name));
         }
+
         //paging
-        int totalRow =await query.CountAsync();
+        int totalRow = await query.CountAsync();
         List<AppUser> data = new List<AppUser>();
         if (request.IsPging)
             data = await query
@@ -294,12 +303,13 @@ public class UserManager : IUserRepository, IDisposable
         {
             data = await query.ToListAsync();
         }
+
         var pagedResult = new PagedList<AppUser>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<AppUser>>()
@@ -367,6 +377,7 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Không thể cập nhật quyền hạn",
             };
         }
+
         var removedRoles = request.Roles.Where(x => x.Selected == false).Select(x => x.Name).ToList();
 
         //await _userManager.RemoveFromRolesAsync(user, removedRoles);
@@ -382,6 +393,7 @@ public class UserManager : IUserRepository, IDisposable
             if (await _userManager.IsInRoleAsync(user, roleName) == false)
                 await _userManager.AddToRoleAsync(user, roleName);
         }
+
         return new MessageResult()
         {
             Result = 1,
@@ -399,6 +411,7 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Không thể cập nhật thông tin"
             };
         }
+
         var user = await _userManager.FindByIdAsync(id);
         user.DateOfBirth = request.DateOfBirth;
         user.Email = request.Email;
@@ -412,6 +425,7 @@ public class UserManager : IUserRepository, IDisposable
             await _storageService.DeleteFileAsync(UserContentFolderName + "/" + user.Avatar);
             user.Avatar = await SaveFileIFormFile(request.AvatarFile);
         }
+
         var result = await _userManager.UpdateAsync(user);
         if (result.Succeeded)
         {
@@ -421,12 +435,14 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Cập nhật thông tin thành công",
             };
         }
+
         return new MessageResult()
         {
             Result = 0,
             Message = "Không thể cập nhật thông tin",
         };
     }
+
     public async Task<MessageResult> LockUser(string id)
     {
         if (await _userManager.Users.AnyAsync(x => x.Id != id))
@@ -437,6 +453,7 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Không tồn tại tài khoản"
             };
         }
+
         var user = await _userManager.FindByIdAsync(id);
         user.Status = Status.Deactivate;
         await _userManager.UpdateAsync(user);
@@ -446,6 +463,7 @@ public class UserManager : IUserRepository, IDisposable
             Message = "Khoá tài khoản thành công",
         };
     }
+
     public async Task<MessageResult> ChangePasword(ChangePassword req)
     {
         if (await _userManager.FindByNameAsync(req.UserName) == null)
@@ -456,6 +474,7 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Tài khoản không tồn tại",
             };
         }
+
         var user = await _userManager.FindByLoginAsync(req.UserName, req.PasswordOld);
         if (user == null)
         {
@@ -465,6 +484,7 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Mật khẩu không chính xác",
             };
         }
+
         if (req.PasswordNew.Equals(req.PasswordConfirm) == false)
         {
             return new MessageResult()
@@ -473,6 +493,7 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Mật khẩu mới khác nhau",
             };
         }
+
         var hasher = new PasswordHasher<AppUser>();
         user.PasswordHash = hasher.HashPassword(null, req.PasswordNew);
         var result = await _userManager.UpdateAsync(user);
@@ -484,6 +505,7 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Thay đổi mật khẩu thành công",
             };
         }
+
         return new MessageResult()
         {
             Result = 0,
