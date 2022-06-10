@@ -13,6 +13,7 @@ namespace TCH.WebServer.Services.Customers
     public interface ICustomerService
     {
         public Task<ResponseLogin<PagedList<Customer>>> GetAllCustomer(bool IsPaging, int pageSize, int pageNumber, string sdt);
+        public Task<ResponseLogin<Customer>> GetAllCustomerByPhone(string sdt);
         public Task<ResponseLogin<Customer>> AddCustomer(CustomerRequest request);
         public Task<ResponseLogin<Customer>> UpdateCustomer(CustomerRequest request, string id);
         public Task<ResponseLogin<Customer>> GetCustomerById(string id);
@@ -82,6 +83,23 @@ namespace TCH.WebServer.Services.Customers
             {
                 var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Customer>>>($"/api/Customers/?IsPging=" + IsPaging.ToString()
                         + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&Name=" + sdt);
+                if (response.Result != 1)
+                {
+                    return null;
+                }
+                return response;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<ResponseLogin<Customer>> GetAllCustomerByPhone(string sdt)
+        {
+            try
+            {
+                var response = await httpClient.GetFromJsonAsync<ResponseLogin<Customer>>($"/api/Customers/phone-number/{sdt}");
                 if (response.Result != 1)
                 {
                     return null;

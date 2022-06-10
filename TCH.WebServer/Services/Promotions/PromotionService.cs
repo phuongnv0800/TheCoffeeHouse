@@ -14,6 +14,7 @@ namespace TCH.WebServer.Services.Promotions
         Task<ResponseLogin<PagedList<Promotion>>> GetAllPromotions(bool IsPaging, int pageSize, int pageNumber);
         Task<ResponseLogin<Promotion>> AddPromotion(PromotionRequest Promotion);
         Task<ResponseLogin<Promotion>> GetPromotionById(string id);
+        Task<double> GetReduceMoney(string code, List<OrderItem> orderItems);
         Task<ResponseLogin<Promotion>> Update(PromotionRequest Promotion);
         Task DeletePromotion(string id);
     }
@@ -122,6 +123,31 @@ namespace TCH.WebServer.Services.Promotions
                     return null;
                 }
                 return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<double> GetReduceMoney(string code, List<OrderItem> orderItems)
+        {
+            try
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(orderItems), Encoding.UTF8, "application/json");
+                var response = await httpClient.PostAsync($"/api/Promotions/{code}", httpContent);
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    ResponseLogin<dynamic> respond = JsonConvert.DeserializeObject<ResponseLogin<dynamic>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond.Data.ReducePromotion;
+                    }
+                    return 0;
+                }
+                return 0;
             }
             catch
             {

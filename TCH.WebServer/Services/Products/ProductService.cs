@@ -139,6 +139,26 @@ namespace TCH.WebServer.Services.Products
             }
         }
 
+        public async Task<ResponseLogin<PagedList<ProductVm>>> GetAllProducts()
+        {
+            try
+            {
+                List<ProductVm> Products;
+                _httpClient.DefaultRequestHeaders.Accept.Clear();
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await _httpClient.GetFromJsonAsync<ResponseLogin<PagedList<ProductVm>>>("/api/Products");
+                if (response.Result != 1)
+                {
+                    return null;
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<ResponseLogin<PagedList<ProductVm>>> GetProductsByBranch(bool IsPaging, int pageSize, int pageNumber, string branchId, string name)
         {
             try

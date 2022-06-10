@@ -7,75 +7,89 @@
 @using TCH.WebServer.Services.Orders
 @using TCH.WebServer.Services.Products
 @using TCH.WebServer.Services.Users
+@using TCH.WebServer.Services.Customers
+@using TCH.WebServer.Services.Promotions
 @inject NavigationManager navigationManager
-@inject IProductService productServices
+@inject IProductService productService
 @inject IUserService userServices
 @inject ICategoryService categoryServices
 @inject NavigationManager NavManager
 @inject IToastService toastService
 @inject IOrderService orderService
+@inject ICustomerService customerService
+@inject IPromotionService promotionService
 @attribute [Authorize]
 
 <div class="page d-flex flex-row flex-column-fluid">
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-        
+
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
             <div class="content flex-column-fluid" id="kt_content">
                 <!--begin::Layout-->
                 <div class="d-flex flex-column flex-lg-row">
                     <!--begin::Content-->
                     <div class="flex-lg-row-fluid mb-10 mb-lg-0 me-lg-7 me-xl-10">
-                        @if(order != null)
+                        @if (order != null)
                         {
-                              <!--begin::Card-->
-                        <div class="card">
-                            <!--begin::Card body-->
+                            <!--begin::Card-->
+                            <div class="card">
+                                <!--begin::Card body-->
                             <div class="card-body p-12">
-                                <!--begin::Form-->
+                                    <!--begin::Form-->
                                 <form action="" id="kt_invoice_form">
-                                    <!--begin::Separator-->
+                                        <!--begin::Separator-->
                                     <div class="separator separator-dashed my-10"></div>
-                                    <!--end::Separator-->
-                                    <!--begin::Wrapper-->
+                                        <!--end::Separator-->
+                                        <!--begin::Wrapper-->
                                     <div class="mb-0">
-                                        <!--begin::Row-->
+                                            <!--begin::Row-->
                                         <div class="row gx-10 mb-5">
-                                            <!--begin::Col-->
+                                                <!--begin::Col-->
                                             <div class="col-lg-12">
-                                                <EditForm Model="@order">
-                                                    <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Số bàn</label>
-                                                    <!--begin::Input group-->
+                                                    @if (phone != null)
+                                                    {
+                                                        <EditForm Model="@phone">
+                                                            <div class="mb-5">
+                                                                <InputText @bind-Value="phone" type="text" class="form-control form-control-solid" placeholder="Số điện thoại khách hàng (nếu có)"></InputText>
+                                                            </div>
+                                                        </EditForm>
+                                                    }
+
+                                                    <EditForm Model="@order">
+                                                        <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Số bàn</label>
+                                                        <!--begin::Input group-->
                                                     <div class="mb-5">
-                                                        <InputNumber @bind-Value="order.TableNum" type="text" class="form-control form-control-solid" placeholder="Số bàn"></InputNumber>
-                                                    </div>
-                                                    <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Tên nhân viên</label>
-                                                    <div class="mb-5">
-                                                        <InputText @bind-Value="order.Cashier" type="text" class="form-control form-control-solid" placeholder="Tên nhân viên"></InputText>
-                                                    </div>
-                                                    <!--end::Input group-->
-                                                    <!--begin::Input group-->
+                                                            <InputNumber @bind-Value="order.TableNum" type="text" class="form-control form-control-solid" placeholder="Số bàn"></InputNumber>
+                                                        </div>
+                                                        <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Tên nhân viên</label>
+                                                        <div class="mb-5">
+                                                            <InputText @bind-Value="order.Cashier" type="text" class="form-control form-control-solid" placeholder="Tên nhân viên"></InputText>
+                                                        </div>
+
+                                                        <!--end::Input group-->
+                                                        <!--begin::Input group-->
                                                     <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Tiền khách gửi</label>
-                                                    <div class="mb-5">
-                                                        <InputNumber @bind-Value="order.CustomerPut" type="text" class="form-control form-control-solid" placeholder="Tiền khách gửi"></InputNumber>
-                                                    </div>
-                                                    <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Tiền thừa</label>
-                                                    <div class="mb-5">
-                                                        <InputNumber @bind-Value="order.CustomerReceive" type="text" class="form-control form-control-solid" placeholder="Tiền thừa"></InputNumber>
-                                                    </div>
-                                                    <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Phí ship</label>
-                                                    <div class="mb-5">
-                                                        <InputNumber @bind-Value="order.ShippingFee" type="text" class="form-control form-control-solid" placeholder="Phí Ship"></InputNumber>
-                                                    </div>
-                                                    <!--end::Input group-->
-                                                    <!--begin::Input group-->
+                                                        <div class="mb-5">
+                                                            <InputNumber @bind-Value="order.CustomerPut" type="text" class="form-control form-control-solid" placeholder="Tiền khách gửi"></InputNumber>
+                                                        </div>
+                                                        <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Tiền thừa</label>
+                                                        <div class="mb-5">
+                                                            <InputNumber @bind-Value="order.CustomerReceive" type="text" class="form-control form-control-solid" placeholder="Tiền thừa"></InputNumber>
+                                                        </div>
+                                                        <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Phí ship</label>
+                                                        <div class="mb-5">
+                                                            <InputNumber @bind-Value="order.ShippingFee" type="text" class="form-control form-control-solid" placeholder="Phí Ship"></InputNumber>
+                                                        </div>
+                                                        <!--end::Input group-->
+                                                        <!--begin::Input group-->
                                                     <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Kiểu bán</label>
-                                                    <div class="mb-5">
-                                                        <InputSelect @bind-Value="order.OrderType" class="form-control">
-                                                            @foreach (var ice in Enum.GetValues(typeof(OrderType)))
-                                                            {
-                                                            <option value="@ice">@ice</option>
-                                                            }
-                                                    </InputSelect>
+                                                        <div class="mb-5">
+                                                            <InputSelect @bind-Value="order.OrderType" class="form-control">
+                                                                @foreach (var ice in Enum.GetValues(typeof(OrderType)))
+                                                                {
+                                                                <option value="@ice">@ice</option>
+                                                                }
+                                                        </InputSelect>
                                                     </div>
                                                     <!--end::Input group-->
                                                 </EditForm>
@@ -98,102 +112,116 @@
                                                 <!--end::Table head-->
                                                 <!--begin::Table body-->
                                                 <tbody>
-                                                        @if (order != null && order.OrderItems != null)
+                                                    @if (order != null && order.OrderItems != null)
                                                         {
                                                             foreach (var orderDetail in order.OrderItems)
                                                             {
                                                                 <tr class="border-bottom border-bottom-dashed" data-kt-element="item">
-                                                                <td class="pe-7">
-                                                                    <input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="@orderDetail.NameProduct">
-                                                                </td>
-                                                                <td class="ps-0">
-                                                                    <input class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" value="x@(orderDetail.Quantity)" data-kt-element="quantity">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" value="@orderDetail.SubAmount" data-kt-element="price">
-                                                                </td>
+                                                                    <td class="pe-7">
+                                                                        <input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="@orderDetail.NameProduct">
+                                                                    </td>
+                                                                    <td class="ps-0">
+                                                                        <input class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" value="x@(orderDetail.Quantity)" data-kt-element="quantity">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" value="@orderDetail.SubAmount" data-kt-element="price">
+                                                                    </td>
                                                                 </tr>
                                                             }
                                                         }
-                                                    
-                                                </tbody>
-                                                <!--end::Table body-->
-                                                <!--begin::Table foot-->
+
+                                                    </tbody>
+                                                    <!--end::Table body-->
+                                                    <!--begin::Table foot-->
                                                 <tfoot>
-                                                    
-                                                    <tr class="align-top fw-bolder text-gray-700">
-                                                        <th></th>
-                                                        <th colspan="2" class="fs-4 ps-0">Total</th>
-                                                        <th colspan="2" class="text-end fs-4 text-nowrap">
-                                                            <span data-kt-element="grand-total">@order.TotalAmount </span>
-                                                            VND
-                                                        </th>
-                                                    </tr>
-                                                </tfoot>
-                                                <!--end::Table foot-->
+
+                                                        <tr class="align-top fw-bolder text-gray-700">
+                                                            <th></th>
+                                                            <th colspan="2" class="fs-4 ps-0">Total</th>
+                                                            <th colspan="2" class="text-end fs-4 text-nowrap">
+                                                                <span data-kt-element="grand-total">@order.TotalAmount </span>
+                                                                VND
+                                                            </th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <!--end::Table foot-->
                                             </table>
-                                        </div>
-                                        <!--end::Table-->
-                                        @*<!--begin::Item template-->
-                                        <table class="table d-none" data-kt-element="item-template">
-                                            <tbody>
-                                                <tr class="border-bottom border-bottom-dashed" data-kt-element="item">
-                                                    <td class="pe-7">
-                                                        <input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Item name">
-                                                        <input type="text" class="form-control form-control-solid" name="description[]" placeholder="Description">
-                                                    </td>
-                                                    <td class="ps-0">
-                                                        <input class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" data-kt-element="quantity">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" data-kt-element="price">
-                                                    </td>
-                                                    <td class="pt-8 text-end">
-                                                        $
-                                                        <span data-kt-element="total">0.00</span>
-                                                    </td>
-                                                    <td class="pt-5 text-end">
-                                                        <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                            <span class="svg-icon svg-icon-3">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                    <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
-                                                                    <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
-                                                                    <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <table class="table d-none" data-kt-element="empty-template">
-                                            <tbody>
-                                                <tr data-kt-element="empty">
-                                                    <th colspan="5" class="text-muted text-center py-10">No items</th>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <!--end::Item template-->*@
-                                        <!--begin::Notes-->
-                                        <EditForm Model="@order">
-                                            <div class="mb-0">
-                                                <label class="form-label fs-6 fw-bolder text-gray-700">Ghi chú</label>
-                                                <InputTextArea @bind-Value="order.Description" name="notes" class="form-control form-control-solid" rows="3" placeholder="Thanks for your business"></InputTextArea>
                                             </div>
-                                        </EditForm>
-                                        <!--end::Notes-->
+                                            @if (codeF != null)
+                                            {
+                                                <EditForm Model="@codeF">
+                                                    <div class="mb-5">
+                                                        <InputText @bind-Value="codeF" type="text" class="form-control form-control-solid" placeholder="Mã giảm giá (nếu có)"></InputText>
+                                                    </div>
+                                                </EditForm>
+                                                <button class="btn-success" onclick="@(() => PickCode())">Nạp mã giảm giá</button>
+                                            }
+                                            <div class="mb-5">
+                                                <div class="mb-0">
+                                                    <label class="form-label fs-6 fw-bolder text-gray-700">Khuyến mãi</label>
+                                                    <input name="notes" class="form-control form-control-solid" rows="3" placeholder="@reduce" />
+                                                </div>
+                                            </div>
+                                            <!--end::Table-->
+                                            @*<!--begin::Item template-->
+                                                <table class="table d-none" data-kt-element="item-template">
+                                                <tbody>
+                                                <tr class="border-bottom border-bottom-dashed" data-kt-element="item">
+                                                <td class="pe-7">
+                                                <input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Item name">
+                                                <input type="text" class="form-control form-control-solid" name="description[]" placeholder="Description">
+                                                </td>
+                                                <td class="ps-0">
+                                                <input class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" data-kt-element="quantity">
+                                                </td>
+                                                <td>
+                                                <input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" data-kt-element="price">
+                                                </td>
+                                                <td class="pt-8 text-end">
+                                                $
+                                                <span data-kt-element="total">0.00</span>
+                                                </td>
+                                                <td class="pt-5 text-end">
+                                                <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                                <span class="svg-icon svg-icon-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+                                                </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                                </button>
+                                                </td>
+                                                </tr>
+                                                </tbody>
+                                                </table>
+                                                <table class="table d-none" data-kt-element="empty-template">
+                                                <tbody>
+                                                <tr data-kt-element="empty">
+                                                <th colspan="5" class="text-muted text-center py-10">No items</th>
+                                                </tr>
+                                                </tbody>
+                                                </table>
+                                                <!--end::Item template-->*@
+                                            <!--begin::Notes-->
+                                        <EditForm Model="@order">
+                                                <div class="mb-0">
+                                                    <label class="form-label fs-6 fw-bolder text-gray-700">Ghi chú</label>
+                                                    <InputTextArea @bind-Value="order.Description" name="notes" class="form-control form-control-solid" rows="3" placeholder="Thanks for your business"></InputTextArea>
+                                                </div>
+                                            </EditForm>
+                                            <!--end::Notes-->
                                     </div>
-                                    <!--end::Wrapper-->
+                                        <!--end::Wrapper-->
                                 </form>
-                                <!--end::Form-->
+                                    <!--end::Form-->
                             </div>
-                            <!--end::Card body-->
+                                <!--end::Card body-->
                         </div>
-                        <!--end::Card-->
+                            <!--end::Card-->
                             <!--begin::Card-->
-                            
                         }
                     </div>
                     <!--end::Content-->
@@ -256,10 +284,14 @@
     private ApplicationUser User;
     private OrderRequest order;
     private string Id;
+    private string phone = "";
+    private string codeF = "";
+    private double reduce = 0;
 
     protected override async Task OnParametersSetAsync()
     {
-        try{
+        try
+        {
             order = GbParameter.GbParameter.Order;
             if (order == null)
             {
@@ -267,6 +299,7 @@
                 order.OrderItems = new List<OrderItem>();
                 GbParameter.GbParameter.Order = order;
             }
+
 
             var response = await userServices.GetUserInfo();
             User = response.Data;
@@ -278,7 +311,7 @@
 
             base.OnParametersSet();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             toastService.ShowError("có lỗi");
         }
@@ -291,9 +324,19 @@
         var modal = Modal.Show<InvoicePopup>("Hóa đơn", parameters);
         var result = await modal.Result;
     }
+    public async Task PickCode()
+    {
+        reduce = await promotionService.GetReduceMoney(codeF, order.OrderItems);
+        order.TotalAmount -= reduce;
+        StateHasChanged();
+    }
     public async Task OnSubmit()
     {
+        var res = await customerService.GetAllCustomerByPhone(phone);
+        Customer cus = res.Data;
+
         order.BranchID = User.BranchId;
+        order.CustomerID = cus.ID;
         var response = await orderService.AddOrder(order);
         if (response != null && response.Result == 1)
         {
