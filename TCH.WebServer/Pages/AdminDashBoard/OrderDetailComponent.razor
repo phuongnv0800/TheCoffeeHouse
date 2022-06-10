@@ -1,0 +1,290 @@
+﻿@page "/orders/{BranchId}"
+@using Blazored.LocalStorage
+@using Microsoft.AspNetCore.Identity
+@using Newtonsoft.Json
+@using System.Net.Http.Headers
+
+@using System.Security.Claims
+@using TCH.Data.Entities
+@using TCH.WebServer.Models
+@using TCH.WebServer.Models.Pagination
+@using TCH.WebServer.Services.Orders
+@using TCH.WebServer.Services.Users
+
+@inject HttpClient httpClient
+@inject ILocalStorageService localStorage;
+@inject IOrderService orderService;
+@inject IUserService userServices;
+@inject NavigationManager navigationManager;
+@inject IToastService toastService;
+@inject IJSRuntime jsRuntime;
+@attribute [Authorize]
+
+<div class="page d-flex flex-row flex-column-fluid">
+    <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+
+        <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+            <div class="card card-flush " style="">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            @if (dateRequest != null)
+                            {
+                                <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
+                                    <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu" />
+                                    <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith" />
+                                    <button onclick="@(() => SearchByText())"
+                                        class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Tìm kiếm
+                                    </button>
+                                </EditForm>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body pt-0">
+                                <RadzenChart>
+                                    <RadzenLineSeries Smooth="true" Data="@items" CategoryProperty="Date" Title="Tháng 6/2022" ValueProperty="Revenue">
+                                        <RadzenMarkers MarkerType="MarkerType.Square" />
+                                    </RadzenLineSeries>
+
+                                    <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}" />
+                                    <RadzenValueA98-xis>
+                                        @*<RadzenGridLines Visible="true" />*@
+                                        <RadzenAxisTitle Text="Tổng doanh thu" />
+                                    </RadzenValueA98-xis>
+                                </RadzenChart>
+                                <div class="text-end d-flex mt-5">
+                                    <h1>Tổng doanh thu:  </h1>
+                                    <h1 class="text-primary ms-2">@Sum</h1>
+                                    <button class="btn btn-success ms-5" onclick="@(() => ExportExcel())">Xuất Excel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="table-responsive">
+                                    <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
+                                        <thead>
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
+                                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                                        <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
+                                                    </div>
+                                                </th>
+                                                <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Tên phiếu nhập
+                                                </th>
+                                                <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
+                                                    Thao tác
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="fw-bold text-gray-600">
+                                            @if (ProductsList.Count != 0)
+                                            {
+                                                foreach (var product in ProductsList)
+                                                {
+                                                    string href = "/orders/" + product.ID.ToString();
+                                                    <tr class="odd">
+                                                        <td>
+                                                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                                <input class="form-check-input" type="checkbox" value="1">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="ms-5">
+                                                                    <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                        @product.Code
+                                                                    </a>
+                                                                    <div class="text-muted fs-7 fw-bolder">@product.Cashier</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            @*if(product.Category.Name != null){
+                                                                <div class="badge badge-light-success">@product.Category.Name</div>
+                                                                }*@
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <div class="dropdown">
+                                                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    Thao tác
+                                                                </button>
+                                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                                    <li><a class="dropdown-item" onclick="@(() => Delete(@product.ID.ToString()))">Xóa</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            @*else
+                                                {
+                                                <div class="spinner" ></div>
+                                                }*@
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                                        <div class="dataTables_length" id="kt_ecommerce_category_table_length">
+                                            <label>
+                                                <EditForm Model="pagination">
+                                                    <InputSelect @bind-Value="pagination.pageSize" name="kt_ecommerce_category_table_length" aria-controls="kt_ecommerce_category_table" class="form-select form-select-sm form-select-solid">
+                                                        <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
+                                                    </InputSelect>
+                                                </EditForm>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                                        <div class="dataTables_paginate paging_simple_numbers" id="kt_ecommerce_category_table_paginate">
+                                            <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]public string BranchId { get; set; }
+    public List<Order>? ProductsList = new List<Order>();
+    private string? token;
+    public string Name;
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
+    private ApplicationUser User;
+    private DateRequest dateRequest;
+    private double Sum;
+    class DataItem
+    {
+        public DateTime Date { get; set; }
+        public double Revenue { get; set; }
+    }
+    private List<DataItem> items = new List<DataItem>();
+
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            navigationManager.NavigateTo($"orders-branch");
+            dateRequest = new DateRequest()
+                {
+                    FromDate = new DateTime(2022, 06, 01),
+                    ToDate = DateTime.Now
+                };
+
+            var response = await userServices.GetUserInfo();
+            User = response.Data;
+            await Get(1);
+            await GetChart();
+            base.OnParametersSet();
+        }
+        catch (Exception e)
+        {
+            toastService.ShowError("có lỗi");
+        }
+    }
+    public async Task Get(int pageNumber)
+    {
+        try
+        {
+            var response = await orderService.GetAllOrdersInBranch(true, pagination.pageSize, pageNumber, BranchId,User.Id, dateRequest.FromDate, dateRequest.ToDate);
+            pagination.PageNumber = response.Data.CurrentPage;
+            ProductsList = response.Data.Items.ToList();
+            pagination.totalPage = response.Data.TotalPages;
+        }
+        catch (Exception e)
+        {
+            toastService.ShowError("có lỗi");
+        }
+    }
+    public async Task GetChart()
+    {
+        try
+        {
+            for (var date = dateRequest.FromDate.Date; date <= dateRequest.ToDate.Date; date = date.AddDays(1))
+            {
+
+                //int daysInMonth = DateTime.DaysInMonth(year: 2022, month: date);
+                //var lastDayOfMonth = new DateTime(2022, date, daysInMonth);
+                var respond = await orderService.GetAllOrdersInBranch(false, 10, 1,BranchId, User.Id, date, date);
+                List<Order> orders = respond.Data.Items;
+                double sum = orders.Sum(x => x.TotalAmount);
+                Sum += sum;
+                DataItem item = new DataItem
+                    {
+                        Date = date,
+                        Revenue = sum
+                    };
+                items.Add(item);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            toastService.ShowError(ex.ToString());
+        }
+    }
+    public async void Delete(string id)
+    {
+        await orderService.DeleteOrder(id);
+    }
+    public async void Change(int link)
+    {
+        pagination.PageNumber = link;
+        await Get(link);
+        StateHasChanged();
+    }
+    public async Task SearchByText()
+    {
+        await Get(pagination.PageNumber);
+    }
+    public async Task ExportExcel()
+    {
+        try{
+            var fileName = $"OrderReport.xlsx";
+        var bytes = await orderService.GetExcelInBranch(BranchId,dateRequest.FromDate, dateRequest.ToDate);
+        await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(bytes));
+        }
+        catch (Exception ex)
+        {
+            toastService.ShowError(ex.ToString());
+        }
+    }
+}
+
+@code {
+    public class DateRequest
+    {
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+    }
+}
+
