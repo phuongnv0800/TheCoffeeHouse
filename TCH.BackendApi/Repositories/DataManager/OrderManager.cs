@@ -954,7 +954,7 @@ public class OrderManager : IOrderRepository, IDisposable
         return _storageService.GetPathBE(fileName);
     }
 
-    public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrder(string? branchId, string productId,
+    public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrder(string? branchId,
         Search search)
     {
         var orders = await _context.Orders

@@ -24,7 +24,7 @@ public interface IOrderRepository
     Task<string> ExcelAllOrder(Search request);
     Task<string> ExcelAllOrderByBranchID(string branchId, Search request);
     Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrderAllBranch(string productId, Search search);
-    Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrder(string? branchId, string productId, Search search);
+    Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrder(string? branchId, Search search);
     Task<Respond<MoneyByDay>> GetChartMoneyByBranchId(string branhID, Search request);
     Task<Respond<MoneyByDay>> GetChartMoney(Search request);
 }
