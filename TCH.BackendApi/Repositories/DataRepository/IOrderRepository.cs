@@ -23,4 +23,6 @@ public interface IOrderRepository
     Task<string> PrintInvoicePaymented(string invoiceID);
     Task<string> ExcelAllOrder(Search request);
     Task<string> ExcelAllOrderByBranchID(string branchId, Search request);
+    Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrderAllBranch(string productId, Search search);
+    Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrder(string? branchId, string productId, Search search);
 }

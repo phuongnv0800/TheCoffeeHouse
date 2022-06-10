@@ -46,6 +46,44 @@ public class OrdersController : ControllerBase
             return BadRequest(new {result = -2, message = e.Message});
         }
     }
+    [AllowAnonymous]
+    [HttpGet("get-product-branch-all/{productId}")]
+    public async Task<IActionResult> GetProductInOrderAllBranch(string productId, [FromQuery] Search request)
+    {
+        try
+        {
+            var orders = await _repository.GetProductInOrderAllBranch(productId, request);
+            return Ok(orders);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new {result = -1, message = e.Message});
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new {result = -2, message = e.Message});
+        }
+    }
+    [AllowAnonymous]
+    [HttpGet("get-product-branch/{branchId}/{productId}")]
+    public async Task<IActionResult> GetProductInOrder(string branchId, string productId, [FromQuery] Search request)
+    {
+        try
+        {
+            var orders = await _repository.GetProductInOrder(branchId, productId, request);
+            return Ok(orders);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new {result = -1, message = e.Message});
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new {result = -2, message = e.Message});
+        }
+    }
 
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     [HttpGet("all-money")]
