@@ -101,16 +101,31 @@
                                             </tr>
                                         }
                                     }
-                                    @*else
-                                        {
-                                        <div class="spinner" ></div>
-                                        }*@
+                                    else
+                                    {
+                                        <tr class="odd">
+                                            <td colspan="4">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+                                                        <defs>
+                                                            <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+                                                                <stop offset="0%" stop-color="hsl(193,90%,55%)"/>
+                                                                <stop offset="100%" stop-color="hsl(223,90%,55%)"/>
+                                                            </linearGradient>
+                                                        </defs>
+                                                        <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round"/>
+                                                        <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10"/>
+                                                    </svg>
+                                                </div>
 
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                            <div class="col-sm-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-start">
                                 <div class="dataTables_length" id="kt_ecommerce_category_table_length">
                                     <label>
                                         <EditForm Model="pagination">
@@ -124,8 +139,8 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
-                                <div class="dataTables_paginate paging_simple_numbers" id="kt_ecommerce_category_table_paginate">
+                            <div class="col-sm-12 col-md-10 d-flex align-items-center justify-content-center justify-content-md-end">
+                                <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
                                     <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
                                 </div>
                             </div>
@@ -140,7 +155,9 @@
 
 
 @code {
-    [Parameter] public string BranchId{ get; set; }
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
+    public string BranchId { get; set; }
     public List<StockMaterial>? ProductsList = new List<StockMaterial>();
     private string? token;
     public string Name;
@@ -151,9 +168,15 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        //navigationManager.NavigateTo("admin-dashboard");
-        var response = await userServices.GetUserInfo();
-        User = response.Data;
+        var authState = await AuthenticationState;
+        if (authState.User.Identity!.IsAuthenticated)
+        {
+            BranchId = authState.User.FindFirst(x => x.Type == ClaimValue.BranhID)!.Value;
+        }
+        else
+        {
+            navigationManager.NavigateTo("/login");
+        }
         await Get(1);
         base.OnParametersSet();
     }

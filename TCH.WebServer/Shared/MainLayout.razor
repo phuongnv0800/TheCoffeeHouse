@@ -1,5 +1,4 @@
 ﻿@inherits LayoutComponentBase
-@inject IUserApiClient userApiClient
 @inject NavigationManager NavigationManager
 @attribute [Authorize]
 <PageTitle>Quản lý The Coffee House</PageTitle>
@@ -15,7 +14,7 @@
             <NavMenu />
         </AsideMenu>
 
-        <AsideFooter FullName=@(user.FirstName + user.LastName) Description="Quản trị viên" Image="assets/media/avatars/300-1.jpg" />
+        <AsideFooter FullName=@Name Description="Quản trị viên" Image="assets/media/avatars/300-1.jpg" />
     </Aside>
     }
     <Page Logo="">
@@ -32,24 +31,13 @@
 @code{
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationState { get; set; }
-    private AppUser user = new AppUser();
+    public string Name { get; set; }
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationState;
         if (authState.User.Identity.IsAuthenticated)
         {
-            var userId = authState.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value;
-            var result = await userApiClient.GetById(userId);
-            
-            if(result.Result == 1)
-            {
-                user = result.Data;
-                GbParameter.GbParameter.BranchId = result.Data.BranchID;
-            }
-            else
-            {
-                NavigationManager.NavigateTo("/login");
-            }
+            Name = authState.User.FindFirst(x => x.Type == ClaimTypes.GivenName)!.Value;
         }
         else
         {

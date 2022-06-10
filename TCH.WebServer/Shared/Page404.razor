@@ -1,0 +1,47 @@
+@inject NavigationManager navigationManager
+@inject AuthenticationStateProvider authenticationStateProvider
+<body id="kt_body" class="bg-body">
+<!--begin::Main-->
+<div class="d-flex flex-column flex-root">
+    <!--begin::Authentication - 404 Page-->
+    <div class="d-flex flex-column flex-center flex-column-fluid p-10">
+        <!--begin::Illustration-->
+        <img src="assets/media/illustrations/sketchy-1/18.png" alt="" class="mw-100 mb-10 h-lg-450px" />
+        <!--end::Illustration-->
+        <!--begin::Message-->
+        <h1 class="fw-bold mb-10" style="color: #A3A3C7">Không tìm thấy trang này</h1>
+        <!--end::Message-->
+        <!--begin::Link-->
+        <button class="btn btn-primary" @onclick="OnReturn">Quay về màn hình chính</button>
+        <!--end::Link-->
+    </div>
+    <!--end::Authentication - 404 Page-->
+</div>
+</body>
+
+@code
+{
+    public async Task OnReturn()
+    {
+        var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            var Roles = authState.User.FindAll(x => x.Type == ClaimTypes.Role).Select(x => x.Value).ToList();
+
+            if (Roles.Contains(Permission.Branch))
+            {
+                navigationManager.NavigateTo("/admin-dashboard", forceLoad: true);
+            }
+            else
+            {
+                navigationManager.NavigateTo("/dashboard", forceLoad: true);
+            }
+        }
+        else
+        {
+            navigationManager.NavigateTo("/login");
+        }
+    }
+}

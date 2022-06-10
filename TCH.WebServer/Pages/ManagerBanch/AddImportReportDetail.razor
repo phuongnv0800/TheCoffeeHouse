@@ -25,21 +25,39 @@
                     @if (importDetail != null)
                     {
                         <EditForm Model="importDetail" OnInvalidSubmit="OnPick">
-                            <div class="mb-10 fv-row fv-plugins-icon-container">
-                                <!--begin::Label-->
-                                <label class="required form-label">Chọn hàng nhập</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <InputSelect @bind-Value="importDetail.MaterialID" class="form-control form-control-solid ">
-                                    @foreach (var material in materials)
-                                    {
-                                        <option value="@material.ID">@material.Name</option>
-                                    }
-                                </InputSelect>
-                                <div class="fv-plugins-message-container invalid-feedback">
-                                    <ValidationMessage For="@(() => importDetail.MaterialID)"/>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-10 fv-row fv-plugins-icon-container">
+                                        <!--begin::Label-->
+                                        <label class="required form-label">Chọn hàng nhập</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <InputSelect @bind-Value="importDetail.MaterialID" class="form-control form-control-solid ">
+                                            @foreach (var material in materials)
+                                            {
+                                                <option value="@material.ID">@material.Name</option>
+                                            }
+                                        </InputSelect>
+                                        <div class="fv-plugins-message-container invalid-feedback">
+                                            <ValidationMessage For="@(() => importDetail.MaterialID)"/>
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
                                 </div>
-                                <!--end::Input-->
+                                <div class="col-6">
+                                    <div class="mb-10 fv-row fv-plugins-icon-container">
+                                        <!--begin::Label-->
+                                        <label class="required form-label">Giá</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <InputNumber @bind-Value="importDetail.PriceOfUnit" class="form-control form-control-solid "/>
+                                        <div class="fv-plugins-message-container invalid-feedback">
+                                            <ValidationMessage For="@(() => importDetail.PriceOfUnit)"/>
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
@@ -69,48 +87,42 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                            <div class="mb-10 fv-row fv-plugins-icon-container">
-                                <!--begin::Label-->
-                                <label class="required form-label">Ngày hết hạn</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <InputDate @bind-Value="importDetail.ExpirationDate" class="form-control form-control-solid"/>
-                                <div class="fv-plugins-message-container invalid-feedback">
-                                    <ValidationMessage For="@(() => importDetail.ExpirationDate)"/>
-                                </div>
-                                <!--end::Input-->
-                            </div>
-                            <div class="mb-10 fv-row fv-plugins-icon-container">
-                                <!--begin::Label-->
-                                <label class="required form-label">Giá</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <InputNumber @bind-Value="importDetail.PriceOfUnit" class="form-control form-control-solid "/>
-                                <div class="fv-plugins-message-container invalid-feedback">
-                                    <ValidationMessage For="@(() => importDetail.PriceOfUnit)"/>
-                                </div>
-                                <!--end::Input-->
-                            </div>
-                            <div class="mb-10 fv-row fv-plugins-icon-container">
-                                <!--begin::Label-->
-                                <label class="required form-label">Đơn vị trọng lượng</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <InputSelect @bind-Value="importDetail.MeasureID" class="form-control form-control-solid ">
-                                    @foreach (var mes in units)
-                                    {
-                                        <option value="@mes.ID">@mes.Name</option>
-                                    }
-                                </InputSelect>
-                                <!--end::Input-->
-                            </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-10 fv-row fv-plugins-icon-container">
                                         <!--begin::Label-->
-                                        <label class="required form-label">Cân nặng</label>
+                                        <label class="required form-label">Đơn vị trọng lượng</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <InputSelect @bind-Value="importDetail.MeasureID" class="form-control form-control-solid ">
+                                            @foreach (var mes in units)
+                                            {
+                                                <option value="@mes.ID">@mes.Name</option>
+                                            }
+                                        </InputSelect>
+                                        <!--end::Input-->
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-10 fv-row fv-plugins-icon-container">
+                                        <!--begin::Label-->
+                                        <label class="required form-label">Ngày hết hạn</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <InputDate @bind-Value="importDetail.ExpirationDate" class="form-control form-control-solid"/>
+                                        <div class="fv-plugins-message-container invalid-feedback">
+                                            <ValidationMessage For="@(() => importDetail.ExpirationDate)"/>
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-10 fv-row fv-plugins-icon-container">
+                                        <!--begin::Label-->
+                                        <label class="required form-label">Khối lượng</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <InputNumber @bind-Value="importDetail.Mass" class="form-control form-control-solid "/>
@@ -126,21 +138,19 @@
                                         <label class="required form-label">Loại hình</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <InputSelect @bind-Value="importDetail.Mass" class="form-control form-control-solid ">
+                                        <InputSelect @bind-Value="importDetail.MeasureType" class="form-control form-control-solid ">
                                             @foreach (var mes in Enum.GetValues(typeof(MeasureType)))
                                             {
                                                 <option value="@mes">@mes</option>
                                             }
                                         </InputSelect>
                                         <div class="fv-plugins-message-container invalid-feedback">
-                                            <ValidationMessage For="@(() => importDetail.Mass)"/>
+                                            <ValidationMessage For="@(() => importDetail.MeasureType)"/>
                                         </div>
                                         <!--end::Input-->
                                     </div>
                                 </div>
                             </div>
-
-
                             <div class="mb-10 fv-row fv-plugins-icon-container">
                                 <!--begin::Label-->
                                 <label class="required form-label">Ghi chú</label>

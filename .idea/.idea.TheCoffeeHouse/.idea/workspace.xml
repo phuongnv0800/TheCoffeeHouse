@@ -12,41 +12,32 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="update availabel">
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/AdminDashBoard.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Brands/Brands.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Categories/Categories.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Materials/Materials.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Orders/Orders.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Products.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Promotion/Promotions.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/MassMaterialInDays.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/ReportExports.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/ReportImports.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/ReportLiquids.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/wwwroot/css/spinner.css" afterDir="false" />
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="remove image">
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ExportReportInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ImportReportInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/LiquidReportInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/MassMaterialInDaysInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/OrdersInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/StockInBranch.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/POS/Customers/Customers.razor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Shared/Page404.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Uploads/temp-order.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Uploads/temp-order.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Uploads/temp.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Uploads/temp.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/AdminDashBoard.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/AdminDashBoard.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Brands/Brands.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Brands/Brands.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Categories/Categories.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Categories/Categories.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Materials/Materials.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Materials/Materials.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/App.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/App.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Orders/Orders.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Orders/Orders.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Products.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Products.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Promotion/Promotions.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Promotion/Promotions.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/MassMaterialInDays.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/MassMaterialInDays.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/ReportExports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/ReportExports.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/ReportImports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/ReportImports.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/ReportLiquids.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Report/ReportLiquids.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/_Layout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/Authentication/Login.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/Authentication/Login.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddImportReportDetail.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddImportReportDetail.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ExportReportInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ExportReportInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ImportReportInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ImportReportInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/LiquidReportInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/LiquidReportInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/MassMaterialInDaysInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/MassMaterialInDaysInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/OrdersInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/OrdersInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/StockInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/StockInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/POS/Customers/Customers.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/POS/Customers/Customers.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/Shared/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Shared/MainLayout.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Shared/NavMenu.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/TCH.WebServer.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/TCH.WebServer.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/_Imports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/_Imports.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/wwwroot/assets/media/smiles/happy.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/wwwroot/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/wwwroot/favicon.ico" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +86,7 @@
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/EF/Seed.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/ProductManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/AdminDashBoard/Brands/Brands.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/AdminDashBoard/Orders/OrderComponent.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.WebServer/wwwroot/assets/js/custom/apps/subscriptions/list/list.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2f7b3b6e2f3c491c91283c8624ab32661ce200/1f/48011b47/HttpDeleteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
@@ -272,7 +264,7 @@
       <workItem from="1654404505866" duration="645000" />
       <workItem from="1654519806393" duration="9758000" />
       <workItem from="1654780881902" duration="3404000" />
-      <workItem from="1654822592824" duration="12437000" />
+      <workItem from="1654822592824" duration="17127000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -428,7 +420,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654829625057</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="update route and add spinner">
+      <created>1654838841655</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1654838841655</updated>
+    </task>
+    <task id="LOCAL-00024" summary="remove image">
+      <created>1654838861970</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1654838861970</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -483,7 +489,9 @@
     <MESSAGE value="on" />
     <MESSAGE value="update" />
     <MESSAGE value="update availabel" />
-    <option name="LAST_COMMIT_MESSAGE" value="update availabel" />
+    <MESSAGE value="update route and add spinner" />
+    <MESSAGE value="remove image" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove image" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
