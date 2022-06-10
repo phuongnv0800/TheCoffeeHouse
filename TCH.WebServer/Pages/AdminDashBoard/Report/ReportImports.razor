@@ -1,18 +1,4 @@
 ﻿@page "/reports-import"
-@using Blazored.LocalStorage
-@using Microsoft.AspNetCore.Identity
-@using Newtonsoft.Json
-@using System.Net.Http.Headers
-
-@using System.Security.Claims
-@using TCH.Data.Entities
-@using TCH.WebServer.Models
-@using TCH.WebServer.Models.Pagination
-@using TCH.WebServer.Services.Reports
-@using TCH.WebServer.Services.Users
-
-@inject HttpClient httpClient
-@inject ILocalStorageService localStorage;
 @inject IReportService reportService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
@@ -81,8 +67,23 @@
                                                         <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
                                                     </div>
                                                 </th>
-                                                <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
                                                     Tên phiếu nhập
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Tên kho
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Địa chỉ
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Nơi cung cấp
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Ngày tạo phiếu
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Chi phí
                                                 </th>
                                                 <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
                                                     Thao tác
@@ -107,14 +108,24 @@
                                                                     <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
                                                                         @product.Name
                                                                     </a>
-                                                                    <div class="text-muted fs-7 fw-bolder">@product.BranchID</div>
+                                                                    <div class="text-muted fs-7 fw-bolder">@product.Code</div>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            @*if(product.Category.Name != null){
-                                                                <div class="badge badge-light-success">@product.Category.Name</div>
-                                                                }*@
+                                                            <div class="text-muted fs-7 fw-bolder">@product.StockName</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.Address</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.Supplier</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.CreateDate</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.TotalAmount</div>
                                                         </td>
                                                         <td class="text-end">
                                                             <div class="dropdown">
@@ -138,7 +149,7 @@
                                     </table>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                                    <div class="col-sm-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-start">
                                         <div class="dataTables_length" id="kt_ecommerce_category_table_length">
                                             <label>
                                                 <EditForm Model="pagination">
@@ -152,8 +163,8 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="kt_ecommerce_category_table_paginate">
+                                    <div class="col-sm-12 col-md-10 d-flex align-items-center justify-content-center justify-content-md-end">
+                                        <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
                                             <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
                                         </div>
                                     </div>

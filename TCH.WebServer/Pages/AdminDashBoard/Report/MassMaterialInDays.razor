@@ -1,16 +1,4 @@
 ﻿@page "/mass-in-day"
-@using Blazored.LocalStorage
-@using Microsoft.AspNetCore.Identity
-@using Newtonsoft.Json
-@using System.Net.Http.Headers
-
-@using System.Security.Claims
-@using TCH.Data.Entities
-@using TCH.WebServer.Models
-@using TCH.WebServer.Models.Pagination
-@using TCH.WebServer.Services.Reports
-@using TCH.WebServer.Services.Users
-
 @inject HttpClient httpClient
 @inject ILocalStorageService localStorage;
 @inject IReportService reportService;
@@ -67,11 +55,15 @@
                                                     Tên nguyên liệu
                                                 </th>
                                                 <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                    Khối lượng tiêu chuẩn
+                                                    Khối lượng tiêu thụ
                                                 </th>
                                                 <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                    Loại hình tính
+                                                    Đơn vị tính
                                                 </th>
+                                                <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Mô tả
+                                                </th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody class="fw-bold text-gray-600">
@@ -113,6 +105,13 @@
                                                                 </div>
                                                             </div>
                                                         </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="ms-5">
+                                                                    @product.Description
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 }
                                             }
@@ -125,7 +124,7 @@
                                     </table>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
+                                    <div class="col-sm-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-start">
                                         <div class="dataTables_length" id="kt_ecommerce_category_table_length">
                                             <label>
                                                 <EditForm Model="pagination">
@@ -139,8 +138,8 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="kt_ecommerce_category_table_paginate">
+                                    <div class="col-sm-12 col-md-10 d-flex align-items-center justify-content-center justify-content-md-end">
+                                        <div class="w-100" id="kt_ecommerce_category_table_paginate">
                                             <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
                                         </div>
                                     </div>
@@ -157,10 +156,10 @@
 
 
 @code {
-    public List<MassMaterial>? ProductsList = new List<MassMaterial>();
+    public List<MassMaterial>? ProductsList = new ();
     private string? token;
     public string Name;
-    private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new ();
     private ApplicationUser User;
     private DateRequest dateRequest;
     private double Sum;
