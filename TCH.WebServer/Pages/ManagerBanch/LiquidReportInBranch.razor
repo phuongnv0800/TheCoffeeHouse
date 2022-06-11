@@ -43,7 +43,7 @@
                                         <RadzenMarkers MarkerType="MarkerType.Square"/>
                                     </RadzenLineSeries>
 
-                                    <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}"/>
+                                    <RadzenCategoryAxis Padding="20" FormatString="{0:dd-MM-yyyy}"/>
                                     <RadzenValueA98-xis>
                                         @*<RadzenGridLines Visible="true" />*@
                                         <RadzenAxisTitle Text="Lượng hàng bị thanh lý"/>
@@ -94,7 +94,7 @@
                                         </tr>
                                         </thead>
                                         <tbody class="fw-bold text-gray-600">
-                                        @if (ProductsList.Count != 0)
+                                        @if (ProductsList != null)
                                         {
                                             foreach (var product in ProductsList)
                                             {

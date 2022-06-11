@@ -91,7 +91,7 @@
                                         </tr>
                                         </thead>
                                         <tbody class="fw-bold text-gray-600">
-                                        @if (ProductsList.Count != 0 && ProductsList != null)
+                                        @if (ProductsList != null)
                                         {
                                             foreach (var product in ProductsList)
                                             {
@@ -231,10 +231,6 @@
             }
             UserId = authState.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
         }
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
         try
         {
             dateRequest = new DateRequest()
@@ -244,12 +240,15 @@
             };
             await Get(1);
             await GetChart();
-            base.OnParametersSet();
         }
         catch (Exception e)
         {
             toastService.ShowError("có lỗi");
         }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
     }
 
     public async Task Get(int pageNumber)
@@ -299,6 +298,8 @@
     public async Task SearchByText()
     {
         await Get(pagination.PageNumber);
+        
+        await GetChart();
     }
 
     public async Task ExportExcel()

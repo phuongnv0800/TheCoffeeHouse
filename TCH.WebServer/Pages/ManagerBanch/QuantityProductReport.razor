@@ -10,19 +10,11 @@
 @attribute [Authorize]
 
 <div class="page d-flex flex-row flex-column-fluid">
-<div class="wrapper d-flex flex-column flex-row-fluid mt-5" id="kt_wrapper">
+    <div class="wrapper d-flex flex-column flex-row-fluid mt-5" id="kt_wrapper">
 
-<div class="content flex-column flex-column-fluid" id="kt_content">
-    <div class="card card-flush " style="">
-        <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-            <div class="card-title">
-                <div class="d-flex align-items-center position-relative my-1">
-                    <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
-                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
-                        </svg>
-                    </span>
+        <div class="content flex-column flex-column-fluid" id="kt_content">
+            <div class="card card-flush " style="">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                     <div class="card-title">
                         <div class="d-flex align-items-center position-relative my-1">
                             <span class="svg-icon svg-icon-1 position-absolute ms-4">
@@ -31,112 +23,120 @@
                                     <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
                                 </svg>
                             </span>
-                            @if (dateRequest != null)
-                            {
-                                <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
-                                    <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu"/>
-                                    <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith"/>
-                                    <button onclick="@(() => SearchByText())"
-                                            class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Tìm kiếm
-                                    </button>
-                                </EditForm>
-                            }
+                            <div class="card-title">
+                                <div class="d-flex align-items-center position-relative my-1">
+                                    <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                        </svg>
+                                    </span>
+                                    @if (dateRequest != null)
+                                    {
+                                        <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
+                                            <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu"/>
+                                            <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith"/>
+                                            <button onclick="@(() => SearchByText())"
+                                                    class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Tìm kiếm
+                                            </button>
+                                        </EditForm>
+                                    }
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
                 </div>
-            </div>
+                <div class="card-body pt-0">
 
-        </div>
-        <div class="card-body pt-0">
+                    <RadzenChart>
+                        <RadzenBarSeries Data="@items" CategoryProperty="Quarter" Title="Lượng sản phẩm" ValueProperty="Revenue">
 
-            <RadzenChart>
-                <RadzenBarSeries Data="@items" CategoryProperty="Quarter" Title="Lượng sản phẩm" ValueProperty="Revenue">
+                        </RadzenBarSeries>
 
-                </RadzenBarSeries>
-
-                <RadzenValueAxis>
-                    @*<RadzenGridLines Visible="true" />*@
-                    <RadzenAxisTitle Text="Lượng tiêu thụ"/>
-                </RadzenValueAxis>
-            </RadzenChart>
+                        <RadzenValueAxis>
+                            @*<RadzenGridLines Visible="true" />*@
+                            <RadzenAxisTitle Text="Lượng tiêu thụ"/>
+                        </RadzenValueAxis>
+                    </RadzenChart>
 
 
-        </div>
-    </div>
-    <div class="card card-flush ">
-        <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-            <div class="card-title">
-                <div class="d-flex align-items-center position-relative my-1">
-                    <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
-                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
-                        </svg>
-                    </span>
-                    <EditForm Model="searchText" OnValidSubmit="SearchByText">
-                        <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-450px ps-14" placeholder="Tìm kiếm chinh nhánh theo tên"/>
-                    </EditForm>
                 </div>
             </div>
-        </div>
-        <div class="card-body pt-0">
+            <div class="card card-flush ">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            <EditForm Model="searchText" OnValidSubmit="SearchByText">
+                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-450px ps-14" placeholder="Tìm kiếm chinh nhánh theo tên"/>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
 
-            <div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                    <div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                         <div class="table-responsive">
                             <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
                                 <thead>
-                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                        
-                                        <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1"  style="width: 637.234px;">
-                                            Sản phẩm
-                                        </th>
-                                        <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1"  style="width: 159.297px;">
-                                            lượng tiêu thụ
-                                        </th>
-                                        <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1"  style="width: 159.297px;">
-                                            đơn vị
-                                        </th>
-                                    </tr>
+                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+
+                                    <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" style="width: 637.234px;">
+                                        Sản phẩm
+                                    </th>
+                                    <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" style="width: 159.297px;">
+                                        lượng tiêu thụ
+                                    </th>
+                                    <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" style="width: 159.297px;">
+                                        đơn vị
+                                    </th>
+                                </tr>
                                 </thead>
                                 <tbody class="fw-bold text-gray-600">
-                                    @if (ProductsList.Count != 0)
+                                @if (ProductsList != null)
+                                {
+                                    foreach (var product in ProductsList)
                                     {
-                                        foreach (var product in ProductsList)
-                                        {
-                                            string fileImage = Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage;
-                                            
-                                            <tr class="odd">
-                                               
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img height="40" width="40" src="@fileImage" >
-                                                        
-                                                        <div class="ms-5">
-                                                            <a class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                @product.ProductName
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
+                                        string fileImage = Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage;
+
+                                        <tr class="odd">
+
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img height="40" width="40" src="@fileImage">
+
                                                     <div class="ms-5">
-                                                        @product.Quantity
+                                                        <a class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                            @product.ProductName
+                                                        </a>
                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <div class="ms-5">
-                                                        @product.Unit
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        }
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ms-5">
+                                                    @product.Quantity
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ms-5">
+                                                    @product.Unit
+                                                </div>
+                                            </td>
+                                        </tr>
                                     }
-                                    else
-                                    {
-                                        <Spinner Colspan="9"></Spinner>
-                                    }
+                                }
+                                else
+                                {
+                                    <Spinner Colspan="9"></Spinner>
+                                }
 
                                 </tbody>
                             </table>
@@ -158,15 +158,15 @@
                             </div>
                             <div class="col-sm-12 col-md-11 d-flex align-items-center justify-content-center justify-content-md-end">
                                 <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
-                                    <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
+                                    <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change"/>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 
 @code {
@@ -175,7 +175,7 @@
 
     class DataItem
     {
-        public string Quarter  { get; set; }
+        public string Quarter { get; set; }
         public double Revenue { get; set; }
     }
 
@@ -193,7 +193,7 @@
 
     private string? token;
     public string Name;
-    private TCH.WebServer.Models.Pagination.Pagination pagination = new ();
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new();
     private AppUser User;
     private DateRequest dateRequest;
     private string searchText = "";
@@ -213,10 +213,10 @@
                 FromDate = new DateTime(2022, 06, 01),
                 ToDate = DateTime.Now
             };
-            
+
             var response = await userApiClient.GetById(GbParameter.GbParameter.UserId);
             User = response.Data;
-            //Sum = await orderService.GetSum(dateRequest.FromDate, dateRequest.ToDate);
+    //Sum = await orderService.GetSum(dateRequest.FromDate, dateRequest.ToDate);
             await Get(1);
             await GetChartBranch();
         }
@@ -225,16 +225,19 @@
             toastService.ShowError("có lỗi");
         }
     }
+
     public async Task Get(int pageNumber)
     {
-        try{
+        try
+        {
             var response = await orderService.GetQuantiProductsByBranch(true, pagination.pageSize, pagination.PageNumber, User.BranchID, dateRequest.FromDate, dateRequest.ToDate);
             pagination.PageNumber = response.Data.CurrentPage;
             ProductsList = response.Data.Items.ToList();
             pagination.totalPage = response.Data.TotalPages;
             StateHasChanged();
         }
-        catch(Exception e){
+        catch (Exception e)
+        {
             toastService.ShowError("Có lỗi");
         }
     }
@@ -246,7 +249,8 @@
         {
             items = new List<DataItem>();
 
-            foreach(var it in ProductsList){
+            foreach (var it in ProductsList)
+            {
                 DataItem data = new DataItem()
                 {
                     Quarter = it.ProductName,
@@ -254,7 +258,6 @@
                 };
                 items.Add(data);
             }
-            
         }
         catch (Exception ex)
         {
