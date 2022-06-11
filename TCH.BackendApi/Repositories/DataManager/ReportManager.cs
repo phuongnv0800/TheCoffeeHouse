@@ -406,95 +406,6 @@ public class ReportManager : IReportRepository, IDisposable
         };
     }
 
-    public async Task<Respond<PagedList<Report>>> GetAllExportReportByBranchID(string branchID, Search request)
-    {
-        var query = _context.Reports
-            .Include(x => x.ReportDetails)
-            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Export);
-        if (request.Name != null)
-        {
-            query = query.Where(x => request.Name.Contains(x.Code));
-        }
-
-        if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x =>
-                DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) < 0 &&
-                DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) > 0);
-
-        //paging
-        int totalRow = await query.CountAsync();
-        List<Report> data;
-        if (request.IsPging)
-            data = await query
-                .Select(x => x)
-                .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToListAsync();
-        else
-        {
-            data = await query.ToListAsync();
-        }
-
-        var pagedResult = new PagedList<Report>()
-        {
-            TotalRecord = totalRow,
-            PageSize = request.PageSize,
-            CurrentPage = request.PageNumber,
-            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
-            Items = data,
-        };
-        return new Respond<PagedList<Report>>()
-        {
-            Data = pagedResult,
-            Result = 1,
-            Message = "Thành công",
-        };
-    }
-
-    public async Task<Respond<PagedList<Report>>> GetAllExportReport(Search request)
-    {
-        var query = _context.Reports
-            .Include(x => x.ReportDetails)
-            .Where(x => x.ReportType == ReportType.Export);
-        if (request.Name != null)
-        {
-            query = query.Where(x => request.Name.Contains(x.Code));
-        }
-
-        if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x =>
-                x.CreateDate.Date >= (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)! &&
-                x.CreateDate.Date <= (request.EndDate != null ? request.EndDate.Value.Date : (DateTime?) null)!);
-
-        //paging
-        int totalRow = await query.CountAsync();
-        List<Report> data;
-        if (request.IsPging)
-            data = await query
-                .Select(x => x)
-                .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToListAsync();
-        else
-        {
-            data = await query.ToListAsync();
-        }
-
-        var pagedResult = new PagedList<Report>()
-        {
-            TotalRecord = totalRow,
-            PageSize = request.PageSize,
-            CurrentPage = request.PageNumber,
-            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
-            Items = data,
-        };
-        return new Respond<PagedList<Report>>()
-        {
-            Data = pagedResult,
-            Result = 1,
-            Message = "Thành công",
-        };
-    }
 
     public async Task<string> ExcelExportReport(string branchId, Search request)
     {
@@ -1351,11 +1262,103 @@ public class ReportManager : IReportRepository, IDisposable
         return _storageService.GetPathBE(fileName);
     }
 
-    public async Task<Respond<PagedList<Report>>> GetAllImportReportByBranchID(string branchID, Search request)
+    public async Task<Respond<PagedList<Report>>> GetAllExportReportByBranchID(string branchId, Search request)
     {
         var query = _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Import);
+            .Where(x => x.BranchID == branchId && x.ReportType == ReportType.Export);
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code));
+        }
+
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x =>
+                request.StartDate != null
+                && x.CreateDate.Date >= request.StartDate.Value.Date 
+                && request.EndDate != null &&
+                x.CreateDate.Date <= request.EndDate.Value.Date);
+
+        //paging
+        int totalRow = await query.CountAsync();
+        List<Report> data;
+        if (request.IsPging)
+            data = await query
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToListAsync();
+        else
+        {
+            data = await query.ToListAsync();
+        }
+
+        var pagedResult = new PagedList<Report>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<Report>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+
+    public async Task<Respond<PagedList<Report>>> GetAllExportReport(Search request)
+    {
+        var query = _context.Reports
+            .Include(x => x.ReportDetails)
+            .Where(x => x.ReportType == ReportType.Export);
+        if (request.Name != null)
+        {
+            query = query.Where(x => request.Name.Contains(x.Code));
+        }
+
+        if (request.StartDate != null && request.EndDate != null)
+            query = query.Where(x =>
+                x.CreateDate.Date >= (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)! &&
+                x.CreateDate.Date <= (request.EndDate != null ? request.EndDate.Value.Date : (DateTime?) null)!);
+
+        //paging
+        int totalRow = await query.CountAsync();
+        List<Report> data;
+        if (request.IsPging)
+            data = await query
+                .Select(x => x)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToListAsync();
+        else
+        {
+            data = await query.ToListAsync();
+        }
+
+        var pagedResult = new PagedList<Report>()
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<Report>>()
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+
+    public async Task<Respond<PagedList<Report>>> GetAllImportReportByBranchID(string branchId, Search request)
+    {
+        if (branchId == null) throw new ArgumentNullException(nameof(branchId));
+        if (branchId == null) throw new ArgumentNullException(nameof(branchId));
+        var query = _context.Reports
+            .Include(x => x.ReportDetails)
+            .Where(x => x.BranchID == branchId && x.ReportType == ReportType.Import);
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code));
@@ -1439,11 +1442,11 @@ public class ReportManager : IReportRepository, IDisposable
         };
     }
 
-    public async Task<Respond<PagedList<Report>>> GetAllLiquidationReportByBranchID(string branchID, Search request)
+    public async Task<Respond<PagedList<Report>>> GetAllLiquidationReportByBranchID(string branchId, Search request)
     {
         var query = _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Liquidation);
+            .Where(x => x.BranchID == branchId && x.ReportType == ReportType.Liquidation);
         if (request.Name != null)
         {
             query = query.Where(x => request.Name.Contains(x.Code));
