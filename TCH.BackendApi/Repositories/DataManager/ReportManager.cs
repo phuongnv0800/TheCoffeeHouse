@@ -465,7 +465,7 @@ public class ReportManager : IReportRepository, IDisposable
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
                 x.CreateDate.Date >= (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)! &&
-                x.CreateDate.Date <= (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!);
+                x.CreateDate.Date <= (request.EndDate != null ? request.EndDate.Value.Date : (DateTime?) null)!);
 
         //paging
         int totalRow = await query.CountAsync();
