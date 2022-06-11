@@ -61,10 +61,6 @@
                                                     <div class="mb-5">
                                                             <InputNumber @bind-Value="order.TableNum" type="text" class="form-control form-control-solid" placeholder="Số bàn"></InputNumber>
                                                         </div>
-                                                        <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Tên nhân viên</label>
-                                                        <div class="mb-5">
-                                                            <InputText @bind-Value="order.Cashier" type="text" class="form-control form-control-solid" placeholder="Tên nhân viên"></InputText>
-                                                        </div>
 
                                                         <!--end::Input group-->
                                                         <!--begin::Input group-->
@@ -113,9 +109,12 @@
                                                         {
                                                             foreach (var orderDetail in order.OrderItems)
                                                             {
+                                                                string s = "";
+                                                                foreach (var i in orderDetail.Toppings) s += i.Name + "; ";
+                                                                string name = orderDetail.NameProduct + " (+ " + orderDetail.PriceSize + ") + " + s; 
                                                                 <tr class="border-bottom border-bottom-dashed" data-kt-element="item">
                                                                     <td class="pe-7">
-                                                                        <input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="@orderDetail.NameProduct">
+                                                                        <input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="@name ">
                                                                     </td>
                                                                     <td class="ps-0">
                                                                         <input class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" value="x@(orderDetail.Quantity)" data-kt-element="quantity">
@@ -329,12 +328,16 @@
     }
     public async Task OnSubmit()
     {
-        var res = await customerService.GetAllCustomerByPhone(phone);
+        if(!string.IsNullOrEmpty(phone)){
+            var res = await customerService.GetAllCustomerByPhone(phone);
+            if(res!=null && res.Result == 1){
+                Customer cus = res.Data;
+                order.CustomerID = cus.ID;
+            } 
+        }
+        order.Cashier = User.LastName;
         order.BranchID = User.BranchId;
-        if(res!=null && res.Result == 1){
-            Customer cus = res.Data;
-            order.CustomerID = cus.ID;
-        } 
+        
         if( order.CustomerPut < order.TotalAmount){
             toastService.ShowError("tiền bị thiếu");
             return;

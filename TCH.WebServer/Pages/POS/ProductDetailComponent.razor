@@ -303,7 +303,8 @@
         Url=  Configuration.GetSection("BackendApiUrl").Value;
         var responseProduct = await productService.GetProductById(ProductId);
         product = responseProduct.Data;
-        order = GbParameter.GbParameter.Order;
+        if( GbParameter.GbParameter.Order == null) {order = new OrderRequest();order.OrderItems = new List<OrderItem>(); }
+        else order = GbParameter.GbParameter.Order;
         orderDetail = new OrderItem()
             {
 

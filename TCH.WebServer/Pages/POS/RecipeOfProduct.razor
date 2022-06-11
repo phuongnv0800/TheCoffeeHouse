@@ -108,7 +108,8 @@
     private ProductVm product = new ProductVm();
     protected override async Task OnParametersSetAsync()
     {
-        Url=  Configuration.GetSection("BackendApiUrl").Value;
+        try{
+            Url=  Configuration.GetSection("BackendApiUrl").Value;
         var responseProduct = await productService.GetProductById(ProductId);
         product = responseProduct.Data;
 
@@ -120,6 +121,10 @@
         }
         recipes = response.Data.Items;
         base.OnParametersSet();
+        }
+        catch{
+            toastService.ShowError("có lỗi");
+        }
     }
     private async Task Add()
     {
