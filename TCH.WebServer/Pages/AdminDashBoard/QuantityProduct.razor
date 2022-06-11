@@ -52,14 +52,18 @@
                 <div class="card-body pt-0">
 
                     <RadzenChart>
-                        <RadzenBarSeries Data="@items" CategoryProperty="Quarter" Title="Lượng sản phẩm" ValueProperty="Revenue">
+                        @if(items != null)
+                        {
+                            <RadzenBarSeries Data="@items" CategoryProperty="Quarter" Title="Lượng sản phẩm" ValueProperty="Revenue">
 
                         </RadzenBarSeries>
+                            
+                        }
                         @if (lists != null && lists.Count != 0)
                         {
                             @foreach (var item in lists)
                             {
-                                <RadzenBarSeries Smooth="@smooth" Data="@item.listItems" CategoryProperty="DateTime" Title="@item.branch.Name" ValueProperty="Revenue">
+                                <RadzenBarSeries  Data="@item.listItems" CategoryProperty="Quarter" Title="@item.branch.Name" ValueProperty="Revenue">
                                     
                                 </RadzenBarSeries>
                             }
@@ -205,7 +209,9 @@
                                                 <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" style="width: 159.297px;">
                                                     lượng tiêu thụ
                                                 </th>
-
+                                                <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" style="width: 159.297px;">
+                                                    đơn vị
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody class="fw-bold text-gray-600">
@@ -213,17 +219,17 @@
                                             {
                                                 foreach (var product in ProductsList)
                                                 {
-                                                //string fileImage = Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage;
+                                                string fileImage = Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage;
 
                                                     <tr class="odd">
                                                         <td>
                                                             <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                                @*<input type="checkbox" class="form-check-input" @onchange="@(e => { SelectBranch(@product.ID, e.Value); })">*@
+                                                                <input type="checkbox" class="form-check-input" @onchange="@(e => { SelectBranch(@product.ProductID, e.Value); })">
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="d-flex align-items-center">
-                                                                @*<img height="40" width="40" src="@fileImage" >*@
+                                                                <img height="40" width="40" src="@fileImage" >
 
                                                                 <div class="ms-5">
                                                                     <a class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
@@ -237,7 +243,11 @@
                                                                 @product.Quantity
                                                             </div>
                                                         </td>
-
+                                                        <td>
+                                                            <div class="ms-5">
+                                                                @product.Unit
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 }
                                             }
@@ -326,7 +336,7 @@
     private string searchText = "";
     private double Sum;
     public List<Branch>? BranchList = new();
-
+    private string BranchId;
     [CascadingParameter]
     public IModalService Modal { get; set; }
 
@@ -385,6 +395,8 @@
     {
         try
         {
+            lists = lists = new List<ListDataItem>();
+            BranchId = branchId;
             var resb = await branchService.GetBranchById(branchId);
             var branch = resb.Data;
             var resp = await orderService.GetQuantiProductsByBranch(true, pagination.pageSize, pagination.PageNumber,branchId, dateRequest.FromDate, dateRequest.ToDate);
@@ -403,7 +415,7 @@
                     branch = branch,
                     listItems = list
                 };
-                lists.Add(listdata);
+            lists.Add(listdata);
         }
         catch (Exception ex)
         {
@@ -421,11 +433,11 @@
         pagination.PageNumber = link;
         await Get(link);
         lists= new List<ListDataItem>();
-        if(BranchIds != null && BranchIds.Count > 0){
-            foreach(var id in BranchIds){
-                await GetChartBranch(id);
-            }
-        }    
+        if(BranchId != null)
+            await GetChartBranch(BranchId);
+        else{
+            await Get(1);
+        }
 
         StateHasChanged();
     }
@@ -438,6 +450,7 @@
     {
         if ((bool) checkedValue)
         {
+            items = null;
             await GetChartBranch(branchId);
             StateHasChanged();
         }
@@ -446,6 +459,11 @@
             var selectBranch = lists.FirstOrDefault(x => x.branch.ID == branchId);
             if (selectBranch != null)
                 lists.Remove(selectBranch);
+            if(lists.Count == 0)
+            {
+                items = new List<DataItem>();
+                Get(1);
+            }
         }
     }
 }
