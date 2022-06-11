@@ -317,7 +317,10 @@
         var parameters = new ModalParameters();
         parameters.Add(nameof(InvoicePopup.Id), Id);
 
-        var modal = Modal.Show<InvoicePopup>("Hóa đơn", parameters);
+        var modal = Modal.Show<InvoicePopup>("Hóa đơn", parameters, options: new ModalOptions
+        {
+            UseCustomLayout = true
+        });
         var result = await modal.Result;
     }
     public async Task PickCode()
