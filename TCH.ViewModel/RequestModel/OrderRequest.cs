@@ -18,7 +18,7 @@ public class OrderRequest
 
     public double CustomerPut { get; set; }
 
-    public double CustomerReceive { get; set; }
+    public double CustomerReceive { get; set; } 
 
     public double ShippingFee { get; set; } = 0;
 
