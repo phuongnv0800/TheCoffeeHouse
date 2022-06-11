@@ -214,7 +214,7 @@ namespace TCH.WebServer.Services.Orders
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Order>>>($"/api/Orders/branch/{id}?IsPging=" + IsPaging.ToString()
+                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Order>>>($"/api/Orders/branch/{BranchId}?IsPging=" + IsPaging.ToString()
                         + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&BranchId=" + BranchId
                         + fromDate
                         + toDate);

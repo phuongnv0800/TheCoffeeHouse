@@ -270,7 +270,7 @@ public class OrdersController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpGet("branch/{userId}")]
+    [HttpGet("branch/{branchID}")]
     public async Task<IActionResult> GetByBranchID(string branchID, [FromQuery] Search request)
     {
         try

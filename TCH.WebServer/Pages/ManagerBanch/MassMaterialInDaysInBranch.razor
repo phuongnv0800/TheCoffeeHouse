@@ -58,7 +58,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="fw-bold text-gray-600">
-                                            @if (ProductsList.Count != 0)
+                                            @if (ProductsList.Count != 0 && ProductsList != null)
                                             {
                                                 foreach (var product in ProductsList)
                                                 {

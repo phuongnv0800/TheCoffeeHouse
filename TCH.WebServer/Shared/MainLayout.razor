@@ -14,7 +14,7 @@
             <NavMenu />
         </AsideMenu>
 
-        <AsideFooter FullName=@Name Description="Quản trị viên" Image="assets/media/avatars/300-1.jpg" />
+        <AsideFooter FullName=@Name Description=@Des Image="assets/media/avatars/300-1.jpg" />
     </Aside>
     }
     <Page Logo="">
@@ -32,12 +32,28 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationState { get; set; }
     public string Name { get; set; }
+    public List<string> Roles { get; set; } = new();
+    public string Des { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthenticationState;
+        var authState = await AuthenticationState;        
+        Roles = new();
         if (authState.User.Identity.IsAuthenticated)
         {
             Name = authState.User.FindFirst(x => x.Type == ClaimTypes.GivenName)!.Value;
+            Roles = authState.User.FindAll(x => x.Type == ClaimTypes.Role).Select(x => x.Value).ToList();
+            if (Roles.Contains(Permission.Branch))
+            {
+                Des = "Quản lý chuỗi cửa hàng";
+            }
+            else if (Roles.Contains(Permission.Manage))
+            {
+                Des = "Quản lý cửa hàng";
+            }
+            if (Roles.Contains(Permission.Staff))
+            {
+                Des = "Nhân viên";
+            }
         }
         else
         {
