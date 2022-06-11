@@ -129,7 +129,8 @@
     private OrderRequest order;
     private string searchText = "";
 
-    protected override async Task OnParametersSetAsync()
+
+    protected override async Task OnInitializedAsync()
     {
         try
         {
@@ -142,14 +143,30 @@
             }
             await Get(1);
 
-            base.OnParametersSet();
         }
         catch (Exception e)
         {
             toastService.ShowError("có lỗi");
         }
     }
+    private async Task OnNew(string productId)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(ChoiceProduct.Title), "Thêm món");
+        parameters.Add(nameof(ChoiceProduct.ProductId), productId);
 
+        var modal = Modal.Show<ChoiceProduct>(string.Empty, parameters, options: new ModalOptions
+        {
+            UseCustomLayout = true
+        });
+
+        var result = await modal.Result;
+        if (!result.Cancelled)
+        {
+            await Get(1);
+        }
+        
+    }
     public async Task Get(int pageNumber)
     {
         var response = await productServices.GetProductsByBranch(true, pagination.pageSize, pageNumber, BranchId, searchText);

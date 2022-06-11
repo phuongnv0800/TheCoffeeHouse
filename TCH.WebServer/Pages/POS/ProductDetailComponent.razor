@@ -208,9 +208,48 @@
                             <!--begin::Title-->
                             <h3 class="card-title align-items-start flex-column">
                                 <span class="card-label fw-bolder text-dark">@product.Name (+ @orderDetail.SizeName)</span>
-                                <span class="text-gray-400 pt-2 fw-bold fs-6"> đường: @orderDetail.SugarType.ToString() </span>
-                                <span class="text-gray-400 pt-2 fw-bold fs-6"> đá: @orderDetail.IcedType.ToString() </span>
-                            </h3>
+                                <span class="text-gray-400 pt-2 fw-bold fs-6">
+                                                    đường:
+                                                    @switch (orderDetail.SugarType)
+                                                    {
+                                                        case SugarType.ZeroPercent:
+                                                            <span>0%</span>
+                                                            break;
+                                                        case SugarType.TwentyFivePercent:
+                                                            <span >25%</span>
+                                                            break;
+                                                        case SugarType.FiftyPercent:
+                                                            <span >50%</span>
+                                                            break;
+                                                        case SugarType.SeventyFivePercent:
+                                                            <span >75%</span>
+                                                            break;
+                                                        case SugarType.OneHundredPercent:
+                                                            <span >100%</span>
+                                                            break;
+                                                    }
+                                                </span>
+                                                <span class="text-gray-400 pt-2 fw-bold fs-6">
+                                                    đá:
+                                                    @switch (orderDetail.IcedType)
+                                                    {
+                                                        case IcedType.ZeroPercent:
+                                                            <span>0%</span>
+                                                            break;
+                                                        case IcedType.TwentyFivePercent:
+                                                            <span >25%</span>
+                                                            break;
+                                                        case IcedType.FiftyPercent:
+                                                            <span >50%</span>
+                                                            break;
+                                                        case IcedType.SeventyFivePercent:
+                                                            <span >75%</span>
+                                                            break;
+                                                        case IcedType.OneHundredPercent:
+                                                            <span >100%</span>
+                                                            break;
+                                                    }
+                                                </span></h3>
                             <!--end::Title-->
                         </div>
                         <!--end::Header-->
