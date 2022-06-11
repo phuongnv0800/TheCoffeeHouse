@@ -26,7 +26,7 @@
         <div class="card ">
             <!--begin::Card body-->
             <div class="card-body p-9">
-                <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@(Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage)">
+                <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" target="_blank" href="@(Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage)">
                     <!--begin::Image-->
                     <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded " style="min-height: 250px;background-image:url(@(Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage))"></div>
                     <!--end::Image-->
