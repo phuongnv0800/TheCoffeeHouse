@@ -302,7 +302,7 @@ public class ReportManager : IReportRepository, IDisposable
                 IsDelete = false,
                 Mass = item.Mass,
                 MeasureType = item.MeasureType,
-                StandardMass = measure != null ? measure.ConversionFactor * item.Mass : item.Mass,
+                StandardMass = measure.ConversionFactor * item.Mass,
                 Description = item.Description,
                 MeasureID = item.MeasureID,
             };
@@ -389,31 +389,32 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<Respond<PagedList<Report>>> GetAllExportReportByBranchID(string branchID, Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Export)
-            .ToListAsync();
+            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Export);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) < 0 &&
-                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) > 0).ToList();
+                DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) < 0 &&
+                DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) > 0);
 
         //paging
-        int totalRow = query.Count;
-        var data = new List<Report>();
+        int totalRow = await query.CountAsync();
+        List<Report> data;
         if (request.IsPging)
-            data = query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data = await query.ToListAsync();
         }
 
         var pagedResult = new PagedList<Report>()
@@ -445,19 +446,19 @@ public class ReportManager : IReportRepository, IDisposable
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
                 x.CreateDate.Date >= (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)! &&
-                x.CreateDate.Date<=(request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!);
+                x.CreateDate.Date <= (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!);
 
         //paging
-        int totalRow =await query.CountAsync();
-        var data = new List<Report>();
+        int totalRow = await query.CountAsync();
+        List<Report> data;
         if (request.IsPging)
-            data =await query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
         else
         {
-            data =await query.ToListAsync();
+            data = await query.ToListAsync();
         }
 
         var pagedResult = new PagedList<Report>()
@@ -478,30 +479,31 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<string> ExcelExportReport(string branchId, Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x => x.ReportType == ReportType.Export && x.BranchID == branchId)
-            .ToListAsync();
+            .Where(x => x.ReportType == ReportType.Export && x.BranchID == branchId);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) <= 0 &&
-                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) >= 0).ToList();
+                DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) <= 0 &&
+                DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) >= 0);
 
-        var data = new List<Report>();
+        List<Report> data;
         if (request.IsPging)
-            data = query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data = await query.ToListAsync();
         }
 
         var stream = new MemoryStream();
@@ -571,32 +573,36 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<string> ExcelLiquidationReport(string branchId, Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x => x.ReportType == ReportType.Liquidation && x.BranchID == branchId)
-            .ToListAsync();
+            .Where(x => x.ReportType == ReportType.Liquidation && x.BranchID == branchId);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
             query = query
                 .Where(
-                    x => DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) <= 0
-                         && DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) >= 0)
-                .ToList();
+                    x => DateTime.Compare(x.CreateDate.Date,
+                             (DateTime) (request.StartDate != null
+                                 ? request.StartDate.Value.Date
+                                 : (DateTime?) null)!) <= 0
+                         && DateTime.Compare(x.CreateDate.Date,
+                             (DateTime) (request.StartDate != null
+                                 ? request.StartDate.Value.Date
+                                 : (DateTime?) null)!) >= 0);
 
-        var data = new List<Report>();
+        List<Report> data;
         if (request.IsPging)
-            data = query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data = await query.ToListAsync();
         }
 
         var stream = new MemoryStream();
@@ -672,30 +678,31 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<string> ExcelImportReport(string branchId, Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x => x.ReportType == ReportType.Import && x.BranchID == branchId)
-            .ToListAsync();
+            .Where(x => x.ReportType == ReportType.Import && x.BranchID == branchId);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) <= 0 &&
-                DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) >= 0).ToList();
+                DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!) <= 0 &&
+                DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!) >= 0);
 
-        var data = new List<Report>();
+        List<Report> data;
         if (request.IsPging)
-            data = query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data = await query.ToListAsync();
         }
 
         var stream = new MemoryStream();
@@ -765,30 +772,31 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<string> ExcelExportAllReport(Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x => x.ReportType == ReportType.Export)
-            .ToListAsync();
+            .Where(x => x.ReportType == ReportType.Export);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) <= 0
-                                     && DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) >= 0)
-                .ToList();
+            query = query.Where(x =>
+                DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) <= 0
+                && DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) >= 0);
 
-        var data = new List<Report>();
+        List<Report> data;
         if (request.IsPging)
-            data = query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data = await query.ToListAsync();
         }
 
         var stream = new MemoryStream();
@@ -858,30 +866,31 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<string> ExcelLiquidationAllReport(Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x => x.ReportType == ReportType.Liquidation)
-            .ToListAsync();
+            .Where(x => x.ReportType == ReportType.Liquidation);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) <= 0
-                                     && DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date) >= 0)
-                .ToList();
+            query = query.Where(x =>
+                DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) <= 0
+                && DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) >= 0);
 
         var data = new List<Report>();
         if (request.IsPging)
-            data = query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data = await query.ToListAsync();
         }
 
         var stream = new MemoryStream();
@@ -957,30 +966,31 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<string> ExcelImportAllReport(Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.Branch)
             .Include(x => x.ReportDetails)
-            .Where(x => x.ReportType == ReportType.Import)
-            .ToListAsync();
+            .Where(x => x.ReportType == ReportType.Import);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
-            query = query.Where(x => DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) <= 0
-                                     && DateTime.Compare(x.CreateDate.Date, (DateTime) request.StartDate?.Date!) >= 0)
-                .ToList();
+            query = query.Where(x =>
+                DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!) <= 0
+                && DateTime.Compare(x.CreateDate.Date,
+                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!) >= 0);
 
-        var data = new List<Report>();
+        List<Report> data;
         if (request.IsPging)
-            data = query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data = await query.ToListAsync();
         }
 
         var stream = new MemoryStream();
@@ -1324,29 +1334,29 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<Respond<PagedList<Report>>> GetAllImportReportByBranchID(string branchID, Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Import)
-            .ToListAsync();
+            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Import);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date &&
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date);
         //paging
-        int totalRow = query.Count;
-        var data = new List<Report>();
+        int totalRow = await query.CountAsync();
+        List<Report> data;
         if (request.IsPging)
-            data = query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data = await query.ToListAsync();
         }
 
         var pagedResult = new PagedList<Report>()
@@ -1367,29 +1377,31 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<Respond<PagedList<Report>>> GetAllImportReport(Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x => x.ReportType == ReportType.Import)
-            .ToListAsync();
+            .Where(x => x.ReportType == ReportType.Import);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+                request.EndDate != null
+                && x.CreateDate.Date <= request.EndDate.Value.Date
+                && request.StartDate != null
+                && x.CreateDate.Date >= request.StartDate.Value.Date);
         //paging
-        int totalRow = query.Count;
-        var data = new List<Report>();
+        int totalRow = await query.CountAsync();
+        List<Report> data;
         if (request.IsPging)
-            data = query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data = await query.ToListAsync();
         }
 
         var pagedResult = new PagedList<Report>()
@@ -1410,29 +1422,31 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<Respond<PagedList<Report>>> GetAllLiquidationReportByBranchID(string branchID, Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Liquidation)
-            .ToListAsync();
+            .Where(x => x.BranchID == branchID && x.ReportType == ReportType.Liquidation);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+                request.EndDate != null
+                && x.CreateDate.Date <= request.EndDate.Value.Date
+                && request.StartDate != null
+                && x.CreateDate.Date >= request.StartDate.Value.Date);
         //paging
-        int totalRow = query.Count;
-        var data = new List<Report>();
+        int totalRow = await query.CountAsync();
+        List<Report> data;
         if (request.IsPging)
-            data = query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data = await query.ToListAsync();
         }
 
         var pagedResult = new PagedList<Report>()
@@ -1453,29 +1467,29 @@ public class ReportManager : IReportRepository, IDisposable
 
     public async Task<Respond<PagedList<Report>>> GetAllLiquidationReport(Search request)
     {
-        var query = await _context.Reports
+        var query = _context.Reports
             .Include(x => x.ReportDetails)
-            .Where(x => x.ReportType == ReportType.Liquidation)
-            .ToListAsync();
+            .Where(x => x.ReportType == ReportType.Liquidation);
         if (request.Name != null)
         {
-            query = query.Where(x => request.Name.Contains(x.Code)).ToList();
+            query = query.Where(x => request.Name.Contains(x.Code));
         }
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date &&
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date);
         //paging
-        int totalRow = query.Count;
-        var data = new List<Report>();
+        int totalRow = await query.CountAsync();
+        List<Report> data;
         if (request.IsPging)
-            data = query
+            data = await query
                 .Select(x => x)
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         else
         {
-            data = query.ToList();
+            data = await query.ToListAsync();
         }
 
         var pagedResult = new PagedList<Report>()
@@ -1575,8 +1589,8 @@ public class ReportManager : IReportRepository, IDisposable
             return new Respond<PagedList<MassMaterial>>
             {
                 Data = new(),
-                Result = 1,
-                Message = "Thành công",
+                Result = 0,
+                Message = "Failed",
             };
         }
 
@@ -1671,8 +1685,8 @@ public class ReportManager : IReportRepository, IDisposable
             return new Respond<PagedList<MassMaterial>>
             {
                 Data = new(),
-                Result = 1,
-                Message = "Thành công",
+                Result = 0,
+                Message = "failed",
             };
         }
 
