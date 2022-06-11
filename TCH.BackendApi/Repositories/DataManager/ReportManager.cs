@@ -85,9 +85,14 @@ public class ReportManager : IReportRepository, IDisposable
                     item.ExpirationDate == stock.ExpirationDate)
                 {
                     stock.Quantity -= item.Quantity;
+
+                    stock.Mass -= item.Mass;
+                    stock.StandardMass = stock.Mass * stock.Measure.ConversionFactor;
                     if (stock.Quantity < 0)
                     {
                         stock.Quantity = 0;
+                        stock.Mass = 0;
+                        stock.StandardMass = 0;
                     }
 
                     break;
@@ -145,7 +150,11 @@ public class ReportManager : IReportRepository, IDisposable
             UserCreateID = _userId,
         };
         await _context.Reports.AddAsync(report);
-        var stockDetails = await _context.StockMaterials.Where(x => x.BranchID == request.BranchID).ToListAsync();
+        var stockDetails = await _context
+            .StockMaterials
+            .Include(x => x.Measure)
+            .Where(x => x.BranchID == request.BranchID)
+            .ToListAsync();
         if (stockDetails == null)
         {
             return new MessageResult()
@@ -170,11 +179,14 @@ public class ReportManager : IReportRepository, IDisposable
             bool isAddStock = true;
             foreach (var stock in stockDetails)
             {
-                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate &&
-                    item.ExpirationDate == stock.ExpirationDate)
+                if (item.MaterialID == stock.MaterialID
+                    && item.BeginDate.Date == stock.BeginDate.Date
+                    && item.ExpirationDate.Date == stock.ExpirationDate.Date)
                 {
                     isAddStock = false;
                     stock.Quantity += item.Quantity;
+                    stock.Mass += item.Mass;
+                    stock.StandardMass = stock.Mass * stock.Measure.ConversionFactor;
                     break;
                 }
             }
@@ -252,7 +264,10 @@ public class ReportManager : IReportRepository, IDisposable
         };
         _context.Reports.Add(report);
 
-        var stockDetails = await _context.StockMaterials.Where(x => x.BranchID == request.BranchID).ToListAsync();
+        var stockDetails = await _context
+            .StockMaterials
+            .Where(x => x.BranchID == request.BranchID)
+            .ToListAsync();
         if (stockDetails == null)
         {
             return new MessageResult()
@@ -276,13 +291,17 @@ public class ReportManager : IReportRepository, IDisposable
 
             foreach (var stock in stockDetails)
             {
-                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate &&
-                    item.ExpirationDate == stock.ExpirationDate)
+                if (item.MaterialID == stock.MaterialID && item.BeginDate.Date == stock.BeginDate.Date &&
+                    item.ExpirationDate.Date == stock.ExpirationDate.Date)
                 {
                     stock.Quantity -= item.Quantity;
+                    stock.Mass -= item.Mass;
+                    stock.StandardMass = stock.Mass * stock.Measure.ConversionFactor;
                     if (stock.Quantity < 0)
                     {
                         stock.Quantity = 0;
+                        stock.Mass = 0;
+                        stock.StandardMass = 0;
                     }
 
                     break;
