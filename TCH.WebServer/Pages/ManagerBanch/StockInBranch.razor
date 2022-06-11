@@ -1,17 +1,4 @@
 ﻿@page "/stock-in-branch"
-@using Blazored.LocalStorage
-@using Microsoft.AspNetCore.Identity
-@using Newtonsoft.Json
-@using System.Net.Http.Headers
-
-@using System.Security.Claims
-@using TCH.Data.Entities
-@using TCH.WebServer.Models
-@using TCH.WebServer.Models.Pagination
-@using TCH.WebServer.Services
-@using TCH.WebServer.Services.Products
-@using TCH.WebServer.Services.StockMaterials
-@using TCH.WebServer.Services.Users
 
 @inject HttpClient httpClient
 @inject ILocalStorageService localStorage;
@@ -25,23 +12,23 @@
 @attribute [Authorize]
 <div class="page d-flex flex-row flex-column-fluid">
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-        
+
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-             <div class="card card-flush " style="">
-            <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                <div class="card-title">
-                    <div class="d-flex align-items-center position-relative my-1">
-                        <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
-                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
-                            </svg>
-                        </span>
-                        <EditForm Model="searchText" OnValidSubmit="SearchByText">
-                            <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm loại sản phẩm"/>
-                        </EditForm>
+            <div class="card card-flush " style="margin-top: 45px">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            <EditForm Model="searchText" OnValidSubmit="SearchByText">
+                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm nguyên liệu"/>
+                            </EditForm>
+                        </div>
                     </div>
-                </div>
 
                 </div>
                 <div class="card-body pt-0">
@@ -50,77 +37,106 @@
                         <div class="table-responsive">
                             <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
                                 <thead>
-                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                        <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
-                                            <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                                <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
-                                            </div>
-                                        </th>
-                                        <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                            Sản phẩm
-                                        </th>
-                                        <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending" style="width: 159.297px;">
-                                            Số lượng
-                                        </th>
-                                        <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
-                                            đơn vị
-                                        </th>
-                                    </tr>
+                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                            <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
+                                        </div>
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" >
+                                        Tên nguyên liệu
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending">
+                                        Tên chi nhánh
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending">
+                                        Ngày sản xuất
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending">
+                                        Ngày hết hạn
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending">
+                                        Khối lượng còn lại
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending">
+                                        đơn vị tính khối lượng
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending">
+                                        Trạng thái
+                                    </th>
+                                </tr>
                                 </thead>
                                 <tbody class="fw-bold text-gray-600">
-                                    @if (ProductsList.Count != 0)
+                                @if (ProductsList.Count != 0)
+                                {
+                                    foreach (var product in ProductsList)
                                     {
-                                        foreach (var product in ProductsList)
-                                        {
-                                            string href = "/stock-material/" + product.MaterialID.ToString();
-                                            <tr class="odd">
-                                                <td>
-                                                    <div class="d-flex align-items-center">  
-                                                        <div class="ms-5">
-                                                            <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                @product.MaterialName
-                                                            </a>
-                                                            <div class="text-muted fs-7 fw-bolder">@product.Description</div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">  
-                                                        <div class="ms-5">
-                                                            <div href="" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                @product.MeasureName
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="badge badge-success">  
-                                                        Còn hàng
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
-                                    else
-                                    {
+                                        string href = "/stock-material/" + product.MaterialID.ToString();
                                         <tr class="odd">
-                                            <td colspan="4">
-                                                <div class="d-flex justify-content-center align-items-center">
-                                                    <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
-                                                        <defs>
-                                                            <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
-                                                                <stop offset="0%" stop-color="hsl(193,90%,55%)"/>
-                                                                <stop offset="100%" stop-color="hsl(223,90%,55%)"/>
-                                                            </linearGradient>
-                                                        </defs>
-                                                        <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round"/>
-                                                        <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10"/>
-                                                    </svg>
+                                            <td>
+                                                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="checkbox" value="1">
                                                 </div>
-
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                            @product.MaterialName
+                                                        </a>
+                                                        <div class="text-muted fs-7 fw-bolder">@product.Description</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        @product.BranchName
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        @product.BeginDate.ToShortDateString()
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        @product.ExpirationDate.ToShortDateString()
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        @product.Mass
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        @product.MeasureName
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        @(product.Status == 1 ? "Còn" : "Hết")
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     }
+                                }
+                                else
+                                {
+                                    <Spinner Colspan="10"></Spinner>
+                                }
                                 </tbody>
                             </table>
                         </div>
@@ -141,7 +157,7 @@
                             </div>
                             <div class="col-sm-12 col-md-10 d-flex align-items-center justify-content-center justify-content-md-end">
                                 <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
-                                    <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
+                                    <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change"/>
                                 </div>
                             </div>
                         </div>
@@ -153,10 +169,11 @@
 </div>
 
 
-
 @code {
+
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationState { get; set; }
+
     public string BranchId { get; set; }
     public List<StockVm>? ProductsList = new List<StockVm>();
     private string? token;
@@ -180,6 +197,7 @@
         await Get(1);
         base.OnParametersSet();
     }
+
     public async Task Get(int pageNumber)
     {
         var response = await stockService.GetStockMaterials(true, pagination.pageSize, pageNumber, searchText, BranchId);
@@ -188,14 +206,21 @@
         pagination.totalPage = response.Data.TotalPages;
         StateHasChanged();
     }
+
     public async Task Change(int link)
     {
         pagination.PageNumber = link;
         await Get(link);
-        StateHasChanged();
+    }
+    public async Task ChangeNumber(int link)
+    {
+        pagination.PageNumber = 1;
+        pagination.pageSize = link;
+        await Get(link);
     }
     public async Task SearchByText()
     {
         await Get(pagination.PageNumber);
     }
+
 }

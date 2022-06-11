@@ -184,7 +184,10 @@
     public async Task Onclick()
     {
         GbParameter.GbParameter.ReportExport = newReport;
-        var modal = Modal.Show<AddExportReportDetail>("Thêm nguyên liệu nhập");
+        var modal = Modal.Show<AddExportReportDetail>("Thêm nguyên liệu nhập", options: new ModalOptions
+        {
+            UseCustomLayout = true
+        });
         var result = await modal.Result;
         if (!result.Cancelled)
         {

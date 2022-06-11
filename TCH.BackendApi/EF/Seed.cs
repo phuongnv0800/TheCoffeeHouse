@@ -575,7 +575,7 @@ public static class Seed
                 Price = 35000,
                 Description =
                     "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-                LinkImage = "/products/bac-siu-nong.webp ",
+                LinkImage = "/products/bac-xiu-nong.webp ",
                 CategoryID = "f7c75354-48e8-49b5-9ea4-dca7b81888df",
             },
             new Product()
@@ -2170,33 +2170,26 @@ public static class Seed
                 IsSale = false,
                 PriceSale = 250000,
                 IsAvailable = true,
-
-
                 Price = 250000,
                 Description =
                     "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
-                LinkImage = "/products/bình giữ nhiệt inox xám cam 473ml.webp",
+                LinkImage = "/products/473ml.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
             {
                 ID = Guid.NewGuid().ToString(),
                 Name = "Bộ Ống Hút Inox",
-
                 ProductType = ProductType.Drink,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
                 IsSale = false,
                 PriceSale = 79000,
                 IsAvailable = true,
-
-
                 Price = 79000,
                 Description =
                     "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-
-                LinkImage = "/products/bộ ống hút inox.webp",
+                LinkImage = "/products/inox.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2212,7 +2205,7 @@ public static class Seed
                 Price = 100000,
                 Description =
                     "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-                LinkImage = "/products/cốc sứ the coffee house gợn sóng.webp",
+                LinkImage = "/products/cocsu.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2228,7 +2221,7 @@ public static class Seed
                 Price = 100000,
                 Description =
                     "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-                LinkImage = "/products/cốc sứ the coffee house sọc ngang.webp",
+                LinkImage = "/products/socngang.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2244,7 +2237,7 @@ public static class Seed
                 Price = 79000,
                 Description =
                     "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-                LinkImage = "/products/túi canvans đà nãng.webp",
+                LinkImage = "/products/canvans3.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2260,7 +2253,7 @@ public static class Seed
                 Price = 79000,
                 Description =
                     "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-                LinkImage = "/products/túi canvans hà nội.webp",
+                LinkImage = "/products/canvans.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             },
             new Product()
@@ -2276,7 +2269,7 @@ public static class Seed
                 Price = 79000,
                 Description =
                     "Không còn trà đào cam sả tươi mát, cũng không còn “best seller” caramel macchiato nhưng quán café The Coffee House signature vẫn là điểm hẹn hot rần rần trong thời gian gần đây. Lấy cảm hứng từ hành trình café đặc sắc của thương hiệu, The Coffee House Signature đúng như cái tên – là chắt lọc tinh túy và những giá trị đặc trưng nhất của Nhà Café.",
-                LinkImage = "/products/túi canvans trăng nhà sung túc.webp",
+                LinkImage = "/products/canvans2.webp",
                 CategoryID = "2e008313-4f56-40c0-89a9-01abe3d5e22f",
             }
         };

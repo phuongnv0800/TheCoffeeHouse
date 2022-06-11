@@ -1,4 +1,5 @@
 ﻿@page "/orders-branch"
+@page "/orders-branch/{branchId}"
 @inject IOrderService orderService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
@@ -41,11 +42,11 @@
                         <div class="col-12">
                             <div class="card-body pt-0">
                                 <RadzenChart>
-                                    <RadzenLineSeries Smooth="true" Data="@items" CategoryProperty="Date" Title="Tháng 6/2022" ValueProperty="Revenue">
+                                    <RadzenLineSeries Smooth="true" Data="@ChartOrders" CategoryProperty="CreateDate" Title="Doanh thu theo cửa hàng" ValueProperty="TotalAmount">
                                         <RadzenMarkers MarkerType="MarkerType.Square"/>
                                     </RadzenLineSeries>
 
-                                    <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}"/>
+                                    <RadzenCategoryAxis Padding="20" FormatString="{0:dd/MM/yyyy}"/>
                                     <RadzenValueA98-xis>
                                         @*<RadzenGridLines Visible="true" />*@
                                         <RadzenAxisTitle Text="Tổng doanh thu"/>
@@ -90,7 +91,7 @@
                                         </tr>
                                         </thead>
                                         <tbody class="fw-bold text-gray-600">
-                                        @if (ProductsList.Count != 0)
+                                        @if (ProductsList.Count != 0 && ProductsList != null)
                                         {
                                             foreach (var product in ProductsList)
                                             {
@@ -156,7 +157,7 @@
                                         }
                                         else
                                         {
-                                            <Spinner Colspan="4"></Spinner>
+                                            <Spinner Colspan="8"></Spinner>
                                         }
                                         </tbody>
                                     </table>
@@ -198,20 +199,23 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationState { get; set; }
 
+    [Parameter]
     public string BranchId { get; set; }
+
     public string UserId { get; set; }
     public List<Order>? ProductsList = new();
+    public List<Order>? ChartOrders = new();
     private Models.Pagination.Pagination pagination = new();
     private DateRequest dateRequest;
     private double Sum;
 
-    class DataItem
-    {
-        public DateTime Date { get; set; }
-        public double Revenue { get; set; }
-    }
-
-    private List<DataItem> items = new();
+    // class DataItem
+    // {
+    //     public DateTime Date { get; set; }
+    //     public double Revenue { get; set; }
+    // }
+    //
+    // private List<DataItem> items = new();
 
     [CascadingParameter]
     public IModalService Modal { get; set; }
@@ -221,7 +225,10 @@
         var authState = await AuthenticationState;
         if (authState.User.Identity!.IsAuthenticated)
         {
-            BranchId = authState.User.FindFirst(x => x.Type == ClaimValue.BranhID)!.Value;
+            if (string.IsNullOrWhiteSpace(BranchId))
+            {
+                BranchId = authState.User.FindFirst(x => x.Type == ClaimValue.BranhID)!.Value;
+            }
             UserId = authState.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
         }
     }
@@ -264,18 +271,11 @@
     {
         try
         {
-            for (var date = dateRequest.FromDate.Date; date <= dateRequest.ToDate.Date; date = date.AddDays(1))
+            var response = await orderService.GetAllOrdersInBranch(false, pagination.pageSize, 1, BranchId, UserId, dateRequest.FromDate, dateRequest.ToDate);
+            if (response.Result == 1)
             {
-                var respond = await orderService.GetAllOrdersInBranch(false, 10, 1, BranchId, UserId, date, date);
-                List<Order> orders = respond.Data.Items;
-                double sum = orders.Sum(x => x.TotalAmount);
-                Sum += sum;
-                DataItem item = new DataItem
-                {
-                    Date = date,
-                    Revenue = sum
-                };
-                items.Add(item);
+                ChartOrders = response.Data.Items.ToList();
+                Sum = response.Data.Items.Sum(x => x.TotalAmount);
             }
         }
         catch (Exception ex)
