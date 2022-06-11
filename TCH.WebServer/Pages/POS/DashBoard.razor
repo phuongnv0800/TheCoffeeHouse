@@ -1,4 +1,5 @@
 ﻿@page "/dashboard"
+@using TCH.WebServer.Pages.POS.Customers
 @inject NavigationManager navigationManager
 @inject IProductService productServices
 @inject IUserService userServices
@@ -7,7 +8,7 @@
 @inject IToastService toastService
 @inject IOrderService orderService
 @inject IConfiguration Configuration
-
+@inject IUserApiClient userApiClient;
 @attribute [Authorize]
 
 <div class="page d-flex flex-row flex-column-fluid">
@@ -15,137 +16,68 @@
 
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
             <div class="row g-5 g-xl-8">
-                <div class="col-md-8 col-12">
-                    <div class="row">
-                        @if (categories != null)
+                <div class="row d-flex">
+                    <EditForm Model="searchText" OnValidSubmit="SearchByText">
+                        <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm loại sản phẩm" />
+                    </EditForm>
+                    <button class="ms-5 btn btn-primary" onclick="@(() => CreateOrder())">Xem đơn hàng</button>
+                </div>
+
+                <div class="row">
+                    @if (categories != null)
+                    {
+                        foreach (var product in ProductsList)
                         {
-                            foreach (var product in ProductsList)
-                            {
-                                <div class="col-md-4 p-5">
-                                    <!--begin::Hot sales post-->
-                                    <div class="card-xl-stretch me-md-6">
-                                        <!--begin::Overlay-->
-                                        <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@(Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage)">
-                                            <!--begin::Image-->
-                                            <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(@(Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage))"></div>
-                                            <!--end::Image-->
-                                            <!--begin::Action-->
-                                            <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
-                                                <i class="bi bi-eye-fill fs-2x text-white"></i>
-                                            </div>
-                                            <!--end::Action-->
-                                        </a>
-                                        <!--end::Overlay-->
-                                        <!--begin::Body-->
-                                        <div class="mt-5">
-                                            <!--begin::Title-->
-                                            <a href="/product-detail/@product.ID" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
-                                            <!--end::Title-->
-                                            <!--begin::Text-->
-                                            <a class="fw-bold text-gray-600 text-dark mt-3 d-block" href="/recipes/@product.ID">Xem công thức</a>
-                                            <!--end::Text-->
-                                            <!--begin::Text-->
-                                            <div class="fs-3 fw-bolder mt-5 d-flex flex-stack">
-                                                <!--begin::Label-->
-                                                @if(!product.IsAvailable){
-                                                    <span class="badge badge-danger border-dashed text-primary p-2">
-                                                        Hết hàng
-                                                    </span>
-                                                }
-                                                <span class="badge border border-dashed text-primary p-2">
-                                                    @((product.IsSale) ? product.Price - product.PriceSale : product.Price)<span class="text-primary text-gray-400">vnđ</span>
-                                                </span>
-                                                <!--end::Label-->
-                                                <!--begin::Action-->
-                                        <button onclick="@(() => NavManager.NavigateTo($"/product-detail/{@product.ID}"))" class="btn btn-sm btn-primary">Mua</button>
-                                                <!--end::Action-->
-                                            </div>
-                                            <!--end::Text-->
+                            <div class="col-md-4 p-5">
+                                <!--begin::Hot sales post-->
+                        <div class="card-xl-stretch me-md-6">
+                                    <!--begin::Overlay-->
+                            <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@(Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage)">
+                                        <!--begin::Image-->
+                                <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(@(Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage))"></div>
+                                        <!--end::Image-->
+                                        <!--begin::Action-->
+                                <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                            <i class="bi bi-eye-fill fs-2x text-white"></i>
                                         </div>
-                                        <!--end::Body-->
-                                    </div>
-                                    <!--end::Hot sales post-->
-                                </div>
-                            }
-                        }
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div div class="card card-xl-stretch mb-xl-8">
-                        <div class="card-header align-items-center border-0 mt-4">
-                            <EditForm Model="searchText" OnValidSubmit="SearchByText">
-                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm loại sản phẩm"/>
-                            </EditForm>
-                            <button onclick="" class="btn btn-primary right mt-5">
-                                Tạo mới
-                            </button>
-                        </div>
-                        <div class="card-body pt-5">
-                            <div class="tab-content">
-                                <!--begin::Tap pane-->
-                                <div class="tab-pane fade show active" id="kt_stats_widget_2_tab_4">
-                                    <!--begin::Table container-->
-                                    <div class="table">
-                                        <!--begin::Table-->
-                                        <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
-                                            <!--begin::Table head-->
-                                            <thead>
-                                            <tr class="fs-7 fw-bolder text-gray-500 border-bottom-0">
-                                                <th class="ps-0 w-50px">ITEM</th>
-                                                <th class="text-end min-w-140px">QTY</th>
-                                                <th class="pe-0 text-end min-w-120px">PRICE</th>
-                                            </tr>
-                                            </thead>
-                                            <!--end::Table head-->
-                                            <!--begin::Table body-->
-                                            <tbody>
-                                            @if (order != null && order.OrderItems != null)
+                                        <!--end::Action-->
+                            </a>
+                                    <!--end::Overlay-->
+                                    <!--begin::Body-->
+                            <div class="mt-5">
+                                        <!--begin::Title-->
+                                <a href="/product-detail/@product.ID" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
+                                        <!--end::Title-->
+                                        <!--begin::Text-->
+                                <a class="fw-bold text-gray-600 text-dark mt-3 d-block" href="/recipes/@product.ID">Xem công thức</a>
+                                        <!--end::Text-->
+                                        <!--begin::Text-->
+                                <div class="fs-6 fw-bolder mt-5 d-flex flex-stack">
+                                            <!--begin::Label-->
+                                            @if (!product.IsAvailable)
                                             {
-                                                foreach (var orderDetail in order.OrderItems)
-                                                {
-                                                    <tr>
-                                                        @*<td>
-                                                                <img src="@(Configuration["BackendApiUrl"]+"/Uploads/" + orderDetail..LinkImage)" class="w-50px ms-n1" alt="">
-                                                                </td>*@
-                                                        <td class="ps-0">
-                                                            <a href="/product-detail/@@orderDetail.ProductID" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6 text-start pe-0">@orderDetail.NameProduct</a>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-gray-800 fw-bolder d-block fs-6 ps-0 text-end">x@(orderDetail.Quantity)</span>
-                                                        </td>
-                                                        <td class="text-end pe-0">
-                                                            <span class="text-gray-800 fw-bolder d-block fs-6">@orderDetail.SubAmount</span>
-                                                        </td>
-                                                    </tr>
-                                                }
+                                                <span class="badge badge-danger border-dashed text-primary p-2">
+                                                    Hết hàng
+                                                </span>
                                             }
-                                            </tbody>
-                                            <!--end::Table body-->
-                                        </table>
-
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <!--begin::Button-->
-
-                                        <!--end::Button-->
-                                        <!--begin::Button-->
-                                        <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary" onclick="@(() => OnSubmit())">
-                                            <span class="indicator-label">Hoàn thành</span>
-                                            <span class="indicator-progress">
-                                                Please wait...
-                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                            <span class="badge border border-dashed text-primary p-2">
+                                                @((product.IsSale) ? product.Price - product.PriceSale : product.Price)<span class="text-primary text-gray-400">vnđ</span>
                                             </span>
-                                        </button>
-                                        <!--end::Button-->
-                                    </div>
-                                    <!--end::Table-->
+                                            <!--end::Label-->
+                                            <!--begin::Action-->
+                                    <button onclick="@(() => NavManager.NavigateTo($"/product-detail/{@product.ID}"))" class="btn btn-sm btn-primary">Mua</button>
+                                            <!--end::Action-->
                                 </div>
-                                <!--end::Tap pane-->
-
+                                        <!--end::Text-->
                             </div>
+                                    <!--end::Body-->
                         </div>
+                                <!--end::Hot sales post-->
                     </div>
+                        }
+                    }
                 </div>
+
             </div>
         </div>
     </div>
@@ -168,14 +100,14 @@
             </div>
         </div>
         <div class="col-sm-12 col-md-10">
-            <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change"/>
+            <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
         </div>
     </div>
 </div>
 
 
 @code {
-    public List<ProductVm>? ProductsList = new ();
+    public List<ProductVm>? ProductsList = new();
 
     [CascadingParameter]
     public IModalService Modal { get; set; }
@@ -185,8 +117,8 @@
 
     private string Url;
     private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
-    private List<Category> categories = new ();
-    private ApplicationUser User;
+    private List<Category> categories = new();
+    private AppUser User;
     private OrderRequest order;
     private string searchText = "";
 
@@ -195,22 +127,8 @@
         try
         {
             Url = Configuration.GetSection("BackendApiUrl").Value;
-            order = GbParameter.GbParameter.Order;
-            if (order == null)
-            {
-                order = new OrderRequest();
-                order.OrderItems = new List<OrderItem>();
-                GbParameter.GbParameter.Order = order;
-            }
-
-            var response = await userServices.GetUserInfo();
+            var response = await userApiClient.GetById(GbParameter.GbParameter.UserId);
             User = response.Data;
-
-            foreach (var or in order.OrderItems)
-            {
-                var res = await productServices.GetProductById(or.ProductID);
-                or.NameProduct = res.Data.Name;
-            }
             await Get(1);
 
             base.OnParametersSet();
@@ -223,8 +141,8 @@
 
     public async Task Get(int pageNumber)
     {
-        var response = await productServices.GetProductsByBranch(true, pagination.pageSize, pageNumber, User.BranchId, searchText);
-    //var response = await productServices.GetProducts(true, pagination.pageSize, pageNumber);
+        var response = await productServices.GetProductsByBranch(true, pagination.pageSize, pageNumber, User.BranchID, searchText);
+        //var response = await productServices.GetProducts(true, pagination.pageSize, pageNumber);
         pagination.PageNumber = response.Data.CurrentPage;
         ProductsList = response.Data.Items.ToList();
         pagination.totalPage = response.Data.TotalPages;
@@ -240,10 +158,7 @@
 
     public async void CreateOrder()
     {
-        order = new OrderRequest();
-        order.OrderItems = new List<OrderItem>();
-        GbParameter.GbParameter.Order = order;
-        StateHasChanged();
+        Modal.Show<OrderDetailComponent>("Đơn hàng đang đặt");
     }
 
     public async void OnSubmit()

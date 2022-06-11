@@ -1,0 +1,133 @@
+﻿@inject NavigationManager navigationManage
+@inject IToastService toastService
+@inject IProductService productService
+<div div class="card card-xl-stretch mb-xl-8">
+    <div class="card-header align-items-center border-0 mt-4">
+
+        <button onclick="" class="btn btn-primary right mt-5">
+            Tạo mới
+        </button>
+    </div>
+    <div class="card-body pt-5">
+        <div class="tab-content">
+            <!--begin::Tap pane-->
+            <div class="tab-pane fade show active" id="kt_stats_widget_2_tab_4">
+                <!--begin::Table container-->
+                <div class="table">
+                    <!--begin::Table-->
+                    <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
+                        <!--begin::Table head-->
+                        <thead>
+                            <tr class="fs-7 fw-bolder text-gray-500 border-bottom-0">
+                                <th class="ps-0 w-50px">ITEM</th>
+                                <th class="text-end min-w-140px">QTY</th>
+                                <th class="pe-0 text-end min-w-120px">PRICE</th>
+                            </tr>
+                        </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
+                        <tbody>
+                            @if (order != null && order.OrderItems != null)
+                            {
+                                @if(order.OrderItems.Count() <= 0)
+                                {
+                                    <button class="btn btn-primary" onclick="@(() => navigationManage.NavigateTo("dashboard"))">Chọn sản phẩm (+)</button>
+                                }else{
+                                    foreach (var orderDetail in order.OrderItems)
+                                    {
+                                        <tr>
+                                            @*<td>
+                                                <img src="@(Configuration["BackendApiUrl"]+"/Uploads/" + orderDetail..LinkImage)" class="w-50px ms-n1" alt="">
+                                                </td>*@
+                                            <td class="ps-0">
+                                                <a href="/product-detail/@@orderDetail.ProductID" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6 text-start pe-0">@orderDetail.NameProduct</a>
+                                            </td>
+                                            <td>
+                                                <span class="text-gray-800 fw-bolder d-block fs-6 ps-0 text-end">x@(orderDetail.Quantity)</span>
+                                            </td>
+                                            <td class="text-end pe-0">
+                                                <span class="text-gray-800 fw-bolder d-block fs-6">@orderDetail.SubAmount</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+
+                </div>
+                <div class="d-flex justify-content-end">
+                    <!--begin::Button-->
+                    <!--end::Button-->
+                    <!--begin::Button-->
+                    <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary" onclick="@(() => OnSubmit())">
+                        <span class="indicator-label">Hoàn thành</span>
+                        <span class="indicator-progress">
+                            Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+                    <!--end::Button-->
+                </div>
+                <!--end::Table-->
+            </div>
+            <!--end::Tap pane-->
+
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<ProductVm>? ProductsList = new();
+
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
+
+    [Parameter]
+    public string BranchId { get; set; }
+
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
+    private List<Category> categories = new();
+    private ApplicationUser User;
+    private OrderRequest order;
+    private string searchText = "";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            order = GbParameter.GbParameter.Order;
+            if (order == null)
+            {
+                order = new OrderRequest();
+                order.OrderItems = new List<OrderItem>();
+                GbParameter.GbParameter.Order = order;
+            }
+            foreach (var or in order.OrderItems)
+            {
+                var res = await productService.GetProductById(or.ProductID);
+                or.NameProduct = res.Data.Name;
+            }
+
+            base.OnParametersSet();
+        }
+        catch (Exception e)
+        {
+            toastService.ShowError("có lỗi");
+        }
+    }
+    public async void CreateOrder()
+    {
+        order = new OrderRequest();
+        order.OrderItems = new List<OrderItem>();
+        GbParameter.GbParameter.Order = order;
+        StateHasChanged();
+    }
+
+    public async void OnSubmit()
+    {
+        navigationManage.NavigateTo($"/invoice");
+    }
+
+}
