@@ -1,5 +1,461 @@
-﻿<h3>QuantityProduct</h3>
+﻿@page "/quantity-product-report"
+@inject IConfiguration Configuration
+@inject IOrderService orderService;
+@inject IToastService toastService
+@inject IJSRuntime jsRuntime;
+@inject IBrandService branchService
+@inject IUserApiClient userApiClient;
+@inject IUserService userServices
+@inject IProductService productService
+@attribute [Authorize]
+
+<div class="page d-flex flex-row flex-column-fluid">
+    <div class="wrapper d-flex flex-column flex-row-fluid mt-5" id="kt_wrapper">
+
+        <div class="content flex-column flex-column-fluid" id="kt_content">
+            <div class="card card-flush " style="">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            <div class="card-title">
+                                <div class="d-flex align-items-center position-relative my-1">
+                                    <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                        </svg>
+                                    </span>
+                                    @if (dateRequest != null)
+                                    {
+                                        <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
+                                            <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu" />
+                                            <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith" />
+                                            <button onclick="@(() => SearchByText())"
+                                                class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Tìm kiếm
+                                            </button>
+                                        </EditForm>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body pt-0">
+
+                    <RadzenChart>
+                        <RadzenBarSeries Data="@items" CategoryProperty="Quarter" Title="Lượng sản phẩm" ValueProperty="Revenue">
+
+                        </RadzenBarSeries>
+                        @if (lists != null && lists.Count != 0)
+                        {
+                            @foreach (var item in lists)
+                            {
+                                <RadzenBarSeries Smooth="@smooth" Data="@item.listItems" CategoryProperty="DateTime" Title="@item.branch.Name" ValueProperty="Revenue">
+                                    
+                                </RadzenBarSeries>
+                            }
+                        }
+                        <RadzenValueAxis>
+                            @*<RadzenGridLines Visible="true" />*@
+                            <RadzenAxisTitle Text="Lượng tiêu thụ" />
+                        </RadzenValueAxis>
+                    </RadzenChart>
+
+
+                </div>
+            </div>
+            <div class="card card-flush ">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            <EditForm Model="searchText" OnValidSubmit="SearchByText">
+                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-450px ps-14" placeholder="Tìm kiếm chinh nhánh theo tên" />
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="table-responsive">
+                                    <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
+                                        <thead>
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
+                                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                                        <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
+                                                    </div>
+                                                </th>
+                                                <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Cửa hàng
+                                                </th>
+                                                <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending" style="width: 159.297px;">
+                                                    Thành phố
+                                                </th>
+                                                <th class="min-w-150px  sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
+                                                    Số điện thoại
+                                                </th>
+                                                <th class="min-w-150px  sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
+                                                    Email
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="fw-bold text-gray-600">
+                                            @if (BranchList?.Count != 0 && BranchList != null)
+                                            {
+                                                foreach (var branch in BranchList)
+                                                {
+                                                    string fileImage = Configuration["BackendApiUrl"] + "/Uploads/" + branch.LinkImage;
+                                                    string href = "/orders-by-branch/" + branch.ID;
+                                                    <tr class="odd">
+                                                        <td>
+                                                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                                <input type="checkbox" class="form-check-input" @onchange="@(e => { SelectBranch(@branch.ID, e.Value); })">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <img height="40" width="40" src="@fileImage">
+                                                                <div class="ms-5">
+                                                                    <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                        @branch.Name
+                                                                    </a>
+                                                                    <div class="text-muted fs-7 fw-bolder">@branch.Adderss </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                @branch.City
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                @branch.Phone
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                @branch.Email
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <Spinner Colspan="5"></Spinner>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-start">
+                                        <div class="dataTables_length" id="kt_ecommerce_category_table_length">
+                                            <label>
+                                                <EditForm Model="pagination">
+                                                    <InputSelect @bind-Value="pagination.pageSize" name="kt_ecommerce_category_table_length" aria-controls="kt_ecommerce_category_table" class="form-select form-select-sm form-select-solid">
+                                                        <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
+                                                    </InputSelect>
+                                                </EditForm>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-10 d-flex align-items-center justify-content-center justify-content-md-end">
+                                        <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
+                                            <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="table-responsive">
+                                    <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
+                                        <thead>
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
+                                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                                        <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
+                                                    </div>
+                                                </th>
+                                                <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" style="width: 637.234px;">
+                                                    Sản phẩm
+                                                </th>
+                                                <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" style="width: 159.297px;">
+                                                    lượng tiêu thụ
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody class="fw-bold text-gray-600">
+                                            @if (ProductsList.Count != 0)
+                                            {
+                                                foreach (var product in ProductsList)
+                                                {
+                                                //string fileImage = Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage;
+
+                                                    <tr class="odd">
+                                                        <td>
+                                                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                                @*<input type="checkbox" class="form-check-input" @onchange="@(e => { SelectBranch(@product.ID, e.Value); })">*@
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                @*<img height="40" width="40" src="@fileImage" >*@
+
+                                                                <div class="ms-5">
+                                                                    <a class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                        @product.ProductName
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="ms-5">
+                                                                @product.Quantity
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr class="odd">
+                                                    <td colspan="4">
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+                                                                <defs>
+                                                                    <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+                                                                        <stop offset="0%" stop-color="hsl(193,90%,55%)" />
+                                                                        <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round" />
+                                                                <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10" />
+                                                            </svg>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-1 d-flex align-items-center justify-content-center justify-content-md-start">
+                                        <div class="dataTables_length" id="kt_ecommerce_category_table_length">
+                                            <label>
+                                                <EditForm Model="pagination">
+                                                    <InputSelect @bind-Value="pagination.pageSize" name="kt_ecommerce_category_table_length" aria-controls="kt_ecommerce_category_table" class="form-select form-select-sm form-select-solid">
+                                                        <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
+                                                    </InputSelect>
+                                                </EditForm>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-11 d-flex align-items-center justify-content-center justify-content-md-end">
+                                        <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
+                                            <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    public String Url { get; set; }
+    bool smooth = true;
+
+    class DataItem
+    {
+        public string Quarter { get; set; }
+        public double Revenue { get; set; }
+    }
+
+    class ListDataItem
+    {
+        public Branch branch { get; set; }
+
+        public List<DataItem> listItems { get; set; }
+    }
+    private List<string> BranchIds = new List<string>();
+    private List<DataItem> items = new List<DataItem>();
+    private List<ListDataItem> lists = new List<ListDataItem>();
+
+    public List<ProductQuantityVm>? ProductsList = new List<ProductQuantityVm>();
+
+    private string? token;
+    public string Name;
+    private TCH.WebServer.Models.Pagination.Pagination pagination = new();
+    private AppUser User;
+    private DateRequest dateRequest;
+    private string searchText = "";
+    private double Sum;
+    public List<Branch>? BranchList = new();
+
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Url = Configuration.GetSection("BackendApiUrl").Value;
+            dateRequest = new DateRequest()
+                {
+                    FromDate = new DateTime(2022, 06, 01),
+                    ToDate = DateTime.Now
+                };
+            pagination.PageNumber = 1;
+            var response = await userApiClient.GetById(GbParameter.GbParameter.UserId);
+            User = response.Data;
+            var res = await branchService.GetAllBranchs(searchText);
+            BranchList = res.Data.Items;
+            //Sum = await orderService.GetSum(dateRequest.FromDate, dateRequest.ToDate);
+            await Get(1);
+        }
+        catch (Exception ex)
+        {
+            toastService.ShowError("có lỗi");
+        }
+    }
+    public async Task Get(int pageNumber)
+    {
+        try
+        {
+            var response = await orderService.GetQuantiProducts(true, pagination.pageSize, pagination.PageNumber, dateRequest.FromDate, dateRequest.ToDate);
+            pagination.PageNumber = response.Data.CurrentPage;
+            ProductsList = response.Data.Items.ToList();
+            items = new List<DataItem>();
+            foreach (var it in ProductsList)
+            {
+                DataItem data = new DataItem()
+                    {
+                        Quarter = it.ProductName,
+                        Revenue = it.Quantity,
+                    };
+                items.Add(data);
+            }
+            pagination.totalPage = response.Data.TotalPages;
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            toastService.ShowError("Có lỗi");
+        }
+    }
+
+
+    public async Task GetChartBranch(string branchId)
+    {
+        try
+        {
+            var resb = await branchService.GetBranchById(branchId);
+            var branch = resb.Data;
+            var resp = await orderService.GetQuantiProductsByBranch(true, pagination.pageSize, pagination.PageNumber,branchId, dateRequest.FromDate, dateRequest.ToDate);
+            List<DataItem> list = new List<DataItem>();
+            foreach (var it in resp.Data.Items)
+            {
+                DataItem data = new DataItem()
+                    {
+                        Quarter = it.ProductName,
+                        Revenue = it.Quantity,
+                    };
+                list.Add(data);
+            }
+            var listdata = new ListDataItem()
+                {
+                    branch = branch,
+                    listItems = list
+                };
+                lists.Add(listdata);
+        }
+        catch (Exception ex)
+        {
+            toastService.ShowError("có lỗi");
+        }
+    }
+
+    public async void Delete(string id)
+    {
+        await orderService.DeleteOrder(id);
+    }
+
+    public async void Change(int link)
+    {
+        pagination.PageNumber = link;
+        await Get(link);
+        lists= new List<ListDataItem>();
+        if(BranchIds != null && BranchIds.Count > 0){
+            foreach(var id in BranchIds){
+                await GetChartBranch(id);
+            }
+        }    
+
+        StateHasChanged();
+    }
+
+    public async Task SearchByText()
+    {
+        await Get(pagination.PageNumber);
+    }
+    public async Task SelectBranch(string branchId, object checkedValue)
+    {
+        if ((bool) checkedValue)
+        {
+            await GetChartBranch(branchId);
+            StateHasChanged();
+        }
+        else
+        {
+            var selectBranch = lists.FirstOrDefault(x => x.branch.ID == branchId);
+            if (selectBranch != null)
+                lists.Remove(selectBranch);
+        }
+    }
+}
+
+@code {
+
+    public class DateRequest
+    {
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+    }
 
 }

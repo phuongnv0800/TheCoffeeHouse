@@ -52,12 +52,10 @@
         <div class="card-body pt-0">
 
             <RadzenChart>
-                <RadzenColumnSeries Data="@items" CategoryProperty="Quarter" Title="Quarter" ValueProperty="Revenue">
-                    <RadzenMarkers MarkerType="MarkerType.Square"/>
-                </RadzenColumnSeries>
+                <RadzenBarSeries Data="@items" CategoryProperty="Quarter" Title="Lượng sản phẩm" ValueProperty="Revenue">
 
+                </RadzenBarSeries>
 
-                <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}"/>
                 <RadzenValueAxis>
                     @*<RadzenGridLines Visible="true" />*@
                     <RadzenAxisTitle Text="Lượng tiêu thụ"/>
@@ -99,11 +97,9 @@
                                             Sản phẩm
                                         </th>
                                         <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1"  style="width: 159.297px;">
-                                            Trạng thái
+                                            lượng tiêu thụ
                                         </th>
-                                        <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
-                                            Thao tác
-                                        </th>
+
                                     </tr>
                                 </thead>
                                 <tbody class="fw-bold text-gray-600">
@@ -111,35 +107,28 @@
                                     {
                                         foreach (var product in ProductsList)
                                         {
-                                            string fileImage = Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage;
-                                            string href = "/products/" + product.ID.ToString();
+                                            //string fileImage = Configuration["BackendApiUrl"]+"/Uploads/" + product.LinkImage;
+                                            
                                             <tr class="odd">
                                                 <td>
                                                     <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input type="checkbox" class="form-check-input" @onchange="@(e => { SelectBranch(@product.ID, e.Value); })">
+                                                        @*<input type="checkbox" class="form-check-input" @onchange="@(e => { SelectBranch(@product.ID, e.Value); })">*@
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
-                                                        <img height="40" width="40" src="@fileImage" >
+                                                        @*<img height="40" width="40" src="@fileImage" >*@
                                                         
                                                         <div class="ms-5">
-                                                            <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                @product.Name
+                                                            <a class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                @product.ProductName
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="ms-5">
-                                                            
-                                                        @if(product.IsActive)
-                                                        {
-                                                             <p class=" fs-5 fw-bolder mb-1" style="color: green">Đang hoạt động</p>
-                                                        }
-                                                        else{
-                                                            <p class=" fs-5 fw-bolder mb-1" style="color:red">Chưa hoạt động</p> 
-                                                        }
+                                                        @product.Quantity
                                                     </div>
                                                 </td>
                                                 
@@ -204,7 +193,6 @@
 
     class DataItem
     {
-        public string Id {get;set;}
         public string Quarter  { get; set; }
         public double Revenue { get; set; }
     }
@@ -219,7 +207,7 @@
     private List<DataItem> items = new List<DataItem>();
     private List<ListDataItem> lists = new List<ListDataItem>();
 
-    public List<ProductVm>? ProductsList = new List<ProductVm>();
+    public List<ProductQuantityVm>? ProductsList = new List<ProductQuantityVm>();
 
     private string? token;
     public string Name;
@@ -243,10 +231,12 @@
                 FromDate = new DateTime(2022, 06, 01),
                 ToDate = DateTime.Now
             };
+            
             var response = await userApiClient.GetById(GbParameter.GbParameter.UserId);
             User = response.Data;
             //Sum = await orderService.GetSum(dateRequest.FromDate, dateRequest.ToDate);
             await Get(1);
+            await GetChartBranch();
         }
         catch (Exception ex)
         {
@@ -256,7 +246,7 @@
     public async Task Get(int pageNumber)
     {
         try{
-            var response = await productService.GetProducts(true, pagination.pageSize, pageNumber, searchText);
+            var response = await orderService.GetQuantiProductsByBranch(true, pagination.pageSize, pagination.PageNumber, User.BranchID, dateRequest.FromDate, dateRequest.ToDate);
             pagination.PageNumber = response.Data.CurrentPage;
             ProductsList = response.Data.Items.ToList();
             pagination.totalPage = response.Data.TotalPages;
@@ -268,21 +258,21 @@
     }
 
 
-    public async Task GetChartBranch(string ProductId)
+    public async Task GetChartBranch()
     {
         try
         {
-            List<DataItem> ite = new List<DataItem>();
+            items = new List<DataItem>();
 
-            var resp = await orderService.GetQuantiProductsByBranch(ProductId, User.BranchID, dateRequest.FromDate, dateRequest.ToDate);
-
-            DataItem data = new DataItem()
+            foreach(var it in ProductsList){
+                DataItem data = new DataItem()
                 {
-                    Id = resp.Data.ProductID,
-                    Quarter = resp.Data.ProductName,
-                    Revenue = resp.Data.Quantity,
+                    Quarter = it.ProductName,
+                    Revenue = it.Quantity,
                 };
-            items.Add(data);
+                items.Add(data);
+            }
+            
         }
         catch (Exception ex)
         {
@@ -299,29 +289,14 @@
     {
         pagination.PageNumber = link;
         await Get(link);
+        await GetChartBranch();
+
         StateHasChanged();
     }
 
     public async Task SearchByText()
     {
         await Get(pagination.PageNumber);
-    }
-
-
-    public async Task SelectBranch(string toppingId, object checkedValue)
-    {
-        if ((bool) checkedValue)
-
-        {
-            await GetChartBranch(toppingId);
-
-            StateHasChanged();
-        }
-        else
-        {
-            var selectBranch = items.FirstOrDefault(x => x.Id == toppingId);
-            items.Remove(selectBranch);
-        }
     }
 
 }

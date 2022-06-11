@@ -24,8 +24,8 @@ namespace TCH.WebServer.Services.Orders
         Task<byte[]> GetExcel(DateTime? FromDate, DateTime? ToDate);
         Task<byte[]> GetExcelInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<Order>> UpdateOrder(OrderRequest branch);
-        Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProducts( DateTime? FromDate, DateTime? ToDate);
-        Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProductsByBranch( string BranchId, DateTime? FromDate, DateTime? ToDate);
+        Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProducts(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate);
+        Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProductsByBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<string> PrintPDF(string id);
         Task DeleteOrder(string id);
         
@@ -322,7 +322,7 @@ namespace TCH.WebServer.Services.Orders
             }
         }
 
-        public async Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProducts( DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProducts(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate)
         {
             try
             {
@@ -330,7 +330,8 @@ namespace TCH.WebServer.Services.Orders
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-                var response = await httpClient.GetAsync($"/api/Orders/get-product-branch-all?" + fromDate
+                var response = await httpClient.GetAsync($"/api/Orders/get-product-branch-all?IsPging=" + IsPaging.ToString()
+                        + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate
                         + toDate);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
@@ -350,7 +351,7 @@ namespace TCH.WebServer.Services.Orders
             }
         }
 
-        public async Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProductsByBranch(string BranchId, DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProductsByBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
         {
             try
             {
@@ -358,7 +359,8 @@ namespace TCH.WebServer.Services.Orders
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-                var response = await httpClient.GetAsync($"/api/Orders/get-product-branch/{BranchId}?" + fromDate
+                var response = await httpClient.GetAsync($"/api/Orders/get-product-branch/{BranchId}?IsPging=" + IsPaging.ToString()
+                        + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate
                         + toDate);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
