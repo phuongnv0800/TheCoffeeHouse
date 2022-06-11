@@ -330,10 +330,11 @@
     public async Task OnSubmit()
     {
         var res = await customerService.GetAllCustomerByPhone(phone);
-        if(res!=null && res.Result == 1)Customer cus = res.Data;
-
         order.BranchID = User.BranchId;
-        order.CustomerID = cus.ID;
+        if(res!=null && res.Result == 1){
+            Customer cus = res.Data;
+            order.CustomerID = cus.ID;
+        } 
         if( order.CustomerPut < order.TotalAmount){
             toastService.ShowError("tiền bị thiếu");
             return;

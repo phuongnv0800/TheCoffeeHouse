@@ -78,7 +78,7 @@
                                                     <div class="d-flex align-items-center">  
                                                         <div class="ms-5">
                                                             <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                @product.Material.Name
+                                                                @product.MaterialName
                                                             </a>
                                                             <div class="text-muted fs-7 fw-bolder">@product.Description</div>
                                                         </div>
@@ -88,7 +88,7 @@
                                                     <div class="d-flex align-items-center">  
                                                         <div class="ms-5">
                                                             <div href="" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                @product.Measure.Name
+                                                                @product.MeasureName
                                                             </div>
                                                         </div>
                                                     </div>
@@ -158,7 +158,7 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationState { get; set; }
     public string BranchId { get; set; }
-    public List<StockMaterial>? ProductsList = new List<StockMaterial>();
+    public List<StockVm>? ProductsList = new List<StockVm>();
     private string? token;
     public string Name;
     private string searchText = "";

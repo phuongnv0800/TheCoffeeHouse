@@ -10,7 +10,7 @@ namespace TCH.WebServer.Services.StockMaterials
 {
     public interface IStockService
     {
-        Task<ResponseLogin<PagedList<StockMaterial>>> GetStockMaterials(bool IsPaging, int pageSize, int pageNumber, string name, string BranchId);
+        Task<ResponseLogin<PagedList<StockVm>>> GetStockMaterials(bool IsPaging, int pageSize, int pageNumber, string name, string BranchId);
         Task<ResponseLogin<PagedList<StockVm>>> GetAllStockExpire(bool IsPaging, int pageSize, int pageNumber, string name, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<PagedList<StockVm>>> GetAllStockExpireInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, string name, DateTime? FromDate, DateTime? ToDate);
         Task DeleteAStockMaterial(string id);
@@ -96,14 +96,14 @@ namespace TCH.WebServer.Services.StockMaterials
             }
         }
 
-        public async Task<ResponseLogin<PagedList<StockMaterial>>> GetStockMaterials(bool IsPaging, int pageSize, int pageNumber, string name, string BranchId)
+        public async Task<ResponseLogin<PagedList<StockVm>>> GetStockMaterials(bool IsPaging, int pageSize, int pageNumber, string name, string BranchId)
         {
             try
             {
                 List<StockMaterial> Products;
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<StockMaterial>>>($"/api/Stocks/get-by-branch/{BranchId}?IsPging=" + IsPaging.ToString()
+                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<StockVm>>>($"/api/Stocks/get-by-branch/{BranchId}?IsPging=" + IsPaging.ToString()
                     + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&Name=" + name );
                 if (response.Result != 1)
                 {
