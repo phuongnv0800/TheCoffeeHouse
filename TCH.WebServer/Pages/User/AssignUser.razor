@@ -22,12 +22,12 @@
             <div class="modal-body">
                 <div class="scroll-y me-n7 pe-7">
                     <div class="">
-                        <div class="mb-3">
-                            @if (roles != null)
+                        <div class="my-3">
+                            @if (_roles != null)
                             {
-                                @foreach (var item in request.Roles)
+                                @foreach (var item in _request.Roles)
                                 {
-                                    <div class="form-check mb-2">
+                                    <div class="form-check my-2">
                                         <input type="checkbox" class="form-check-input" id="@item.Name" @bind="item.Selected">
                                         <label class="form-check-label" for="@item.Name">@item.Name</label>
                                     </div>
@@ -50,32 +50,32 @@
     [CascadingParameter]
     BlazoredModalInstance ModalInstance { get; set; }
 
-    private PagedList<RoleVm> roles;
+    private PagedList<RoleVm> _roles = new();
 
-    private UserVm user;
-    private RoleAssignRequest request;
+    private UserVm _user = new();
+    private RoleAssignRequest _request = new();
     protected override async Task OnInitializedAsync()
     {
 
-        request = new RoleAssignRequest();
+        _request = new RoleAssignRequest();
         var respondRole = await RoleApiClient.GetAll();
         var respondUser = await UserApiClient.GetByIdVm(Id);
         if (respondRole.Result == 1)
         {
-            roles = respondRole.Data;
+            _roles = respondRole.Data;
         }
         if (respondUser.Result == 1)
         {
-            user = respondUser.Data;
+            _user = respondUser.Data;
         }
-        request.Id = Id;
-        foreach (var role in roles.Items)
+        _request.Id = Id;
+        foreach (var role in _roles.Items)
         {
-            request.Roles.Add(new SelectedItem()
+            _request.Roles.Add(new SelectedItem()
                 {
-                    Id = role.ID.ToString(),
+                    Id = role.ID,
                     Name = role.Name,
-                    Selected = user.Roles.Contains(role.Name)
+                    Selected = _user.Roles.Contains(role.Name)
                 });
         }
     }
@@ -84,7 +84,7 @@
     {
         try
         {
-            var messageResult = await UserApiClient.Assign(Id, request);
+            var messageResult = await UserApiClient.Assign(Id, _request);
             if (messageResult.Result == 1)
             {
                 ToastService.ShowSuccess(messageResult.Message);
@@ -95,9 +95,10 @@
             }
             await ModalInstance.CloseAsync(ModalResult.Ok<string>("thành công"));
         }
-        catch
+        catch (Exception e)
         {
-
+            Console.WriteLine(e);
+            throw;
         }
 
     }

@@ -78,7 +78,7 @@
         loginModel.RememberMe = true;
         showLogin = false;
         var result = await authService.Login(loginModel);
-        if (result)
+        if (result.Result == 1)
         {
             var claims = authService.GetClaims();
             if (claims != null)
@@ -98,7 +98,7 @@
         else
         {
             showLogin = true;
-            ToastService.ShowError("Đăng nhập thất bại", "Thông báo");
+            ToastService.ShowError(result.Message, "Thông báo");
         }
     }
 

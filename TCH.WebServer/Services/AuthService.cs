@@ -23,21 +23,40 @@ public class AuthService : IAuthService
         _authenticationStateProvider = authenticationStateProvider;
         _localStorage = localStorage;
     }
-    public async Task<bool> Login(LoginRequest loginRequest)
+    public async Task<Respond<dynamic>> Login(LoginRequest loginRequest)
     {
 
         var result = await _httpClient.PostAsJsonAsync("/api/Users/authenticate", loginRequest);
         if (!result.IsSuccessStatusCode)
         {
-            return false;
+            return new Respond<dynamic>()
+            {
+                Message = "Thất bại",
+                Result = -1,
+                Data = false,
+            };
         }
         var content = await result.Content.ReadAsStringAsync();
         Respond<string> respond = JsonConvert.DeserializeObject<Respond<string>>(content);
+        if (respond?.Result != 1 && respond != null)
+        {
+            return new Respond<dynamic>()
+            {
+                Message = respond.Message,
+                Result = respond.Result,
+                Data = false,
+            };
+        }
         Claims = ((ApiAuthenticationStateProvider)_authenticationStateProvider).ParseClaimsFromJwt(respond.Data);
         await _localStorage.SetItemAsync("authToken", respond.Data);
         ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginRequest.UserName);
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", respond.Data);
-        return true;
+        return new Respond<dynamic>()
+        {
+            Message = respond.Message,
+            Result = respond.Result,
+            Data = true,
+        };
     }
 
     public async Task Logout()
