@@ -1,32 +1,63 @@
-﻿@using TCH.WebServer.Services.Orders
-@inject IToastService toastService;
+﻿@inject IToastService toastService;
 @inject IOrderService orderService;
 @attribute [Authorize]
 
-@if (myMarkup != null)
-{
-   @((MarkupString)myMarkup)
-}
-<div class="d-flex justify-content-end">
-    <!--begin::Button-->
-    <a href="/invoice" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
-    <!--end::Button-->
-    <!--begin::Button-->
-    <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary" >
-        <span class="indicator-label">Hoàn thành</span>
-        <span class="indicator-progress">
-            Please wait...
-            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-        </span>
-    </button>
-    <!--end::Button-->
+
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="OnCancel"></div>
+    <div class="modal-dialog modal-dialog-centered" style="z-index: 1050">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="fw-bolder">CHI TIẾT</h5>
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" @onclick="OnCancel">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="scroll-y me-n7 pe-7">
+                    @if (myMarkup != null)
+                    {
+                        @((MarkupString) myMarkup)
+                    }
+                    <div class="d-flex justify-content-end">
+                        <!--begin::Button-->
+                        <a href="/invoice" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+                        <!--end::Button-->
+                        <!--begin::Button-->
+                        <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
+                            <span class="indicator-label">Hoàn thành</span>
+                            <span class="indicator-progress">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+
 @code {
-    [Parameter] public string Id { get; set; }
+
+
+    [CascadingParameter]
+    BlazoredModalInstance BlazoredModal { get; set; }
+    [Parameter]
+    public string Id { get; set; }
+
     public string myMarkup { get; set; }
+
     protected override async Task OnParametersSetAsync()
     {
         myMarkup = await orderService.PrintPDF(Id);
     }
+    private async Task OnCancel() => await BlazoredModal.CancelAsync();
 }
