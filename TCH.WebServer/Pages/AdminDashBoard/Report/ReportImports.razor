@@ -122,7 +122,7 @@
                                                             <div class="text-muted fs-7 fw-bolder">@product.Supplier</div>
                                                         </td>
                                                         <td>
-                                                            <div class="text-muted fs-7 fw-bolder">@product.CreateDate</div>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.CreateDate.ToShortDateString()</div>
                                                         </td>
                                                         <td>
                                                             <div class="text-muted fs-7 fw-bolder">@String.Format("{0:0,0 vnđ}", product.TotalAmount)</div>
