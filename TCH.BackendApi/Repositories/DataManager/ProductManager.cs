@@ -36,6 +36,7 @@ public class ProductManager : IProductRepository, IDisposable
         _userID = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
         //_accessToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
     }
+
     public async Task<Respond<PagedList<ProductVm>>> GetAllByBranchID(string branchID, Search request)
     {
         var query = from c in _context.Products select c;
@@ -45,29 +46,29 @@ public class ProductManager : IProductRepository, IDisposable
         int totalRow = await query.CountAsync();
         var data = new List<ProductVm>();
         var item1 = from sp in _context.SizeInProducts
-                    join s in _context.Sizes on sp.SizeID equals s.ID
-                    select new { s, sp, };
+            join s in _context.Sizes on sp.SizeID equals s.ID
+            select new {s, sp,};
         var item2 = from tp in _context.ToppingInProducts
-                    join t in _context.Toppings on tp.ToppingID equals t.ID
-                    select new { t, tp, };
+            join t in _context.Toppings on tp.ToppingID equals t.ID
+            select new {t, tp,};
         if (request.IsPging)
         {
             data = await query.Select(x => new ProductVm()
-            {
-                ID = x.ID,
-                Name = x.Name,
-                ProductType = x.ProductType,
-                CreateDate = x.CreateDate,
-                UpdateDate = x.UpdateDate,
-                IsSale = x.IsSale,
-                PriceSale = x.PriceSale,
-                IsAvailable = x.IsAvailable,
-                Price = x.Price,
-                Description = x.Description,
-                LinkImage = x.LinkImage,
-                CategoryID = x.CategoryID,
-                IsActive = true,
-            })
+                {
+                    ID = x.ID,
+                    Name = x.Name,
+                    ProductType = x.ProductType,
+                    CreateDate = x.CreateDate,
+                    UpdateDate = x.UpdateDate,
+                    IsSale = x.IsSale,
+                    PriceSale = x.PriceSale,
+                    IsAvailable = x.IsAvailable,
+                    Price = x.Price,
+                    Description = x.Description,
+                    LinkImage = x.LinkImage,
+                    CategoryID = x.CategoryID,
+                    IsActive = true,
+                })
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
         }
@@ -90,19 +91,31 @@ public class ProductManager : IProductRepository, IDisposable
                 IsActive = true,
             }).ToListAsync();
         }
+
         foreach (var item in data)
         {
-            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
-            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x=>x.SubPrice).ToList();
-            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x=>x.SubPrice).ToList();
+            var sizes = await item1
+                .Where(x => x.sp.ProductID == item.ID)
+                .Select(x => _mapper.Map<SizeVm>(x.s))
+                .OrderBy(x => x.SubPrice)
+                .IgnoreAutoIncludes()
+                .ToListAsync();
+            var toppings = await item2
+                .Where(x => x.tp.ProductID == item.ID)
+                .Select(x => _mapper.Map<ToppingVm>(x.t))
+                .OrderBy(x => x.SubPrice)
+                .IgnoreAutoIncludes()
+                .ToListAsync();
+            item.Sizes = sizes;
+            item.Toppings = toppings;
         }
+
         var pagedResult = new PagedList<ProductVm>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<ProductVm>>()
@@ -207,29 +220,29 @@ public class ProductManager : IProductRepository, IDisposable
         int totalRow = await query.CountAsync();
         var data = new List<ProductVm>();
         var item1 = from sp in _context.SizeInProducts
-                    join s in _context.Sizes on sp.SizeID equals s.ID
-                    select new { s, sp, };
+            join s in _context.Sizes on sp.SizeID equals s.ID
+            select new {s, sp,};
         var item2 = from tp in _context.ToppingInProducts
-                    join t in _context.Toppings on tp.ToppingID equals t.ID
-                    select new { t, tp, };
+            join t in _context.Toppings on tp.ToppingID equals t.ID
+            select new {t, tp,};
         if (request.IsPging)
         {
             data = await query.Select(x => new ProductVm()
-            {
-                ID = x.ID,
-                Name = x.Name,
-                ProductType = x.ProductType,
-                CreateDate = x.CreateDate,
-                UpdateDate = x.UpdateDate,
-                IsSale = x.IsSale,
-                PriceSale = x.PriceSale,
-                IsAvailable = x.IsAvailable,
-                Price = x.Price,
-                Description = x.Description,
-                LinkImage = x.LinkImage,
-                CategoryID = x.CategoryID,
-                IsActive = true,
-            })
+                {
+                    ID = x.ID,
+                    Name = x.Name,
+                    ProductType = x.ProductType,
+                    CreateDate = x.CreateDate,
+                    UpdateDate = x.UpdateDate,
+                    IsSale = x.IsSale,
+                    PriceSale = x.PriceSale,
+                    IsAvailable = x.IsAvailable,
+                    Price = x.Price,
+                    Description = x.Description,
+                    LinkImage = x.LinkImage,
+                    CategoryID = x.CategoryID,
+                    IsActive = true,
+                })
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
         }
@@ -252,19 +265,31 @@ public class ProductManager : IProductRepository, IDisposable
                 IsActive = true,
             }).ToListAsync();
         }
+
         foreach (var item in data)
         {
-            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
-            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
-            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).ToList();
+            var sizes = await item1
+                .Where(x => x.sp.ProductID == item.ID)
+                .Select(x => _mapper.Map<SizeVm>(x.s))
+                .OrderBy(x => x.SubPrice)
+                .IgnoreAutoIncludes()
+                .ToListAsync();
+            var toppings = await item2
+                .Where(x => x.tp.ProductID == item.ID)
+                .Select(x => _mapper.Map<ToppingVm>(x.t))
+                .OrderBy(x => x.SubPrice)
+                .IgnoreAutoIncludes()
+                .ToListAsync();
+            item.Sizes = sizes;
+            item.Toppings = toppings;
         }
+
         var pagedResult = new PagedList<ProductVm>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<ProductVm>>()
@@ -274,39 +299,41 @@ public class ProductManager : IProductRepository, IDisposable
             Message = "Thành công",
         };
     }
+
     public async Task<Respond<PagedList<ProductVm>>> GetProductByCategoryID(string categoryID, Search request)
     {
-        var query = from c in _context.Products 
-            where c.CategoryID == categoryID select c;
+        var query = from c in _context.Products
+            where c.CategoryID == categoryID
+            select c;
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.Name.Contains(request.Name));
         //paging
         int totalRow = await query.CountAsync();
         var data = new List<ProductVm>();
         var item1 = from sp in _context.SizeInProducts
-                    join s in _context.Sizes on sp.SizeID equals s.ID
-                    select new { s, sp, };
+            join s in _context.Sizes on sp.SizeID equals s.ID
+            select new {s, sp,};
         var item2 = from tp in _context.ToppingInProducts
-                    join t in _context.Toppings on tp.ToppingID equals t.ID
-                    select new { t, tp, };
+            join t in _context.Toppings on tp.ToppingID equals t.ID
+            select new {t, tp,};
         if (request.IsPging)
         {
             data = await query.Select(x => new ProductVm()
-            {
-                ID = x.ID,
-                Name = x.Name,
-                ProductType = x.ProductType,
-                CreateDate = x.CreateDate,
-                UpdateDate = x.UpdateDate,
-                IsSale = x.IsSale,
-                PriceSale = x.PriceSale,
-                IsAvailable = x.IsAvailable,
-                Price = x.Price,
-                Description = x.Description,
-                LinkImage = x.LinkImage,
-                CategoryID = x.CategoryID,
-                IsActive = true,
-            })
+                {
+                    ID = x.ID,
+                    Name = x.Name,
+                    ProductType = x.ProductType,
+                    CreateDate = x.CreateDate,
+                    UpdateDate = x.UpdateDate,
+                    IsSale = x.IsSale,
+                    PriceSale = x.PriceSale,
+                    IsAvailable = x.IsAvailable,
+                    Price = x.Price,
+                    Description = x.Description,
+                    LinkImage = x.LinkImage,
+                    CategoryID = x.CategoryID,
+                    IsActive = true,
+                })
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
         }
@@ -329,19 +356,31 @@ public class ProductManager : IProductRepository, IDisposable
                 IsActive = true,
             }).ToListAsync();
         }
+
         foreach (var item in data)
         {
-            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
-            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
-            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).ToList();
+            var sizes = await item1
+                .Where(x => x.sp.ProductID == item.ID)
+                .Select(x => _mapper.Map<SizeVm>(x.s))
+                .OrderBy(x => x.SubPrice)
+                .IgnoreAutoIncludes()
+                .ToListAsync();
+            var toppings = await item2
+                .Where(x => x.tp.ProductID == item.ID)
+                .Select(x => _mapper.Map<ToppingVm>(x.t))
+                .OrderBy(x => x.SubPrice)
+                .IgnoreAutoIncludes()
+                .ToListAsync();
+            item.Sizes = sizes;
+            item.Toppings = toppings;
         }
+
         var pagedResult = new PagedList<ProductVm>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<ProductVm>>()
@@ -371,12 +410,13 @@ public class ProductManager : IProductRepository, IDisposable
         }
         else
             data = query.ToList();
+
         var pagedResult = new PagedList<Product>()
         {
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<Product>>()
@@ -398,6 +438,7 @@ public class ProductManager : IProductRepository, IDisposable
                 Result = -1,
             };
         }
+
         var product = _mapper.Map<Product>(request);
         product.ID = Guid.NewGuid().ToString();
         product.CreateDate = DateTime.Now;
@@ -414,8 +455,8 @@ public class ProductManager : IProductRepository, IDisposable
             {
                 throw new CustomException("Save File Create Error: " + e.Message);
             }
-
         }
+
         await _context.Products.AddAsync(product);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -445,12 +486,14 @@ public class ProductManager : IProductRepository, IDisposable
                 throw new CustomException("Failed delete file");
             }
         }
+
         var productImages = await _context.ProductImages.Where(x => x.ProductId == productId).ToListAsync();
         foreach (var item in productImages)
         {
             await _storageService.DeleteFileAsync(item.ImagePath);
             _context.ProductImages.Remove(item);
         }
+
         _context.Products.Remove(product);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -478,7 +521,7 @@ public class ProductManager : IProductRepository, IDisposable
                 Name = product.Name,
                 UpdateDate = product.UpdateDate,
                 CreateDate = DateTime.UtcNow,
-                StartDate = product.UpdateDate,//ngày cũ
+                StartDate = product.UpdateDate, //ngày cũ
                 EndDate = DateTime.Now,
                 Description = $"Cập nhật giá ngày: {product.UpdateDate} cho sản phẩm: {product.Name}",
                 PriceOld = product.Price,
@@ -504,6 +547,7 @@ public class ProductManager : IProductRepository, IDisposable
                 {
                     await _storageService.DeleteFileAsync(product.LinkImage);
                 }
+
                 var nameFile = await SaveFileIFormFile(request.File);
                 product.LinkImage = Upload + "/" + nameFile;
             }
@@ -512,6 +556,7 @@ public class ProductManager : IProductRepository, IDisposable
                 throw new CustomException("Save File Create Error: " + e.Message);
             }
         }
+
         _context.Products.Update(product);
 
         await _context.SaveChangesAsync();
@@ -521,7 +566,8 @@ public class ProductManager : IProductRepository, IDisposable
             Message = "Cập nhật sản phẩm thành công",
         };
     }
-public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvailable)
+
+    public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvailable)
     {
         var product = await _context.Products.FindAsync(productID);
         if (product == null)
@@ -553,6 +599,7 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
                 Message = "Không tìm thấy sản phẩm",
             };
         }
+
         var category = await _context.Categories.FindAsync(categoryID);
         if (category == null)
         {
@@ -562,6 +609,7 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
                 Message = "Không tìm thấy danh mục",
             };
         }
+
         product.CategoryID = category.ID;
         product.Category = category;
         _context.Products.Update(product);
@@ -576,11 +624,11 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
     public async Task<Respond<ProductVm>> GetById(string productID)
     {
         var item1 = from sp in _context.SizeInProducts
-                    join s in _context.Sizes on sp.SizeID equals s.ID
-                    select new { s, sp, };
+            join s in _context.Sizes on sp.SizeID equals s.ID
+            select new {s, sp,};
         var item2 = from tp in _context.ToppingInProducts
-                    join t in _context.Toppings on tp.ToppingID equals t.ID
-                    select new { t, tp, };
+            join t in _context.Toppings on tp.ToppingID equals t.ID
+            select new {t, tp,};
         var product = await _context.Products.Where(x => x.ID == productID).Select(x => new ProductVm()
         {
             ID = x.ID,
@@ -599,10 +647,20 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
         }).FirstOrDefaultAsync();
         if (product != null)
         {
-            var sizes = await item1.Where(x => x.sp.ProductID == product.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
-            var toppings = await item2.Where(x => x.tp.ProductID == product.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-            product.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
-            product.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).ToList();
+            var sizes = await item1
+                .Where(x => x.sp.ProductID == product.ID)
+                .Select(x => _mapper.Map<SizeVm>(x.s))
+                .OrderBy(x => x.SubPrice)
+                .IgnoreAutoIncludes()
+                .ToListAsync();
+            var toppings = await item2
+                .Where(x => x.tp.ProductID == product.ID)
+                .Select(x => _mapper.Map<ToppingVm>(x.t))
+                .OrderBy(x => x.SubPrice)
+                .IgnoreAutoIncludes()
+                .ToListAsync();
+            product.Sizes = sizes;
+            product.Toppings = toppings;
         }
 
         if (product == null)
@@ -631,6 +689,7 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
                 Result = 0,
             };
         }
+
         var productImage = new ProductImage()
         {
             ID = Guid.NewGuid().ToString(),
@@ -648,6 +707,7 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
             productImage.Size = request.ImageFile.Length;
             productImage.Name = nameFile;
         }
+
         _context.ProductImages.Add(productImage);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -670,6 +730,7 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
                 Message = "Không có dữ liệu",
             };
         }
+
         var pagedResult = new PagedList<ProductImageVm>()
         {
             TotalRecord = productImages.Count,
@@ -735,6 +796,7 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
             productImage.Caption = request.Caption;
             productImage.UpdateDate = DateTime.Now;
         }
+
         _context.ProductImages.Update(productImage);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -756,6 +818,7 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
                 Message = "Không có dữ liệu",
             };
         }
+
         var sizeVms = sizes.Select(x => _mapper.Map<SizeVm>(x)).ToList();
         var pagedResult = new PagedList<Size>()
         {
@@ -790,9 +853,9 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
                 Name = request.Name,
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.UtcNow,
-                StartDate = size.UpdateDate ?? DateTime.Now,//ngày cũ
+                StartDate = size.UpdateDate ?? DateTime.Now, //ngày cũ
                 EndDate = DateTime.Now,
-                Description = $"Cập nhật giá ngày: { DateTime.Now} cho kichs thuocw: {request.Name}",
+                Description = $"Cập nhật giá ngày: {DateTime.Now} cho kichs thuocw: {request.Name}",
                 PriceOld = size.SubPrice,
                 PriceNew = request.SubPrice,
                 UserCreateID = _userID,
@@ -861,6 +924,7 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
                 Message = "Không có dữ liệu",
             };
         }
+
         var pagedResult = new PagedList<Topping>()
         {
             TotalRecord = toppings.Count,
@@ -877,16 +941,16 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
         };
     }
 
-    public async Task<MessageResult> UpdateTopping(string toppingID, Topping request)
+    public async Task<MessageResult> UpdateTopping(string toppingId, Topping request)
     {
-        var topping = await _context.Toppings.FindAsync(toppingID);
+        var topping = await _context.Toppings.FindAsync(toppingId);
         if (topping == null)
             return new MessageResult()
             {
                 Result = -1,
                 Message = "Không tìm thấy topping",
             };
-        if (request.SubPrice != topping.SubPrice)
+        if (Math.Abs(request.SubPrice - topping.SubPrice) != 0)
         {
             var history = new HistoryPriceUpdate()
             {
@@ -894,14 +958,14 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
                 Name = request.Name,
                 UpdateDate = DateTime.Now,
                 CreateDate = DateTime.UtcNow,
-                StartDate = topping.UpdateDate ?? DateTime.Now,//ngày cũ
+                StartDate = topping.UpdateDate ?? DateTime.Now, //ngày cũ
                 EndDate = DateTime.Now,
-                Description = $"Cập nhật giá ngày: { DateTime.Now} cho topping: {request.Name}",
+                Description = $"Cập nhật giá ngày: {DateTime.Now} cho topping: {request.Name}",
                 PriceOld = topping.SubPrice,
                 PriceNew = request.SubPrice,
                 UserCreateID = _userID,
                 HistoryType = HistoryType.Topping,
-                ToppingID = toppingID,
+                ToppingID = toppingId,
             };
             _context.HistoryPriceUpdates.Add(history);
         }
@@ -937,9 +1001,9 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
         };
     }
 
-    public async Task<MessageResult> DeleteTopping(string toppingID)
+    public async Task<MessageResult> DeleteTopping(string toppingId)
     {
-        var topping = await _context.Toppings.FindAsync(toppingID);
+        var topping = await _context.Toppings.FindAsync(toppingId);
         if (topping == null)
             return new MessageResult()
             {
@@ -964,21 +1028,22 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
 
     private async Task<string> SaveFileIFormFile(IFormFile file)
     {
-        var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+        var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName!.Trim('"');
         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
         await _storageService.SaveFileAsync(file.OpenReadStream(), Upload + "/" + fileName);
         return fileName;
     }
 
-    public async Task<Respond<PagedList<HistoryPriceUpdate>>> GetHistoryPriceByID(string ID, Search request)
+    public async Task<Respond<PagedList<HistoryPriceUpdate>>> GetHistoryPriceByID(string id, Search request)
     {
-
-        var query = from c in _context.HistoryPriceUpdates where c.ProductID == ID || c.SizeID == ID || c.ToppingID == ID select c;
+        var query = from c in _context.HistoryPriceUpdates
+            where c.ProductID == id || c.SizeID == id || c.ToppingID == id
+            select c;
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.Name!.Contains(request.Name));
         //paging
         int totalRow = await query.CountAsync();
-        var data = new List<HistoryPriceUpdate>();
+        List<HistoryPriceUpdate> data;
         if (request.IsPging)
         {
             data = await query.Select(x => x)
@@ -995,7 +1060,7 @@ public async Task<MessageResult> UpdateAvailable(string productID, bool IsAvaila
             TotalRecord = totalRow,
             PageSize = request.PageSize,
             CurrentPage = request.PageNumber,
-            TotalPages = (int)Math.Ceiling((double)totalRow / request.PageSize),
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
             Items = data,
         };
         return new Respond<PagedList<HistoryPriceUpdate>>()
