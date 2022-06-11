@@ -136,7 +136,7 @@ namespace TCH.WebServer.Services.Promotions
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
                 var httpContent = new StringContent(JsonConvert.SerializeObject(orderItems), Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync($"/api/Promotions/{code}", httpContent);
+                var response = await httpClient.PostAsync($"/api/Promotions/reduce-money/{code}", httpContent);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();

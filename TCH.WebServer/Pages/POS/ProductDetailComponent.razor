@@ -58,7 +58,7 @@
                                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr006.svg-->
                                             @size.SubPrice
                                                                 </div>
-                                                                <button class="btn btn-outline-primary" style="" onclick="@(() => PickSize(size.ID))">+</button>
+                                                                <button class="btn btn-outline-primary" style="" onclick="@(() => PickSize(size.ID, size.Name))">+</button>
                                                             </div>
                                             }
                                         }
@@ -207,7 +207,7 @@
                         <div class="card-header pt-5">
                             <!--begin::Title-->
                             <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label fw-bolder text-dark">@product.Name (+ @orderDetail.PriceSize)</span>
+                                <span class="card-label fw-bolder text-dark">@product.Name (+ @orderDetail.SizeName)</span>
                                 <span class="text-gray-400 pt-2 fw-bold fs-6"> đường: @orderDetail.SugarType.ToString() </span>
                                 <span class="text-gray-400 pt-2 fw-bold fs-6"> đá: @orderDetail.IcedType.ToString() </span>
                             </h3>
@@ -333,7 +333,8 @@
             var topping = new OrderToppingItem()
                 {
                     ToppingID = toppingId,
-                    SubPrice = subPrice
+                    SubPrice = subPrice,
+                    Quantity = 1,
                 };
             toppings.Remove(topping);
             orderDetail.Toppings = toppings;
@@ -341,9 +342,10 @@
             StateHasChanged();
         }
     }
-    public async Task PickSize(string size)
+    public async Task PickSize(string size, string name)
     {
         orderDetail.SizeID = size;
+        orderDetail.SizeName = name;
         var sizes = await productService.GetSizes();
         foreach (Size si in sizes.Items)
         {
