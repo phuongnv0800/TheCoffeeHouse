@@ -238,7 +238,7 @@ public static class Seed
             new Size()
             {
                 ID = Guid.NewGuid().ToString(),
-                Name = "S",
+                Name = "L",
                 SubPrice = 10000,
             },
         };
@@ -2563,14 +2563,15 @@ public static class Seed
 
         for (var i = 0; i < 100; i++)
         {
+            Random random = new();
             var customer = new Customer()
             {
                 ID = Guid.NewGuid().ToString(),
-                FullName = "Khách hàng " + i,
-                Phone = "0965654078",
+                FullName = "Khách hàng số " + i,
+                Phone = "09656"+ random.Next(10000, 99999),
                 Email = "custormer" + i + "@gmail.com",
                 Address = "Ngô Quyền, Hải Phòng",
-                Gender = Gender.Female,
+                Gender = i % 2 == 0 ? Gender.Female : Gender.Male,
                 DateOfBirth = DateTime.Now,
                 MemberID = "CODEKH" + i,
                 Point = 0,

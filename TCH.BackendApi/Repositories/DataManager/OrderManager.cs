@@ -155,7 +155,8 @@ public class OrderManager : IOrderRepository, IDisposable
                             OrderID = orderRe.ID,
                             ProductID = productDb.ID,
                             SubPrice = toppingDb.SubPrice,
-                            Name = toppingDb.Name
+                            Name = toppingDb.Name,
+                            Quantity = topping.Quantity,
                         });
                     }
                 }
