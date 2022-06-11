@@ -1,4 +1,4 @@
-﻿@page "/expiried"
+﻿@page "/expiried-branch"
 @using Blazored.LocalStorage
 @using Microsoft.AspNetCore.Identity
 @using Newtonsoft.Json
@@ -15,10 +15,10 @@
 @inject ILocalStorageService localStorage;
 @inject IStockService stockService;
 @inject IUserService userServices;
-@inject IUserApiClient userApiClient;
 @inject NavigationManager navigationManager;
 @inject IToastService toastService
 @inject IJSRuntime jsRuntime;
+@inject IUserApiClient userApiClient;
 @attribute [Authorize]
 
 <div class="page d-flex flex-row flex-column-fluid">
@@ -191,7 +191,7 @@
     {
         try
         {
-            navigationManager.NavigateTo("expiried");
+            navigationManager.NavigateTo("expiried-branch");
             dateRequest = new DateRequest()
                 {
                     FromDate = new DateTime(2022, 06, 01),
@@ -211,7 +211,7 @@
     {
         try
         {
-            var response = await stockService.GetAllStockExpire(true, pagination.pageSize, pageNumber, searchText, dateRequest.FromDate, dateRequest.ToDate);
+            var response = await stockService.GetAllStockExpireInBranch(true, pagination.pageSize, pageNumber, User.BranchID, searchText, dateRequest.FromDate, dateRequest.ToDate);
             pagination.PageNumber = response.Data.CurrentPage;
             ProductsList = response.Data.Items.ToList();
             pagination.totalPage = response.Data.TotalPages;

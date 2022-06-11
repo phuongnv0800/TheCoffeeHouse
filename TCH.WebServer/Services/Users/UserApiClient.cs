@@ -16,6 +16,7 @@ public interface IUserApiClient
     Task<MessageResult> Delete(string id);
     Task<MessageResult> Lock(string id, Status status);
     Task<Respond<PagedList<AppUser>>> GetAll(Search request);
+    Task<Respond<PagedList<AppUser>>> GetAllByBranch(string branchId, Search request);
     Task<Respond<AppUser>> GetById(string id);
     Task<Respond<UserVm>> GetByIdVm(string id);
     Task<Respond<AppUser>> GetByUserName(string userName);
@@ -44,6 +45,20 @@ public class UserApiClient : BaseApiClient, IUserApiClient
         if (!string.IsNullOrWhiteSpace(request.Name))
             queryStringParam.Add("name", request.Name);
         string url = QueryHelpers.AddQueryString($"/api/users/paging", queryStringParam);
+
+        return await GetFromJsonAsync<Respond<PagedList<AppUser>>>(url);
+    }
+    public async Task<Respond<PagedList<AppUser>>> GetAllByBranch(string branchId, Search request)
+    {
+        var queryStringParam = new Dictionary<string, string>
+        {
+            ["pageNumber"] = request.PageNumber.ToString(),
+        };
+        queryStringParam.Add("pageSize", request.PageSize.ToString());
+        queryStringParam.Add("isPging", request.IsPging.ToString());
+        if (!string.IsNullOrWhiteSpace(request.Name))
+            queryStringParam.Add("name", request.Name);
+        string url = QueryHelpers.AddQueryString($"/api/users/user-branch/{branchId}", queryStringParam);
 
         return await GetFromJsonAsync<Respond<PagedList<AppUser>>>(url);
     }

@@ -1,0 +1,313 @@
+﻿@page "/user-branch"
+@using TCH.Data.Entities
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@inject PageContainer _page
+@inject IToastService _toastService
+@inject IUserApiClient userApiClient;
+
+@inject IJSRuntime JS
+
+@inject IUserApiClient UserApiClient
+
+<div class="page d-flex flex-row flex-column-fluid">
+    <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+
+        <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+            <div class="card card-flush " style="">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            <EditForm Model="searchContent" OnValidSubmit="SearchByText">
+                                <InputText @bind-Value="searchContent" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm tài khoản"/>
+                            </EditForm>
+                        </div>
+                    </div>
+                    <div class="card-toolbar">
+
+                        <a class="btn btn-primary" onclick="@(() => OnNew())">Thêm tài khoản</a>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+
+                    <div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="table-responsive">
+                            <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
+                                <thead>
+                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                    <th>STT</th>
+                                    <th class="">Tên tài khoản</th>
+                                    <th class="">Họ tên</th>
+                                    <th class="">Ngày sinh</th>
+                                    <th class="">Email</th>
+                                    <th class="">Giới tính</th>
+                                    <th class="min-w-125px">Số điện thoại</th>
+                                    <th class="">Trạnh thái</th>
+                                    <th class="">Phân quyền</th>
+                                    <th class="text-end min-w-100px"> </th>
+                                </tr>
+                                </thead>
+                                <tbody class="fw-bold text-gray-600">
+                                @if (users != null && users.Count != 0)
+                                {
+                                    var i = 1;
+                                    foreach (var item in users)
+                                    {
+                                        <tr>
+                                            <td>@(i++)</td>
+                                            <td>
+                                                <a href="/user/@item.Id">@item.UserName </a>
+                                            </td>
+                                            <td>@(item.FirstName + " " + item.LastName)</td>
+                                            <td>@item.DateOfBirth.ToShortDateString()</td>
+                                            <td>@item.Email</td>
+                                            <td>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    @(item.Gender == Gender.Male ? "Nam" : "Nữ")
+                                                </div>
+                                            </td>
+                                            <td>@item.PhoneNumber</td>
+                                            <td class="">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="bullet bullet-dot @(item.Status == Status.Deactivate ? "bg-danger" : "bg-success") me-2"></span>
+                                                    <span class="fs-7 fw-bold @(item.Status == Status.Deactivate ? "text-danger" : "text-success")">@(item.Status == Status.Deactivate ? "Khóa" : "Hoạt động")</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary text-nowrap text-white-50a" @onclick="() => AssignRoleUser(item.Id)">Gán quyền</button>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="d-flex justify-content-end flex-shrink-0">
+                                                    <a @onclick="(() => OnLock(item.Id, item.Status))" class="w-125px btn btn-sm btn-outline btn-outline-dashed @((item.Status == Status.Deactivate) ? "btn-outline-success btn-active-light-success" : "btn-outline-danger btn-active-light-danger") fw-bolder  me-2">
+                                                        <span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
+                                                            @if (item.Status == Status.Deactivate)
+                                                            {
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                                                                    <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+                                                                    <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                                                </svg>
+                                                            }
+                                                            else
+                                                            {
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+                                                                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+                                                                </svg>
+                                                            }
+                                                        </span> @(item.Status == Status.Deactivate ? "Mở khóa" : "Khóa")
+                                                    </a>
+                                                    <a @onclick="@(() => OnEdit(item.Id))" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" placeholder="Chỉnh sửa">
+                                                        <span class="svg-icon svg-icon-3">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="black"/>
+                                                                <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="black"/>
+                                                            </svg>
+                                                        </span>
+                                                    </a>
+                                                    <a onclick="@(() => OnRemove(item.Id))" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" placeholder="Xóa">
+                                                        <span class="svg-icon svg-icon-3">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="black"/>
+                                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="black"/>
+                                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="black"/>
+                                                            </svg>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <Spinner Colspan="9"></Spinner>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<AppUser> users = new();
+    private AppUser User;
+    private int pageSize = 10;
+    private int total = 0;
+    private string searchContent;
+    private Models.Pagination.Pagination pagination = new();
+    private int PageIndex;
+
+    private Search search = new()
+    {
+        Name = "",
+        IsPging = true,
+        PageNumber = 1,
+        PageSize = 10
+    };
+
+    protected override void OnInitialized()
+    {
+        _page.Config("Quản lý tài khoản");
+
+        users = new List<AppUser>();
+        total = 0;
+        searchContent = string.Empty;
+    }
+
+    protected override async Task OnParametersSetAsync() { 
+        var response = await userApiClient.GetById(GbParameter.GbParameter.UserId);
+            User = response.Data;
+        await Get(1); }
+
+
+    protected async Task OnKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" || e.Key == "NumpadEnter") await OnSelectedChanged(1);
+    }
+
+    public async Task Change(int link)
+    {
+        pagination.PageNumber = link;
+        await Get(link);
+        StateHasChanged();
+    }
+
+    public async Task SearchByText()
+    {
+        await Get(pagination.PageNumber);
+    }
+
+    public async Task Get(int pageNumber)
+    {
+        try
+        {
+            search.PageNumber = pageNumber;
+            search.Name = searchContent;
+            var result = await UserApiClient.GetAllByBranch(User.BranchID, search);
+            users = result.Data.Items;
+            pagination.PageNumber = result.Data.CurrentPage;
+            pagination.totalPage = result.Data.TotalPages;
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            _toastService.ShowError("Có lỗi");
+        }
+    }
+
+}
+
+@code {
+
+    private async Task OnSelectedChanged(int pageIndex)
+    {
+        PageIndex = pageIndex;
+        search.PageNumber = PageIndex;
+        var result = await UserApiClient.GetAllByBranch(User.BranchID, search);
+        total = result.Data.TotalRecord;
+        users = result.Data.Items;
+        StateHasChanged();
+    }
+
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
+
+    private async Task OnNew()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(UserCreate.Title), "Thêm mới tài khoản");
+
+        var modal = Modal.Show<UserCreate>(string.Empty, parameters, options: new ModalOptions
+        {
+            UseCustomLayout = true
+        });
+
+        var result = await modal.Result;
+
+        if (!result.Cancelled)
+        {
+            await OnSelectedChanged(PageIndex);
+        }
+    }
+
+    private async Task OnLock(string userId, Status status)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(UserLock.Id), userId);
+        parameters.Add(nameof(UserLock.Status), status);
+
+        var moviesModal = Modal.Show<UserLock>(string.Empty, parameters, options: new ModalOptions
+        {
+            UseCustomLayout = true
+        });
+        var result = await moviesModal.Result;
+
+        if (result.Cancelled)
+            Console.WriteLine("Modal was cancelled");
+        else
+            await OnSelectedChanged(1);
+    }
+
+    private async Task OnEdit(string id)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(UserCreate.Title), "Cập nhật tài khoản");
+        parameters.Add(nameof(UserCreate.UserId), id);
+
+        var modal = Modal.Show<UserCreate>(string.Empty, parameters, options: new ModalOptions
+        {
+            UseCustomLayout = true
+        });
+
+        var result = await modal.Result;
+
+        if (!result.Cancelled)
+        {
+            await OnSelectedChanged(PageIndex);
+        }
+    }
+
+    private async void AssignRoleUser(string id)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(AssignUser.Id), id);
+
+        var moviesModal = Modal.Show<AssignUser>(string.Empty, parameters, options: new ModalOptions
+        {
+            UseCustomLayout = true
+        });
+        var result = await moviesModal.Result;
+
+        if (!result.Cancelled)
+            await OnSelectedChanged(PageIndex);
+    }
+
+    private async Task OnRemove(string userId)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(UserDelete.Id), userId);
+
+        var moviesModal = Modal.Show<UserDelete>(string.Empty, parameters, options: new ModalOptions
+        {
+            UseCustomLayout = true
+        });
+        var result = await moviesModal.Result;
+
+        if (result.Cancelled)
+            Console.WriteLine("Modal was cancelled");
+        else
+            await OnSelectedChanged(1);
+    }
+
+}
