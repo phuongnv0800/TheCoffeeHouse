@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Globalization;
 using System.Text;
 using System.Xml;
@@ -991,6 +990,14 @@ public class OrderManager : IOrderRepository, IDisposable
                     ProductID = item.ProductID,
                     Quantity = item.Quantity,
                     ProductName = item.Product.Name,
+                    LinkImage = item.Product.LinkImage,
+                    Unit = item.Product.ProductType == ProductType.Drink
+                        ? "Đồ uống"
+                        : item.Product.ProductType == ProductType.Food
+                            ? "Đồ ăn"
+                            : item.Product.ProductType == ProductType.InDay
+                                ? "Trong ngày"
+                                : "Khác"
                 });
             }
         }
@@ -1021,7 +1028,7 @@ public class OrderManager : IOrderRepository, IDisposable
         };
     }
 
-    public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrderAllBranch(string productId, Search search)
+    public async Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrderAllBranch(Search search)
     {
         var orders = await _context.Orders
             .Include(x => x.OrderDetails)
@@ -1056,6 +1063,14 @@ public class OrderManager : IOrderRepository, IDisposable
                     ProductID = item.ProductID,
                     Quantity = item.Quantity,
                     ProductName = item.Product.Name,
+                    LinkImage = item.Product.LinkImage,
+                    Unit = item.Product.ProductType == ProductType.Drink
+                        ? "Đồ uống"
+                        : item.Product.ProductType == ProductType.Food
+                            ? "Đồ ăn"
+                            : item.Product.ProductType == ProductType.InDay
+                                ? "Trong ngày"
+                                : "Khác"
                 });
             }
         }

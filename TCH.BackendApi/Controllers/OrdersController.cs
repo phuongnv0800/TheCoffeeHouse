@@ -85,12 +85,12 @@ public class OrdersController : ControllerBase
         }
     }
     [AllowAnonymous]
-    [HttpGet("get-product-branch-all/{productId}")]
-    public async Task<IActionResult> GetProductInOrderAllBranch(string productId, [FromQuery] Search request)
+    [HttpGet("get-product-branch-all")]
+    public async Task<IActionResult> GetProductInOrderAllBranch([FromQuery] Search request)
     {
         try
         {
-            var orders = await _repository.GetProductInOrderAllBranch(productId, request);
+            var orders = await _repository.GetProductInOrderAllBranch(request);
             return Ok(orders);
         }
         catch (CustomException e)
