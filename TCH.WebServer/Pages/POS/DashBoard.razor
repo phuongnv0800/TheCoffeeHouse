@@ -135,6 +135,7 @@
         {
             Url = Configuration.GetSection("BackendApiUrl").Value;
             var authState = await AuthenticationState;
+            pagination.pageSize = 9;
             if (authState.User.Identity!.IsAuthenticated)
             {
                 BranchId = authState.User.FindFirst(x => x.Type == ClaimValue.BranhID)!.Value;
