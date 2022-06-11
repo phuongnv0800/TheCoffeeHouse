@@ -192,7 +192,47 @@ public class OrderManager : IOrderRepository, IDisposable
                 });
             }
         }
+        //trừ nguyên liệu trong kho
+        var data = new List<MassMaterial>();
+        foreach (var item in orderDetails)
+        {
+            var recipes = await _context
+                .RecipeDetails
+                .Where(x => 
+                    x.ProductID == item.ProductID 
+                    && x.SizeID == item.SizeID)
+                .ToListAsync();
+            if (recipes != null)
+            {
+                foreach (var recipe in recipes)
+                {
+                    var stockMaterial = await _context
+                        .StockMaterials
+                        .Include(x => x.Material)
+                        .Include(x => x.Measure)
+                        .FirstOrDefaultAsync(x =>
+                            x.IsDelete == false
+                            && x.MaterialID == recipe.MaterialID
+                            && x.BranchID == request.BranchID);
+                    if (stockMaterial == null
+                        || (stockMaterial.StandardMass == 0 || stockMaterial.StandardMass - recipe.Weight < 0))
+                    {
+                        return new Respond<object>
+                        {
+                            Data = orderRe,
+                            Result = 0,
+                            Message =
+                                $"Nguyên liệu {stockMaterial?.Material?.Name} trong chi nhánh {branch.Name} không đủ hoặc đã hết."
+                        };
+                    }
 
+                    stockMaterial.StandardMass = recipe.Weight;
+                    stockMaterial.Mass = stockMaterial.StandardMass / stockMaterial.Measure.ConversionFactor;
+                    _context.StockMaterials.Update(stockMaterial);
+                }
+                
+            }
+        }
         _context.OrderDetails.AddRange(orderDetails);
         await _context.SaveChangesAsync();
         return new Respond<object>
@@ -202,57 +242,21 @@ public class OrderManager : IOrderRepository, IDisposable
             Message = "Tạo thành công"
         };
     }
-    //public async Task<InvoiceLayout> CreateDefaultInvoiceLayout(string BranchID)
-    //{
-    //    InvoiceLayout invoiceLayout = new InvoiceLayout()
-    //    {
-    //        ID = System.Guid.NewGuid().ToString(),
-    //        CreateDate = DateTime.Now,
-    //        UserCreateID = UserID,
-    //        Headercontent = "www.thecoffeehouse.com",
-    //        TitleInvoice = "THE COFFEE HOUSE",
-    //        Footercontent = "Giá sản phẩm đã bao gồm phí VAT 10%|Password wifi: thecoffeehouse|Miễn phí giao hàng hoá đơn trên 50.000 VNĐ|Đặt hàng tại www.thecoffeehouse.com hoặc gọi 1800 6936",
-    //        LayoutType = 0,
-    //        LogoInvoice = null,
-    //        Phone = "0702264274",
-    //        RestaurantName = "The coffee house",
-    //        Address = "Hải Phòng",
-    //        UpdateDate = DateTime.Now,
-    //        BranchID = BranchID,
-    //        UserUpdateID = UserID,
-    //    };
 
-    //    await _context.InvoiceLayouts.AddAsync(invoiceLayout);
-    //    await _context.SaveChangesAsync();
-
-    //    return invoiceLayout;
-    //}
-    public async Task<string> PrintInvoicePaymented(string invoiceID)
+    public async Task<string> PrintInvoicePaymented(string invoiceId)
     {
-        //Invoice invoice = await _context.Invoices.Include(e => e.InvoiceDetails).FirstOrDefaultAsync(e => e.ID == invoiceID);
         var invoice = await _context.Orders
             .Include(x => x.OrderDetails)
             .ThenInclude(x => x.OrderToppingDetails)
             .ThenInclude(x => x.Topping)
-            .FirstOrDefaultAsync(x => x.ID == invoiceID);
+            .FirstOrDefaultAsync(x => x.ID == invoiceId);
         if (invoice == null) throw new CustomException("Không tìm thấy thông tin hóa đơn");
         var branch = await _context.Branches.FirstOrDefaultAsync(x => x.ID == invoice.BranchID);
         if (branch == null) throw new CustomException("Không tìm thấy thông tin cửa hàng");
-
-        //await this.CheckMappingBranch(invoice.BranchID);
-
-        //InvoiceLayout invoiceLayout = await _context.InvoiceLayouts.FirstOrDefaultAsync(e => e.BranchID == invoice.BranchID);
-        //if (invoiceLayout == null)
-        //{
-        //    invoiceLayout = await CreateDefaultInvoiceLayout(invoice.BranchID);
-        //}
-
         string newPathXML = Path.Combine(Directory.GetCurrentDirectory(), "LayoutInvoice",
             "Type" + (branch.LayoutType + 1), "DefaultTemplate.xml");
         string newPathXSLT = Path.Combine(Directory.GetCurrentDirectory(), "LayoutInvoice",
             "Type" + (branch.LayoutType + 1), "DefaultTemplate.xslt");
-
-        //DinnerTable dinnerTable = _context.DinnerTables.FirstOrDefault(e => e.ID == invoice.DinnerTableID && e.IsDelete == 0);
 
         XmlDocument doc = new XmlDocument();
         doc.Load(newPathXML);
@@ -1101,7 +1105,7 @@ public class OrderManager : IOrderRepository, IDisposable
         };
     }
 
-    public async Task<Respond<Order>> GetById(string orderID)
+    public async Task<Respond<Order>> GetById(string orderId)
     {
         var order = await _context.Orders
             .Include(x => x.OrderDetails)
@@ -1110,7 +1114,7 @@ public class OrderManager : IOrderRepository, IDisposable
             .ThenInclude(x => x.Product)
             .Include(x => x.OrderDetails)
             .ThenInclude(x => x.Size)
-            .FirstOrDefaultAsync(x => x.ID == orderID);
+            .FirstOrDefaultAsync(x => x.ID == orderId);
         if (order == null)
             return new Respond<Order>
             {
@@ -1126,10 +1130,10 @@ public class OrderManager : IOrderRepository, IDisposable
         };
     }
 
-    public async Task<MessageResult> UpdateStatus(string orderID, OrderStatus status)
+    public async Task<MessageResult> UpdateStatus(string orderId, OrderStatus status)
     {
         var order = await _context.Orders
-            .FirstOrDefaultAsync(x => x.ID == orderID);
+            .FirstOrDefaultAsync(x => x.ID == orderId);
         if (order == null)
             return new MessageResult
             {
@@ -1146,12 +1150,12 @@ public class OrderManager : IOrderRepository, IDisposable
         };
     }
 
-    public async Task<MessageResult> Delete(string orderID)
+    public async Task<MessageResult> Delete(string orderId)
     {
         var order = await _context.Orders
             .Include(x => x.OrderDetails)
             .ThenInclude(x => x.OrderToppingDetails)
-            .FirstOrDefaultAsync(x => x.ID == orderID);
+            .FirstOrDefaultAsync(x => x.ID == orderId);
         if (order == null)
             return new MessageResult
             {

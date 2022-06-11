@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 using TCH.Data.Entities;
 using TCH.Utilities.Enum;
 using TCH.Utilities.Roles;
@@ -3231,6 +3232,7 @@ public static class Seed
         });
         for (var i = 0; i < 100; i++)
         {
+            Random rnd = new();
             var userAdd = new AppUser()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -3243,10 +3245,10 @@ public static class Seed
                 SecurityStamp = Guid.NewGuid().ToString(),
                 FirstName = "Người dùng",
                 LastName = i.ToString(),
-                PhoneNumber = "0999999999",
+                PhoneNumber = "09040"+ rnd.Next(10000, 99999),
                 PhoneNumberConfirmed = true,
                 Address = "Hải Phòng, Việt Nam",
-                DateOfBirth = new DateTime(1900 + i, 1, 1),
+                DateOfBirth = new DateTime(1990 + rnd.Next(1, 40), 1, 1),
                 BranchID = branches[(new Random()).Next(0, 7)].ID,
                 Status = Status.Active,
                 CreateDate = DateTime.Now,

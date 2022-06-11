@@ -54,6 +54,15 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Tài khoản không tồn tại",
                 Data = null,
             };
+        if (user.Status == Status.Deactivate)
+        {
+            return new Respond<dynamic>()
+            {
+                Result = 0,
+                Message = "Tài khoản đã bị khoá, liên hệ quản trị viên để mở",
+                Data = null,
+            };
+        }
         var result = await _signInManager.PasswordSignInAsync(user, request.Password, true, true);
         if (!result.Succeeded)
         {
@@ -445,7 +454,9 @@ public class UserManager : IUserRepository, IDisposable
 
     public async Task<MessageResult> LockUser(string id)
     {
-        if (await _userManager.Users.AnyAsync(x => x.Id != id))
+        
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
         {
             return new MessageResult()
             {
@@ -453,13 +464,11 @@ public class UserManager : IUserRepository, IDisposable
                 Message = "Không tồn tại tài khoản"
             };
         }
-
-        var user = await _userManager.FindByIdAsync(id);
-        user.Status = Status.Deactivate;
+        user.Status =user.Status == Status.Active ? Status.Deactivate: Status.Active;
         await _userManager.UpdateAsync(user);
         return new MessageResult()
         {
-            Result = 0,
+            Result = 1,
             Message = "Khoá tài khoản thành công",
         };
     }
