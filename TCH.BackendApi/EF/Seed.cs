@@ -2926,38 +2926,41 @@ public static class Seed
 
         foreach (var item in products)
         {
-            Random rnd = new Random();
-            var recipes = new RecipeDetail[]
+            foreach (var size in sizes)
             {
-                new RecipeDetail()
+                Random rnd = new Random();
+                var recipes = new RecipeDetail[]
                 {
-                    ProductID = item.ID,
-                    MaterialID = materials[rnd.Next(0, 10)].ID,
-                    SizeID = sizes[0].ID,
-                    Weight = 30,
-                    Unit = "Gam",
-                    StandardUnitType = StandardUnitType.g,
-                },
-                new RecipeDetail()
-                {
-                    ProductID = item.ID,
-                    MaterialID = materials[rnd.Next(11, 20)].ID,
-                    SizeID = sizes[0].ID,
-                    Weight = 20,
-                    Unit = "Mililit",
-                    StandardUnitType = StandardUnitType.ml,
-                },
-                new RecipeDetail()
-                {
-                    ProductID = item.ID,
-                    MaterialID = materials[rnd.Next(21, 30)].ID,
-                    SizeID = sizes[0].ID,
-                    Weight = 100,
-                    Unit = "Mililit",
-                    StandardUnitType = StandardUnitType.ml,
-                },
-            };
-            context.RecipeDetails.AddRange(recipes);
+                    new RecipeDetail()
+                    {
+                        ProductID = item.ID,
+                        MaterialID = materials[rnd.Next(4, 10)].ID,
+                        SizeID = size.ID,
+                        Weight = rnd.Next(30, 100),
+                        Unit = "Gam",
+                        StandardUnitType = StandardUnitType.g,
+                    },
+                    new RecipeDetail()
+                    {
+                        ProductID = item.ID,
+                        MaterialID = materials[rnd.Next(11, 20)].ID,
+                        SizeID = size.ID,
+                        Weight = rnd.Next(30, 100),
+                        Unit = "Mililit",
+                        StandardUnitType = StandardUnitType.ml,
+                    },
+                    new RecipeDetail()
+                    {
+                        ProductID = item.ID,
+                        MaterialID = materials[rnd.Next(21, 30)].ID,
+                        SizeID = size.ID,
+                        Weight = rnd.Next(30, 100),
+                        Unit = "Mililit",
+                        StandardUnitType = StandardUnitType.ml,
+                    },
+                };
+                context.RecipeDetails.AddRange(recipes);
+            }
         }
 
         var order = new Order()
