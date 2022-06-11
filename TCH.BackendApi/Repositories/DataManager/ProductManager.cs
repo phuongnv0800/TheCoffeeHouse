@@ -20,8 +20,7 @@ public class ProductManager : IProductRepository, IDisposable
     private readonly APIContext _context;
     private readonly IStorageService _storageService;
     private readonly IMapper _mapper;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly string? _userID;
+    private readonly string? _userId;
     private const string Upload = "products";
 
     public ProductManager(APIContext context,
@@ -32,25 +31,18 @@ public class ProductManager : IProductRepository, IDisposable
         _context = context;
         _storageService = storageService;
         _mapper = mapper;
-        _httpContextAccessor = httpContextAccessor;
-        _userID = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
+        _userId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimValue.ID)?.Value;
         //_accessToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
     }
 
-    public async Task<Respond<PagedList<ProductVm>>> GetAllByBranchID(string branchID, Search request)
+    public async Task<Respond<PagedList<ProductVm>>> GetAllByBranchID(string branchId, Search request)
     {
         var query = from c in _context.Products select c;
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.Name.Contains(request.Name));
         //paging
         int totalRow = await query.CountAsync();
-        var data = new List<ProductVm>();
-        var item1 = from sp in _context.SizeInProducts
-            join s in _context.Sizes on sp.SizeID equals s.ID
-            select new {s, sp,};
-        var item2 = from tp in _context.ToppingInProducts
-            join t in _context.Toppings on tp.ToppingID equals t.ID
-            select new {t, tp,};
+        List<ProductVm> data;
         if (request.IsPging)
         {
             data = await query.Select(x => new ProductVm()
@@ -70,36 +62,46 @@ public class ProductManager : IProductRepository, IDisposable
                     IsActive = true,
                 })
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToListAsync();
+                .Take(request.PageSize)
+                .OrderBy(x => x.CategoryID)
+                .ToListAsync();
         }
         else
         {
             data = await query.Select(x => new ProductVm()
-            {
-                ID = x.ID,
-                Name = x.Name,
-                ProductType = x.ProductType,
-                CreateDate = x.CreateDate,
-                UpdateDate = x.UpdateDate,
-                IsSale = x.IsSale,
-                PriceSale = x.PriceSale,
-                IsAvailable = x.IsAvailable,
-                Price = x.Price,
-                Description = x.Description,
-                LinkImage = x.LinkImage,
-                CategoryID = x.CategoryID,
-                IsActive = true,
-            }).ToListAsync();
+                {
+                    ID = x.ID,
+                    Name = x.Name,
+                    ProductType = x.ProductType,
+                    CreateDate = x.CreateDate,
+                    UpdateDate = x.UpdateDate,
+                    IsSale = x.IsSale,
+                    PriceSale = x.PriceSale,
+                    IsAvailable = x.IsAvailable,
+                    Price = x.Price,
+                    Description = x.Description,
+                    LinkImage = x.LinkImage,
+                    CategoryID = x.CategoryID,
+                    IsActive = true,
+                })
+                .OrderBy(x => x.CategoryID)
+                .ToListAsync();
         }
 
-        foreach (var item in data)
-        {
-            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
-            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x=>x.SubPrice).ToList();
-            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x=>x.SubPrice).ToList();
-
-        }
+        // var item1 = from sp in _context.SizeInProducts
+        //     join s in _context.Sizes on sp.SizeID equals s.ID
+        //     select new {s, sp,};
+        // var item2 = from tp in _context.ToppingInProducts
+        //     join t in _context.Toppings on tp.ToppingID equals t.ID
+        //     select new {t, tp,};
+        // foreach (var item in data)
+        // {
+        //     var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
+        //     var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
+        //     item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x=>x.SubPrice).ToList();
+        //     item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x=>x.SubPrice).ToList();
+        //
+        // }
 
         var pagedResult = new PagedList<ProductVm>()
         {
@@ -150,35 +152,39 @@ public class ProductManager : IProductRepository, IDisposable
                     IsActive = true,
                 })
                 .Skip((request.PageNumber - 1) * request.PageSize)
+                .OrderBy(x => x.CategoryID)
                 .Take(request.PageSize).ToListAsync();
         }
         else
         {
             data = await query.Select(x => new ProductVm()
-            {
-                ID = x.ID,
-                Name = x.Name,
-                ProductType = x.ProductType,
-                CreateDate = x.CreateDate,
-                UpdateDate = x.UpdateDate,
-                IsSale = x.IsSale,
-                PriceSale = x.PriceSale,
-                IsAvailable = x.IsAvailable,
-                Price = x.Price,
-                Description = x.Description,
-                LinkImage = x.LinkImage,
-                CategoryID = x.CategoryID,
-                IsActive = true,
-            }).ToListAsync();
+                {
+                    ID = x.ID,
+                    Name = x.Name,
+                    ProductType = x.ProductType,
+                    CreateDate = x.CreateDate,
+                    UpdateDate = x.UpdateDate,
+                    IsSale = x.IsSale,
+                    PriceSale = x.PriceSale,
+                    IsAvailable = x.IsAvailable,
+                    Price = x.Price,
+                    Description = x.Description,
+                    LinkImage = x.LinkImage,
+                    CategoryID = x.CategoryID,
+                    IsActive = true,
+                })
+                .OrderBy(x => x.CategoryID)
+                .ToListAsync();
         }
 
         foreach (var item in data)
         {
-            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
-            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x=>x.SubPrice).ToList();
-            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x=>x.SubPrice).ToList();
-
+            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes()
+                .ToListAsync();
+            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes()
+                .ToListAsync();
+            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x => x.SubPrice).ToList();
+            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x => x.SubPrice).ToList();
         }
 
         var pagedResult = new PagedList<ProductVm>()
@@ -197,22 +203,16 @@ public class ProductManager : IProductRepository, IDisposable
         };
     }
 
-    public async Task<Respond<PagedList<ProductVm>>> GetProductByCategoryID(string categoryID, Search request)
+    public async Task<Respond<PagedList<ProductVm>>> GetProductByCategoryID(string categoryId, Search request)
     {
         var query = from c in _context.Products
-            where c.CategoryID == categoryID
+            where c.CategoryID == categoryId
             select c;
         if (!string.IsNullOrEmpty(request.Name))
             query = query.Where(x => x.Name.Contains(request.Name));
         //paging
         int totalRow = await query.CountAsync();
-        var data = new List<ProductVm>();
-        var item1 = from sp in _context.SizeInProducts
-            join s in _context.Sizes on sp.SizeID equals s.ID
-            select new {s, sp,};
-        var item2 = from tp in _context.ToppingInProducts
-            join t in _context.Toppings on tp.ToppingID equals t.ID
-            select new {t, tp,};
+        List<ProductVm> data;
         if (request.IsPging)
         {
             data = await query.Select(x => new ProductVm()
@@ -232,6 +232,7 @@ public class ProductManager : IProductRepository, IDisposable
                     IsActive = true,
                 })
                 .Skip((request.PageNumber - 1) * request.PageSize)
+                .OrderBy(x => x.CategoryID)
                 .Take(request.PageSize).ToListAsync();
         }
         else
@@ -254,13 +255,21 @@ public class ProductManager : IProductRepository, IDisposable
             }).ToListAsync();
         }
 
-        foreach (var item in data)
-        {
-            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
-            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x=>x.SubPrice).ToList();
-            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x=>x.SubPrice).ToList();
-        }
+        // var item1 = from sp in _context.SizeInProducts
+        //     join s in _context.Sizes on sp.SizeID equals s.ID
+        //     select new {s, sp,};
+        // var item2 = from tp in _context.ToppingInProducts
+        //     join t in _context.Toppings on tp.ToppingID equals t.ID
+        //     select new {t, tp,};
+        // foreach (var item in data)
+        // {
+        //     var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes()
+        //         .ToListAsync();
+        //     var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes()
+        //         .ToListAsync();
+        //     item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x => x.SubPrice).ToList();
+        //     item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x => x.SubPrice).ToList();
+        // }
 
         var pagedResult = new PagedList<ProductVm>()
         {
@@ -277,7 +286,7 @@ public class ProductManager : IProductRepository, IDisposable
             Message = "Thành công",
         };
     }
-    
+
     public async Task<MessageResult> Create(ProductRequest request)
     {
         var category = await _context.Categories.FindAsync(request.CategoryID);
@@ -377,7 +386,7 @@ public class ProductManager : IProductRepository, IDisposable
                 Description = $"Cập nhật giá ngày: {product.UpdateDate} cho sản phẩm: {product.Name}",
                 PriceOld = product.Price,
                 PriceNew = request.Price,
-                UserCreateID = _userID,
+                UserCreateID = _userId,
                 HistoryType = HistoryType.Product,
                 ProductID = productID,
             };
@@ -498,11 +507,12 @@ public class ProductManager : IProductRepository, IDisposable
         }).FirstOrDefaultAsync();
         if (product != null)
         {
-            var sizes = await item1.Where(x => x.sp.ProductID == product.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
-            var toppings = await item2.Where(x => x.tp.ProductID == product.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-            product.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x=>x.SubPrice).ToList();
-            product.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x=>x.SubPrice).ToList();
-
+            var sizes = await item1.Where(x => x.sp.ProductID == product.ID).Select(x => x.s).IgnoreAutoIncludes()
+                .ToListAsync();
+            var toppings = await item2.Where(x => x.tp.ProductID == product.ID).Select(x => x.t).IgnoreAutoIncludes()
+                .ToListAsync();
+            product.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x => x.SubPrice).ToList();
+            product.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x => x.SubPrice).ToList();
         }
 
         if (product == null)
@@ -700,7 +710,7 @@ public class ProductManager : IProductRepository, IDisposable
                 Description = $"Cập nhật giá ngày: {DateTime.Now} cho kichs thuocw: {request.Name}",
                 PriceOld = size.SubPrice,
                 PriceNew = request.SubPrice,
-                UserCreateID = _userID,
+                UserCreateID = _userId,
                 HistoryType = HistoryType.Size,
                 SizeID = sizeID,
             };
@@ -710,7 +720,7 @@ public class ProductManager : IProductRepository, IDisposable
         size.Name = request.Name;
         size.SubPrice = request.SubPrice;
         size.UpdateDate = DateTime.Now;
-        size.UserUpdateID = _userID;
+        size.UserUpdateID = _userId;
         _context.Sizes.Update(size);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -725,8 +735,8 @@ public class ProductManager : IProductRepository, IDisposable
         size.ID = Guid.NewGuid().ToString();
         size.CreateDate = DateTime.Now;
         size.UpdateDate = DateTime.Now;
-        size.UserCreateID = _userID;
-        size.UserUpdateID = _userID;
+        size.UserCreateID = _userId;
+        size.UserUpdateID = _userId;
         _context.Sizes.Add(size);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -805,7 +815,7 @@ public class ProductManager : IProductRepository, IDisposable
                 Description = $"Cập nhật giá ngày: {DateTime.Now} cho topping: {request.Name}",
                 PriceOld = topping.SubPrice,
                 PriceNew = request.SubPrice,
-                UserCreateID = _userID,
+                UserCreateID = _userId,
                 HistoryType = HistoryType.Topping,
                 ToppingID = toppingId,
             };
@@ -816,8 +826,8 @@ public class ProductManager : IProductRepository, IDisposable
         topping.Description = request.Description;
         topping.SubPrice = request.SubPrice;
         topping.UpdateDate = DateTime.Now;
-        topping.UserCreateID = _userID;
-        topping.UserUpdateID = _userID;
+        topping.UserCreateID = _userId;
+        topping.UserUpdateID = _userId;
         _context.Toppings.Update(topping);
         await _context.SaveChangesAsync();
         return new MessageResult()
@@ -832,8 +842,8 @@ public class ProductManager : IProductRepository, IDisposable
         topping.ID = Guid.NewGuid().ToString();
         topping.CreateDate = DateTime.Now;
         topping.UpdateDate = DateTime.Now;
-        topping.UserCreateID = _userID;
-        topping.UserUpdateID = _userID;
+        topping.UserCreateID = _userId;
+        topping.UserUpdateID = _userId;
         _context.Toppings.Add(topping);
         await _context.SaveChangesAsync();
         return new MessageResult()

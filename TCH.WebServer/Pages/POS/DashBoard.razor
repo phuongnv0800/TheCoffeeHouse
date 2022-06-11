@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="row">
-                    @if (categories != null)
+                    @if (ProductsList != null && ProductsList.Count != 0)
                     {
                         foreach (var product in ProductsList)
                         {
@@ -32,9 +32,9 @@
                                 <!--begin::Hot sales post-->
                                 <div class="card-xl-stretch me-md-6">
                                     <!--begin::Overlay-->
-                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@(Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage)">
+                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="@(Configuration["BackendApiUrl"] + "/Uploads" + product.LinkImage)" target="_blank">
                                         <!--begin::Image-->
-                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(@(Configuration["BackendApiUrl"] + "/Uploads/" + product.LinkImage))"></div>
+                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px" style="background-image:url(@(Configuration["BackendApiUrl"] + "/Uploads" + product.LinkImage))"></div>
                                         <!--end::Image-->
                                         <!--begin::Action-->
                                         <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
@@ -60,8 +60,8 @@
                                                     Hết hàng
                                                 </span>
                                             }
-                                            <span class="badge border border-dashed text-primary p-2">
-                                                @((product.IsSale) ? product.Price - product.PriceSale : product.Price)<span class="text-primary text-gray-400">vnđ</span>
+                                            <span class="badge border border-dashed text-primary p-2 fs-1">
+                                                @String.Format("{0:0,0 vnđ}", (product.IsSale) ? product.Price - product.PriceSale : product.Price)
                                             </span>
                                             <!--end::Label-->
                                             <!--begin::Action-->
@@ -75,6 +75,10 @@
                                 <!--end::Hot sales post-->
                             </div>
                         }
+                    }
+                    else
+                    {
+                        <Loading></Loading>
                     }
                 </div>
 
@@ -119,7 +123,7 @@
     public string BranchId { get; set; }
 
     private string Url;
-    private TCH.WebServer.Models.Pagination.Pagination pagination = new TCH.WebServer.Models.Pagination.Pagination();
+    private Models.Pagination.Pagination pagination = new();
     private List<Category> categories = new();
     private string branchId;
     private OrderRequest order;
