@@ -114,7 +114,7 @@
 
 @code {
     public List<ProductVm>? ProductsList = new();
-    
+
     [CascadingParameter]
     public IModalService Modal { get; set; }
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
@@ -170,9 +170,10 @@
     {
         var or = order.OrderItems.FirstOrDefault(x => x.ProductID == id);
         order.OrderItems.Remove(or);
+        order.TotalAmount -= or.SubAmount * or.Quantity;
         GbParameter.GbParameter.Order = order;
         StateHasChanged();
     }
 
-    private async Task OnCancel() => await BlazoredModal.CancelAsync();
+    
 }

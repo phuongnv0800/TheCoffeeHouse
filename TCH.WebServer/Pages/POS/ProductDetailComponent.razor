@@ -110,7 +110,7 @@
                                                                     <!--end::Product=-->
                                                                     <!--begin::Qty=-->
                                             <td class="text-end pe-5">
-                                                                        <input type="checkbox" @onchange="@(e => { AddTopping(@topping.ID, topping.SubPrice, e.Value); })">
+                                                                        <input type="checkbox" @onchange="@(e => { AddTopping(@topping.ID, topping.SubPrice, topping.Name, e.Value); })">
                                                                     </td>
                                                                     <!--end::Qty=-->
                                         </tr>
@@ -228,7 +228,6 @@
                                             <thead>
                                                 <tr class="fs-7 fw-bolder text-gray-500">
                                                     <th class="p-0 min-w-150px d-block pt-3">Tên</th>
-                                                    <th class="text-end min-w-140px pt-3">Trạng thái</th>
                                                     <th class="pe-0 text-end min-w-120px pt-3">Giá</th>
                                                 </tr>
                                             </thead>
@@ -239,17 +238,14 @@
                                                     {
                                                         @foreach (var topping in orderDetail.Toppings)
                                                         {
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="#" class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">@topping.Name </a>
-                                                                        </td>
-                                                                        <td class="text-end">
-                                                                            <span class="badge badge-light-success fs-7 fw-bolder">Còn hàng</span>
-                                                                        </td>
-                                                                        <td class="text-end">
-                                                                            <span class="text-gray-800 fw-bolder d-block fs-6">@topping.SubPrice</span>
-                                                                        </td>
-                                                                    </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <a class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">@topping.Name </a>
+                                                                </td>
+                                                                <td class="text-end">
+                                                                    <span class="text-gray-800 fw-bolder d-block fs-6">@topping.SubPrice</span>
+                                                                </td>
+                                                            </tr>
                                                         }
                                                     }
                                                 </tbody>
@@ -316,13 +312,14 @@
             };
         base.OnParametersSet();
     }
-    public async Task AddTopping(string toppingId, double subPrice, object checkedValue)
+    public async Task AddTopping(string toppingId, double subPrice, string name, object checkedValue)
     {
         if ((bool)checkedValue)
 
         {
             var topping = new OrderToppingItem()
                 {
+                    Name = name,
                     ToppingID = toppingId,
                     SubPrice = subPrice
                 };

@@ -117,7 +117,7 @@
                                                                         <input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="@name ">
                                                                     </td>
                                                                     <td class="ps-0">
-                                                                        <input class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" value="x@(orderDetail.Quantity)" data-kt-element="quantity">
+                                                                        <input class="form-control form-control-solid"  name="quantity[]"  value="@(orderDetail.Quantity)" data-kt-element="quantity">
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" value="@orderDetail.SubAmount" data-kt-element="price">
@@ -296,7 +296,7 @@
                 GbParameter.GbParameter.Order = order;
             }
 
-
+            order.TotalAmount = 0;
             var response = await userServices.GetUserInfo();
             User = response.Data;
 
