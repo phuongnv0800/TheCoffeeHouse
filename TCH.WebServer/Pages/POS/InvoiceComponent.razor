@@ -330,7 +330,7 @@
     public async Task OnSubmit()
     {
         var res = await customerService.GetAllCustomerByPhone(phone);
-        Customer cus = res.Data;
+        if(res!=null && res.Result == 1)Customer cus = res.Data;
 
         order.BranchID = User.BranchId;
         order.CustomerID = cus.ID;
