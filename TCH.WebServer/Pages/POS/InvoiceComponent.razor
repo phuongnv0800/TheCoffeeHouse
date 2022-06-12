@@ -315,16 +315,25 @@
         }
         order.CustomerReceive = order.CustomerPut - order.TotalAmount;
         var response = await orderService.AddOrder(order);
-        if (response != null && response.Result == 1)
+        if (response != null)
         {
-            toastService.ShowSuccess("thành công");
-            Id = response.Data.ID;
-            GbParameter.GbParameter.Order = null;
-            await ShowPopUp();
-            navigationManager.NavigateTo("/dashboard");
-            return;
+            if (response.Result == 1)
+            {
+                toastService.ShowSuccess("thành công");
+                Id = response.Data.ID;
+                GbParameter.GbParameter.Order = null;
+                await ShowPopUp();
+                navigationManager.NavigateTo("/dashboard");
+            }
+            else
+            {
+                toastService.ShowSuccess(response.Message);
+            }
         }
-        toastService.ShowError("thất bại");
+        else
+        {
+            toastService.ShowError("thất bại");
+        }
     }
 
 }
