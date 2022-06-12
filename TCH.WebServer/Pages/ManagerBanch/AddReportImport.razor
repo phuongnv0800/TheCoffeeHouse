@@ -243,6 +243,8 @@
         {
             MessageResult response = new MessageResult();
 
+            newReport.TotalAmount = newReport.ReportDetails.Sum(x => x.Quantity * x.PriceOfUnit);
+
             response = await reportService.AddImport(newReport);
 
             if (response != null)

@@ -80,7 +80,7 @@
                             <label class="required form-label">Chọn loại nguyên liệu thanh lý</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                            <button class="btn btn-warning" onclick="@(() => Onclick())">Chọn nguyên liệu</button>
+                            <a class="btn btn-warning" onclick="@(() => Onclick())">Chọn nguyên liệu</a>
                                 <!--end::Input-->
                                 <!--begin::Table container-->
                             <div class="table-responsive">
@@ -167,7 +167,7 @@
         materials = response.Data.Items;
         var respon = await userApiClient.GetById(GbParameter.GbParameter.UserId);
         User = respon.Data;
-        if (GbParameter.GbParameter.ReportImport != null)
+        if (GbParameter.GbParameter.ReportExport != null)
         {
             newReport = GbParameter.GbParameter.ReportExport;
         }
@@ -199,7 +199,7 @@
         try
         {
             MessageResult response = new MessageResult();
-
+            newReport.TotalAmount = newReport.ReportDetails.Sum(x => x.Quantity * x.PriceOfUnit);
             response = await reportService.AddLiquid(newReport);
 
             if (response != null)
