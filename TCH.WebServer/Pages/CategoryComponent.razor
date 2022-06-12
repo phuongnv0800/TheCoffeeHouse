@@ -4,98 +4,106 @@
 @using TCH.WebServer.Services.Categories
 @using TCH.WebServer.Services.Products
 @using TCH.WebServer.Services.Users
-
+@inject IToastService _toastService
 @inject ICategoryService _categoryService
 @inject IUserService userService
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 
-						<!--begin::Post-->
-						<div class="post d-flex flex-column-fluid" id="kt_post">
-							<!--begin::Container-->
-							<div id="kt_content_container" class="container-xxl">
-								<form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework" data-kt-redirect="../../demo1/dist/apps/ecommerce/catalog/categories.html">
-									
-									<!--begin::Main column-->
-									<div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
-										<!--begin::General options-->
-										<div class="card card-flush py-4">
-											<!--begin::Card header-->
-											<div class="card-header">
-												<div class="card-title">
-													<h2>Thông tin</h2>
-												</div>
-											</div>
-											<!--end::Card header-->
-											<!--begin::Card body-->
-											<div class="card-body pt-0">
-												<!--begin::Input group-->
-												<EditForm Model="@editCategory">
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Tên loại sản phẩm</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editCategory.Name" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editCategory.Name)" />
-														</div>
-														<!--end::Input-->
-														<!--begin::Description-->
-														<div class="text-muted fs-7">Tên loại sản phẩm phải là duy nhất</div>
-														<!--end::Description-->
-													</div>
-													<!--end::Input group-->
-													<div class="mb-10 fv-row fv-plugins-icon-container">
-														<!--begin::Label-->
-														<label class="required form-label">Mô tả</label>
-														<!--end::Label-->
-														<!--begin::Input-->
-														<InputText @bind-Value="editCategory.Description" class="form-control form-control-solid col-sm-6" />
-														<div class="fv-plugins-message-container invalid-feedback">
-															<ValidationMessage For="@(() => editCategory.Description)" />
-														</div>
-														<!--end::Input-->
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework" data-kt-redirect="../../demo1/dist/apps/ecommerce/catalog/categories.html">
 
-													</div>
-													<!--end::Input group-->
-												</EditForm>
-											</div>
-											<!--end::Card header-->
-										</div>
-										<!--end::General options-->
-										
-										<div class="d-flex justify-content-end">
-											<!--begin::Button-->
-											<a href="../../demo1/dist/apps/ecommerce/catalog/products.html" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
-											<!--end::Button-->
-											<!--begin::Button-->
-											<button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
-												<span class="indicator-label">Hoàn thành</span>
-												<span class="indicator-progress">Please wait...
-												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-											</button>
-											<!--end::Button-->
-										</div>
-									</div>
-									<!--end::Main column-->
-								<div></div></form>
-							</div>
-							<!--end::Container-->
-						</div>
-						<!--end::Post-->
-					</div>
+                <!--begin::Main column-->
+                <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                    <!--begin::General options-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>Thông tin</h2>
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <!--begin::Input group-->
+                            <EditForm Model="@editCategory">
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Tên loại sản phẩm</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputText @bind-Value="editCategory.Name" class="form-control form-control-solid col-sm-6"/>
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                        <ValidationMessage For="@(() => editCategory.Name)"/>
+                                    </div>
+                                    <!--end::Input-->
+                                    <!--begin::Description-->
+                                    <div class="text-muted fs-7">Tên loại sản phẩm phải là duy nhất</div>
+                                    <!--end::Description-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="mb-10 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required form-label">Mô tả</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <InputText @bind-Value="editCategory.Description" class="form-control form-control-solid col-sm-6"/>
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                        <ValidationMessage For="@(() => editCategory.Description)"/>
+                                    </div>
+                                    <!--end::Input-->
+
+                                </div>
+                                <!--end::Input group-->
+                            </EditForm>
+                        </div>
+                        <!--end::Card header-->
+                    </div>
+                    <!--end::General options-->
+
+                    <div class="d-flex justify-content-end">
+                        <!--begin::Button-->
+                        <a href="../../demo1/dist/apps/ecommerce/catalog/products.html" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+                        <!--end::Button-->
+                        <!--begin::Button-->
+                        <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
+                            <span class="indicator-label">Hoàn thành</span>
+                            <span class="indicator-progress">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                </div>
+                <!--end::Main column-->
+                <div></div>
+            </form>
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+</div>
 
 @code {
-    [Parameter] public string Title { get; set; }
-    [Parameter] public string CategoryId { get; set; }
-	private ApplicationUser User;
-    private Category editCategory = null;
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string CategoryId { get; set; }
+
+    private ApplicationUser User;
+    private CategoryVm editCategory = null;
 
     protected async override Task OnInitializedAsync()
     {
-        editCategory = new Category();
-		var response = await userService.GetUserInfo();
+        editCategory = new ();
+        var response = await userService.GetUserInfo();
         User = response.Data;
     }
 
@@ -103,7 +111,7 @@
     {
         if (string.IsNullOrEmpty(CategoryId))
         {
-            editCategory = new Category();
+            editCategory = new ();
         }
         else
         {
@@ -113,31 +121,45 @@
             editCategory.Description = vesselDB.Description;
         }
     }
+
 }
 
 @code{
 
     private MultipartFormDataContent content = new MultipartFormDataContent();
+
     private async Task OnSubmit()
     {
-        ResponseLogin<Category> response = new ResponseLogin<Category>();
-		
         if (string.IsNullOrEmpty(CategoryId))
         {
-            response = await _categoryService.AddCategory(editCategory);
+            var messageResult = await _categoryService.AddCategory(editCategory);
+            if (messageResult.Result == 1)
+            {
+                _toastService.ShowSuccess("Thêm thành công");
+    // await BlazoredModal.CloseAsync(ModalResult.Ok(true));
+            }
+            else
+            {
+                _toastService.ShowError(messageResult.Message);
+    // await BlazoredModal.CloseAsync(ModalResult.Ok(false));
+            }
         }
         else
         {
-            response = await _categoryService.UpdateCategory(editCategory);
-        }
-        if(response != null)
-        {
-            if(response.Result == 1)
+            var messageResult = await _categoryService.UpdateCategory(CategoryId, editCategory);
+            if (messageResult.Result == 1)
             {
-                
+                _toastService.ShowSuccess("Thêm thành công");
+    // await BlazoredModal.CloseAsync(ModalResult.Ok(true));
+            }
+            else
+            {
+                _toastService.ShowError(messageResult.Message);
+    // await BlazoredModal.CloseAsync(ModalResult.Ok(false));
             }
         }
     }
+
     private async Task HandleSelection(InputFileChangeEventArgs e)
     {
         var file = e.File;
@@ -146,12 +168,13 @@
         {
             var fileContent = new StreamContent(file.OpenReadStream(maxFileSize));
             content.Add(fileContent, "file", file.Name);
-            // _systemService.Download(content);
-            // editVessel.File = file.Name;
+    // _systemService.Download(content);
+    // editVessel.File = file.Name;
         }
         catch (Exception)
         {
-            //Logger.LogError($"File: {file.Name} Error: {ex.Message}");
+    //Logger.LogError($"File: {file.Name} Error: {ex.Message}");
         }
-	}
+    }
+
 }

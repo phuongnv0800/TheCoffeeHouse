@@ -1,38 +1,31 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
+using Blazored.LocalStorage;
 using TCH.Data.Entities;
 using TCH.Utilities.Paginations;
+using TCH.Utilities.SubModels;
+using TCH.ViewModel.SubModels;
 using TCH.WebServer.Models;
 
 namespace TCH.WebServer.Services.Categories
 {
-    public class CategoryService : ICategoryService
+    public class CategoryService : BaseApiClient, ICategoryService
     {
         private readonly HttpClient httpClient;
 
-        public CategoryService(HttpClient httpClient)
+        public CategoryService(HttpClient httpClient, ILocalStorageService localStorageService)
+            : base(httpClient, localStorageService)
         {
             this.httpClient = httpClient;
         }
-        public async Task<ResponseLogin<Category>> AddCategory(Category category)
+
+        public async Task<MessageResult> AddCategory(CategoryVm category)
         {
             try
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var httpContent = new StringContent(JsonConvert.SerializeObject(category), Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync($"/api/Categories/", httpContent);
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<Category> respond = JsonConvert.DeserializeObject<ResponseLogin<Category>>(content);
-                    if (respond.Result == 1)
-                    {
-                        return respond;
-                    }
-                    return null;
-                }
-                return null;
+                var response = await CreateAsJsonAsync($"/api/Categories", category);
+                return response;
             }
             catch
             {
@@ -40,21 +33,12 @@ namespace TCH.WebServer.Services.Categories
             }
         }
 
-        public async Task DeleteCategory(string id)
+        public async Task<MessageResult> DeleteCategory(string id)
         {
             try
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var response = await httpClient.DeleteAsync($"/api/Categories/{id}");
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<PagedList<Category>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<Category>>>(content);
-                    if (respond.Result == 1)
-                    {
-                        return;
-                    }
-                }
+                var response = await DeleteAsync($"/api/Categories/{id}");
+                return response;
             }
             catch
             {
@@ -69,6 +53,7 @@ namespace TCH.WebServer.Services.Categories
             {
                 return null;
             }
+
             return response;
         }
 
@@ -78,12 +63,15 @@ namespace TCH.WebServer.Services.Categories
             {
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Category>>>("/api/Categories?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString());
+                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Category>>>(
+                    "/api/Categories?IsPging=" + IsPaging.ToString()
+                                               + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" +
+                                               pageSize.ToString());
                 if (response.Result != 1)
                 {
                     return null;
                 }
+
                 return response;
             }
             catch (Exception ex)
@@ -92,23 +80,12 @@ namespace TCH.WebServer.Services.Categories
             }
         }
 
-        public async Task<ResponseLogin<Category>> GetCategoryById(string id)
+        public async Task<Respond<CategoryVm>> GetCategoryById(string id)
         {
             try
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var response = await httpClient.GetAsync($"/api/Categories/{id}");
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<Category> respond = JsonConvert.DeserializeObject<ResponseLogin<Category>>(content);
-                    if (respond.Result == 1)
-                    {
-                        return respond;
-                    }
-                    return null;
-                }
-                return null;
+                var response = await GetFromJsonAsync<Respond<CategoryVm>>($"/api/Categories/{id}");
+                return response;
             }
             catch
             {
@@ -116,24 +93,12 @@ namespace TCH.WebServer.Services.Categories
             }
         }
 
-        public async Task<ResponseLogin<Category>> UpdateCategory(Category category)
+        public async Task<MessageResult> UpdateCategory(string id, CategoryVm category)
         {
             try
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var httpContent = new StringContent(JsonConvert.SerializeObject(category), Encoding.UTF8, "application/json");
-                var response = await httpClient.PutAsync($"/api/Products/", httpContent);
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<Category> respond = JsonConvert.DeserializeObject<ResponseLogin<Category>>(content);
-                    if (respond.Result == 1)
-                    {
-                        return respond;
-                    }
-                    return null;
-                }
-                return null;
+                var response = await UpdateAsJsonAsync($"/api/Categories/{id}", category);
+                return response;
             }
             catch
             {

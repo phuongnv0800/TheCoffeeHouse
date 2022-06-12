@@ -148,29 +148,17 @@
 </div>
 
 @code {
-    public List<Category>? CategoryList = new List<Category>();
-    private string? token;
-    public string Name;
-    private TCH.WebServer.Models.Pagination.Pagination pagination = new();
-    private ApplicationUser User;
+    public List<Category>? CategoryList = new();
+    private Models.Pagination.Pagination pagination = new();
 
     [CascadingParameter]
     public IModalService Modal { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+
+    protected override async Task OnInitializedAsync()
     {
-        try
-        {
-    //navigationManager.NavigateTo("categories-table");
-            var response = await userService.GetUserInfo();
-            User = response.Data;
-            await Get(1);
-            base.OnParametersSet();
-        }
-        catch (Exception e)
-        {
-            toastService.ShowError("có lỗi");
-        }
+        CategoryList = new();
+        await Get(1);
     }
 
     public async Task Get(int pageNumber)
@@ -189,20 +177,49 @@
         }
     }
 
-    public async void Add()
+    public async Task Add()
     {
-        Modal.Show<AddCategory>("Thêm loại sản phẩm");
-    //var response = await productServices.GetProducts(true,  pagination.pageSize,  1);
+        var moviesModal = Modal.Show<AddCategory>("Thêm loại sản phẩm", options: new ModalOptions()
+        {
+            UseCustomLayout = true,
+        });
+        var result = await moviesModal.Result;
+
+        if (result.Cancelled)
+            Console.WriteLine("Modal was cancelled");
+        else
+
+            await Get(1);
     }
 
     public async void Update(string id)
     {
-        navigationManager.NavigateTo($"categories/{id}");
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(AddCategory.CategoryId), id);
+        var moviesModal = Modal.Show<AddCategory>("Sửa loại sản phẩm", parameters, options: new ModalOptions()
+        {
+            UseCustomLayout = true,
+        });
+        var result = await moviesModal.Result;
+
+        if (result.Cancelled)
+            Console.WriteLine("Modal was cancelled");
+        else
+            await Get(1);
     }
 
-    public async void Delete(string id)
+    public async Task Delete(string id)
     {
-        await categoryService.DeleteCategory(id);
+        var result = await categoryService.DeleteCategory(id);
+        if (result.Result == 1)
+        {
+            toastService.ShowSuccess(result.Message);
+            await Get(1);
+        }
+        else
+        {
+            toastService.ShowError("có lỗi");
+        }
     }
 
     public async void Change(int link)

@@ -41,7 +41,7 @@ public class CategoriesController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
-    [HttpGet("/{id}")]
+    [HttpGet("{id}")]
     [AllowAnonymous]
     public async Task<IActionResult> GetAll(string id)
     {
@@ -68,8 +68,6 @@ public class CategoriesController : ControllerBase
     {
         try
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             var result = await _category.Create(name);
             return Ok(result);
         }
