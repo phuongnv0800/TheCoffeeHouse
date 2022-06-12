@@ -12,29 +12,8 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="update">
-      <change afterPath="$PROJECT_DIR$/TCH.Data/Entities/CustomerForPromotion.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/CustomerDetailFor.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/ExchangeVoucherModal.razor" afterDir="false" />
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="add new customer">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/CustomersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/CustomersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/EF/APIContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/EF/APIContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220610083241_updatestock.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Migrations/20220610083241_updatestock.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/UserManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/ICustomerRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/ICustomerRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Customer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Customer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.Data/Entities/Promotion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Data/Entities/Promotion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.Utilities/Roles/Permission.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.Utilities/Roles/Permission.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/Authentication/Login.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/Authentication/Login.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Services/Customers/CustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Services/Customers/CustomerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Shared/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Shared/MainLayout.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Shared/NavMenu.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Shared/Page404.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Shared/Page404.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -263,7 +242,7 @@
       <workItem from="1654519806393" duration="9758000" />
       <workItem from="1654780881902" duration="3404000" />
       <workItem from="1654822592824" duration="22562000" />
-      <workItem from="1654997555302" duration="19118000" />
+      <workItem from="1654997555302" duration="20503000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -468,7 +447,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655014971066</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="add new customer">
+      <created>1655019242832</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1655019242832</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -502,7 +488,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="add print pdf" />
     <MESSAGE value="add layout print" />
     <MESSAGE value="add DI for program" />
     <MESSAGE value="fix" />
@@ -527,7 +512,8 @@
     <MESSAGE value="no message" />
     <MESSAGE value="uodat" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="add new customer" />
+    <option name="LAST_COMMIT_MESSAGE" value="add new customer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

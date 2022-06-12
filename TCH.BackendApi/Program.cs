@@ -42,7 +42,6 @@ builder.Services.AddIdentity<AppUser, AppRole>()
 builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
 builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
 builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
-
 builder.Services.AddScoped<IProductRepository, ProductManager>();
 builder.Services.AddScoped<ICategoryRepository, CategoryManager>();
 builder.Services.AddScoped<IUserRepository, UserManager>();
@@ -57,7 +56,6 @@ builder.Services.AddScoped<IRecipeRepository, RecipeManager>();
 builder.Services.AddScoped<IReportRepository, ReportManager>();
 builder.Services.AddScoped<IUnitRepository, UnitManager>();
 builder.Services.AddScoped<IStockRepository, StockManager>();
-
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IStorageService, FileStorageService>();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
