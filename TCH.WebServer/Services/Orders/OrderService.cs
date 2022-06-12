@@ -91,8 +91,8 @@ namespace TCH.WebServer.Services.Orders
         {
             try
             {
-                // CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
-                // Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
                 var response = await httpClient.GetFromJsonAsync<Respond<MoneyByDay>>($"/api/Orders/get-revenue?" + fromDate + toDate);
@@ -109,8 +109,8 @@ namespace TCH.WebServer.Services.Orders
         {
             try
             {
-                // CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
-                // Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
                 var response = await httpClient.GetFromJsonAsync<Respond<MoneyByDay>>($"/api/Orders/get-revenue-branch/{BranchId}?" + fromDate
