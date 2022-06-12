@@ -195,6 +195,7 @@ public class ReportManager : IReportRepository, IDisposable
             {
                 var stockMaterial = new StockMaterial()
                 {
+                    ID = Guid.NewGuid().ToString(),
                     BranchID = request.BranchID,
                     MaterialID = item.MaterialID,
                     BeginDate = item.BeginDate,
