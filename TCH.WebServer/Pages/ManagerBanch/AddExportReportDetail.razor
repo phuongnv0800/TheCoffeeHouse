@@ -34,7 +34,7 @@
                         <EditForm Model="importDetail" OnInvalidSubmit="OnPick">
                             <div class="mb-10 fv-row fv-plugins-icon-container">
                                 <!--begin::Label-->
-                            <label class="required form-label">Chọn hàng nhập</label>
+                            <label class="required form-label">Chọn hàng xuất</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                             <InputSelect @bind-Value="importDetail.MaterialID" class="form-control form-control-solid ">
@@ -70,28 +70,7 @@
                             </div>
                             <!--end::Input-->
                         </div>
-                        <div class="mb-10 fv-row fv-plugins-icon-container">
-                            <!--begin::Label-->
-                            <label class="required form-label">Ngày hết hạn</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <InputDate @bind-Value="importDetail.ExpirationDate" class="form-control form-control-solid" />
-                            <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => importDetail.ExpirationDate)" />
-                            </div>
-                            <!--end::Input-->
-                        </div>
-                        <div class="mb-10 fv-row fv-plugins-icon-container">
-                            <!--begin::Label-->
-                            <label class="required form-label">Giá</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <InputNumber @bind-Value="importDetail.PriceOfUnit" class="form-control form-control-solid " />
-                            <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => importDetail.PriceOfUnit)" />
-                            </div>
-                            <!--end::Input-->
-                        </div>
+                        
                         <div class="mb-10 fv-row fv-plugins-icon-container">
                             <!--begin::Label-->
                             <label class="required form-label">Đơn vị trọng lượng</label>
@@ -181,6 +160,8 @@
         units = res.Data.Items;
         importDetail = new ImportDetail()
             {
+                MaterialID = materials.First().ID,
+                MaterialName = materials.First().Name,
                 BeginDate = DateTime.Now,
                 Status = 0,
             };
@@ -188,6 +169,7 @@
     }
     public async Task OnPick()
     {
+        importDetail.MaterialName = materials.FirstOrDefault(x => x.ID == importDetail.MaterialID).Name;
         GbParameter.GbParameter.ReportExport.ReportDetails.Add(importDetail);
 
         await BlazoredModal.CloseAsync(ModalResult.Ok(true));

@@ -1,193 +1,192 @@
 ﻿@page "/add-report-liquid"
+@using TCH.Utilities.SubModels
 @inject IReportService reportService
 @inject IToastService toastService
 @inject IStockService stockService
 @inject IMaterialService materialService
+@inject IUserApiClient userApiClient;
 @attribute [Authorize]
 <!--begin::Post-->
-    <!--begin::Container-->
-    <div id="kt_content_container" class="container-xxl">
-        <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework" >
-            <!--begin::Main column-->
-            <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
-                <!--begin::General options-->
-                <div class="card card-flush py-4">
-                    <!--begin::Card header-->
-                    <div class="card-header">
-                        <div class="card-title">
-                            <h2>Thông tin</h2>
+<!--begin::Container-->
+<div id="kt_content_container" class="container-xxl">
+    <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework">
+        <!--begin::Main column-->
+        <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+            <!--begin::General options-->
+            <div class="card card-flush py-4">
+                <!--begin::Card header-->
+                <div class="card-header">
+                    <div class="card-title">
+                        <h2>Thông tin</h2>
+                    </div>
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <!--begin::Input group-->
+                    @if (newReport != null)
+                    {
+                        <EditForm Model="newReport">
+                            <div class="mb-10 fv-row fv-plugins-icon-container">
+                                <!--begin::Label-->
+                            <label class="required form-label">Mã phiếu thanh lý</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                            <InputText @bind-Value="newReport.Code" class="form-control form-control-solid col-sm-6" />
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                    <ValidationMessage For="@(() => newReport.Code)" />
+                                </div>
+                                <!--end::Input-->
                         </div>
-                    </div>
-                    <!--end::Card header-->
-                    <!--begin::Card body-->
-                    <div class="card-body pt-0">
-                        <!--begin::Input group-->
-                        @if (newReport != null)
-                        {
-                            <EditForm Model="newReport">
-                            <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                <label class="required form-label">Mã phiếu thanh lý</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                <InputText @bind-Value="newReport.Code" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => newReport.Code)" />
-                                    </div>
-                                    <!--end::Input-->
-                            </div>
-                                <!--end::Input group-->
-
-                                @*<div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                    <label class="required form-label">Đơn vị</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <InputText @bind-Value="editProduct.Unit" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                    <ValidationMessage For="@(() => editProduct.Unit)" />
-                                    </div>
-                                    <!--end::Input-->
-                                    </div>*@
-                                <!--end::Input group-->
-                            <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                <label class=" form-label">Lí do thanh lý</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                <InputText @bind-Value="newReport.Reason" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => newReport.Reason)" />
-                                    </div>
-                                    <!--end::Input-->
-                            </div>
-                                <!--end::Input group-->
-                            <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                <label class="required form-label">Đánh giá hàng thanh lý</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                <InputText @bind-Value="newReport.Conclude" class="form-control form-control-solid col-sm-6" />
-                                    <div class="fv-plugins-message-container invalid-feedback">
-                                        <ValidationMessage For="@(() => newReport.Conclude)" />
-                                    </div>
-                                    <!--end::Input-->
-                            </div>
-                                <!--end::Input group-->
-                            <div class="mb-10 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                <label class="required form-label">Chọn loại nguyên liệu thanh lý</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                <button class="btn btn-warning" onclick="@(() => Onclick())">Chọn nguyên liệu</button>
-                                    <!--end::Input-->
-                                    <!--begin::Table container-->
-                                <div class="table-responsive">
-                                        <!--begin::Table-->
-                                    <table class="table align-middle gs-0 gy-4 my-0">
-                                            <!--begin::Table head-->
-                                        <thead>
-                                                <tr class="fs-7 fw-bolder text-gray-500">
-                                                    <th class="p-0 min-w-150px d-block pt-3">Tên</th>
-                                                    <th class="text-end min-w-140px pt-3">Trạng thái</th>
-                                                    <th class="pe-0 text-end min-w-120px pt-3">Giá</th>
-                                                    <th class="pe-0 text-end min-w-120px pt-3">Đơn vị</th>
-                                                    <th class="pe-0 text-end min-w-120px pt-3">Cân nặng</th>
-                                                </tr>
-                                            </thead>
-                                            <!--end::Table head-->
-                                            <!--begin::Table body-->
-                                        <tbody>
-                                                @if (newReport.ReportDetails != null)
+                            <!--end::Input group-->
+                            @*<div class="mb-10 fv-row fv-plugins-icon-container">
+                                <!--begin::Label-->
+                                <label class="required form-label">Đơn vị</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <InputText @bind-Value="editProduct.Unit" class="form-control form-control-solid col-sm-6" />
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                <ValidationMessage For="@(() => editProduct.Unit)" />
+                                </div>
+                                <!--end::Input-->
+                                </div>*@
+                            <!--end::Input group-->
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                                <!--begin::Label-->
+                            <label class=" form-label">Lí do thanh lý</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                            <InputText @bind-Value="newReport.Reason" class="form-control form-control-solid col-sm-6" />
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                    <ValidationMessage For="@(() => newReport.Reason)" />
+                                </div>
+                                <!--end::Input-->
+                        </div>
+                            <!--end::Input group-->
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                                <!--begin::Label-->
+                            <label class="required form-label">Đánh giá hàng thanh lý</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                            <InputText @bind-Value="newReport.Conclude" class="form-control form-control-solid col-sm-6" />
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                    <ValidationMessage For="@(() => newReport.Conclude)" />
+                                </div>
+                                <!--end::Input-->
+                        </div>
+                            <!--end::Input group-->
+                        <div class="mb-10 fv-row fv-plugins-icon-container">
+                                <!--begin::Label-->
+                            <label class="required form-label">Chọn loại nguyên liệu thanh lý</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                            <button class="btn btn-warning" onclick="@(() => Onclick())">Chọn nguyên liệu</button>
+                                <!--end::Input-->
+                                <!--begin::Table container-->
+                            <div class="table-responsive">
+                                    <!--begin::Table-->
+                                <table class="table align-middle gs-0 gy-4 my-0">
+                                        <!--begin::Table head-->
+                                    <thead>
+                                            <tr class="fs-7 fw-bolder text-gray-500">
+                                                <th class="p-0 min-w-150px d-block pt-3">Tên</th>
+                                                <th class="pe-0 text-end min-w-120px pt-3">Giá</th>
+                                                <th class="pe-0 text-end min-w-120px pt-3">Đơn vị</th>
+                                                <th class="pe-0 text-end min-w-120px pt-3">Cân nặng</th>
+                                            </tr>
+                                        </thead>
+                                        <!--end::Table head-->
+                                        <!--begin::Table body-->
+                                    <tbody>
+                                            @if (newReport.ReportDetails != null)
+                                            {
+                                                @foreach (var topping in newReport.ReportDetails)
                                                 {
-                                                    @foreach (var topping in newReport.ReportDetails)
-                                                    {
-                                                        <tr>
-                                                            <td>
-                                                                <span class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">@topping.MaterialID</span>
-                                                            </td>
-                                                            <td class="text-end">
-                                                                <span class="badge badge-light-success fs-7 fw-bolder">Còn hàng</span>
-                                                            </td>
-                                                            <td class="text-end">
-                                                                <span class="text-gray-800 fw-bolder d-block fs-6">@topping.PriceOfUnit</span>
-                                                            </td>
-                                                            <td class="text-end">
-                                                                <span class="text-gray-800 fw-bolder d-block fs-6">@topping.Unit</span>
-                                                            </td>
-                                                            <td class="text-end">
-                                                                <span class="text-gray-800 fw-bolder d-block fs-6">@topping.Mass</span>
-                                                            </td>
-                                                        </tr>
-                                                    }
+                                                    <tr>
+                                                        <td>
+                                                            <span class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">@topping.MaterialName</span>
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <span class="text-gray-800 fw-bolder d-block fs-6">@topping.PriceOfUnit</span>
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <span class="text-gray-800 fw-bolder d-block fs-6">@topping.Unit</span>
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <span class="text-gray-800 fw-bolder d-block fs-6">@topping.Mass</span>
+                                                        </td>
+                                                    </tr>
                                                 }
-                                            </tbody>
-                                            <!--end::Table body-->
-                                    </table>
-                                    </div>
-                                    <!--end::Table container-->
-                            </div>
-                                <!--end::Input group-->
-                        </EditForm>
-                        }
-                    </div>
-                    <!--end::Card header-->
-                </div>
-                <!--end::General options-->
-                <!--begin::Meta options-->
+                                            }
+                                        </tbody>
+                                        <!--end::Table body-->
+                                </table>
+                                </div>
+                                <!--end::Table container-->
+                        </div>
+                            <div class="d-flex justify-content-end">
 
-                <div class="d-flex justify-content-end">
-                    <!--begin::Button-->
-                    <a href="../../demo1/dist/apps/ecommerce/catalog/products.html" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
-                    <!--end::Button-->
-                    <!--begin::Button-->
-                    <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary" onclick="@(() => OnSubmit())">
-                        <span class="indicator-label">Hoàn thành</span>
-                        <span class="indicator-progress">
-                            Please wait...
-                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                        </span>
-                    </button>
-                    <!--end::Button-->
+                                <!--begin::Button-->
+                            <button type="submit" class="btn btn-primary" onclick="@(() => OnSubmit())">
+                                    <span class="indicator-label">Hoàn thành</span>
+                                    <span class="indicator-progress">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                        </div>
+                            <!--end::Input group-->
+                    </EditForm>
+                    }
                 </div>
+                <!--end::Card header-->
             </div>
-            <!--end::Main column-->
-            <div></div>
-        </form>
-        
-        <!--end::Container-->
-    </div>
+            <!--end::General options-->
+            <!--begin::Meta options-->
+
+
+        </div>
+        <!--end::Main column-->
+        <div></div>
+    </form>
+
+    <!--end::Container-->
+</div>
 <!--end::Post-->
 @code {
     [Parameter] public string Title { get; set; }
     private ExportRequest newReport;
     private List<ImportDetail> stockMaterials = new List<ImportDetail>();
-
+    private AppUser User;
     private List<Material> materials;
     [CascadingParameter] public IModalService Modal { get; set; }
     protected async override Task OnInitializedAsync()
     {
         var response = await materialService.GetAllMaterials();
         materials = response.Data.Items;
-        if(GbParameter.GbParameter.ReportImport != null)
+        var respon = await userApiClient.GetById(GbParameter.GbParameter.UserId);
+        User = respon.Data;
+        if (GbParameter.GbParameter.ReportImport != null)
         {
             newReport = GbParameter.GbParameter.ReportExport;
         }
-        else{
+        else
+        {
             newReport = new ExportRequest()
-            {
-                BranchID = GbParameter.GbParameter.BranchId
-            };
+                {
+                    BranchID = User.BranchID
+                };
         }
 
     }
     public async Task Onclick()
     {
         GbParameter.GbParameter.ReportExport = newReport;
-        var modal = Modal.Show<AddExportReportDetail>("Thêm nguyên liệu nhập", options: new ModalOptions
-        {
-            UseCustomLayout = true
-        });
+        var modal = Modal.Show<AddExportReportDetail>("Thêm nguyên liệu thanh lý", options: new ModalOptions
+            {
+                UseCustomLayout = true
+            });
         var result = await modal.Result;
         if (!result.Cancelled)
         {
@@ -199,7 +198,7 @@
     {
         try
         {
-            ResponseLogin<Report> response = new ResponseLogin<Report>();
+            MessageResult response = new MessageResult();
 
             response = await reportService.AddLiquid(newReport);
 

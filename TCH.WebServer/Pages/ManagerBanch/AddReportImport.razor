@@ -1,8 +1,10 @@
 ﻿@page "/add-report-import"
+@using TCH.Utilities.SubModels
 @inject IReportService reportService
 @inject IToastService toastService
 @inject IStockService stockService
 @inject IMaterialService materialService
+@inject IUserApiClient userApiClient;
 @attribute [Authorize]
 <!--begin::Post-->
 <!--begin::Container-->
@@ -24,7 +26,7 @@
                     <!--begin::Input group-->
                     @if (newReport != null)
                     {
-                        <EditForm Model="newReport">
+                        <EditForm  Model="newReport" id="myid">
                             <div class="mb-10 fv-row fv-plugins-icon-container">
                                 <!--begin::Label-->
                                 <label class="required form-label">Mã phiếu nhập</label>
@@ -75,7 +77,7 @@
                             <!--end::Input group-->
                             <div class="mb-10 fv-row fv-plugins-icon-container">
                                 <!--begin::Label-->
-                                <label class="required form-label">Giá</label>
+                                <label class="required form-label">Tiền ứng trước</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <InputNumber @bind-Value="newReport.Depreciation" class="form-control form-control-solid col-sm-6"/>
@@ -102,7 +104,7 @@
                                 <label class="required form-label">Chọn nguyên liệu nhập</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <button class="btn btn-warning" onclick="@(() => Onclick())">Chọn nguyên liệu</button>
+                                <a class="btn btn-warning" onclick="@(() => Onclick())">Chọn nguyên liệu</a>
                                 <!--end::Input-->
                                 <!--begin::Table container-->
                                 <div class="table-responsive">
@@ -112,7 +114,6 @@
                                         <thead>
                                         <tr class="fs-7 fw-bolder text-gray-500">
                                             <th class="p-0 min-w-150px d-block pt-3">Tên</th>
-                                            <th class="text-end min-w-140px pt-3">Trạng thái</th>
                                             <th class="pe-0 text-end min-w-120px pt-3">Giá</th>
                                             <th class="pe-0 text-end min-w-120px pt-3">Số lượng</th>
                                             <th class="pe-0 text-end min-w-120px pt-3">Đơn vị</th>
@@ -128,10 +129,7 @@
                                             {
                                                 <tr>
                                                     <td>
-                                                        <span class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">@topping.MaterialID</span>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-light-success fs-7 fw-bolder">Còn hàng</span>
+                                                        <span class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">@topping.MaterialName</span>
                                                     </td>
                                                     <td class="text-end">
                                                         <span class="text-gray-800 fw-bolder d-block fs-6">@topping.PriceOfUnit</span>
@@ -155,6 +153,20 @@
                                 </div>
                                 <!--end::Table container-->
                             </div>
+                            <div class="d-flex justify-content-end">
+                                <!--begin::Button-->
+                
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button class="btn btn-primary"  onclick="@(() => OnSubmit())">
+                                    <span class="indicator-label">Hoàn thành</span>
+                                    <span class="indicator-progress">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
                             <!--end::Input group-->
                         </EditForm>
                     }
@@ -164,20 +176,7 @@
             <!--end::General options-->
             <!--begin::Meta options-->
 
-            <div class="d-flex justify-content-end">
-                <!--begin::Button-->
-                <a href="../../demo1/dist/apps/ecommerce/catalog/products.html" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
-                <!--end::Button-->
-                <!--begin::Button-->
-                <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary" onclick="@(() => OnSubmit())">
-                    <span class="indicator-label">Hoàn thành</span>
-                    <span class="indicator-progress">
-                        Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
-                </button>
-                <!--end::Button-->
-            </div>
+            
         </div>
         <!--end::Main column-->
         <div></div>
@@ -196,6 +195,7 @@
     private List<ImportDetail> stockMaterials = new List<ImportDetail>();
 
     private List<Material> materials;
+    private AppUser User;
 
     [CascadingParameter]
     public IModalService Modal { get; set; }
@@ -204,6 +204,8 @@
     {
         var response = await materialService.GetAllMaterials();
         materials = response.Data.Items;
+        var respon = await userApiClient.GetById(GbParameter.GbParameter.UserId);
+            User = respon.Data;
         if (GbParameter.GbParameter.ReportImport != null)
         {
             newReport = GbParameter.GbParameter.ReportImport;
@@ -212,8 +214,10 @@
         {
             newReport = new ImportRequest()
             {
-                BranchID = GbParameter.GbParameter.BranchId
+                BranchID = User.BranchID,
+                
             };
+            
         }
     }
 
@@ -237,7 +241,7 @@
     {
         try
         {
-            ResponseLogin<Report> response = new ResponseLogin<Report>();
+            MessageResult response = new MessageResult();
 
             response = await reportService.AddImport(newReport);
 

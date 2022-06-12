@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using TCH.Data.Entities;
 using TCH.Utilities.Paginations;
+using TCH.Utilities.SubModels;
 using TCH.ViewModel.RequestModel;
 using TCH.ViewModel.SubModels;
 using TCH.WebServer.Models;
@@ -18,9 +19,9 @@ namespace TCH.WebServer.Services.Reports
         Task<ResponseLogin<PagedList<Report>>> GetAllImportInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<PagedList<Report>>> GetAllExportInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<PagedList<Report>>> GetAllLiquidInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
-        Task<ResponseLogin<Report>> AddImport(ImportRequest Promotion);
-        Task<ResponseLogin<Report>> AddExport(ExportRequest Promotion);
-        Task<ResponseLogin<Report>> AddLiquid(ExportRequest Promotion);
+        Task<MessageResult> AddImport(ImportRequest Promotion);
+        Task<MessageResult> AddExport(ExportRequest Promotion);
+        Task<MessageResult> AddLiquid(ExportRequest Promotion);
         Task<ResponseLogin<Report>> GetImportnById(string id);
         Task<ResponseLogin<Report>> GetExportnById(string id);
         Task<ResponseLogin<Report>> GetLiquidById(string id);
@@ -45,17 +46,20 @@ namespace TCH.WebServer.Services.Reports
             this.httpClient = httpClient;
         }
 
-        public async Task<ResponseLogin<Report>> AddExport(ExportRequest Promotion)
+        public async Task<MessageResult> AddExport(ExportRequest Promotion)
         {
             try
             {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8, "application/json");
+                var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8, "application/json-patch+json");
+                
                 var response = await httpClient.PostAsync($"/api/Reports/export", httpContent);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<Report> respond = JsonConvert.DeserializeObject<ResponseLogin<Report>>(content);
+                    MessageResult respond = JsonConvert.DeserializeObject<MessageResult>(content);
                     if (respond.Result == 1)
                     {
                         return respond;
@@ -70,18 +74,20 @@ namespace TCH.WebServer.Services.Reports
             }
         }
 
-        public async Task<ResponseLogin<Report>> AddImport(ImportRequest Promotion)
+        public async Task<MessageResult> AddImport(ImportRequest Promotion)
         {
             try
             {
-                
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
                 var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8, "application/json");
+                
                 var response = await httpClient.PostAsync($"/api/Reports/import", httpContent);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<Report> respond = JsonConvert.DeserializeObject<ResponseLogin<Report>>(content);
+                    MessageResult respond = JsonConvert.DeserializeObject<MessageResult>(content);
                     if (respond.Result == 1)
                     {
                         return respond;
@@ -96,17 +102,20 @@ namespace TCH.WebServer.Services.Reports
             }
         }
 
-        public async Task<ResponseLogin<Report>> AddLiquid(ExportRequest Promotion)
+        public async Task<MessageResult> AddLiquid(ExportRequest Promotion)
         {
             try
             {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8, "application/json");
+                var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8, "application/json-patch+json");
+                
                 var response = await httpClient.PostAsync($"/api/Reports/liquidation", httpContent);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<Report> respond = JsonConvert.DeserializeObject<ResponseLogin<Report>>(content);
+                    MessageResult respond = JsonConvert.DeserializeObject<MessageResult>(content);
                     if (respond.Result == 1)
                     {
                         return respond;

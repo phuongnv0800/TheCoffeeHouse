@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using TCH.Data.Entities;
 using TCH.Utilities.Paginations;
+using TCH.Utilities.SubModels;
 using TCH.ViewModel.RequestModel;
 using TCH.ViewModel.SubModels;
 using TCH.WebServer.Models;
@@ -14,8 +15,8 @@ namespace TCH.WebServer.Services.Customers
     {
         public Task<ResponseLogin<PagedList<Customer>>> GetAllCustomer(bool IsPaging, int pageSize, int pageNumber, string sdt);
         public Task<ResponseLogin<Customer>> GetAllCustomerByPhone(string sdt);
-        public Task<ResponseLogin<Customer>> AddCustomer(CustomerRequest request);
-        public Task<ResponseLogin<Customer>> UpdateCustomer(CustomerRequest request, string id);
+        public Task<MessageResult> AddCustomer(MultipartFormDataContent request);
+        public Task<MessageResult> UpdateCustomer(MultipartFormDataContent request, string id);
         public Task<ResponseLogin<Customer>> GetCustomerById(string id);
         public Task DeleCustomer(string id);
     }
@@ -28,19 +29,19 @@ namespace TCH.WebServer.Services.Customers
             this.httpClient = httpClient;
         }
 
-        public async Task<ResponseLogin<Customer>> AddCustomer(CustomerRequest request)
+        public async Task<MessageResult> AddCustomer(MultipartFormDataContent request)
         {
             try
             {
                 CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
                 var httpContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync($"/api/Customers/", httpContent);
+                var response = await httpClient.PostAsync($"/api/Customers/", request);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<Customer> respond = JsonConvert.DeserializeObject<ResponseLogin<Customer>>(content);
+                    MessageResult respond = JsonConvert.DeserializeObject<MessageResult>(content);
                     if (respond.Result == 1)
                     {
                         return respond;
@@ -136,17 +137,17 @@ namespace TCH.WebServer.Services.Customers
             }
         }
 
-        public async Task<ResponseLogin<Customer>> UpdateCustomer(CustomerRequest request, string id)
+        public async Task<MessageResult> UpdateCustomer(MultipartFormDataContent request, string id)
         {
             try
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var httpContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
-                var response = await httpClient.PutAsync($"/api/Customers/", httpContent);
+                //var httpContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+                var response = await httpClient.PutAsync($"/api/Customers/{id}", request);
                 if ((int)response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<Customer> respond = JsonConvert.DeserializeObject<ResponseLogin<Customer>>(content);
+                    MessageResult respond = JsonConvert.DeserializeObject<MessageResult>(content);
                     if (respond.Result == 1)
                     {
                         return respond;

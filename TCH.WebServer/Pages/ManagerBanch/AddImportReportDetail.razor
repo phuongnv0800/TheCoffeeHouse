@@ -201,15 +201,18 @@
         var res = await unitService.GetAllMaterials();
         units = res.Data.Items;
         importDetail = new ImportDetail()
-        {
-            BeginDate = DateTime.Now,
-            ExpirationDate = DateTime.Now.AddDays(10),
-            Status = 1,
-        };
+            {
+                MaterialID = materials.First().ID,
+                MaterialName = materials.First().Name,
+                BeginDate = DateTime.Now,
+                    ExpirationDate = DateTime.Now.AddDays(10),
+                    Status = 0,
+                };
     }
 
     public async Task OnPick()
     {
+        importDetail.MaterialName = materials.FirstOrDefault(x => x.ID == importDetail.MaterialID).Name;
         GbParameter.GbParameter.ReportImport.ReportDetails.Add(importDetail);
 
         await BlazoredModal.CloseAsync(ModalResult.Ok(true));

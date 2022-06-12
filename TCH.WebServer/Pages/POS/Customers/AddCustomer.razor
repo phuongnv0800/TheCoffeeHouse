@@ -1,5 +1,6 @@
 ﻿@page "/add-customer"
 @using TCH.Data.Entities
+@using TCH.Utilities.SubModels
 @using TCH.ViewModel.RequestModel
 @using TCH.WebServer.Models
 @using TCH.WebServer.Services.Categories
@@ -134,16 +135,21 @@
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
 
     private async Task OnCancel() => await BlazoredModal.CancelAsync();
-
+    private MultipartFormDataContent content = new ();
     private async Task OnSubmit()
     {
         try{
-            ResponseLogin<Customer> response = new ResponseLogin<Customer>();
-            
+            MessageResult response = new MessageResult();
+            content.Add(new StringContent(editProduct.FullName), "fullName");
+            content.Add(new StringContent(editProduct.Address), "address");
+            content.Add(new StringContent(editProduct.DateOfBirth.ToString()), "dateOfBirth");
+            content.Add(new StringContent(editProduct.Email), "email");
+            content.Add(new StringContent(editProduct.Phone), "phone");
+            content.Add(new StringContent(editProduct.Gender.ToString()), "gender");
             if(CustomerId == null)
-                response = await customerService.AddCustomer(editProduct);
+                response = await customerService.AddCustomer(content);
             else{
-                response = await customerService.UpdateCustomer(editProduct, CustomerId);
+                response = await customerService.UpdateCustomer(content, CustomerId);
             }
 
             if(response != null)
