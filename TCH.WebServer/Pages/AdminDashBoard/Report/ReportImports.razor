@@ -269,6 +269,8 @@
     public async Task SearchByText()
     {
         await Get(pagination.PageNumber);
+        
+        await GetChart();
     }
     public async Task ExportExcel()
     {

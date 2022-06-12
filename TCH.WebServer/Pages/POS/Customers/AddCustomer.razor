@@ -19,24 +19,24 @@
                 <h5 class="fw-bolder">@Title</h5>
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" @onclick="OnCancel">
                     <span class="svg-icon svg-icon-1">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-							<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
-							<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
-						</svg>
-					</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+                        </svg>
+                    </span>
                 </div>
             </div>
             <div class="modal-body">
                 <div class="scroll-y me-n7 pe-7">
                     <EditForm Model="editProduct" OnValidSubmit="OnSubmit" class="form">
-                        <DataAnnotationsValidator />
+                        <DataAnnotationsValidator/>
                         <div class="fv-row mb-7">
-							<label class="required fs-6 fw-bold mb-2">Họ tên khách hàng</label>
-                            <InputText @bind-Value="editProduct.FullName" class="form-control form-control-solid col-sm-6" />
+                            <label class="required fs-6 fw-bold mb-2">Họ tên khách hàng</label>
+                            <InputText @bind-Value="editProduct.FullName" class="form-control form-control-solid col-sm-6"/>
                             <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editProduct.FullName)" />
+                                <ValidationMessage For="@(() => editProduct.FullName)"/>
                             </div>
-						</div>
+                        </div>
 
                         @*<div class="fv-row mb-7">
 							<label class="required fs-6 fw-bold mb-2">đơn vị sản phẩm</label>
@@ -47,48 +47,49 @@
 						</div>*@
 
                         <div class="fv-row mb-7">
-							<label class="fs-6 fw-bold mb-2 requied">Địa chỉ</label>
-                            <InputText @bind-Value="editProduct.Address" class="form-control form-control-solid col-sm-6" />
+                            <label class="fs-6 fw-bold mb-2 requied">Địa chỉ</label>
+                            <InputText @bind-Value="editProduct.Address" class="form-control form-control-solid col-sm-6"/>
                             <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editProduct.Address)" />
+                                <ValidationMessage For="@(() => editProduct.Address)"/>
                             </div>
-						</div>
+                        </div>
                         <div class="fv-row mb-7">
-							<label class="fs-6 fw-bold mb-2 requied">Email</label>
-                            <InputText @bind-Value="editProduct.Email" class="form-control form-control-solid col-sm-6" />
+                            <label class="fs-6 fw-bold mb-2 requied">Email</label>
+                            <InputText @bind-Value="editProduct.Email" class="form-control form-control-solid col-sm-6"/>
                             <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editProduct.Email)" />
+                                <ValidationMessage For="@(() => editProduct.Email)"/>
                             </div>
-						</div>
+                        </div>
 
                         <div class="fv-row mb-7">
-							<label class="fs-6 fw-bold mb-2">Số điện thoại</label>
-                            <InputText @bind-Value="editProduct.Phone" class="form-control form-control-solid col-sm-6" />
+                            <label class="fs-6 fw-bold mb-2">Số điện thoại</label>
+                            <InputText @bind-Value="editProduct.Phone" class="form-control form-control-solid col-sm-6"/>
                             <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editProduct.Phone)" />
+                                <ValidationMessage For="@(() => editProduct.Phone)"/>
                             </div>
-						</div>
+                        </div>
 
                         <div class="fv-row mb-7">
-							<label class="fs-6 fw-bold mb-2 requied">Khuyến mãi</label>
+                            <label class="fs-6 fw-bold mb-2 requied">Giới tính</label>
                             <InputSelect @bind-Value="editProduct.Gender" class="form-control">
-                                @foreach(var gender in Enum.GetValues(typeof(Gender))){
+                                @foreach (var gender in Enum.GetValues(typeof(Gender)))
+                                {
                                     <option value="@gender">@gender</option>
                                 }
                             </InputSelect>
-						</div>
+                        </div>
 
                         <div class="fv-row mb-7">
-							<label class=" fs-6 fw-bold mb-2">Ngày sinh</label>
-                            <InputDate @bind-Value="editProduct.DateOfBirth" class="form-control form-control-solid col-sm-6" />
+                            <label class=" fs-6 fw-bold mb-2">Ngày sinh</label>
+                            <InputDate @bind-Value="editProduct.DateOfBirth" class="form-control form-control-solid col-sm-6"/>
                             <div class="fv-plugins-message-container invalid-feedback">
-                                <ValidationMessage For="@(() => editProduct.DateOfBirth)" />
+                                <ValidationMessage For="@(() => editProduct.DateOfBirth)"/>
                             </div>
-						</div>
+                        </div>
 
-                        
+
                         <div class="card-footer p-2">
-                            <button type="submit" class="btn btn-primary mr-2" onclick="@(()=>OnSubmit())">Cập nhật</button>
+                            <button type="submit" class="btn btn-primary mr-2" onclick="@(() => OnSubmit())">Cập nhật</button>
                         </div>
                     </EditForm>
                 </div>
@@ -98,8 +99,12 @@
 </div>
 
 @code {
-    [Parameter] public string Title { get; set; }
-    [Parameter] public string? CustomerId { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string? CustomerId { get; set; }
 
     private CustomerRequest editProduct = null;
 
@@ -110,7 +115,6 @@
 
     protected override async Task OnParametersSetAsync()
     {
-
         if (string.IsNullOrEmpty(CustomerId))
         {
             editProduct = new CustomerRequest();
@@ -127,28 +131,33 @@
             editProduct.Phone = customer.Phone;
         }
     }
+
 }
 
 
 @code {
-    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
+    [CascadingParameter]
+    BlazoredModalInstance BlazoredModal { get; set; }
 
     private async Task OnCancel() => await BlazoredModal.CancelAsync();
 
     private async Task OnSubmit()
     {
-        try{
+        try
+        {
             ResponseLogin<Customer> response = new ResponseLogin<Customer>();
-            
-            if(CustomerId == null)
+
+            if (CustomerId == null)
                 response = await customerService.AddCustomer(editProduct);
-            else{
+            else
+            {
                 response = await customerService.UpdateCustomer(editProduct, CustomerId);
             }
 
-            if(response != null)
+            if (response != null)
             {
-                if(response.Result == 1)
+                if (response.Result == 1)
                 {
                     _toastService.ShowSuccess("Thêm thành công");
                     await BlazoredModal.CloseAsync(ModalResult.Ok(true));
@@ -156,11 +165,10 @@
             }
             _toastService.ShowSuccess("Không thành công");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _toastService.ShowError(ex.ToString());
         }
     }
 
 }
-

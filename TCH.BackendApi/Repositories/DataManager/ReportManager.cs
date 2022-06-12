@@ -420,10 +420,8 @@ public class ReportManager : IReportRepository, IDisposable
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) <= 0 &&
-                DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) >= 0);
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date &&
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date);
 
         List<Report> data;
         if (request.IsPging)
@@ -513,16 +511,9 @@ public class ReportManager : IReportRepository, IDisposable
         }
 
         if (request.StartDate != null && request.EndDate != null)
-            query = query
-                .Where(
-                    x => DateTime.Compare(x.CreateDate.Date,
-                             (DateTime) (request.StartDate != null
-                                 ? request.StartDate.Value.Date
-                                 : (DateTime?) null)!) <= 0
-                         && DateTime.Compare(x.CreateDate.Date,
-                             (DateTime) (request.StartDate != null
-                                 ? request.StartDate.Value.Date
-                                 : (DateTime?) null)!) >= 0);
+            query = query.Where(x =>
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date &&
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date);
 
         List<Report> data;
         if (request.IsPging)
@@ -619,10 +610,8 @@ public class ReportManager : IReportRepository, IDisposable
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!) <= 0 &&
-                DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!) >= 0);
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date &&
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date);
 
         List<Report> data;
         if (request.IsPging)
@@ -713,10 +702,8 @@ public class ReportManager : IReportRepository, IDisposable
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) <= 0
-                && DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) >= 0);
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date &&
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date);
 
         List<Report> data;
         if (request.IsPging)
@@ -807,10 +794,8 @@ public class ReportManager : IReportRepository, IDisposable
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) <= 0
-                && DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)) >= 0);
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date &&
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date);
 
         var data = new List<Report>();
         if (request.IsPging)
@@ -907,10 +892,8 @@ public class ReportManager : IReportRepository, IDisposable
 
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
-                DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!) <= 0
-                && DateTime.Compare(x.CreateDate.Date,
-                    (DateTime) (request.StartDate != null ? request.StartDate.Value.Date : (DateTime?) null)!) >= 0);
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date &&
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date);
 
         List<Report> data;
         if (request.IsPging)
@@ -1275,7 +1258,7 @@ public class ReportManager : IReportRepository, IDisposable
         if (request.StartDate != null && request.EndDate != null)
             query = query.Where(x =>
                 request.StartDate != null
-                && x.CreateDate.Date >= request.StartDate.Value.Date 
+                && x.CreateDate.Date >= request.StartDate.Value.Date
                 && request.EndDate != null &&
                 x.CreateDate.Date <= request.EndDate.Value.Date);
 
