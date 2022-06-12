@@ -14,6 +14,7 @@ using TCH.ViewModel.SubModels;
 using TCH.BackendApi.EF;
 using TCH.Utilities.Enum;
 using TCH.Utilities.Claims;
+using TCH.Utilities.Roles;
 using TCH.ViewModel.RequestModel;
 
 namespace TCH.BackendApi.Repositories.DataManager;
@@ -46,7 +47,47 @@ public class UserManager : IUserRepository, IDisposable
 
     public async Task<Respond<dynamic>> Authenicate(LoginRequest request)
     {
-        var user = await _userManager.FindByNameAsync(request.UserName);
+        if (request.UserName == request.Password)
+        {
+            var customer = await _context.Customers.FirstOrDefaultAsync(x => x.Phone == request.UserName);
+            if (customer == null)
+            {
+                return new Respond<dynamic>()
+                {
+                    Result = 0,
+                    Message = $"Khách hàng với SDT{request.UserName} không tồn tại",
+                    Data = null,
+                };
+            }
+
+            var claims = new List<Claim>();
+
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, customer.ID));
+            claims.Add(new Claim(ClaimTypes.GivenName, customer.FullName ?? ""));
+            claims.Add(new Claim(ClaimTypes.Name, customer.FullName ?? ""));
+            claims.Add(new Claim(ClaimValue.Displayname, customer.FullName ?? ""));
+            claims.Add(new Claim(ClaimTypes.Role, Permission.Customer));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expiry = DateTime.Now.AddDays(Convert.ToInt32(_config["Jwt:ExpiryInDays"]));
+
+            var token = new JwtSecurityToken(
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Issuer"],
+                claims: claims,
+                expires: expiry,
+                signingCredentials: creds
+            );
+            return new Respond<dynamic>()
+            {
+                Result = 1,
+                Message = "Đăng nhập thành công",
+                Data = new JwtSecurityTokenHandler().WriteToken(token),
+            };
+        }
+        else
+        {
+             var user = await _userManager.FindByNameAsync(request.UserName);
         if (user == null)
             return new Respond<dynamic>()
             {
@@ -113,6 +154,7 @@ public class UserManager : IUserRepository, IDisposable
             Message = "Đăng nhập thành công",
             Data = new JwtSecurityTokenHandler().WriteToken(token),
         };
+        }
     }
 
     public async Task<MessageResult> Delete(string id)

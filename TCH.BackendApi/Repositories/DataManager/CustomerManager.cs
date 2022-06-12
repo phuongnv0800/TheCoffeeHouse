@@ -98,6 +98,71 @@ public class CustomerManager : IDisposable, ICustomerRepository
             Data = result,
         };
     }
+    public async Task<Respond<Customer>> ExchangePoint(string customerId, string promotionId)
+    {
+        var customer = await _context.Customers.FindAsync(customerId);
+        var promotion = await _context.Promotions.FindAsync(promotionId);
+        var beans = await _context.Beans.ToListAsync();
+        if (customer == null || promotion == null)
+            return new Respond<Customer>()
+            {
+                Result = 0,
+                Message = "Không tìm thấy",
+            };
+        if (customer.Point < promotion.PointExchange)
+        {
+            return new Respond<Customer>()
+            {
+                Result = 0,
+                Message = "Không đủ điểm để đổi",
+            };
+        }
+
+        customer.Point -=promotion.PointExchange;
+        // if (customer.Point >= beans.First(x => x.Code == BeanType.Diamond).MinPoint)
+        // {
+        //     customer.
+        // }
+        var promotionInCustomer = new CustomerForPromotion()
+        {
+            Activate = true,
+            Code = promotion.Code,
+            CustomerId = customerId,
+            EndDate = promotion.EndDate,
+            StartDate = promotion.StartDate,
+            PromotionId = promotionId,
+        };
+        await _context.CustomerForPromotions.AddAsync(promotionInCustomer);
+        return new Respond<Customer>()
+        {
+            Result = 1,
+            Message = "Thành công",
+            Data = customer,
+        };
+    }
+    public async Task<Respond<Customer>> GetPromotion(string customerId)
+    {
+        var customer = await _context
+            .Customers
+            .Include(x=>x.Bean)
+            .Include(x=>x.CustomerForPromotions)
+            .FirstOrDefaultAsync(x=>x.ID == customerId);
+        if (customer == null)
+        {
+            return new Respond<Customer>()
+            {
+                Result = 0,
+                Message = "failed",
+                Data = null,
+            };
+        }
+        return new Respond<Customer>()
+        {
+            Result = 1,
+            Message = "Thành công",
+            Data = customer,
+        };
+    }
     public async Task<Respond<Customer>> GetByPhone(string phone)
     {
         var result = await _context.Customers.FirstOrDefaultAsync(x => x.Phone == phone);

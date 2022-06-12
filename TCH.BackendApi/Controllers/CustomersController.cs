@@ -80,6 +80,46 @@ public class CustomersController : ControllerBase
             return BadRequest(new { result = -2, message = e.Message });
         }
     }
+    [HttpGet("promotions/{customerId}")]
+    public async Task<IActionResult> GetPromotion(string customerId)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.GetPromotion( customerId:customerId);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
+    [HttpPost("exchange/{customerId}")]
+    public async Task<IActionResult> ExchangePoint(string customerId,[FromBody]string promotionId )
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.ExchangePoint(customerId, promotionId);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new { result = -1, message = e.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new { result = -2, message = e.Message });
+        }
+    }
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] CustomerRequest request)
     {

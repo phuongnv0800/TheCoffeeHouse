@@ -18,10 +18,12 @@ public class Customer
     public Gender Gender { get; set; } = Gender.Female;
     public DateTime DateOfBirth { get; set; } = DateTime.Now;
     public string MemberID { get; set; }
-    public int Point { get; set; } = 0;
+    public int Point { get; set; } = 100;
     public string? ConversionRate { get; set; }
     public string? Avatar { get; set; }
 
     public string BeanID { get; set; }
     public Bean Bean { get; set; }
+    
+    public virtual ICollection<CustomerForPromotion> CustomerForPromotions { get; set; }
 }

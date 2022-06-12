@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TCH.BackendApi.Migrations
 {
-    public partial class updatestock : Migration
+    public partial class exchange : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -124,6 +124,7 @@ namespace TCH.BackendApi.Migrations
                     PromotionObject = table.Column<int>(type: "int", nullable: false),
                     ReduceAmount = table.Column<double>(type: "float", nullable: false),
                     ReducePercent = table.Column<double>(type: "float", nullable: false),
+                    PointExchange = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false)
@@ -587,6 +588,34 @@ namespace TCH.BackendApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CustomerForPromotions",
+                columns: table => new
+                {
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PromotionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Activate = table.Column<bool>(type: "bit", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerForPromotions", x => new { x.PromotionId, x.CustomerId });
+                    table.ForeignKey(
+                        name: "FK_CustomerForPromotions_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CustomerForPromotions_Promotions_PromotionId",
+                        column: x => x.PromotionId,
+                        principalTable: "Promotions",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -935,6 +964,11 @@ namespace TCH.BackendApi.Migrations
                 column: "MenuID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CustomerForPromotions_CustomerId",
+                table: "CustomerForPromotions",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Customers_BeanID",
                 table: "Customers",
                 column: "BeanID");
@@ -1094,7 +1128,7 @@ namespace TCH.BackendApi.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "CustomerForPromotions");
 
             migrationBuilder.DropTable(
                 name: "HistoryPriceUpdates");
@@ -1133,7 +1167,7 @@ namespace TCH.BackendApi.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "MemberTypes");
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");
@@ -1149,6 +1183,9 @@ namespace TCH.BackendApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Measures");
+
+            migrationBuilder.DropTable(
+                name: "MemberTypes");
 
             migrationBuilder.DropTable(
                 name: "Orders");
