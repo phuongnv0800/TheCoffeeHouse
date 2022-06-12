@@ -168,9 +168,12 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var result = await _brandService.GetAllBranchs("");
+        Branches = result.Data.Items;
         if (UserId == null)
         {
             user = new RegisterRequest();
+            user.branchID = Branches.First().ID;
         }
         else
         {
@@ -188,8 +191,7 @@
             user.UserName = aUser.UserName;
 
         } 
-        var result = await _brandService.GetAllBranchs("");
-        Branches = result.Data.Items;
+        
     }
 }
 

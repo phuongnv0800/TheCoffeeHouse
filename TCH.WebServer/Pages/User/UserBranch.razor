@@ -237,7 +237,7 @@
 
         if (!result.Cancelled)
         {
-            await OnSelectedChanged(PageIndex);
+            await OnSelectedChanged(1);
         }
     }
 
@@ -274,7 +274,7 @@
 
         if (!result.Cancelled)
         {
-            await OnSelectedChanged(PageIndex);
+            await OnSelectedChanged(1);
         }
     }
 
@@ -290,7 +290,7 @@
         var result = await moviesModal.Result;
 
         if (!result.Cancelled)
-            await OnSelectedChanged(PageIndex);
+            await OnSelectedChanged(1);
     }
 
     private async Task OnRemove(string userId)
