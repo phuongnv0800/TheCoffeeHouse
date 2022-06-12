@@ -81,11 +81,10 @@ public class ReportManager : IReportRepository, IDisposable
 
             foreach (var stock in stockDetails)
             {
-                if (item.MaterialID == stock.MaterialID && item.BeginDate == stock.BeginDate &&
-                    item.ExpirationDate == stock.ExpirationDate)
+                if (item.MaterialID == stock.MaterialID && item.BeginDate.Date == stock.BeginDate.Date &&
+                    item.ExpirationDate.Date == stock.ExpirationDate.Date)
                 {
                     stock.Quantity -= item.Quantity;
-
                     stock.Mass -= item.Mass;
                     stock.StandardMass = stock.Mass * stock.Measure.ConversionFactor;
                     if (stock.Quantity < 0)
@@ -95,6 +94,7 @@ public class ReportManager : IReportRepository, IDisposable
                         stock.StandardMass = 0;
                     }
 
+                    _context.StockMaterials.Update(stock);
                     break;
                 }
             }
@@ -305,6 +305,7 @@ public class ReportManager : IReportRepository, IDisposable
                         stock.StandardMass = 0;
                     }
 
+                    _context.StockMaterials.Update(stock);
                     break;
                 }
             }
