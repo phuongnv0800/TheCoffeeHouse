@@ -18,6 +18,8 @@ namespace TCH.WebServer.Services.Customers
         public Task<MessageResult> AddCustomer(MultipartFormDataContent request);
         public Task<MessageResult> UpdateCustomer(MultipartFormDataContent request, string id);
         public Task<ResponseLogin<Customer>> GetCustomerById(string id);
+        public Task<Respond<Customer>> GetPromotion(string customerId);
+        Task<Respond<Customer>> ExchangePoint(string customerId, string promotionId);
         public Task DeleCustomer(string id);
     }
     public class CustomerService : ICustomerService
@@ -49,6 +51,36 @@ namespace TCH.WebServer.Services.Customers
                     return null;
                 }
                 return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public async Task<Respond<Customer>> ExchangePoint(string customerId, string promotionId)
+        {
+            try
+            {
+                var response = await httpClient.PostAsJsonAsync($"/api/Customers/exchange/{customerId}", promotionId);
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Respond<Customer> respond = JsonConvert.DeserializeObject<Respond<Customer>>(content);
+                    return respond;
+                }
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public async Task<Respond<Customer>> GetPromotion(string customerId)
+        {
+            try
+            {
+                var response = await httpClient.GetFromJsonAsync<Respond<Customer>>($"/api/Customers/promotions/{customerId}");
+                return response;
             }
             catch
             {

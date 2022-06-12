@@ -41,6 +41,7 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
         builder.Entity<RecipeDetail>().HasKey(x => new {x.MaterialID, x.ProductID, x.SizeID });
         builder.Entity<SizeInProduct>().HasKey(x => new {x.ProductID, x.SizeID});
         builder.Entity<ToppingInProduct>().HasKey(x => new {x.ProductID, x.ToppingID});
+        builder.Entity<CustomerForPromotion>().HasKey(x => new {x.PromotionId, x.CustomerId});
         base.OnModelCreating(builder);
     }
     public DbSet<AppRole> AppRoles { get; set; }
@@ -71,4 +72,5 @@ public class APIContext : IdentityDbContext<AppUser, AppRole, string>
     public DbSet<Measure> Measures { get; set; }
     public DbSet<OrderToppingDetail> OrderToppingDetails { get; set; }
     public DbSet<UnitConversion> UnitConversions{ get; set; }
+    public DbSet<CustomerForPromotion> CustomerForPromotions { get; set; }
 }

@@ -20,8 +20,11 @@ public class Promotion
     public double ReduceAmount { get; set; }
     [Range(0, 1)]
     public double ReducePercent { get; set; }
+
+    public int PointExchange { get; set; } = 100;
     public int Status { get; set; }
     public string? Description { get; set; }
     public int Quantity { get; set; }
     public virtual ICollection<PromotionGift> PromotionGifts { get; set; }
+    public virtual ICollection<CustomerForPromotion> CustomerForPromotions { get; set; }
 }

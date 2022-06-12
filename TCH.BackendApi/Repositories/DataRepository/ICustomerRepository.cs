@@ -20,5 +20,7 @@ public interface ICustomerRepository
     Task<Respond<Bean>> GetMemberTypeByID(string id);
     Task<MessageResult> UpdateMemberType(string id, MemberTypeRequest request);
     Task<Respond<PagedList<Bean>>> GetAllMemberType(Search request);
+    Task<Respond<Customer>> ExchangePoint(string customerId, string promotionId);
+    Task<Respond<Customer>> GetPromotion(string customerId);
 
 }

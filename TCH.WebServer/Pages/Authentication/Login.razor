@@ -66,6 +66,10 @@
             {
                 navigationManager.NavigateTo("/admin-dashboard", forceLoad: true);
             }
+            else if (Roles.Contains(Permission.Customer))
+            {
+                navigationManager.NavigateTo("/customer-detail", forceLoad: true);
+            }
             else
             {
                 navigationManager.NavigateTo("/dashboard", forceLoad: true);
@@ -83,9 +87,13 @@
             var claims = authService.GetClaims();
             if (claims != null)
             {
-                if (claims.FirstOrDefault(x => x.Value == "Branch") != null)
+                if (claims.FirstOrDefault(x => x.Value == Permission.Branch) != null)
                 {
                     navigationManager.NavigateTo("/admin-dashboard", forceLoad: true);
+                }
+                else if (claims.FirstOrDefault(x => x.Value == Permission.Customer) != null)
+                {
+                    navigationManager.NavigateTo("/customer-detail", forceLoad: true);
                 }
                 else
                 {

@@ -34,6 +34,10 @@
             {
                 navigationManager.NavigateTo("/admin-dashboard", forceLoad: true);
             }
+            else if (Roles.Contains(Permission.Customer))
+            {
+                navigationManager.NavigateTo("/customer-detail", forceLoad: true);
+            }
             else
             {
                 navigationManager.NavigateTo("/dashboard", forceLoad: true);

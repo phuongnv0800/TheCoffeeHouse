@@ -30,7 +30,7 @@ builder.Services.AddDbContext<APIContext>(options =>
     }
     else
     {
-        options.UseSqlServer(config.GetConnectionString("Prod"));
+        options.UseSqlServer(config.GetConnectionString("Dev"));
     }
     
 });

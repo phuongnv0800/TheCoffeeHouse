@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TCH.BackendApi.EF;
 
@@ -12,10 +11,9 @@ using TCH.BackendApi.EF;
 namespace TCH.BackendApi.Migrations
 {
     [DbContext(typeof(APIContext))]
-    [Migration("20220610083241_updatestock")]
-    partial class updatestock
+    partial class APIContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -463,6 +461,34 @@ namespace TCH.BackendApi.Migrations
                     b.HasIndex("BeanID");
 
                     b.ToTable("Customers", (string)null);
+                });
+
+            modelBuilder.Entity("TCH.Data.Entities.CustomerForPromotion", b =>
+                {
+                    b.Property<string>("PromotionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Activate")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PromotionId", "CustomerId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CustomerForPromotions");
                 });
 
             modelBuilder.Entity("TCH.Data.Entities.HistoryPriceUpdate", b =>
@@ -937,6 +963,9 @@ namespace TCH.BackendApi.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<int>("PointExchange")
+                        .HasColumnType("int");
+
                     b.Property<int>("PromotionObject")
                         .HasColumnType("int");
 
@@ -1398,6 +1427,25 @@ namespace TCH.BackendApi.Migrations
                     b.Navigation("Bean");
                 });
 
+            modelBuilder.Entity("TCH.Data.Entities.CustomerForPromotion", b =>
+                {
+                    b.HasOne("TCH.Data.Entities.Customer", "Customer")
+                        .WithMany("CustomerForPromotions")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TCH.Data.Entities.Promotion", "Promotion")
+                        .WithMany("CustomerForPromotions")
+                        .HasForeignKey("PromotionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Promotion");
+                });
+
             modelBuilder.Entity("TCH.Data.Entities.HistoryPriceUpdate", b =>
                 {
                     b.HasOne("TCH.Data.Entities.Product", null)
@@ -1718,6 +1766,11 @@ namespace TCH.BackendApi.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("TCH.Data.Entities.Customer", b =>
+                {
+                    b.Navigation("CustomerForPromotions");
+                });
+
             modelBuilder.Entity("TCH.Data.Entities.Material", b =>
                 {
                     b.Navigation("RecipeDetails");
@@ -1773,6 +1826,8 @@ namespace TCH.BackendApi.Migrations
 
             modelBuilder.Entity("TCH.Data.Entities.Promotion", b =>
                 {
+                    b.Navigation("CustomerForPromotions");
+
                     b.Navigation("PromotionGifts");
                 });
 

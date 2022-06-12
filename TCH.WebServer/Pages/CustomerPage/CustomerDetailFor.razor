@@ -1,0 +1,326 @@
+@page "/customer-detail"
+@using TCH.WebServer.Services.Customers
+@using TCH.WebServer.Pages.POS.Customers
+@attribute [Authorize]
+@inject PageContainer Page
+@inject IToastService ToastService
+@inject ICustomerService CustomerService
+@inject IConfiguration Configuration
+<!--end::Header-->
+<!--begin::Content-->
+<div class="content d-flex flex-column flex-column-fluid mt-5" id="kt_content">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            @if (customer != null)
+            {
+                <div class="d-flex flex-column flex-xl-row">
+                    <!--begin::Sidebar-->
+                    <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
+                        <!--begin::Card-->
+                        <div class="card mb-5 mb-xl-8">
+                            <!--begin::Card body-->
+                            <div class="card-body pt-15">
+                                <!--begin::Summary-->
+                                <div class="d-flex flex-center flex-column mb-5">
+                                    <!--begin::Avatar-->
+                                    <div class="symbol symbol-100px symbol-circle mb-7">
+                                        <img src="assets/media/avatars/300-1.jpg" alt="image"/>
+                                    </div>
+                                    <!--end::Avatar-->
+                                    <!--begin::Name-->
+                                    <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bolder mb-1">@customer.FullName</a>
+                                    <!--end::Name-->
+                                    <!--begin::Position-->
+                                    <div class="fs-5 fw-bold text-muted mb-6">@Des</div>
+                                    <!--end::Position-->
+                                    <!--begin::Info-->
+                                    <div class="d-flex flex-wrap flex-center">
+                                        <!--begin::Stats-->
+                                        <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
+                                            <div class="fs-4 fw-bolder text-gray-700">
+                                                <span class="w-75px">6,900</span>
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                <span class="svg-icon svg-icon-3 svg-icon-success">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black"/>
+                                                        <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="black"/>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <div class="fw-bold text-muted">Earnings</div>
+                                        </div>
+                                        <!--end::Stats-->
+                                        <!--begin::Stats-->
+                                        <div class="border border-gray-300 border-dashed rounded py-3 px-3 mx-4 mb-3">
+                                            <div class="fs-4 fw-bolder text-gray-700">
+                                                <span class="w-50px">130</span>
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
+                                                <span class="svg-icon svg-icon-3 svg-icon-danger">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"/>
+                                                        <path d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z" fill="black"/>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <div class="fw-bold text-muted">Tasks</div>
+                                        </div>
+                                        <!--end::Stats-->
+                                        <!--begin::Stats-->
+                                        <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
+                                            <div class="fs-4 fw-bolder text-gray-700">
+                                                <span class="w-50px">500</span>
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                <span class="svg-icon svg-icon-3 svg-icon-success">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black"/>
+                                                        <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="black"/>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <div class="fw-bold text-muted">Hours</div>
+                                        </div>
+                                        <!--end::Stats-->
+                                    </div>
+                                    <!--end::Info-->
+                                </div>
+                                <!--end::Summary-->
+                                <!--begin::Details toggle-->
+                                <div class="d-flex flex-stack fs-4 py-3">
+                                    <div class="fw-bolder rotate collapsible" data-bs-toggle="collapse" href="#kt_customer_view_details" role="button" aria-expanded="false" aria-controls="kt_customer_view_details">
+                                        Chi tiết
+                                        <span class="ms-2 rotate-180">
+                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                                            <span class="svg-icon svg-icon-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                    </div>
+                                    <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit customer details">
+                                        <button class="btn btn-sm btn-light-primary" @onclick="OnEdit" data-bs-toggle="modal" data-bs-target="#kt_modal_update_customer">Cập nhật</button>
+                                    </span>
+                                </div>
+                                <!--end::Details toggle-->
+                                <div class="separator separator-dashed my-3"></div>
+                                <!--begin::Details content-->
+                                <div id="kt_customer_view_details" class="collapse show">
+                                    <div class="py-5 fs-6">
+                                        <!--begin::Badge-->
+                                        <div class="badge badge-light-info d-inline">@customer?.Bean?.Code</div>
+                                        <!--begin::Badge-->
+                                        <!--begin::Details item-->
+                                        <div class="fw-bolder mt-5">ID khách hàng</div>
+                                        <div class="text-gray-600">@customer.MemberID</div>
+                                        <!--begin::Details item-->
+                                        <!--begin::Details item-->
+                                        <div class="fw-bolder mt-5">Email</div>
+                                        <div class="text-gray-600">
+                                            <a href="#" class="text-gray-600 text-hover-primary">@customer.Email</a>
+                                        </div>
+                                        <!--begin::Details item-->
+                                        <!--begin::Details item-->
+                                        <div class="fw-bolder mt-5">Địa chỉ</div>
+                                        <div class="text-gray-600">
+                                            @customer.Address
+                                            <br/>Hải Phòng
+                                            <br/>Việt Nam
+                                        </div>
+                                        <div class="fw-bolder mt-5">Số điện thoại</div>
+                                        <div class="text-gray-600">@customer.Phone</div>
+                                        <div class="fw-bolder mt-5">Ngày sinh nhật</div>
+                                        <div class="text-gray-600">@customer.DateOfBirth.ToShortDateString()</div>
+                                        <div class="fw-bolder mt-5">Số điểm tích luỹ</div>
+                                        <div class="text-gray-600">@customer.Point</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-lg-row-fluid ms-lg-15">
+                        <div class="card pt-4 mb-6 mb-xl-9">
+                            <div class="card-header border-0">
+                                <div class="card-title">
+                                    <h2>Danh sách voucher hiện có</h2>
+                                </div>
+                                <div class="card-toolbar">
+                                    <button @onclick="OnExchange" type="button" class="btn btn-sm btn-flex btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="black"/>
+                                                <rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="black"/>
+                                                <rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="black"/>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->Quy đổi voucher
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0 pb-5">
+                                <table class="table align-middle table-row-dashed gy-5" id="kt_table_customers_payment">
+                                    <thead class="border-bottom border-gray-200 fs-7 fw-bolder">
+                                    <tr class="text-start text-muted text-uppercase gs-0">
+                                        <th class="min-w-100px">Voucher No.</th>
+                                        <th>Trạng thái</th>
+                                        <th>Ngày bắt đầu</th>
+                                        <th class="min-w-100px">Ngày kết thúc</th>
+                                        <th class="text-end min-w-100px pe-4">Thao tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="fs-6 fw-bold text-gray-600">
+                                    @if (customer.CustomerForPromotions != null)
+                                    {
+                                        @foreach (var item in customer.CustomerForPromotions)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a class="text-gray-600 text-hover-primary mb-1">@item.Code</a>
+                                                </td>
+                                                <td>
+                                                    <span class="badge badge-light-success">@(item.Activate == true ? "Hoạt động" : "Dừng")</span>
+                                                </td>
+                                                <td>@item.StartDate.ToLongDateString()</td>
+                                                <td>@item.EndDate.ToLongDateString()</td>
+                                                <td class="pe-0 text-end">
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <Loading></Loading>
+            }
+        </div>
+    </div>
+</div>
+<div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+    <!--begin::Container-->
+    <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+        <!--begin::Copyright-->
+        <div class="text-dark order-2 order-md-1">
+            <span class="text-muted fw-bold me-1">2022©</span>
+            <a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">The Coffee House</a>
+        </div>
+        <!--end::Copyright-->
+        <!--begin::Menu-->
+        <ul class="menu menu-gray-600 menu-hover-primary fw-bold border-1">
+            <li class="menu-item">
+                <a href="/" target="_blank" class="menu-link px-2">Về chúng tôi</a>
+            </li>
+            <li class="menu-item">
+                <a href="/" target="_blank" class="menu-link px-2">Hỗ trợ</a>
+            </li>
+            <li class="menu-item">
+                <a href="/" target="_blank" class="menu-link px-2">Mua</a>
+            </li>
+        </ul>
+        <!--end::Menu-->
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Footer-->
+
+@code {
+
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
+
+    public Customer customer { get; set; } = new();
+    public string Name { get; set; }
+    public List<string> Roles { get; set; } = new();
+    public string Des { get; set; }
+    public string customerId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Page.Config("Thông tin chi tiết");
+        var authState = await AuthenticationState;
+        Roles = new();
+        if (authState.User.Identity.IsAuthenticated)
+        {
+            customerId = authState.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
+            Name = authState.User.FindFirst(x => x.Type == ClaimTypes.GivenName)!.Value;
+            Roles = authState.User.FindAll(x => x.Type == ClaimTypes.Role).Select(x => x.Value).ToList();
+            if (Roles.Contains(Permission.Branch))
+            {
+                Des = "Quản lý chuỗi cửa hàng";
+            }
+            else if (Roles.Contains(Permission.Manage))
+            {
+                Des = "Quản lý cửa hàng";
+            }
+            else if (Roles.Contains(Permission.Staff))
+            {
+                Des = "Nhân viên";
+            }
+            else if (Roles.Contains(Permission.Customer))
+            {
+                Des = "Khách hàng";
+            }
+            var respond = await CustomerService.GetPromotion(customerId);
+            if (respond.Result == 1)
+            {
+                customer = respond.Data;
+            }
+        }
+    }
+
+    private async Task OnEdit()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(AddCustomer.Title), "Cập nhật thông tin khách hàng thành viên");
+        parameters.Add(nameof(AddCustomer.CustomerId), customerId);
+
+        var modal = Modal.Show<AddCustomer>(string.Empty, parameters, options: new ModalOptions
+        {
+            UseCustomLayout = true
+        });
+
+        var result = await modal.Result;
+        var respond = await CustomerService.GetPromotion(customerId);
+        if (respond.Result == 1)
+        {
+            customer = respond.Data;
+        }
+    }
+
+    private async Task OnExchange()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(ExchangeVoucherModal.Title), "Đổi mã giảm giá");
+        parameters.Add(nameof(ExchangeVoucherModal.CustomerId), customerId);
+
+        var modal = Modal.Show<ExchangeVoucherModal>(string.Empty, parameters, options: new ModalOptions
+        {
+            UseCustomLayout = true
+        });
+
+        var result = await modal.Result;
+        if (result.Data == (object) true)
+        {
+            var respond = await CustomerService.GetPromotion(customerId);
+            if (respond.Result == 1)
+            {
+                customer = respond.Data;
+            }
+        }
+    }
+
+}
