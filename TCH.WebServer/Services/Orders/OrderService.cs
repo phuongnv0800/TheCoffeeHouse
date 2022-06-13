@@ -5,10 +5,12 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Text;
 using System.Globalization;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.WebUtilities;
+using TCH.Utilities.Searchs;
 using TCH.Utilities.SubModels;
 using TCH.ViewModel.RequestModel;
 using TCH.ViewModel.SubModels;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace TCH.WebServer.Services.Orders
 {
@@ -19,6 +21,9 @@ namespace TCH.WebServer.Services.Orders
 
         Task<ResponseLogin<PagedList<Order>>> GetAllOrdersInBranch(bool IsPaging, int pageSize, int pageNumber,
             string BranchId, string id, DateTime? FromDate, DateTime? ToDate);
+
+        Task<Respond<PagedList<Order>>> GetOrderByUser(bool IsPaging, int pageSize, int pageNumber,
+            string BranchId, string userId, DateTime? FromDate, DateTime? ToDate);
 
         Task<ResponseLogin<Order>> AddOrder(OrderRequest branch);
         Task<ResponseLogin<Order>> GetOrderById(string id);
@@ -42,13 +47,43 @@ namespace TCH.WebServer.Services.Orders
         Task<Respond<MoneyByDay>> GetChartMoneyByBranchId(string BranchId, DateTime? FromDate, DateTime? ToDate);
     }
 
-    public class OrderService : IOrderService
+    public class OrderService : BaseApiClient, IOrderService
     {
         private readonly HttpClient httpClient;
+        private readonly ILocalStorageService localStorage;
 
-        public OrderService(HttpClient httpClient)
+        public OrderService(HttpClient httpClient, ILocalStorageService localStorage)
+            : base(httpClient, localStorage)
         {
             this.httpClient = httpClient;
+            this.localStorage = localStorage;
+        }
+
+        public async Task<Respond<PagedList<Order>>> GetOrderByUser(bool IsPaging, int pageSize, int pageNumber,
+            string BranchId, string userId, DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                var token = await localStorage.GetItemAsync<string>("authToken");
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetFromJsonAsync<Respond<PagedList<Order>>>($"/api/Orders/user/{userId}?IsPging=" 
+                    + IsPaging
+                    + "&PageNumber=" + pageNumber + "&PageSize=" + pageSize + fromDate + toDate);
+                return response;
+            }
+            catch (Exception e)
+            {
+                return new Respond<PagedList<Order>>()
+                {
+                    Data = null,
+                    Result = 0,
+                    Message = "",
+                };
+            }
         }
 
         public async Task<ResponseLogin<Order>> AddOrder(OrderRequest order)
@@ -66,9 +101,10 @@ namespace TCH.WebServer.Services.Orders
                     ResponseLogin<Order> respond = JsonConvert.DeserializeObject<ResponseLogin<Order>>(content);
                     return respond;
                 }
+
                 return null;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw;
             }
@@ -107,8 +143,8 @@ namespace TCH.WebServer.Services.Orders
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.GetDateTimeFormats()[0] : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.GetDateTimeFormats()[0] : "";
                 var response =
-                    await httpClient.GetFromJsonAsync<Respond<MoneyByDay>>($"/api/Orders/get-revenue?" + fromDate +
-                                                                           toDate);
+                    await httpClient.GetFromJsonAsync<Respond<MoneyByDay>>($"/api/Orders/get-revenue?"
+                                                                           + fromDate + toDate);
                 return response;
             }
             catch (Exception e)
@@ -128,8 +164,7 @@ namespace TCH.WebServer.Services.Orders
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.GetDateTimeFormats()[0] : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.GetDateTimeFormats()[0] : "";
                 var response = await httpClient.GetFromJsonAsync<Respond<MoneyByDay>>(
-                    $"/api/Orders/get-revenue-branch/{BranchId}?" + fromDate
-                                                                  + toDate);
+                    $"/api/Orders/get-revenue-branch/{BranchId}?" + fromDate + toDate);
                 return response;
             }
             catch

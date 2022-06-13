@@ -16,7 +16,7 @@ namespace TCH.WebServer.Services.Promotions
         Task<ResponseLogin<PagedList<Promotion>>> GetAllPromotions(bool IsPaging, int pageSize, int pageNumber);
         Task<ResponseLogin<Promotion>> AddPromotion(PromotionRequest Promotion);
         Task<ResponseLogin<Promotion>> GetPromotionById(string id);
-        Task<Respond<dynamic>> GetReduceMoney(string code, List<OrderItem> orderItems);
+        Task<Respond<ReducePromotionVm>> GetReduceMoney(string code, List<OrderItem> orderItems);
         Task<ResponseLogin<Promotion>> Update(PromotionRequest Promotion);
         Task DeletePromotion(string id);
     }
@@ -133,7 +133,7 @@ namespace TCH.WebServer.Services.Promotions
             }
         }
 
-        public async Task<Respond<dynamic>> GetReduceMoney(string code, List<OrderItem> orderItems)
+        public async Task<Respond<ReducePromotionVm>> GetReduceMoney(string code, List<OrderItem> orderItems)
         {
             try
             {
@@ -145,13 +145,13 @@ namespace TCH.WebServer.Services.Promotions
                 {
                     //var body = await response.Content.ReadAsStringAsync();
                     //return JsonSerializer.Deserialize<MessageResult>(body);
-                    var body = await response.Content.ReadFromJsonAsync<Respond<dynamic>>();
+                    var body = await response.Content.ReadFromJsonAsync<Respond<ReducePromotionVm>>();
                     return body;
                 }
 
-                return new Respond<object>()
+                return new Respond<ReducePromotionVm>()
                 {
-                    Data = new
+                    Data = new ()
                     {
                         ReducePromotion = 0,
                     },
@@ -161,9 +161,9 @@ namespace TCH.WebServer.Services.Promotions
             }
             catch (Exception e)
             {
-                return new Respond<object>()
+                return new Respond<ReducePromotionVm>()
                 {
-                    Data = new
+                    Data = new()
                     {
                         ReducePromotion = 0,
                     },

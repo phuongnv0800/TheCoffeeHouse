@@ -193,14 +193,15 @@ public class OrderManager : IOrderRepository, IDisposable
                 });
             }
         }
+
         //trừ nguyên liệu trong kho
         var data = new List<MassMaterial>();
         foreach (var item in orderDetails)
         {
             var recipes = await _context
                 .RecipeDetails
-                .Where(x => 
-                    x.ProductID == item.ProductID 
+                .Where(x =>
+                    x.ProductID == item.ProductID
                     && x.SizeID == item.SizeID)
                 .ToListAsync();
             if (recipes != null)
@@ -231,9 +232,9 @@ public class OrderManager : IOrderRepository, IDisposable
                     stockMaterial.Mass = stockMaterial.StandardMass / stockMaterial.Measure.ConversionFactor;
                     _context.StockMaterials.Update(stockMaterial);
                 }
-                
             }
         }
+
         _context.OrderDetails.AddRange(orderDetails);
         await _context.SaveChangesAsync();
         return new Respond<object>
@@ -545,29 +546,28 @@ public class OrderManager : IOrderRepository, IDisposable
 
     public async Task<Respond<PagedList<Order>>> GetByBranhID(string branhID, Search request)
     {
-        //var query = from c in _context.Orders where c.BranchID == branhID select c;
-        var result = await _context
+        var result = _context
             .Orders
             .Include(x => x.OrderDetails)
             .ThenInclude(e => e.OrderToppingDetails)
-            .Where(x => x.BranchID == branhID)
-            .ToListAsync();
+            .Where(x => x.BranchID == branhID);
         if (!string.IsNullOrEmpty(request.Name))
-            result = result.Where(x => x.Code.Contains(request.Name)).ToList();
+            result = result.Where(x => x.Code.Contains(request.Name));
         if (request.StartDate != null && request.EndDate != null)
             result = result.Where(x =>
-                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date &&
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date);
         //paging
-        int totalRow = result.Count();
-        var data = new List<Order>();
+        int totalRow = await result.CountAsync();
+        List<Order> data;
         if (request.IsPging)
         {
-            data = result
+            data = await result
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         }
         else
-            data = result.ToList();
+            data = await result.ToListAsync();
 
         var pagedResult = new PagedList<Order>
         {
@@ -585,30 +585,30 @@ public class OrderManager : IOrderRepository, IDisposable
         };
     }
 
-    public async Task<Respond<PagedList<Order>>> GetByUser(string userID, Search request)
+    public async Task<Respond<PagedList<Order>>> GetByUser(string userId, Search request)
     {
-        var result = await _context
+        var result = _context
             .Orders
             .Include(x => x.OrderDetails)
             .ThenInclude(e => e.OrderToppingDetails)
-            .Where(x => x.UserCreateID == userID)
-            .ToListAsync();
+            .Where(x => x.UserCreateID == userId);
         if (!string.IsNullOrEmpty(request.Name))
-            result = result.Where(x => x.Code.Contains(request.Name)).ToList();
+            result = result.Where(x => x.Code.Contains(request.Name));
         if (request.StartDate != null && request.EndDate != null)
             result = result.Where(x =>
-                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date &&
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date);
         //paging
-        int totalRow = result.Count();
-        var data = new List<Order>();
+        int totalRow = await result.CountAsync();
+        List<Order> data;
         if (request.IsPging)
         {
-            data = result
+            data = await result
                 .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+                .Take(request.PageSize).ToListAsync();
         }
         else
-            data = result.ToList();
+            data = await result.ToListAsync();
 
         var pagedResult = new PagedList<Order>
         {
@@ -628,19 +628,20 @@ public class OrderManager : IOrderRepository, IDisposable
 
     public async Task<Respond<PagedList<Order>>> GetAll(Search request)
     {
-        var result = await _context
+        var result = _context
             .Orders
             .Include(x => x.OrderDetails)
             .ThenInclude(e => e.OrderToppingDetails)
-            .ToListAsync();
+            .AsQueryable();
         if (!string.IsNullOrEmpty(request.Name))
-            result = result.Where(x => x.Code.Contains(request.Name)).ToList();
+            result = result.Where(x => x.Code.Contains(request.Name));
         if (request.StartDate != null && request.EndDate != null)
             result = result.Where(x =>
-                x.CreateDate.Date <= request.EndDate?.Date && x.CreateDate.Date >= request.StartDate?.Date).ToList();
+                request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date &&
+                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date);
         //paging
-        int totalRow = result.Count();
-        var data = new List<Order>();
+        int totalRow = await result.CountAsync();
+        List<Order> data;
         if (request.IsPging)
         {
             data = result.Skip((request.PageNumber - 1) * request.PageSize)
@@ -667,28 +668,28 @@ public class OrderManager : IOrderRepository, IDisposable
 
     public async Task<string> ExcelAllOrder(Search request)
     {
-        var result = await _context
+        var result = _context
             .Orders
             .Include(x => x.Branch)
             .OrderBy(x => x.CreateDate)
-            .ToListAsync();
+            .AsQueryable();
         if (!string.IsNullOrEmpty(request.Name))
-            result = result.Where(x => x.Code.Contains(request.Name)).ToList();
+            result = result.Where(x => x.Code.Contains(request.Name));
         if (request.StartDate != null && request.EndDate != null)
             result = result
-                .Where(x => x.CreateDate.Date <= request.EndDate?.Date
-                            && x.CreateDate.Date >= request.StartDate?.Date)
-                .ToList();
+                    .Where(x => request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date &&
+                                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date)
+                ;
         //paging
         int totalRow = result.Count();
-        var data = new List<Order>();
+        List<Order> data;
         if (request.IsPging)
         {
-            data = result.Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToList();
+            data =await result.Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToListAsync();
         }
         else
-            data = result.ToList();
+            data =await result.ToListAsync();
 
         CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); // try with "en-US"
         string a = double.Parse("12345").ToString("#,###", cul.NumberFormat);

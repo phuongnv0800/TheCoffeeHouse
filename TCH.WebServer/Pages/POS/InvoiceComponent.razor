@@ -148,7 +148,7 @@
                                 <div class="mb-5">
                                     <InputText @bind-Value="codeF" type="text" class="form-control form-control-solid" placeholder="Mã giảm giá (nếu có)"></InputText>
                                 </div>
-                            <button class="btn-success" onclick="@PickCode">Nạp mã giảm giá</button>
+                                <button class="btn-success" onclick="@PickCode">Nạp mã giảm giá</button>
                             </EditForm>
                         }
                         <div class="mb-5">
@@ -290,13 +290,14 @@
 
     public async Task PickCode()
     {
-        // var result = await promotionService.GetReduceMoney(codeF, order.OrderItems);
-        // reduce = Convert.ToDouble(result.Data?.ReducePromotion);
-        reduce = 6000;
+        var result = await promotionService.GetReduceMoney(codeF, order.OrderItems);
+        reduce = result.Data.ReducePromotion;
+        // reduce = 6000;
         order.ReducePromotion = reduce;
         order.TotalAmount -= reduce;
         StateHasChanged();
     }
+
     public async Task OnSubmit()
     {
         if (!string.IsNullOrEmpty(phone))
@@ -328,7 +329,7 @@
             }
             else
             {
-                toastService.ShowSuccess(response.Message);
+                toastService.ShowWarning(response.Message);
             }
         }
         else

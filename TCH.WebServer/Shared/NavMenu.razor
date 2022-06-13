@@ -84,6 +84,17 @@
     <NavItem Title="Danh sách phiếu thanh lý" Link="/reports-liquid">
         <i class="las la-expand-arrows-alt"></i>
     </NavItem>
+
+    <NavItem Title="Danh sách hoá đơn bán hàng của tài khoản" Link="/order-in-user">
+        <span class="svg-icon svg-icon-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="9" height="9" rx="2" fill="black"/>
+                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black"/>
+                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black"/>
+                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black"/>
+            </svg>
+        </span>
+    </NavItem>
 }
 else if (Roles.Contains(Permission.Manage))
 {
@@ -231,8 +242,19 @@ else if (Roles.Contains(Permission.Manage))
             </svg>
         </span>
     </NavItem>
+
+    <NavItem Title="Danh sách hoá đơn bán hàng của tài khoản" Link="/order-in-user">
+        <span class="svg-icon svg-icon-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="9" height="9" rx="2" fill="black"/>
+                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black"/>
+                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black"/>
+                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black"/>
+            </svg>
+        </span>
+    </NavItem>
 }
-else  if (Roles.Contains(Permission.Staff))
+else if (Roles.Contains(Permission.Staff))
 {
     <NavItem Title="TRANG CHỦ" Link="/dashboard">
         <span class="svg-icon svg-icon-2">
@@ -255,8 +277,18 @@ else  if (Roles.Contains(Permission.Staff))
             </svg>
         </span>
     </NavItem>
+    <NavItem Title="Danh sách hoá đơn bán hàng của tài khoản" Link="/order-in-user">
+        <span class="svg-icon svg-icon-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="9" height="9" rx="2" fill="black"/>
+                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black"/>
+                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black"/>
+                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black"/>
+            </svg>
+        </span>
+    </NavItem>
 }
-else  if (Roles.Contains(Permission.Customer))
+else if (Roles.Contains(Permission.Customer))
 {
     <NavItem Title="TRANG CHỦ" Link="/customer-detail">
         <span class="svg-icon svg-icon-2">
