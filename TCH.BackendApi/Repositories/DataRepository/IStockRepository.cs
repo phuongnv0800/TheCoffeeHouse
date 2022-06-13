@@ -15,4 +15,5 @@ public interface IStockRepository
     Task<MessageResult> UpdateStockMaterial(string Id, StockRequest request);
     Task<Respond<PagedList<StockVm>>> GetAllStockExpireByBranchID(string branchID, Search request);
     Task<Respond<PagedList<StockVm>>> GetAllStockExpire(Search request);
+    Task<MessageResult> NotificationMaterialInStock(string branchId);
 }

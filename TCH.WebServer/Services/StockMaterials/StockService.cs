@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System.Globalization;
 using System.Net.Http.Headers;
+using Blazored.LocalStorage;
 using TCH.Data.Entities;
 using TCH.Utilities.Paginations;
+using TCH.Utilities.SubModels;
 using TCH.ViewModel.SubModels;
 using TCH.WebServer.Models;
 
@@ -14,12 +16,14 @@ namespace TCH.WebServer.Services.StockMaterials
         Task<ResponseLogin<PagedList<StockVm>>> GetAllStockExpire(bool IsPaging, int pageSize, int pageNumber, string name, DateTime? FromDate, DateTime? ToDate);
         Task<ResponseLogin<PagedList<StockVm>>> GetAllStockExpireInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, string name, DateTime? FromDate, DateTime? ToDate);
         Task DeleteAStockMaterial(string id);
+        Task<MessageResult> NotificationMaterialInStock(string branchId);
     }
-    public class StockService : IStockService
+    public class StockService :BaseApiClient, IStockService
     {
         private readonly HttpClient httpClient;
 
-        public StockService(HttpClient httpClient)
+        public StockService(HttpClient httpClient, ILocalStorageService localStorageService)
+            : base(httpClient, localStorageService)
         {
             this.httpClient = httpClient;
         }
@@ -44,6 +48,11 @@ namespace TCH.WebServer.Services.StockMaterials
             {
                 throw;
             }
+        }
+
+        public async Task<MessageResult> NotificationMaterialInStock(string branchId)
+        {
+            return await GetFromJsonAsync<MessageResult>($"/api/Stocks/notify/{branchId}");
         }
 
         public async Task<ResponseLogin<PagedList<StockVm>>> GetAllStockExpire(bool IsPaging, int pageSize, int pageNumber, string name, DateTime? FromDate, DateTime? ToDate)

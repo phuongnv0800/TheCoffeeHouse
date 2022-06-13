@@ -94,8 +94,13 @@
                 <div id="kt_customer_view_details" class="collapse show">
                     <div class="py-5 fs-6">
                         <div class="badge badge-light-info d-inline">@User.UserName</div>
-                        <div class="fw-bolder mt-5">ID khách hàng</div>
-                        <div class="text-gray-600">@User.Status</div>
+                        <div class="fw-bolder mt-5">Trạng thái tài khoản</div>
+                        <div class="text-gray-600">
+                            <div class="d-flex align-items-center">
+                                <span class="bullet bullet-dot @(User.Status == Status.Deactivate ? "bg-danger" : "bg-success") me-2"></span>
+                                <span class="fs-7 fw-bold @(User.Status == Status.Deactivate ? "text-danger" : "text-success")">@(User.Status == Status.Deactivate ? "Khóa" : "Hoạt động")</span>
+                            </div>
+                        </div>
                         <div class="fw-bolder mt-5">Email</div>
                         <div class="text-gray-600">
                             <a href="#" class="text-gray-600 text-hover-primary">@User.Email</a>
