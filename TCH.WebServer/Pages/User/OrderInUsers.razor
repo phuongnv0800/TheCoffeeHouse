@@ -1,0 +1,472 @@
+﻿@page "/order-in-user"
+@page "/order-in-user/{userId}"
+@inject IOrderService orderService;
+@inject IUserService userServices;
+@inject IUserApiClient UserApiClient;
+@inject NavigationManager navigationManager;
+@inject IToastService toastService;
+@inject IJSRuntime jsRuntime;
+@attribute [Authorize]
+
+<div class="content d-flex flex-column flex-column-fluid mt-5" id="kt_content">
+<div class="post d-flex flex-column-fluid" id="kt_post">
+<div id="kt_content_container" class="container-xxl">
+@if (User != null)
+{
+    <div class="d-flex flex-column flex-xl-row">
+    <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
+        <div class="card mb-5 mb-xl-8">
+            <div class="card-body pt-15">
+                <div class="d-flex flex-center flex-column mb-5">
+                    <div class="symbol symbol-100px symbol-circle mb-7">
+                        <img src="assets/media/avatars/300-1.jpg" alt="image"/>
+                    </div>
+                    <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bolder mb-1">@User.FirstName @User.LastName</a>
+                    <div class="d-flex flex-wrap flex-center">
+                        <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
+                            <div class="fs-4 fw-bolder text-gray-700">
+                                <span class="w-75px">@ProductsList?.Count</span>
+                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                <span class="svg-icon svg-icon-3 svg-icon-success">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black"/>
+                                        <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="black"/>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                            <div class="fw-bold text-muted">Đơn hàng</div>
+                        </div>
+                        <!--end::Stats-->
+                        <!--begin::Stats-->
+                        <div class="border border-gray-300 border-dashed rounded py-3 px-3 mx-4 mb-3">
+                            <div class="fs-4 fw-bolder text-gray-700">
+                                <span class="w-50px">130</span>
+                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
+                                <span class="svg-icon svg-icon-3 svg-icon-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect opacity="0.5" x="11" y="18" width="13" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"/>
+                                        <path d="M11.4343 15.4343L7.25 11.25C6.83579 10.8358 6.16421 10.8358 5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75L11.2929 18.2929C11.6834 18.6834 12.3166 18.6834 12.7071 18.2929L18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25C17.8358 10.8358 17.1642 10.8358 16.75 11.25L12.5657 15.4343C12.2533 15.7467 11.7467 15.7467 11.4343 15.4343Z" fill="black"/>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                            <div class="fw-bold text-muted">Nhiệm vụ</div>
+                        </div>
+                        <!--end::Stats-->
+                        <!--begin::Stats-->
+                        <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
+                            <div class="fs-4 fw-bolder text-gray-700">
+                                <span class="w-50px">500</span>
+                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                <span class="svg-icon svg-icon-3 svg-icon-success">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black"/>
+                                        <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="black"/>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                            <div class="fw-bold text-muted">Thời gian</div>
+                        </div>
+                        <!--end::Stats-->
+                    </div>
+                </div>
+                <div class="d-flex flex-stack fs-4 py-3">
+                    <div class="fw-bolder rotate collapsible" data-bs-toggle="collapse" href="#kt_customer_view_details" role="button" aria-expanded="false" aria-controls="kt_customer_view_details">
+                        Chi tiết
+                        <span class="ms-2 rotate-180">
+                            <span class="svg-icon svg-icon-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </span>
+                    </div>
+                    <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit customer details">
+                        <button class="btn btn-sm btn-light-primary" @onclick="OnEdit" data-bs-toggle="modal" data-bs-target="#kt_modal_update_customer">Cập nhật</button>
+                    </span>
+                </div>
+                <!--end::Details toggle-->
+                <div class="separator separator-dashed my-3"></div>
+                <!--begin::Details content-->
+                <div id="kt_customer_view_details" class="collapse show">
+                    <div class="py-5 fs-6">
+                        <div class="badge badge-light-info d-inline">@User.UserName</div>
+                        <div class="fw-bolder mt-5">ID khách hàng</div>
+                        <div class="text-gray-600">@User.Status</div>
+                        <div class="fw-bolder mt-5">Email</div>
+                        <div class="text-gray-600">
+                            <a href="#" class="text-gray-600 text-hover-primary">@User.Email</a>
+                        </div>
+                        <div class="fw-bolder mt-5">Giới tính</div>
+                        <div class="text-gray-600">@(User.Gender == Gender.Female ? "Nữ" : "Nam")</div>
+                        <div class="fw-bolder mt-5">Địa chỉ</div>
+                        <div class="text-gray-600">
+                            @User.Address
+                            <br/>Hải Phòng
+                            <br/>Việt Nam
+                        </div>
+                        <div class="fw-bolder mt-5">Số điện thoại</div>
+                        <div class="text-gray-600">@User.PhoneNumber</div>
+                        <div class="fw-bolder mt-5">Ngày sinh nhật</div>
+                        <div class="text-gray-600">@User.DateOfBirth.ToShortDateString()</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-lg-row-fluid ms-lg-15">
+        <div class="card card-flush ">
+            <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                <div class="card-title">
+                    <div class="d-flex align-items-center position-relative my-1">
+                        <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                            </svg>
+                        </span>
+                        @if (dateRequest != null)
+                        {
+                            <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
+                                <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu"/>
+                                <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith"/>
+                                <button onclick="@(() => SearchByText())"
+                                        class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tìm kiếm
+                                </button>
+                            </EditForm>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="card-body pt-0">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card-body pt-0">
+                            <RadzenChart>
+                                <RadzenLineSeries Smooth="true" Data="@ChartOrders" CategoryProperty="CreateDate" Title="Doanh thu theo cửa hàng" ValueProperty="TotalAmount">
+                                    <RadzenMarkers MarkerType="MarkerType.Square"/>
+                                </RadzenLineSeries>
+
+                                <RadzenCategoryAxis Padding="20" FormatString="{0:dd/MM/yyyy}"/>
+                                <RadzenValueA98-xis>
+                                    @*<RadzenGridLines Visible="true" />*@
+                                    <RadzenAxisTitle Text="Tổng doanh thu"/>
+                                </RadzenValueA98-xis>
+                            </RadzenChart>
+                            <div class="text-end d-flex mt-5">
+                                <h1>Tổng doanh thu: </h1>
+                                <h1 class="text-primary ms-2">@(Sum == 0 ? "0 vnđ" : String.Format("{0:0,0 vnđ}", Sum))</h1>
+                                <button class="btn btn-success ms-5" onclick="@(() => ExportExcel())">Xuất Excel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="table-responsive">
+                                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
+                                    <thead>
+                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                        <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1">
+                                            <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                                <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
+                                            </div>
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1">
+                                            Code
+                                        </th>
+                                        <th class=" sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1">
+                                            Bàn phục vụ
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1">
+                                            Kiểu hoá đơn
+                                        </th>
+                                        <th class=" sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1">
+                                            Thời gian tạo
+                                        </th>
+                                        <th class=" sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1">
+                                            Tổng tiền
+                                        </th>
+                                        <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions">
+                                            Thao tác
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="fw-bold text-gray-600">
+                                    @if (ProductsList != null)
+                                    {
+                                        foreach (var product in ProductsList)
+                                        {
+                                            string href = "/orders/" + product.ID;
+                                            <tr class="odd">
+                                                <td>
+                                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                        <input class="form-check-input" type="checkbox" value="1">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ms-5">
+                                                            <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                @product.Code
+                                                            </a>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.Cashier</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ms-5">
+                                                            <div class="text-muted fs-7 fw-bolder">@product.TableNum</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ms-5">
+                                                            <div class="text-muted fs-7 fw-bolder">@(product.OrderType == OrderType.InPlace ? "Tại cửa hàng" : product.OrderType == OrderType.TakeAway ? "Mang đi" : "Ship")</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ms-5">
+                                                            <div class="text-muted fs-7 fw-bolder">@product.CreateDate.ToShortDateString()</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="ms-5">
+                                                            <div class="text-muted fs-7 fw-bolder">@String.Format("{0:0,0 vnđ}", product.TotalAmount)</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-end">
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            Thao tác
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                            <li>
+                                                                <a class="dropdown-item" onclick="@(() => Delete(@product.ID.ToString()))">Xóa</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <Spinner Colspan="8"></Spinner>
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-1 d-flex align-items-center justify-content-center justify-content-md-start">
+                                    <div class="dataTables_length" id="kt_ecommerce_category_table_length">
+                                        <label>
+                                            <EditForm Model="pagination">
+                                                <InputSelect @bind-Value="pagination.pageSize" name="kt_ecommerce_category_table_length" aria-controls="kt_ecommerce_category_table" class="form-select form-select-sm form-select-solid">
+                                                    <option value="10">10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </InputSelect>
+                                            </EditForm>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-11 d-flex align-items-center justify-content-center justify-content-md-end">
+                                    <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
+                                        <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+}
+else
+{
+    <Loading></Loading>
+}
+</div>
+</div>
+</div>
+<div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+    <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+        <div class="text-dark order-2 order-md-1">
+            <span class="text-muted fw-bold me-1">2022©</span>
+            <a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">The Coffee House</a>
+        </div>
+        <ul class="menu menu-gray-600 menu-hover-primary fw-bold border-1">
+            <li class="menu-item">
+                <a href="/" target="_blank" class="menu-link px-2">Về chúng tôi</a>
+            </li>
+            <li class="menu-item">
+                <a href="/" target="_blank" class="menu-link px-2">Hỗ trợ</a>
+            </li>
+            <li class="menu-item">
+                <a href="/" target="_blank" class="menu-link px-2">Mua</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+@code {
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
+
+    public string BranchId { get; set; }
+
+    [Parameter]
+    public string UserId { get; set; }
+
+    public List<Order>? ProductsList = new();
+    public List<Order>? ChartOrders = new();
+    private Models.Pagination.Pagination pagination = new();
+    private DateRequest dateRequest;
+    private double Sum;
+    public AppUser User { get; set; }
+
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationState;
+
+        if (authState.User.Identity!.IsAuthenticated)
+        {
+            if (string.IsNullOrWhiteSpace(UserId))
+            {
+                BranchId = authState.User.FindFirst(x => x.Type == ClaimValue.BranhID)!.Value;
+                UserId = authState.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
+            }
+            var res = await UserApiClient.GetById(UserId);
+            User = res.Data;
+        }
+        try
+        {
+            dateRequest = new DateRequest()
+            {
+                FromDate = new DateTime(2022, 06, 01),
+                ToDate = DateTime.Now
+            };
+            await Get(1);
+            await GetChart();
+        }
+        catch (Exception e)
+        {
+            toastService.ShowError("có lỗi");
+        }
+    }
+
+    private async Task OnEdit()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(UserCreate.Title), "Cập nhật tài khoản");
+        parameters.Add(nameof(UserCreate.UserId), UserId);
+
+        var modal = Modal.Show<UserCreate>(string.Empty, parameters, options: new ModalOptions
+        {
+            UseCustomLayout = true
+        });
+
+        var result = await modal.Result;
+
+        if (!result.Cancelled)
+        {
+            await Get(1);
+            await GetChart();
+        }
+    }
+
+    public async Task Get(int pageNumber)
+    {
+        try
+        {
+            var response = await orderService.GetOrderByUser(true, pagination.pageSize, pageNumber, BranchId, UserId, dateRequest.FromDate, dateRequest.ToDate);
+            pagination.PageNumber = response.Data.CurrentPage;
+            ProductsList = response.Data.Items.ToList();
+            pagination.totalPage = response.Data.TotalPages;
+        }
+        catch (Exception e)
+        {
+            toastService.ShowError("có lỗi");
+        }
+    }
+
+    public async Task GetChart()
+    {
+        try
+        {
+            var response = await orderService.GetOrderByUser(false, pagination.pageSize, 1, BranchId, UserId, dateRequest.FromDate, dateRequest.ToDate);
+            if (response.Result == 1)
+            {
+                ChartOrders = response.Data.Items.ToList();
+                Sum = response.Data.Items.Sum(x => x.TotalAmount);
+            }
+        }
+        catch (Exception ex)
+        {
+            toastService.ShowError(ex.ToString());
+        }
+    }
+
+    public async void Delete(string id)
+    {
+        await orderService.DeleteOrder(id);
+    }
+
+    public async void Change(int link)
+    {
+        pagination.PageNumber = link;
+        await Get(link);
+        StateHasChanged();
+    }
+
+    public async Task SearchByText()
+    {
+        await Get(pagination.PageNumber);
+
+        await GetChart();
+    }
+
+    public async Task ExportExcel()
+    {
+        try
+        {
+            var fileName = $"OrderReport.xlsx";
+            var bytes = await orderService.GetExcelInBranch(BranchId, dateRequest.FromDate, dateRequest.ToDate);
+            await jsRuntime.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(bytes));
+        }
+        catch (Exception ex)
+        {
+            toastService.ShowError(ex.ToString());
+        }
+    }
+
+}
+
+@code {
+
+    public class DateRequest
+    {
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+    }
+
+}
