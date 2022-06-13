@@ -1,21 +1,23 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
+@inject IStockService StockService
+@inject IToastService ToastService
 @attribute [Authorize]
 <PageTitle>Quản lý The Coffee House</PageTitle>
 
 <Layout>
     if (authState.User.Identity.IsAuthenticated){
-        <Aside>
-            <AsideBrand Logo="" Class="px-4">
-                <span class="text-primary fw-bolder fs-6 lh-base ms-2">The Coffee House</span>
-            </AsideBrand>
+    <Aside>
+        <AsideBrand Logo="" Class="px-4">
+            <span class="text-primary fw-bolder fs-6 lh-base ms-2">The Coffee House</span>
+        </AsideBrand>
 
-            <AsideMenu>
-                <NavMenu />
-            </AsideMenu>
+        <AsideMenu>
+            <NavMenu/>
+        </AsideMenu>
 
-            <AsideFooter FullName=@Name Description=@Des Image="assets/media/avatars/300-1.jpg" />
-        </Aside>
+        <AsideFooter FullName=@Name Description=@Des Image="assets/media/avatars/300-1.jpg"/>
+    </Aside>
     }
     <Page Logo="">
         <Mobile>
@@ -27,20 +29,26 @@
     </Page>
 </Layout>
 
-<Overlay />
+<Overlay/>
+
 @code{
+
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationState { get; set; }
+
     public string Name { get; set; }
     public List<string> Roles { get; set; } = new();
     public string Des { get; set; }
+    public string BranchId { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthenticationState;        
+        var authState = await AuthenticationState;
         Roles = new();
         if (authState.User.Identity.IsAuthenticated)
         {
             Name = authState.User.FindFirst(x => x.Type == ClaimTypes.GivenName)!.Value;
+            BranchId = authState.User.FindFirst(x => x.Type == ClaimValue.BranhID)!.Value;
             Roles = authState.User.FindAll(x => x.Type == ClaimTypes.Role).Select(x => x.Value).ToList();
             if (Roles.Contains(Permission.Branch))
             {
@@ -64,9 +72,37 @@
             NavigationManager.NavigateTo("/login");
         }
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                if (Roles.Contains(Permission.Manage))
+                {
+                    var message = await StockService.NotificationMaterialInStock(BranchId);
+                    if (message.Result == 1)
+                    {
+                        ToastService.ShowWarning(
+                            message.Message,
+                            "Thông báo",
+                            () => NavigationManager.NavigateTo("/add-report-import"));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+    }
+
 }
+
 <BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopRight"
-                Timeout="2"
+                Timeout="5"
                 IconType="IconType.FontAwesome"
                 InfoClass="alert alert-dismissible bg-light-primary border border-primary border-dashed text-primary show"
                 InfoIcon="far fa-lightbulb text-primary fs-3"
@@ -75,4 +111,4 @@
                 WarningClass="alert alert-dismissible bg-light-warning border border-warning border-dashed text-light show"
                 WarningIcon="fas fa-exclamation-triangle text-warning fs-3"
                 ErrorClass="alert alert-dismissible bg-light-danger border border-danger border-dashed text-light show"
-                ErrorIcon="fas fa-times text-danger fs-3" />
+                ErrorIcon="fas fa-times text-danger fs-3"/>

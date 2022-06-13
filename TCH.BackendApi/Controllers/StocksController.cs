@@ -21,6 +21,28 @@ public class StocksController : ControllerBase
         _logger = logger;
     }
 
+    [Authorize]
+    [HttpGet("notify/{branchId}")]
+    public async Task<IActionResult> NotificationMaterialInStock(string branchId)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _repository.NotificationMaterialInStock(branchId);
+            return Ok(result);
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new {result = -1, message = e.Message});
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return BadRequest(new {result = -2, message = e.Message});
+        }
+    }
+
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     [HttpGet("get-by-branch/{branchId}")]
     public async Task<IActionResult> GetAllStockByBranchID(string branchId, [FromQuery] Search search)
@@ -34,14 +56,15 @@ public class StocksController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
+
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     [HttpGet("expire-by-branch/{branchId}")]
     public async Task<IActionResult> GetAllStockExpireByBranchID(string branchId, [FromQuery] Search search)
@@ -55,14 +78,15 @@ public class StocksController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
+
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     [HttpGet("expire-all")]
     public async Task<IActionResult> GetAllStockExpire([FromQuery] Search search)
@@ -71,19 +95,20 @@ public class StocksController : ControllerBase
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _repository.GetAllStockExpire( search);
+            var result = await _repository.GetAllStockExpire(search);
             return Ok(result);
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
+
     [Authorize(Roles = Permission.Branch)]
     [HttpGet("get-all")]
     public async Task<IActionResult> GetAll([FromQuery] Search search)
@@ -97,14 +122,15 @@ public class StocksController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
+
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     [HttpPost("create/{branchId}")]
     public async Task<IActionResult> Create(string branchId, [FromBody] StockRequest search)
@@ -118,14 +144,15 @@ public class StocksController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
+
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(string id, [FromBody] StockRequest search)
@@ -139,14 +166,15 @@ public class StocksController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
+
     [Authorize(Roles = Permission.Branch + "," + Permission.Manage)]
     [HttpDelete("{branchId}/{materialID}")]
     public async Task<IActionResult> Delete(string branchId, string materialID)
@@ -160,12 +188,12 @@ public class StocksController : ControllerBase
         }
         catch (CustomException e)
         {
-            return BadRequest(new { result = -1, message = e.Message });
+            return BadRequest(new {result = -1, message = e.Message});
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
-            return BadRequest(new { result = -2, message = e.Message });
+            return BadRequest(new {result = -2, message = e.Message});
         }
     }
 }

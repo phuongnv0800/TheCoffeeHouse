@@ -117,6 +117,29 @@ public class StockManager : IDisposable, IStockRepository
         };
     }
 
+    public async Task<MessageResult> NotificationMaterialInStock(string branchId)
+    {
+        var query = await _context
+            .StockMaterials
+            .Include(x => x.Material)
+            .Where(x => x.BranchID == branchId && x.StandardMass <= 100)
+            .Select(x => x.Material.Name)
+            .ToListAsync();
+        if (query == null || query.Count == 0)
+        {
+            return new MessageResult()
+            {
+                Result = 0,
+                Message = "Nguyên liệu đủ dùng",
+            };
+        }
+        return new MessageResult()
+        {
+            Message ="Những nguyên liệu này sắp hết: "+ string.Join(", ", query),
+            Result = 1,
+        };
+    }
+
     public async Task<Respond<PagedList<StockVm>>> GetAllStockExpireByBranchID(string branchID, Search request)
     {
         var query = from c in _context.StockMaterials
