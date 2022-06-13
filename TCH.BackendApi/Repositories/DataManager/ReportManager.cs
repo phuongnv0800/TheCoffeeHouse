@@ -179,9 +179,7 @@ public class ReportManager : IReportRepository, IDisposable
             bool isAddStock = true;
             foreach (var stock in stockDetails)
             {
-                if (item.MaterialID == stock.MaterialID
-                    && item.BeginDate.Date == stock.BeginDate.Date
-                    && item.ExpirationDate.Date == stock.ExpirationDate.Date)
+                if (item.MaterialID == stock.MaterialID)
                 {
                     isAddStock = false;
                     stock.Quantity += item.Quantity;
