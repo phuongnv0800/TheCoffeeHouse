@@ -148,8 +148,8 @@
                                 <div class="mb-5">
                                     <InputText @bind-Value="codeF" type="text" class="form-control form-control-solid" placeholder="Mã giảm giá (nếu có)"></InputText>
                                 </div>
+                            <button class="btn-success" onclick="@PickCode">Nạp mã giảm giá</button>
                             </EditForm>
-                            <button class="btn-success" onclick="@(() => PickCode())">Nạp mã giảm giá</button>
                         }
                         <div class="mb-5">
                             <div class="mb-0">
@@ -290,7 +290,9 @@
 
     public async Task PickCode()
     {
-        reduce = await promotionService.GetReduceMoney(codeF, order.OrderItems);
+        // var result = await promotionService.GetReduceMoney(codeF, order.OrderItems);
+        // reduce = Convert.ToDouble(result.Data?.ReducePromotion);
+        reduce = 6000;
         order.ReducePromotion = reduce;
         order.TotalAmount -= reduce;
         StateHasChanged();
