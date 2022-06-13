@@ -65,9 +65,11 @@ public class OrderManager : IOrderRepository, IDisposable
         }
 
         var totalAmount = subTotal - (request.ReducePromotion + request.ReduceAmount);
-        if (string.IsNullOrWhiteSpace(request.CustomerID))
+        if (!string.IsNullOrWhiteSpace(request.CustomerID))
         {
-            var customer = await _context.Customers.FindAsync(request.CustomerID);
+            var customer = await _context.Customers
+                .Include(x => x.Bean)
+                .FirstOrDefaultAsync(x => x.ID == request.CustomerID);
             if (customer != null)
             {
                 if (totalAmount >= customer.Bean.ConversationMoney)
@@ -685,11 +687,11 @@ public class OrderManager : IOrderRepository, IDisposable
         List<Order> data;
         if (request.IsPging)
         {
-            data =await result.Skip((request.PageNumber - 1) * request.PageSize)
+            data = await result.Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToListAsync();
         }
         else
-            data =await result.ToListAsync();
+            data = await result.ToListAsync();
 
         CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); // try with "en-US"
         string a = double.Parse("12345").ToString("#,###", cul.NumberFormat);
