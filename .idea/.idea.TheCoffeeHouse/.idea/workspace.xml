@@ -12,16 +12,11 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="up">
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="update category">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/CategoriesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/CategoriesController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.ViewModel/SubModels/CategoryVm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.ViewModel/SubModels/CategoryVm.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Categories/AddCategory.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Categories/AddCategory.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Categories/Categories.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Categories/Categories.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/CategoryComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/CategoryComponent.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Services/Categories/CategoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Services/Categories/CategoryService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Services/Categories/ICategoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Services/Categories/ICategoryService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/POS/InvoiceComponent.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/POS/InvoiceComponent.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Services/Orders/OrderService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Services/Orders/OrderService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,12 +60,16 @@
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/ReportManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/ReportManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/AdminDashBoard/Categories/AddCategory.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.WebServer/wwwroot/assets/js/custom/apps/subscriptions/list/list.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2dd236033eef492db4680dabbd762d778400/a6/933b6bc7/ToastService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2f7b3b6e2f3c491c91283c8624ab32661ce200/1f/48011b47/HttpDeleteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
@@ -257,7 +256,7 @@
       <workItem from="1654519806393" duration="9758000" />
       <workItem from="1654780881902" duration="3404000" />
       <workItem from="1654822592824" duration="22562000" />
-      <workItem from="1654997555302" duration="25527000" />
+      <workItem from="1654997555302" duration="26817000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -483,7 +482,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655020804606</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="update category">
+      <created>1655034088471</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1655034088471</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -517,7 +523,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="fix" />
     <MESSAGE value=" value" />
     <MESSAGE value="report" />
     <MESSAGE value="done" />
@@ -542,7 +547,8 @@
     <MESSAGE value="add new customer" />
     <MESSAGE value="db" />
     <MESSAGE value="up" />
-    <option name="LAST_COMMIT_MESSAGE" value="up" />
+    <MESSAGE value="update category" />
+    <option name="LAST_COMMIT_MESSAGE" value="update category" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
