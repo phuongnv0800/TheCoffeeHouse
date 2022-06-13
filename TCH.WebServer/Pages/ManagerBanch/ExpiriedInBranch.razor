@@ -64,17 +64,21 @@
                                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
                                                 </div>
                                             </th>
-                                            <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">
                                                 Tên nguyên liệu
                                             </th>
-                                            <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">
                                                 Ngày nhập
                                             </th>
-                                            <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">
                                                 Ngày hết hạn
                                             </th>
-                                            <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Số lượng
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                                                Còn lại
+                                            </th>
+
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">
+                                                Chi nhánh
                                             </th>
                                         </tr>
                                         </thead>
@@ -120,9 +124,14 @@
                                                         <div class="d-flex align-items-center">
                                                             <div class="ms-5">
                                                                 <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                    @product.Quantity
+                                                                    @product.StandardMass g
                                                                 </a>
                                                             </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            @product.BranchName
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -193,7 +202,6 @@
     {
         try
         {
-            navigationManager.NavigateTo("expiried-branch");
             dateRequest = new DateRequest()
             {
                 FromDate = new DateTime(2022, 06, 01),
@@ -202,7 +210,6 @@
             var response = await userApiClient.GetById(GbParameter.GbParameter.UserId);
             User = response.Data;
             await Get(1);
-            base.OnParametersSet();
         }
         catch (Exception e)
         {

@@ -91,17 +91,14 @@ namespace TCH.WebServer.Services.StockMaterials
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<StockVm>>>($"/api/Stocks/expire-by-branch?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&Name=" + name + fromDate + toDate);
-                if (response.Result != 1)
-                {
-                    return null;
-                }
+                var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<StockVm>>>($"/api/Stocks/expire-by-branch/{BranchId}?IsPging=" + IsPaging.ToString()
+                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + "&Name=" + name);
                 return response;
             }
             catch (Exception ex)
             {
                 throw;
+                return null;
             }
         }
 

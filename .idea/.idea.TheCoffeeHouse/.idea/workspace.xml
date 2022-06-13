@@ -12,11 +12,12 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="update view">
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/CustomerDetailFor.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/CustomerDetailFor.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/POS/Customers/Customers.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/POS/Customers/Customers.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ExpiriedInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/ExpiriedInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Services/StockMaterials/StockService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Services/StockMaterials/StockService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,14 +59,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Controllers/ProductsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/EF/Seed.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/AdminDashBoard/Orders/OrderComponent.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/User/OrderInUsers.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.WebServer/wwwroot/assets/js/custom/apps/subscriptions/list/list.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2dd236033eef492db4680dabbd762d778400/a6/933b6bc7/ToastService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2f7b3b6e2f3c491c91283c8624ab32661ce200/1f/48011b47/HttpDeleteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
@@ -257,7 +251,9 @@
       <workItem from="1654822592824" duration="22562000" />
       <workItem from="1654997555302" duration="26817000" />
       <workItem from="1655095144581" duration="13996000" />
-      <workItem from="1655127745979" duration="3466000" />
+      <workItem from="1655127745979" duration="5418000" />
+      <workItem from="1655134187132" duration="151000" />
+      <workItem from="1655161831019" duration="1578000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -539,7 +535,35 @@
       <option name="project" value="LOCAL" />
       <updated>1655130945475</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="update route">
+      <created>1655131402198</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1655131402198</updated>
+    </task>
+    <task id="LOCAL-00042" summary="update bE">
+      <created>1655132231320</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1655132231320</updated>
+    </task>
+    <task id="LOCAL-00043" summary="update seed">
+      <created>1655133383764</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1655133383764</updated>
+    </task>
+    <task id="LOCAL-00044" summary="updáte">
+      <created>1655134327755</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1655134327755</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -573,10 +597,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="add mass material" />
-    <MESSAGE value="nomessage" />
-    <MESSAGE value="update user" />
-    <MESSAGE value="pẻom" />
     <MESSAGE value="model" />
     <MESSAGE value="pussh" />
     <MESSAGE value="add" />
@@ -598,7 +618,11 @@
     <MESSAGE value="prog" />
     <MESSAGE value="notify" />
     <MESSAGE value="update view" />
-    <option name="LAST_COMMIT_MESSAGE" value="update view" />
+    <MESSAGE value="update route" />
+    <MESSAGE value="update bE" />
+    <MESSAGE value="update seed" />
+    <MESSAGE value="updáte" />
+    <option name="LAST_COMMIT_MESSAGE" value="updáte" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -638,32 +662,6 @@
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ReportManager.cs</url>
-          <line>69</line>
-          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ReportManager.cs" initialLine="69" containingFunctionPresentation="method 'CreateExportReport'">
-            <startOffsets>
-              <option value="2422" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2465" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ReportManager.cs</url>
-          <line>38</line>
-          <properties documentPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/ReportManager.cs" initialLine="38" containingFunctionPresentation="method 'CreateExportReport'">
-            <startOffsets>
-              <option value="1251" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2025" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Categories/AddCategory.razor</url>
           <line>87</line>
           <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Pages/AdminDashBoard/Categories/AddCategory.razor" initialLine="83" isMultiMethodBreakpoint="true">
@@ -689,6 +687,33 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.WebServer/Pages/POS/InvoiceComponent.razor</url>
+          <line>305</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Pages/POS/InvoiceComponent.razor" initialLine="305" isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
+            <startOffsets>
+              <option value="-1" />
+            </startOffsets>
+            <endOffsets>
+              <option value="-1" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TCH.WebServer/Services/StockMaterials/StockService.cs</url>
+          <line>95</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Services/StockMaterials/StockService.cs" initialLine="95" containingFunctionPresentation="method 'GetAllStockExpireInBranch'">
+            <startOffsets>
+              <option value="4881" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4897" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

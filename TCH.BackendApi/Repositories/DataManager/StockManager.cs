@@ -146,7 +146,7 @@ public class StockManager : IDisposable, IStockRepository
             join b in _context.Branches on c.BranchID equals b.ID
             join m in _context.Materials on c.MaterialID equals m.ID
             join mea in _context.Measures on c.MeasureID equals mea.ID
-            where c.BranchID == branchID && DateTime.Compare(c.ExpirationDate, DateTime.Now) < 0
+            where c.BranchID == branchID &&( c.ExpirationDate.Date < DateTime.Now || c.StandardMass <= 100)
             select new {c, b, m, mea};
         if (!string.IsNullOrEmpty(request.Name))
         {
