@@ -51553,6 +51553,10 @@ body {
 }
 
 @media (max-width:991.98px) {
+    .wrapper {
+        margin: -265px;
+    }
+
     .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
         max-width: none;
         padding: 0 15px
