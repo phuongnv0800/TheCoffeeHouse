@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
+using Blazored.LocalStorage;
 using TCH.Data.Entities;
 using TCH.Utilities.Paginations;
+using TCH.Utilities.SubModels;
 using TCH.ViewModel.RequestModel;
 using TCH.ViewModel.SubModels;
 using TCH.WebServer.Models;
@@ -14,17 +16,18 @@ namespace TCH.WebServer.Services.Promotions
         Task<ResponseLogin<PagedList<Promotion>>> GetAllPromotions(bool IsPaging, int pageSize, int pageNumber);
         Task<ResponseLogin<Promotion>> AddPromotion(PromotionRequest Promotion);
         Task<ResponseLogin<Promotion>> GetPromotionById(string id);
-        Task<double> GetReduceMoney(string code, List<OrderItem> orderItems);
+        Task<Respond<dynamic>> GetReduceMoney(string code, List<OrderItem> orderItems);
         Task<ResponseLogin<Promotion>> Update(PromotionRequest Promotion);
         Task DeletePromotion(string id);
     }
     public class PromotionService : IPromotionService
     {
         private readonly HttpClient httpClient;
-
-        public PromotionService(HttpClient httpClient)
+        private readonly ILocalStorageService localStorage;
+        public PromotionService(HttpClient httpClient, ILocalStorageService localStorage)
         {
             this.httpClient = httpClient;
+            this.localStorage = localStorage;
         }
         public async Task<ResponseLogin<Promotion>> AddPromotion(PromotionRequest Promotion)
         {
@@ -130,28 +133,43 @@ namespace TCH.WebServer.Services.Promotions
             }
         }
 
-        public async Task<double> GetReduceMoney(string code, List<OrderItem> orderItems)
+        public async Task<Respond<dynamic>> GetReduceMoney(string code, List<OrderItem> orderItems)
         {
             try
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var httpContent = new StringContent(JsonConvert.SerializeObject(orderItems), Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync($"/api/Promotions/reduce-money/{code}", httpContent);
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                var token = await localStorage.GetItemAsync<string>("authToken");
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var response = await httpClient.PostAsJsonAsync($"/api/Promotions/reduce-money/{code}", orderItems);
+                if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<dynamic> respond = JsonConvert.DeserializeObject<ResponseLogin<dynamic>>(content);
-                    if (respond.Result == 1)
-                    {
-                        return respond.Data.ReducePromotion;
-                    }
-                    return 0;
+                    //var body = await response.Content.ReadAsStringAsync();
+                    //return JsonSerializer.Deserialize<MessageResult>(body);
+                    var body = await response.Content.ReadFromJsonAsync<Respond<dynamic>>();
+                    return body;
                 }
-                return 0;
+
+                return new Respond<object>()
+                {
+                    Data = new
+                    {
+                        ReducePromotion = 0,
+                    },
+                    Result = 0,
+                    Message = "",
+                };
             }
-            catch
+            catch (Exception e)
             {
-                throw;
+                return new Respond<object>()
+                {
+                    Data = new
+                    {
+                        ReducePromotion = 0,
+                    },
+                    Result = 0,
+                    Message = "",
+                };
             }
         }
     }
