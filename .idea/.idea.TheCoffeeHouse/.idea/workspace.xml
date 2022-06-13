@@ -12,14 +12,10 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="">
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="notify">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/StocksController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/StockManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IStockRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataRepository/IStockRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Services/StockMaterials/StockService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Services/StockMaterials/StockService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Shared/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Shared/MainLayout.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/User/OrderInUsers.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/User/OrderInUsers.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,6 +57,8 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Controllers/ProductsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/EF/Seed.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.WebServer/wwwroot/assets/js/custom/apps/subscriptions/list/list.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2dd236033eef492db4680dabbd762d778400/a6/933b6bc7/ToastService.cs" root0="SKIP_HIGHLIGHTING" />
@@ -253,7 +251,7 @@
       <workItem from="1654822592824" duration="22562000" />
       <workItem from="1654997555302" duration="26817000" />
       <workItem from="1655095144581" duration="13996000" />
-      <workItem from="1655127745979" duration="1759000" />
+      <workItem from="1655127745979" duration="2155000" />
     </task>
     <task id="LOCAL-00001" summary="add order, customer controller">
       <created>1649177027535</created>
@@ -514,7 +512,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655126913070</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="notify">
+      <created>1655129615372</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1655129615372</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -548,7 +553,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="add report order" />
     <MESSAGE value="add mass material" />
     <MESSAGE value="nomessage" />
     <MESSAGE value="update user" />
@@ -573,7 +577,8 @@
     <MESSAGE value="ađ" />
     <MESSAGE value="update" />
     <MESSAGE value="prog" />
-    <option name="LAST_COMMIT_MESSAGE" value="prog" />
+    <MESSAGE value="notify" />
+    <option name="LAST_COMMIT_MESSAGE" value="notify" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
