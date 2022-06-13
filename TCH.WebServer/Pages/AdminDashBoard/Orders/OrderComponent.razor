@@ -77,13 +77,13 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Input group-->
-                            <EditForm Model="@editBranch">
+                            <EditForm Model="@editBranch" id = "myform">
                                 <div class="mb-10 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
                                     <label class="required form-label">Mã đơn hàng</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <InputText @bind-Value="editBranch.Code" class="form-control form-control-solid col-sm-6 read-only" />
+                                    <InputText @bind-Value="editBranch.Code" class="form-control form-control-solid col-sm-6 read-only" disabled="true"/>
                                     <!--end::Input-->
                                     <!--begin::Description-->
                                     <div class="text-muted fs-7">A product name is required and recommended to be unique.</div>
@@ -96,7 +96,7 @@
                                     <label class="required form-label">Người trả tiền</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <InputText @bind-Value="editBranch.Cashier" class="form-control form-control-solid col-sm-6 read-only" />
+                                    <InputText @bind-Value="editBranch.Cashier" class="form-control form-control-solid col-sm-6 read-only" disabled="true"/>
 
                                     <!--end::Input-->
                                 </div>
@@ -106,7 +106,7 @@
                                     <label class="required form-label">Ngày thanh toán</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <InputDate @bind-Value="editBranch.CreateDate" class="form-control form-control-solid col-sm-6 read-only" />
+                                    <InputDate @bind-Value="editBranch.CreateDate" class="form-control form-control-solid col-sm-6 read-only" disabled="true"/>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -115,7 +115,7 @@
                                     <label class="required form-label">Tiền khách trả</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <InputNumber @bind-Value="editBranch.CustomerPut" class="form-control form-control-solid col-sm-6 read-only" />
+                                    <InputNumber @bind-Value="editBranch.CustomerPut" class="form-control form-control-solid col-sm-6 read-only" disabled="true"/>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -124,7 +124,7 @@
                                     <label class="required form-label">Tiền khách nhận</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <InputNumber @bind-Value="editBranch.CustomerReceive" class="form-control form-control-solid col-sm-6 read-only" />
+                                    <InputNumber @bind-Value="editBranch.CustomerReceive" class="form-control form-control-solid col-sm-6 read-only" disabled="true"/>
 
                                     <!--end::Input-->
                                 </div>
@@ -134,7 +134,7 @@
                                     <label class="required form-label">Nội dung Footer</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <InputText @bind-Value="editBranch.Description" class="form-control form-control-solid col-sm-6 read-only" />
+                                    <InputText @bind-Value="editBranch.Description" class="form-control form-control-solid col-sm-6 read-only" disabled="true"/>
 
                                     <!--end::Input-->
                                 </div>
@@ -144,7 +144,7 @@
                                     <label class="required form-label">Nội dung Header</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <InputNumber @bind-Value="editBranch.ReduceAmount" class="form-control form-control-solid col-sm-6 read-only" />
+                                    <InputNumber @bind-Value="editBranch.ReduceAmount" class="form-control form-control-solid col-sm-6 read-only" disabled="true"/>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -153,7 +153,7 @@
                                     <label class="required form-label">Kiểu</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <InputNumber @bind-Value="editBranch.SubAmount" class="form-control form-control-solid col-sm-6 read-only" />
+                                    <InputNumber @bind-Value="editBranch.SubAmount" class="form-control form-control-solid col-sm-6 read-only" disabled="true"/>
 
                                     <!--end::Input-->
                                 </div>
@@ -167,7 +167,6 @@
                                 <thead>
                                     <tr class="fs-7 fw-bolder text-gray-500">
                                         <th class="p-0 min-w-150px d-block pt-3">Tên</th>
-                                        <th class="text-end min-w-140px pt-3">Trạng thái</th>
                                         <th class="text-end min-w-140px pt-3">Kích cỡ</th>
                                         <th class="pe-0 text-end min-w-120px pt-3">Giá</th>
                                         <th class="pe-0 text-end min-w-120px pt-3">Số lượng</th>
@@ -183,9 +182,6 @@
                                             <tr>
                                                 <td>
                                                     <span class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">@(topping.Product != null ? topping.Product.Name : "unknow")</span>
-                                                </td>
-                                                <td class="text-end">
-                                                    <span class="badge badge-light-success fs-7 fw-bolder">Còn hàng</span>
                                                 </td>
                                                 <td class="text-end">
                                                     <span class="text-gray-800 fw-bolder d-block fs-6">@(topping.Size != null ? topping.Size.Name : "unknow")</span>
@@ -213,7 +209,7 @@
                 <div class="d-flex justify-content-end">
                     <!--begin::Button-->
                     <a href="/orders" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
-                    <button type="submit" onclick="@(() => ShowPopUp())" href="#" class="btn btn-primary" id="kt_invoice_submit_button">
+                    <button type="submit" onclick="@(() => ShowPopUp())" form="myform" class="btn btn-primary" id="kt_invoice_submit_button">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen016.svg-->
                         <span class="svg-icon svg-icon-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -237,7 +233,6 @@
     [Parameter] public string Title { get; set; }
     [Parameter] public string OrderId { get; set; }
 
-    private ApplicationUser User;
     private Order editBranch = null;
 
     [CascadingParameter] public IModalService Modal { get; set; }
@@ -247,8 +242,7 @@
         try
         {
             editBranch = new Order();
-            var response = await userService.GetUserInfo();
-            User = response.Data;
+
         }
         catch (Exception ex)
         {

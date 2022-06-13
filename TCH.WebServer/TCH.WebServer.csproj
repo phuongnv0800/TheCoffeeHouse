@@ -16,6 +16,7 @@
   <ItemGroup>
     <Content Remove="C:\Users\Admin\.nuget\packages\vmu\8.0.36.2\contentFiles\any\net6.0\wwwroot\css\style.bundle.css" />
     <Content Remove="C:\Users\Admin\.nuget\packages\vmu\8.0.36.2\contentFiles\any\net6.0\wwwroot\css\style.bundle.rtl.css" />
+    <Content Remove="Pages\Beans\Beans.razor" />
     <Content Remove="wwwroot\images\1640270462_combo-qua-tet.webp" />
     <Content Remove="wwwroot\images\24-lon-cpsd.webp" />
     <Content Remove="wwwroot\images\2combo2-cforiginal.webp" />
@@ -127,11 +128,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Beans\Beans.razor" />
     <None Include="wwwroot\css\spinner.css" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.3.0-preview.1" />
+    <PackageReference Include="HtmlRenderer.PdfSharp" Version="1.5.0.6" />
     <PackageReference Include="Microsoft.Net.Http.Headers" Version="2.2.8" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Radzen.Blazor" Version="3.18.13" />
@@ -156,6 +159,14 @@
     <ProjectReference Include="..\TCH.Data\TCH.Data.csproj" />
     <ProjectReference Include="..\TCH.Utilities\TCH.Utilities.csproj" />
     <ProjectReference Include="..\TCH.ViewModel\TCH.ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Beans\Beans.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Beans\Beans.razor" />
   </ItemGroup>
 
 </Project>
