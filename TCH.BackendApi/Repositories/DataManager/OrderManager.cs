@@ -200,7 +200,7 @@ public class OrderManager : IOrderRepository, IDisposable
         var data = new List<MassMaterial>();
         foreach (var item in orderDetails)
         {
-            var product =await _context.Products.FindAsync(item.ProductID);
+            var product = await _context.Products.FindAsync(item.ProductID);
             var recipes = await _context
                 .RecipeDetails
                 .Where(x =>
@@ -680,22 +680,21 @@ public class OrderManager : IOrderRepository, IDisposable
             result = result.Where(x => x.Code.Contains(request.Name));
         if (request.StartDate != null && request.EndDate != null)
             result = result
-                    .Where(x => request.EndDate != null && x.CreateDate.Date <= request.EndDate.Value.Date &&
-                                request.StartDate != null && x.CreateDate.Date >= request.StartDate.Value.Date)
-                ;
+                .Where(x => request.EndDate != null
+                            && x.CreateDate.Date <= request.EndDate.Value.Date
+                            && request.StartDate != null
+                            && x.CreateDate.Date >= request.StartDate.Value.Date);
+        var moneyAllBranch = await result.SumAsync(x => x.TotalAmount);
         //paging
-        int totalRow = result.Count();
-        List<Order> data;
-        if (request.IsPging)
-        {
-            data = await result.Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize).ToListAsync();
-        }
-        else
-            data = await result.ToListAsync();
+        var data = await result
+            .GroupBy(x => x.BranchID)
+            .Select(x => new
+            {
+                Branch = x.Key,
+                Orders = x.Select(x => x).ToList(),
+            }).ToListAsync();
 
         CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); // try with "en-US"
-        string a = double.Parse("12345").ToString("#,###", cul.NumberFormat);
         var stream = new MemoryStream();
         using (var xlPackage = new ExcelPackage(stream))
         {
@@ -707,7 +706,7 @@ public class OrderManager : IOrderRepository, IDisposable
             var row = startRow;
 
             //Create Headers and format them
-            worksheet.Cells["A1"].Value = "Báo cáo bán hàng của tất cả cửa hàng";
+            worksheet.Cells["A1"].Value = "Báo cáo doanh số bán hàng cho tất cả cửa hàng";
             using (var r = worksheet.Cells["A1:Q1"])
             {
                 r.Merge = true;
@@ -730,56 +729,46 @@ public class OrderManager : IOrderRepository, IDisposable
             }
 
             worksheet.Cells["A5"].Value = "STT";
-            worksheet.Cells["B5"].Value = "Mã bán hàng";
-            worksheet.Cells["C5"].Value = "Số bàn";
-            worksheet.Cells["D5"].Value = "Nhân viên bán hàng";
-            worksheet.Cells["E5"].Value = "Ngày tạo";
-            worksheet.Cells["F5"].Value = "Kiểu hoá đơn";
-            worksheet.Cells["G5"].Value = "Mô tả";
-            worksheet.Cells["H5"].Value = "Kiểu thanh toán";
-            worksheet.Cells["I5"].Value = "Tên khách hàng";
-            worksheet.Cells["J5"].Value = "Tên cửa hàng";
-            worksheet.Cells["K5"].Value = "Giảm giá theo khuyến mãi";
-            worksheet.Cells["L5"].Value = "Giảm trừ";
-            worksheet.Cells["M5"].Value = "Tiền khách hàng đưa";
-            worksheet.Cells["N5"].Value = "Tiền khách hàng nhận";
-            worksheet.Cells["O5"].Value = "Phí vận chuyển";
-            worksheet.Cells["P5"].Value = "Tổng tiền";
-            worksheet.Cells["Q5"].Value = "Thành tiền";
-            worksheet.Cells["A5:Q5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            worksheet.Cells["A5:Q5"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
-            worksheet.Cells["A5:Q5"].Style.Font.Bold = true;
+            worksheet.Cells["B5"].Value = "Tên chi nhánh";
+            worksheet.Cells["C5"].Value = "Địa chỉ";
+            worksheet.Cells["D5"].Value = "Thành phố";
+            worksheet.Cells["E5"].Value = "Số điện thoại";
+            worksheet.Cells["F5"].Value = "Từ ngày";
+            worksheet.Cells["G5"].Value = "Đến ngày";
+            worksheet.Cells["H5"].Value = "Giảm trừ";
+            worksheet.Cells["I5"].Value = "Giảm giá theo khuyến mãi";
+            worksheet.Cells["J5"].Value = "Tiền khách hàng nhận";
+            worksheet.Cells["K5"].Value = "Tiền khách hàng đưa";
+            worksheet.Cells["L5"].Value = "Phí vận chuyển";
+            worksheet.Cells["M5"].Value = "Tổng tiền";
+            worksheet.Cells["N5"].Value = "Thành tiền";
+            worksheet.Cells["A5:N5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            worksheet.Cells["A5:N5"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+            worksheet.Cells["A5:N5"].Style.Font.Bold = true;
             row = 6;
             foreach (var item in data.Select((value, i) => new {value, i}))
             {
                 var customer = new Customer();
-                if (item.value.CustomerID != null)
-                    customer = await _context.Customers.FindAsync(item.value.CustomerID);
-                worksheet.Cells[row, 1].Value = item.i;
-                worksheet.Cells[row, 2].Value = item.value.Code;
-                worksheet.Cells[row, 3].Value = item.value.TableNum;
-                worksheet.Cells[row, 4].Value = item.value.Cashier;
-                worksheet.Cells[row, 5].Value = item.value.CreateDate.ToShortDateString();
-                worksheet.Cells[row, 6].Value = item.value.OrderType == OrderType.InPlace ? "Tại cửa hàng" :
-                    item.value.OrderType == OrderType.TakeAway ? "Mang về" : "Ship đồ";
-                worksheet.Cells[row, 7].Value = item.value.Description;
-                worksheet.Cells[row, 8].Value =
-                    item.value.PaymentType == PaymentType.Cash ? "Tiền mặt" : "Chuyển khoản";
-                worksheet.Cells[row, 9].Value = customer != null ? customer.FullName : "";
-                worksheet.Cells[row, 10].Value = item.value.Branch.Name;
-                worksheet.Cells[row, 11].Value = item.value.ReducePromotion.ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 12].Value = item.value.ReduceAmount.ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 13].Value = item.value.CustomerPut.ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 14].Value = item.value.CustomerReceive.ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 15].Value = item.value.ShippingFee.ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 16].Value = item.value.SubAmount.ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 17].Value = item.value.TotalAmount.ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 1].Value = item.i + 1;
+                worksheet.Cells[row, 2].Value = item.value.Orders[0].Branch.Name;
+                worksheet.Cells[row, 3].Value = item.value.Orders[0].Branch.Adderss;
+                worksheet.Cells[row, 4].Value = item.value.Orders[0].Branch.City;
+                worksheet.Cells[row, 5].Value = item.value.Orders[0].Branch.Phone;
+                worksheet.Cells[row, 6].Value = request.StartDate?.ToShortDateString();
+                worksheet.Cells[row, 7].Value = request.EndDate?.ToShortDateString();
+                worksheet.Cells[row, 8].Value = item.value.Orders.Sum(x=>x.ReduceAmount).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 9].Value = item.value.Orders.Sum(x=>x.ReducePromotion).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 10].Value =  item.value.Orders.Sum(x=>x.CustomerReceive).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 11].Value = item.value.Orders.Sum(x=>x.CustomerPut).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 12].Value =  item.value.Orders.Sum(x=>x.ShippingFee).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 13].Value =  item.value.Orders.Sum(x=>x.SubAmount).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 14].Value = item.value.Orders.Sum(x=>x.TotalAmount).ToString("#,###", cul.NumberFormat);
                 row++;
             }
 
             row++;
             worksheet.Cells[$"A{row}"].Value = "Doanh thu bán hàng";
-            using (var r = worksheet.Cells[$"A{row}:P{row}"])
+            using (var r = worksheet.Cells[$"A{row}:M{row}"])
             {
                 r.Merge = true;
                 r.Style.Font.Size = 14;
@@ -789,8 +778,8 @@ public class OrderManager : IOrderRepository, IDisposable
                 r.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(223, 249, 251));
             }
 
-            worksheet.Cells[$"Q{row}"].Value = (data.Sum(x => x.TotalAmount)).ToString("#,###", cul.NumberFormat);
-            using (var r = worksheet.Cells[$"Q{row}:Q{row}"])
+            worksheet.Cells[$"N{row}"].Value = moneyAllBranch.ToString("#,###", cul.NumberFormat);
+            using (var r = worksheet.Cells[$"N{row}:N{row}"])
             {
                 r.Merge = true;
                 r.Style.Font.Size = 14;
@@ -802,7 +791,7 @@ public class OrderManager : IOrderRepository, IDisposable
 
             // set some core property values
             xlPackage.Workbook.Properties.Title = "Báo cáo";
-            xlPackage.Workbook.Properties.Author = "Quản lý";
+            xlPackage.Workbook.Properties.Author = "Quản lý chi nhánh";
             xlPackage.Workbook.Properties.Subject = "Báo cáo";
             // save the new spreadsheet
             xlPackage.Save();
