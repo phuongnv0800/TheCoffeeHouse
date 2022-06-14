@@ -1,5 +1,3 @@
-using TCH.Data.Entities;
-
 namespace TCH.ViewModel.SubModels;
 
 public class OrderInUser
