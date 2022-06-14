@@ -2568,7 +2568,7 @@ public static class Seed
             {
                 ID = Guid.NewGuid().ToString(),
                 FullName = "Khách hàng số " + i,
-                Phone = "09656"+ random.Next(10000, 99999),
+                Phone = "09656" + random.Next(10000, 99999),
                 Email = "custormer" + i + "@gmail.com",
                 Address = "Ngô Quyền, Hải Phòng",
                 Gender = i % 2 == 0 ? Gender.Female : Gender.Male,
@@ -2964,13 +2964,13 @@ public static class Seed
             TableNum = 15,
             Cashier = "Nam Phuong",
             Code = "ORDER.N0" + DateTime.Now.Minute + "-" + DateTime.Now.Day,
-            SubAmount = (products[0].Price + sizes[0].SubPrice + toppings[0].SubPrice * 1)* 2,
-            TotalAmount = (products[0].Price + sizes[0].SubPrice + toppings[0].SubPrice * 1)* 2 -10000,
+            SubAmount = (products[0].Price + sizes[0].SubPrice + toppings[0].SubPrice * 1) * 2,
+            TotalAmount = (products[0].Price + sizes[0].SubPrice + toppings[0].SubPrice * 1) * 2 - 10000,
             Status = OrderStatus.Open,
             OrderType = OrderType.InPlace,
             ReducePromotion = 10000,
             ReduceAmount = 0,
-            CustomerPut = (products[0].Price + sizes[0].SubPrice + toppings[0].SubPrice * 1)* 2,
+            CustomerPut = (products[0].Price + sizes[0].SubPrice + toppings[0].SubPrice * 1) * 2,
             CustomerReceive = 10000,
             ShippingFee = 0,
             CreateDate = DateTime.Now,
@@ -3006,59 +3006,13 @@ public static class Seed
             Quantity = 1,
         };
         context.OrderToppingDetails.Add(orderToppingDetail);
-        for (int i = 0; i < 1000; i++)
-        {
-            Random rnd = new Random();
-            int indexPro = rnd.Next(1, 100);
-            var ordertemp = new Order()
-            {
-                ID = Guid.NewGuid().ToString(),
-                TableNum = i,
-                Cashier = (i % 2 == 0 ? "Phuong " : "Long ") + i,
-                Code = "ORDER.N0"
-                       + (new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28))).Millisecond
-                       + "-"
-                       + (new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28))).Day,
-                SubAmount = (products[indexPro].Price + sizes[i % 2].SubPrice) * (i % 2 == 0 ? 1 : 2),
-                TotalAmount = (products[indexPro].Price + sizes[i % 2].SubPrice) * (i % 2 == 0 ? 1 : 2),
-                Status = OrderStatus.Open,
-                OrderType = i % 2 == 0 ? OrderType.InPlace : OrderType.TakeAway,
-                ReducePromotion = 0,
-                ReduceAmount = 0,
-                CustomerPut = (products[indexPro].Price + sizes[i % 2].SubPrice) * (i % 2 == 0 ? 1 : 2),
-                CustomerReceive = 0,
-                ShippingFee = 0,
-                CreateDate = new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28)),
-                Description = "Đơn hàng ngày -" +
-                              (new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28))).ToShortDateString(),
-                CancellationReason = null,
-                UserCreateID = null,
-                PaymentType = PaymentType.Credit,
-                CustomerID = null,
-                BranchID = branches[rnd.Next(1, 7)].ID,
-            };
-            context.Orders.Add(ordertemp);
-            var orderDetailTemp = new OrderDetail()
-            {
-                OrderID = ordertemp.ID,
-                Quantity = (i % 2 == 0 ? 1 : 2),
-                PriceProduct = products[indexPro].Price,
-                Description = "Mô tả",
-                SugarType = SugarType.OneHundredPercent,
-                IcedType = IcedType.OneHundredPercent,
-                PriceSize = sizes[i % 2].SubPrice,
-                SizeID = sizes[i % 2].ID,
-                ProductID = products[indexPro].ID
-            };
-            context.OrderDetails.Add(orderDetailTemp);
-        }
 
         for (int i = 0; i < branches.Length; i++)
         {
             for (int j = 0; j < materials.Length; j++)
             {
                 Random random = new();
-                var num = random.Next(10, 999);
+                var num = random.Next(20, 30);
                 var stock = new StockMaterial()
                 {
                     ID = Guid.NewGuid().ToString(),
@@ -3090,11 +3044,11 @@ public static class Seed
                 Name = "Bao cao",
                 BranchID = branches[rnd.Next(0, 7)].ID,
                 Code = "N0."
-                       + (new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28))).Minute
+                       + (new DateTime(2022, rnd.Next(4, 7), rnd.Next(1, 28))).Minute
                        + "-"
-                       + (new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28))).Day,
+                       + (new DateTime(2022, rnd.Next(4, 7), rnd.Next(1, 28))).Day,
                 Conclude = "...",
-                CreateDate = new DateTime(2022, rnd.Next(1, 12), rnd.Next(1, 28)),
+                CreateDate = new DateTime(2022, rnd.Next(4, 7), rnd.Next(1, 28)),
                 Depreciation = 0,
                 LiquidationName = "Nam",
                 LiquidationRole = "Quản lý",
@@ -3178,27 +3132,7 @@ public static class Seed
             CreateDate = DateTime.Now,
             UpdateDate = DateTime.Now,
         };
-        var user = new AppUser()
-        {
-            Id = Guid.NewGuid().ToString(),
-            UserName = "user",
-            NormalizedUserName = "USER",
-            Email = "userng08@gmail.com",
-            NormalizedEmail = "USERNG08@GMAIL.COM",
-            EmailConfirmed = true,
-            PasswordHash = hasher.HashPassword(null, "123123aA@"),
-            SecurityStamp = Guid.NewGuid().ToString(),
-            Address = "Hải Phòng, Việt Nam",
-            FirstName = "Vũ",
-            LastName = "Long",
-            DateOfBirth = new DateTime(2000, 8, 17),
-            BranchID = branches[0].ID,
-            Status = Status.Active,
-            CreateDate = DateTime.Now,
-            UpdateDate = DateTime.Now,
-        };
         context.AppUsers.Add(admin);
-        context.AppUsers.Add(user);
         context.UserRoles.Add(new IdentityUserRole<string>()
         {
             UserId = admin.Id,
@@ -3219,11 +3153,7 @@ public static class Seed
             UserId = admin.Id,
             RoleId = roleStaff.Id,
         });
-        context.UserRoles.Add(new IdentityUserRole<string>()
-        {
-            UserId = user.Id,
-            RoleId = roleBranch.Id,
-        });
+        var users = new List<AppUser>();
         for (var i = 0; i < 100; i++)
         {
             Random rnd = new();
@@ -3237,9 +3167,9 @@ public static class Seed
                 EmailConfirmed = true,
                 PasswordHash = hasher.HashPassword(null, "123123aA@"),
                 SecurityStamp = Guid.NewGuid().ToString(),
-                FirstName = "Nguyễn Văn",
+                FirstName = "Nguyễn",
                 LastName = i.ToString(),
-                PhoneNumber = "09040"+ rnd.Next(10000, 99999),
+                PhoneNumber = "09040" + rnd.Next(10000, 99999),
                 PhoneNumberConfirmed = true,
                 Address = "Thuỷ Nguyên, Hải Phòng, Việt Nam",
                 DateOfBirth = new DateTime(1990 + rnd.Next(1, 40), 1, 1),
@@ -3248,12 +3178,60 @@ public static class Seed
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
             };
+            users.Add(userAdd);
             context.AppUsers.Add(userAdd);
             context.UserRoles.Add(new IdentityUserRole<string>()
             {
                 UserId = userAdd.Id,
                 RoleId = i % 2 == 0 ? roleManager.Id : roleStaff.Id,
             });
+        }
+
+        for (int i = 0; i < 1000; i++)
+        {
+            Random rnd = new Random();
+            int indexPro = rnd.Next(1, 100);
+            var ordertemp = new Order()
+            {
+                ID = Guid.NewGuid().ToString(),
+                TableNum = (int) ((i + 1) % 6),
+                Cashier = users[indexPro].FirstName + " " + users[indexPro].LastName,
+                Code = "ORDER.N0"
+                       + (new DateTime(2022, rnd.Next(4, 7), rnd.Next(1, 20))).Millisecond
+                       + "-"
+                       + (new DateTime(2022, rnd.Next(4, 7), rnd.Next(1, 20))).Day,
+                SubAmount = (products[indexPro].Price + sizes[i % 2].SubPrice) * (i % 2 == 0 ? 1 : 2),
+                TotalAmount = (products[indexPro].Price + sizes[i % 2].SubPrice) * (i % 2 == 0 ? 1 : 2),
+                Status = OrderStatus.Open,
+                OrderType = i % 2 == 0 ? OrderType.InPlace : OrderType.TakeAway,
+                ReducePromotion = 0,
+                ReduceAmount = 0,
+                CustomerPut = (products[indexPro].Price + sizes[i % 2].SubPrice) * (i % 2 == 0 ? 1 : 2),
+                CustomerReceive = 0,
+                ShippingFee = 0,
+                CreateDate = new DateTime(2022, rnd.Next(4, 7), rnd.Next(1, 20)),
+                Description = "Đơn hàng ngày -" +
+                              (new DateTime(2022, rnd.Next(4, 7), rnd.Next(1, 20))).ToShortDateString(),
+                CancellationReason = null,
+                UserCreateID = users[indexPro].Id,
+                PaymentType = i % 2 == 0 ? PaymentType.Credit : PaymentType.Cash,
+                CustomerID = null,
+                BranchID = branches[rnd.Next(0, 7)].ID,
+            };
+            context.Orders.Add(ordertemp);
+            var orderDetailTemp = new OrderDetail()
+            {
+                OrderID = ordertemp.ID,
+                Quantity = (i % 2 == 0 ? 1 : 2),
+                PriceProduct = products[indexPro].Price,
+                Description = "Mô tả",
+                SugarType = SugarType.OneHundredPercent,
+                IcedType = IcedType.OneHundredPercent,
+                PriceSize = sizes[i % 2].SubPrice,
+                SizeID = sizes[i % 2].ID,
+                ProductID = products[indexPro].ID
+            };
+            context.OrderDetails.Add(orderDetailTemp);
         }
 
         context.SaveChanges();
