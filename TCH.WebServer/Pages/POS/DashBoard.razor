@@ -45,13 +45,15 @@
                                     <!--end::Overlay-->
                                     <!--begin::Body-->
                                     <div class="mt-5">
-                                        <!--begin::Title-->
-                                        <a href="/product-detail/@product.ID" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
-                                        <!--end::Title-->
-                                        <!--begin::Text-->
-                                        <a class="fw-bold text-gray-600 text-dark mt-3 d-block" href="/recipes/@product.ID">Xem công thức</a>
-                                        <!--end::Text-->
-                                        <!--begin::Text-->
+                                        <div class="d-flex">
+                                            <div class="w-100">
+                                                <a href="/product-detail/@product.ID" class="text-primary fw-bolder text-hover-primary text-dark lh-base">@product.Name</a>
+                                                <a class="fw-bold text-gray-600 text-dark mt-3 d-block" href="/recipes/@product.ID">Xem công thức</a>
+                                            </div>
+                                            <div style="width: 120px">
+                                                Số lượng: @product.Quantity
+                                            </div>
+                                        </div>
                                         <div class="fs-6 fw-bolder mt-5 d-flex flex-stack">
                                             <!--begin::Label-->
                                             @if (!product.IsAvailable)
@@ -65,8 +67,14 @@
                                             </span>
                                             <!--end::Label-->
                                             <!--begin::Action-->
-                                            @* <button onclick="@(() => NavManager.NavigateTo($"/product-detail/{@product.ID}"))" class="btn btn-sm btn-primary">Mua</button> *@
+                                            @* @if (product.IsAvailable) *@
+                                            @* { *@
                                             <button onclick="@(() => OnNew(@product.ID))" class="btn btn-sm btn-primary">Mua</button>
+                                            @* } *@
+                                            @* else *@
+                                            @* { *@
+                                            @*     <button class="btn btn-sm btn-outline-primary">Hết nguyên liệu</button> *@
+                                            @* } *@
                                         </div>
                                         <!--end::Text-->
                                     </div>
@@ -116,6 +124,7 @@
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationState { get; set; }
+
     [CascadingParameter]
     public IModalService Modal { get; set; }
 
@@ -142,13 +151,13 @@
                 BranchId = authState.User.FindFirst(x => x.Type == ClaimValue.BranhID)!.Value;
             }
             await Get(1);
-
         }
         catch (Exception e)
         {
             toastService.ShowError("có lỗi");
         }
     }
+
     private async Task OnNew(string productId)
     {
         var parameters = new ModalParameters();
@@ -165,8 +174,8 @@
         {
             await Get(1);
         }
-        
     }
+
     public async Task Get(int pageNumber)
     {
         var response = await productServices.GetProductsByBranch(true, pagination.pageSize, pageNumber, BranchId, searchText);

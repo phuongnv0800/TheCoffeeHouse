@@ -88,20 +88,48 @@ public class ProductManager : IProductRepository, IDisposable
                 .ToListAsync();
         }
 
-        // var item1 = from sp in _context.SizeInProducts
-        //     join s in _context.Sizes on sp.SizeID equals s.ID
-        //     select new {s, sp,};
-        // var item2 = from tp in _context.ToppingInProducts
-        //     join t in _context.Toppings on tp.ToppingID equals t.ID
-        //     select new {t, tp,};
-        // foreach (var item in data)
-        // {
-        //     var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes().ToListAsync();
-        //     var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes().ToListAsync();
-        //     item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x=>x.SubPrice).ToList();
-        //     item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x=>x.SubPrice).ToList();
-        //
-        // }
+        var item1 = from sp in _context.SizeInProducts
+            join s in _context.Sizes on sp.SizeID equals s.ID
+            select new {s, sp,};
+        var item2 = from tp in _context.ToppingInProducts
+            join t in _context.Toppings on tp.ToppingID equals t.ID
+            select new {t, tp,};
+        foreach (var item in data)
+        {
+            var sizes = await item1.Where(x => x.sp.ProductID == item.ID).Select(x => x.s).IgnoreAutoIncludes()
+                .ToListAsync();
+            var toppings = await item2.Where(x => x.tp.ProductID == item.ID).Select(x => x.t).IgnoreAutoIncludes()
+                .ToListAsync();
+            item.Sizes = sizes.Select(x => _mapper.Map<SizeVm>(x)).OrderBy(x => x.SubPrice).ToList();
+            item.Toppings = toppings.Select(x => _mapper.Map<ToppingVm>(x)).OrderBy(x => x.SubPrice).ToList();
+        }
+
+        foreach (var p in data)
+        {
+            var recipes = await _context
+                .RecipeDetails
+                .Where(x => x.ProductID == p.ID && x.SizeID == p.Sizes[0].ID)
+                .ToListAsync();
+
+            var stock = await _context
+                .StockMaterials
+                .FirstOrDefaultAsync(x => x.MaterialID == recipes[0].MaterialID
+                                          && x.BranchID == branchId);
+            var minQuantity = stock?.StandardMass / recipes[0].Weight ?? 0;
+            foreach (var recipe in recipes)
+            {
+                var quaMass = ((await _context
+                    .StockMaterials
+                    .FirstOrDefaultAsync(x => x.MaterialID == recipe.MaterialID
+                                              && x.BranchID == branchId))?.StandardMass ?? 0) / recipe.Weight;
+                if (minQuantity > quaMass && quaMass != 0)
+                {
+                    minQuantity = quaMass;
+                }
+            }
+            p.Quantity = (int) minQuantity;
+            p.IsAvailable = (int)minQuantity != 0 ? true: false;
+        }
 
         var pagedResult = new PagedList<ProductVm>()
         {

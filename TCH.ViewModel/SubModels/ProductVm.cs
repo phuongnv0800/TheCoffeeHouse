@@ -6,6 +6,7 @@ public class ProductVm
 {
     public string ID { get; set; }
     public string Name { get; set; }
+    public int Quantity { get; set; }
     public ProductType ProductType { get; set; } = ProductType.Drink;
     public DateTime CreateDate { get; set; }
     public DateTime UpdateDate { get; set; }

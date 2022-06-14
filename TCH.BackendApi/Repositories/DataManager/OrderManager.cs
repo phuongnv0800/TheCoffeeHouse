@@ -200,6 +200,7 @@ public class OrderManager : IOrderRepository, IDisposable
         var data = new List<MassMaterial>();
         foreach (var item in orderDetails)
         {
+            var product =await _context.Products.FindAsync(item.ProductID);
             var recipes = await _context
                 .RecipeDetails
                 .Where(x =>
@@ -226,7 +227,7 @@ public class OrderManager : IOrderRepository, IDisposable
                             Data = orderRe,
                             Result = 0,
                             Message =
-                                $"Nguyên liệu {stockMaterial?.Material?.Name} trong chi nhánh {branch.Name} không đủ hoặc đã hết."
+                                $"Nguyên liệu {stockMaterial?.Material?.Name} trong chi nhánh {branch.Name} của sản phẩm {product.Name} không đủ hoặc đã hết."
                         };
                     }
 
