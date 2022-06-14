@@ -700,7 +700,7 @@ public class OrderManager : IOrderRepository, IDisposable
                     ShippingFee = x.Sum(z => z.ShippingFee),
                     SubAmount = x.Sum(z => z.SubAmount),
                     TotalAmount = x.Sum(z => z.TotalAmount),
-                    UserName = _context.Users.Find(x.First().UserCreateID)!.UserName,
+                    // UserName = _context.Users.Find(x.First().UserCreateID)!.UserName,
                 })
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToList();
@@ -717,7 +717,7 @@ public class OrderManager : IOrderRepository, IDisposable
                 ShippingFee = x.Sum(z => z.ShippingFee),
                 SubAmount = x.Sum(z => z.SubAmount),
                 TotalAmount = x.Sum(z => z.TotalAmount),
-                UserName = _context.Users.Find(x.First().UserCreateID)!.UserName,
+                // UserName = _context.Users.Find(x.First().UserCreateID)!.UserName,
             }).ToList();
 
         var pagedResult = new PagedList<OrderInUser>
