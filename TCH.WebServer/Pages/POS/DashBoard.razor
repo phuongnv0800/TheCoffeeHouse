@@ -58,7 +58,7 @@
                                             <!--begin::Label-->
                                             @if (!product.IsAvailable)
                                             {
-                                                <span class="badge badge-danger border-dashed text-primary p-2">
+                                                <span class="badge badge-danger border-dashed text-white p-2">
                                                     Hết hàng
                                                 </span>
                                             }
@@ -67,14 +67,14 @@
                                             </span>
                                             <!--end::Label-->
                                             <!--begin::Action-->
-                                            @* @if (product.IsAvailable) *@
-                                            @* { *@
-                                            <button onclick="@(() => OnNew(@product.ID))" class="btn btn-sm btn-primary">Mua</button>
-                                            @* } *@
-                                            @* else *@
-                                            @* { *@
-                                            @*     <button class="btn btn-sm btn-outline-primary">Hết nguyên liệu</button> *@
-                                            @* } *@
+                                            @if (product.IsAvailable)
+                                            {
+                                                <button onclick="@(() => OnNew(@product.ID))" class="btn btn-sm btn-primary">Mua</button>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-sm btn-outline-primary">Dừng bán</button>
+                                            }
                                         </div>
                                         <!--end::Text-->
                                     </div>

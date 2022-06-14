@@ -122,7 +122,7 @@ public class ProductManager : IProductRepository, IDisposable
                     .StockMaterials
                     .FirstOrDefaultAsync(x => x.MaterialID == recipe.MaterialID
                                               && x.BranchID == branchId))?.StandardMass ?? 0) / recipe.Weight;
-                if (minQuantity > quaMass && quaMass != 0)
+                if (minQuantity > quaMass)
                 {
                     minQuantity = quaMass;
                 }

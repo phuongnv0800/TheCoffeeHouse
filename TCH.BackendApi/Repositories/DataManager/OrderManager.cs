@@ -216,11 +216,10 @@ public class OrderManager : IOrderRepository, IDisposable
                         .Include(x => x.Material)
                         .Include(x => x.Measure)
                         .FirstOrDefaultAsync(x =>
-                            x.IsDelete == false
-                            && x.MaterialID == recipe.MaterialID
+                            x.MaterialID == recipe.MaterialID
                             && x.BranchID == request.BranchID);
                     if (stockMaterial == null
-                        || (stockMaterial.StandardMass == 0 || stockMaterial.StandardMass - recipe.Weight < 0))
+                        || (stockMaterial.StandardMass == 0 || stockMaterial.StandardMass - recipe.Weight*item.Quantity < 0))
                     {
                         return new Respond<object>
                         {
@@ -231,7 +230,7 @@ public class OrderManager : IOrderRepository, IDisposable
                         };
                     }
 
-                    stockMaterial.StandardMass = recipe.Weight;
+                    stockMaterial.StandardMass -= recipe.Weight*item.Quantity;
                     stockMaterial.Mass = stockMaterial.StandardMass / stockMaterial.Measure.ConversionFactor;
                     _context.StockMaterials.Update(stockMaterial);
                 }
