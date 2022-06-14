@@ -688,11 +688,11 @@ public class OrderManager : IOrderRepository, IDisposable
         List<OrderInUser> data;
         if (request.IsPging)
         {
-            data = result.GroupBy(x => x.Cashier)
+            data = result.GroupBy(x => x.UserCreateID)
                 .Select(x => new OrderInUser()
                 {
-                    Cashier = x.Key,
-                    UserCreateID = x.First().UserCreateID,
+                    UserCreateID = x.Key,
+                    Cashier = x.First().Cashier,
                     CustomerPut = x.Sum(z => z.CustomerPut),
                     CustomerReceive = x.Sum(z => z.CustomerReceive),
                     ReduceAmount = x.Sum(z => z.ReduceAmount),
@@ -706,10 +706,10 @@ public class OrderManager : IOrderRepository, IDisposable
                 .Take(request.PageSize).ToList();
         }
         else
-            data = result.GroupBy(x => x.Cashier).Select(x => new OrderInUser()
+            data = result.GroupBy(x => x.UserCreateID).Select(x => new OrderInUser()
             {
-                Cashier = x.Key,
-                UserCreateID = x.First().UserCreateID,
+                UserCreateID = x.Key,
+                Cashier = x.First().Cashier,
                 CustomerPut = x.Sum(z => z.CustomerPut),
                 CustomerReceive = x.Sum(z => z.CustomerReceive),
                 ReduceAmount = x.Sum(z => z.ReduceAmount),
