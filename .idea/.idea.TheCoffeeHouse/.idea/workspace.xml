@@ -12,19 +12,14 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="up">
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/RecipeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/RecipeManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Uploads/temp.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Uploads/temp.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/CustomerDetailFor.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/CustomerDetailFor.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/ExchangeVoucherModal.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/ExchangeVoucherModal.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddExportReportDetail.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddExportReportDetail.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddImportReportDetail.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddImportReportDetail.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddReportImport.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddReportImport.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Services/Reports/ReportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Services/Reports/ReportService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddReportExport.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddReportExport.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddReportLiquid.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddReportLiquid.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,30 +60,8 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Controllers/ProductsController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/EF/Seed.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/EF/Seed.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/ProductManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/ProductManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.ViewModel/SubModels/ProductVm.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/ManagerBanch/OrdersInBranch.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/POS/DashBoard.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/POS/DashBoard.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.WebServer/wwwroot/assets/js/custom/apps/subscriptions/list/list.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2dd236033eef492db4680dabbd762d778400/a6/933b6bc7/ToastService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2f7b3b6e2f3c491c91283c8624ab32661ce200/1f/48011b47/HttpDeleteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
@@ -291,14 +264,8 @@
       <workItem from="1655187456750" duration="955000" />
       <workItem from="1655190434432" duration="6000" />
       <workItem from="1655191906088" duration="287000" />
-      <workItem from="1655197539023" duration="15079000" />
-    </task>
-    <task id="LOCAL-00004" summary="add DI for program">
-      <created>1654095221195</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1654095221195</updated>
+      <workItem from="1655197539023" duration="15865000" />
+      <workItem from="1655220812294" duration="164000" />
     </task>
     <task id="LOCAL-00005" summary="fix">
       <created>1654096779562</created>
@@ -636,7 +603,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655217922150</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="change">
+      <created>1655219836369</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1655219836369</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -670,7 +644,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="on" />
     <MESSAGE value="update availabel" />
     <MESSAGE value="update route and add spinner" />
     <MESSAGE value="remove image" />
@@ -695,7 +668,8 @@
     <MESSAGE value="update" />
     <MESSAGE value="seed" />
     <MESSAGE value="up" />
-    <option name="LAST_COMMIT_MESSAGE" value="up" />
+    <MESSAGE value="change" />
+    <option name="LAST_COMMIT_MESSAGE" value="change" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

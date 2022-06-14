@@ -201,7 +201,7 @@
             MessageResult response = new MessageResult();
             newReport.TotalAmount = newReport.ReportDetails.Sum(x => x.Quantity * x.PriceOfUnit);
             response = await reportService.AddLiquid(newReport);
-
+            GbParameter.GbParameter.ReportExport = new();
             if (response != null)
             {
                 if (response.Result == 1)
