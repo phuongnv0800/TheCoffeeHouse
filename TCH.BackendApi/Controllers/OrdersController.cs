@@ -341,7 +341,7 @@ public class OrdersController : ControllerBase
     }
     [AllowAnonymous]
     [HttpGet("compare/{branchId}")]
-    public async Task<IActionResult> CompareOrderUserInBranch(string branchId, Search search)
+    public async Task<IActionResult> CompareOrderUserInBranch(string branchId,[FromQuery] Search search)
     {
         try
         {
