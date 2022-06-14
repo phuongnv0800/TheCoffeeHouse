@@ -27,4 +27,5 @@ public interface IOrderRepository
     Task<Respond<PagedList<ProductQuantityVm>>> GetProductInOrder(string? branchId, Search search);
     Task<Respond<MoneyByDay>> GetChartMoneyByBranchId(string branhID, Search request);
     Task<Respond<MoneyByDay>> GetChartMoney(Search request);
+    Task<Respond<PagedList<OrderInUser>>> CompareOrderUserInBranch(string branchId, Search request);
 }

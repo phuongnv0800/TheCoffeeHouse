@@ -339,7 +339,21 @@ public class OrdersController : ControllerBase
             return BadRequest(new Respond<string> {Result = -1, Message = "Failed", Data = e.Message});
         }
     }
-
+    [AllowAnonymous]
+    [HttpGet("compare/{branchId}")]
+    public async Task<IActionResult> CompareOrderUserInBranch(string branchId, Search search)
+    {
+        try
+        {
+            var respond = await _repository.CompareOrderUserInBranch(branchId, search);
+            return Ok(respond);
+            //return File(bytes, "image/png");
+        }
+        catch (CustomException e)
+        {
+            return BadRequest(new Respond<string> {Result = -1, Message = "Failed", Data = e.Message});
+        }
+    }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] OrderRequest request)

@@ -219,7 +219,8 @@ public class OrderManager : IOrderRepository, IDisposable
                             x.MaterialID == recipe.MaterialID
                             && x.BranchID == request.BranchID);
                     if (stockMaterial == null
-                        || (stockMaterial.StandardMass == 0 || stockMaterial.StandardMass - recipe.Weight*item.Quantity < 0))
+                        || (stockMaterial.StandardMass == 0 ||
+                            stockMaterial.StandardMass - recipe.Weight * item.Quantity < 0))
                     {
                         return new Respond<object>
                         {
@@ -230,7 +231,7 @@ public class OrderManager : IOrderRepository, IDisposable
                         };
                     }
 
-                    stockMaterial.StandardMass -= recipe.Weight*item.Quantity;
+                    stockMaterial.StandardMass -= recipe.Weight * item.Quantity;
                     stockMaterial.Mass = stockMaterial.StandardMass / stockMaterial.Measure.ConversionFactor;
                     _context.StockMaterials.Update(stockMaterial);
                 }
@@ -668,6 +669,73 @@ public class OrderManager : IOrderRepository, IDisposable
         };
     }
 
+    public async Task<Respond<PagedList<OrderInUser>>> CompareOrderUserInBranch(string branchId, Search request)
+    {
+        var result = _context
+            .Orders
+            .Include(x => x.Branch)
+            .Where(x => x.BranchID == branchId && x.UserCreateID != null);
+        if (!string.IsNullOrEmpty(request.Name))
+            result = result.Where(x => x.Code.Contains(request.Name));
+        if (request.StartDate != null && request.EndDate != null)
+            result = result
+                .Where(x => request.EndDate != null
+                            && x.CreateDate.Date <= request.EndDate.Value.Date
+                            && request.StartDate != null
+                            && x.CreateDate.Date >= request.StartDate.Value.Date);
+        //paging
+        int totalRow = await result.CountAsync();
+        List<OrderInUser> data;
+        if (request.IsPging)
+        {
+            data = result.GroupBy(x => x.Cashier)
+                .Select(x => new OrderInUser()
+                {
+                    Cashier = x.Key,
+                    UserCreateID = x.First().UserCreateID,
+                    CustomerPut = x.Sum(z => z.CustomerPut),
+                    CustomerReceive = x.Sum(z => z.CustomerReceive),
+                    ReduceAmount = x.Sum(z => z.ReduceAmount),
+                    ReducePromotion = x.Sum(z => z.ReducePromotion),
+                    ShippingFee = x.Sum(z => z.ShippingFee),
+                    SubAmount = x.Sum(z => z.SubAmount),
+                    TotalAmount = x.Sum(z => z.TotalAmount),
+                    UserName = _context.Users.Find(x.First().UserCreateID)!.UserName,
+                })
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize).ToList();
+        }
+        else
+            data = result.GroupBy(x => x.Cashier).Select(x => new OrderInUser()
+            {
+                Cashier = x.Key,
+                UserCreateID = x.First().UserCreateID,
+                CustomerPut = x.Sum(z => z.CustomerPut),
+                CustomerReceive = x.Sum(z => z.CustomerReceive),
+                ReduceAmount = x.Sum(z => z.ReduceAmount),
+                ReducePromotion = x.Sum(z => z.ReducePromotion),
+                ShippingFee = x.Sum(z => z.ShippingFee),
+                SubAmount = x.Sum(z => z.SubAmount),
+                TotalAmount = x.Sum(z => z.TotalAmount),
+                UserName = _context.Users.Find(x.First().UserCreateID)!.UserName,
+            }).ToList();
+
+        var pagedResult = new PagedList<OrderInUser>
+        {
+            TotalRecord = totalRow,
+            PageSize = request.PageSize,
+            CurrentPage = request.PageNumber,
+            TotalPages = (int) Math.Ceiling((double) totalRow / request.PageSize),
+            Items = data,
+        };
+        return new Respond<PagedList<OrderInUser>>
+        {
+            Data = pagedResult,
+            Result = 1,
+            Message = "Thành công",
+        };
+    }
+
     public async Task<string> ExcelAllOrder(Search request)
     {
         var result = _context
@@ -690,7 +758,7 @@ public class OrderManager : IOrderRepository, IDisposable
             .Select(x => new
             {
                 Branch = x.Key,
-                Orders = x.Select(x => x).ToList(),
+                Orders = x.Select(z => z).ToList(),
             }).ToListAsync();
 
         CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); // try with "en-US"
@@ -755,13 +823,20 @@ public class OrderManager : IOrderRepository, IDisposable
                 worksheet.Cells[row, 5].Value = item.value.Orders[0].Branch.Phone;
                 worksheet.Cells[row, 6].Value = request.StartDate?.ToShortDateString();
                 worksheet.Cells[row, 7].Value = request.EndDate?.ToShortDateString();
-                worksheet.Cells[row, 8].Value = item.value.Orders.Sum(x=>x.ReduceAmount).ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 9].Value = item.value.Orders.Sum(x=>x.ReducePromotion).ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 10].Value =  item.value.Orders.Sum(x=>x.CustomerReceive).ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 11].Value = item.value.Orders.Sum(x=>x.CustomerPut).ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 12].Value =  item.value.Orders.Sum(x=>x.ShippingFee).ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 13].Value =  item.value.Orders.Sum(x=>x.SubAmount).ToString("#,###", cul.NumberFormat);
-                worksheet.Cells[row, 14].Value = item.value.Orders.Sum(x=>x.TotalAmount).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 8].Value =
+                    item.value.Orders.Sum(x => x.ReduceAmount).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 9].Value =
+                    item.value.Orders.Sum(x => x.ReducePromotion).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 10].Value =
+                    item.value.Orders.Sum(x => x.CustomerReceive).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 11].Value =
+                    item.value.Orders.Sum(x => x.CustomerPut).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 12].Value =
+                    item.value.Orders.Sum(x => x.ShippingFee).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 13].Value =
+                    item.value.Orders.Sum(x => x.SubAmount).ToString("#,###", cul.NumberFormat);
+                worksheet.Cells[row, 14].Value =
+                    item.value.Orders.Sum(x => x.TotalAmount).ToString("#,###", cul.NumberFormat);
                 row++;
             }
 
