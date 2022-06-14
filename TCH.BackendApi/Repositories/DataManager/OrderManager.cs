@@ -707,7 +707,7 @@ public class OrderManager : IOrderRepository, IDisposable
 
             //Create Headers and format them
             worksheet.Cells["A1"].Value = "Báo cáo doanh số bán hàng cho tất cả cửa hàng";
-            using (var r = worksheet.Cells["A1:Q1"])
+            using (var r = worksheet.Cells["A1:N1"])
             {
                 r.Merge = true;
                 r.Style.Font.Size = 28;
@@ -718,7 +718,7 @@ public class OrderManager : IOrderRepository, IDisposable
             }
 
             worksheet.Cells["A2"].Value = "Ngày báo cáo: " + DateTime.Now.ToShortDateString();
-            using (var r = worksheet.Cells["A2:Q2"])
+            using (var r = worksheet.Cells["A2:N2"])
             {
                 r.Merge = true;
                 r.Style.Font.Size = 20;
