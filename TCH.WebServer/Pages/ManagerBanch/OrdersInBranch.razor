@@ -1,5 +1,6 @@
 ﻿@page "/orders-branch"
 @page "/orders-branch/{branchId}"
+@using System.Security.Cryptography.X509Certificates
 @inject IOrderService orderService;
 @inject IUserService userServices;
 @inject NavigationManager navigationManager;
@@ -42,7 +43,7 @@
                         <div class="col-12">
                             <div class="card-body pt-0">
                                 <RadzenChart>
-                                    <RadzenLineSeries Smooth="true" Data="@ChartOrders" CategoryProperty="CreateDate" Title="Doanh thu theo cửa hàng" ValueProperty="TotalAmount">
+                                    <RadzenLineSeries Smooth="true" Data="@DataSet" CategoryProperty="DateTime" Title="Doanh thu theo cửa hàng" ValueProperty="Revenue">
                                         <RadzenMarkers MarkerType="MarkerType.Square"/>
                                     </RadzenLineSeries>
 
@@ -208,7 +209,7 @@
     private Models.Pagination.Pagination pagination = new();
     private DateRequest dateRequest;
     private double Sum;
-
+    public List<MoneyByDayDetail> DataSet { get; set; }
     // class DataItem
     // {
     //     public DateTime Date { get; set; }
@@ -260,7 +261,7 @@
             ProductsList = response.Data.Items.ToList();
             pagination.totalPage = response.Data.TotalPages;
         }
-        catch (Exception e)
+        catch (Exception _e)
         {
             toastService.ShowError("có lỗi");
         }
@@ -274,6 +275,10 @@
             if (response.Result == 1)
             {
                 ChartOrders = response.Data.Items.ToList();
+                DataSet = response.Data.Items
+                    .AsQueryable()
+                    .GroupBy(x => x.CreateDate.Date)
+                    .Select(x => new MoneyByDayDetail(){ DateTime = x.Key, Revenue = x.Sum(i=>i.TotalAmount) }).ToList();
                 Sum = response.Data.Items.Sum(x => x.TotalAmount);
             }
         }
@@ -298,7 +303,7 @@
     public async Task SearchByText()
     {
         await Get(pagination.PageNumber);
-        
+
         await GetChart();
     }
 
@@ -325,5 +330,5 @@
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
     }
-
+    
 }
