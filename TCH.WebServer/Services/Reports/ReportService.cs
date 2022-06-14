@@ -13,12 +13,24 @@ namespace TCH.WebServer.Services.Reports
 {
     public interface IReportService
     {
-        Task<ResponseLogin<PagedList<Report>>> GetAllImport(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate);
-        Task<ResponseLogin<PagedList<Report>>> GetAllExport(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate);
-        Task<ResponseLogin<PagedList<Report>>> GetAllLiquid(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate);
-        Task<ResponseLogin<PagedList<Report>>> GetAllImportInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
-        Task<ResponseLogin<PagedList<Report>>> GetAllExportInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
-        Task<ResponseLogin<PagedList<Report>>> GetAllLiquidInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
+        Task<ResponseLogin<PagedList<Report>>> GetAllImport(bool IsPaging, int pageSize, int pageNumber,
+            DateTime? FromDate, DateTime? ToDate);
+
+        Task<ResponseLogin<PagedList<Report>>> GetAllExport(bool IsPaging, int pageSize, int pageNumber,
+            DateTime? FromDate, DateTime? ToDate);
+
+        Task<ResponseLogin<PagedList<Report>>> GetAllLiquid(bool IsPaging, int pageSize, int pageNumber,
+            DateTime? FromDate, DateTime? ToDate);
+
+        Task<ResponseLogin<PagedList<Report>>> GetAllImportInBranch(bool IsPaging, int pageSize, int pageNumber,
+            string BranchId, DateTime? FromDate, DateTime? ToDate);
+
+        Task<ResponseLogin<PagedList<Report>>> GetAllExportInBranch(bool IsPaging, int pageSize, int pageNumber,
+            string BranchId, DateTime? FromDate, DateTime? ToDate);
+
+        Task<ResponseLogin<PagedList<Report>>> GetAllLiquidInBranch(bool IsPaging, int pageSize, int pageNumber,
+            string BranchId, DateTime? FromDate, DateTime? ToDate);
+
         Task<MessageResult> AddImport(ImportRequest Promotion);
         Task<MessageResult> AddExport(ExportRequest Promotion);
         Task<MessageResult> AddLiquid(ExportRequest Promotion);
@@ -31,12 +43,18 @@ namespace TCH.WebServer.Services.Reports
         Task<Byte[]> ExcelExportInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<Byte[]> ExcelImportInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<Byte[]> ExcelLiquidInBranch(string BranchId, DateTime? FromDate, DateTime? ToDate);
-        Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDay(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate);
-        Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDayByBranchId(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
+
+        Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDay(bool IsPaging, int pageSize, int pageNumber,
+            DateTime? FromDate, DateTime? ToDate);
+
+        Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDayByBranchId(bool IsPaging, int pageSize,
+            int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
+
         Task DeleteImport(string id);
         Task DeleteExport(string id);
         Task DeleteLiquid(string id);
     }
+
     public class ReportService : IReportService
     {
         private readonly HttpClient httpClient;
@@ -52,11 +70,13 @@ namespace TCH.WebServer.Services.Reports
             {
                 CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8, "application/json-patch+json");
-                
+                httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8,
+                    "application/json-patch+json");
+
                 var response = await httpClient.PostAsync($"/api/Reports/export", httpContent);
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                if ((int) response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     MessageResult respond = JsonConvert.DeserializeObject<MessageResult>(content);
@@ -64,8 +84,10 @@ namespace TCH.WebServer.Services.Reports
                     {
                         return respond;
                     }
+
                     return null;
                 }
+
                 return null;
             }
             catch
@@ -80,20 +102,20 @@ namespace TCH.WebServer.Services.Reports
             {
                 CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8, "application/json");
-                
-                var response = await httpClient.PostAsync($"/api/Reports/import", httpContent);
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8,
+                    "application/json");
+
+                var response = await httpClient.PostAsJsonAsync($"/api/Reports/import", Promotion);
+                if ((int) response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     MessageResult respond = JsonConvert.DeserializeObject<MessageResult>(content);
-                    if (respond.Result == 1)
-                    {
-                        return respond;
-                    }
-                    return null;
+
+                    return respond;
                 }
+
                 return null;
             }
             catch
@@ -108,11 +130,13 @@ namespace TCH.WebServer.Services.Reports
             {
                 CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
-                var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8, "application/json-patch+json");
-                
+                httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(Promotion), Encoding.UTF8,
+                    "application/json-patch+json");
+
                 var response = await httpClient.PostAsync($"/api/Reports/liquidation", httpContent);
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                if ((int) response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     MessageResult respond = JsonConvert.DeserializeObject<MessageResult>(content);
@@ -120,8 +144,10 @@ namespace TCH.WebServer.Services.Reports
                     {
                         return respond;
                     }
+
                     return null;
                 }
+
                 return null;
             }
             catch
@@ -134,12 +160,14 @@ namespace TCH.WebServer.Services.Reports
         {
             try
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
                 var response = await httpClient.DeleteAsync($"/api/Reports/export/{id}");
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                if ((int) response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<PagedList<Report>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<Report>>>(content);
+                    ResponseLogin<PagedList<Report>> respond =
+                        JsonConvert.DeserializeObject<ResponseLogin<PagedList<Report>>>(content);
                     if (respond.Result == 1)
                     {
                         return;
@@ -156,12 +184,14 @@ namespace TCH.WebServer.Services.Reports
         {
             try
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
                 var response = await httpClient.DeleteAsync($"/api/Reports/import/{id}");
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                if ((int) response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<PagedList<Report>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<Report>>>(content);
+                    ResponseLogin<PagedList<Report>> respond =
+                        JsonConvert.DeserializeObject<ResponseLogin<PagedList<Report>>>(content);
                     if (respond.Result == 1)
                     {
                         return;
@@ -178,12 +208,14 @@ namespace TCH.WebServer.Services.Reports
         {
             try
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
+                httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", GbParameter.GbParameter.Token);
                 var response = await httpClient.DeleteAsync($"/api/Reports/liquidation/{id}");
-                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                if ((int) response.StatusCode == StatusCodes.Status200OK)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    ResponseLogin<PagedList<Report>> respond = JsonConvert.DeserializeObject<ResponseLogin<PagedList<Report>>>(content);
+                    ResponseLogin<PagedList<Report>> respond =
+                        JsonConvert.DeserializeObject<ResponseLogin<PagedList<Report>>>(content);
                     if (respond.Result == 1)
                     {
                         return;
@@ -205,7 +237,7 @@ namespace TCH.WebServer.Services.Reports
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
                 var response = await httpClient.GetAsync($"/api/Reports/excel-export-all?" + fromDate
-                        + toDate);
+                    + toDate);
                 return await response.Content.ReadAsByteArrayAsync();
             }
             catch
@@ -223,7 +255,7 @@ namespace TCH.WebServer.Services.Reports
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
                 var response = await httpClient.GetAsync($"/api/Reports/excel-export/{BranchId}?" + fromDate
-                        + toDate);
+                    + toDate);
                 return await response.Content.ReadAsByteArrayAsync();
             }
             catch
@@ -241,7 +273,7 @@ namespace TCH.WebServer.Services.Reports
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
                 var response = await httpClient.GetAsync($"/api/Reports/excel-import-all?" + fromDate
-                        + toDate);
+                    + toDate);
                 return await response.Content.ReadAsByteArrayAsync();
             }
             catch
@@ -259,7 +291,7 @@ namespace TCH.WebServer.Services.Reports
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
                 var response = await httpClient.GetAsync($"/api/Reports/excel-import/{BranchId}?" + fromDate
-                        + toDate);
+                    + toDate);
                 return await response.Content.ReadAsByteArrayAsync();
             }
             catch
@@ -277,7 +309,7 @@ namespace TCH.WebServer.Services.Reports
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
                 var response = await httpClient.GetAsync($"/api/Reports/excel-liquidation-all?" + fromDate
-                        + toDate);
+                    + toDate);
                 return await response.Content.ReadAsByteArrayAsync();
             }
             catch
@@ -295,7 +327,7 @@ namespace TCH.WebServer.Services.Reports
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
                 var response = await httpClient.GetAsync($"/api/Reports/excel-liquidation/{BranchId}?" + fromDate
-                        + toDate);
+                    + toDate);
                 return await response.Content.ReadAsByteArrayAsync();
             }
             catch
@@ -304,93 +336,117 @@ namespace TCH.WebServer.Services.Reports
             }
         }
 
-        public async Task<ResponseLogin<PagedList<Report>>> GetAllExport(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<PagedList<Report>>> GetAllExport(bool IsPaging, int pageSize, int pageNumber,
+            DateTime? FromDate, DateTime? ToDate)
         {
             CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
             string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>("/api/Reports/export?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate + toDate);
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>(
+                "/api/Reports/export?IsPging=" + IsPaging.ToString()
+                                               + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" +
+                                               pageSize.ToString() + fromDate + toDate);
             return response;
         }
 
-        public async Task<ResponseLogin<PagedList<Report>>> GetAllExportInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<PagedList<Report>>> GetAllExportInBranch(bool IsPaging, int pageSize,
+            int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
         {
             CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
             string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>($"/api/Reports/export-by-branch-id/{BranchId}?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() +fromDate + toDate);
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>(
+                $"/api/Reports/export-by-branch-id/{BranchId}?IsPging=" + IsPaging.ToString()
+                                                                        + "&PageNumber=" + pageNumber.ToString() +
+                                                                        "&PageSize=" + pageSize.ToString() + fromDate +
+                                                                        toDate);
             return response;
         }
 
-        public async Task<ResponseLogin<PagedList<Report>>> GetAllImport(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<PagedList<Report>>> GetAllImport(bool IsPaging, int pageSize, int pageNumber,
+            DateTime? FromDate, DateTime? ToDate)
         {
             CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
             string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>("/api/Reports/import?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate + toDate);
-            
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>(
+                "/api/Reports/import?IsPging=" + IsPaging.ToString()
+                                               + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" +
+                                               pageSize.ToString() + fromDate + toDate);
+
             return response;
         }
 
-        public async Task<ResponseLogin<PagedList<Report>>> GetAllImportInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<PagedList<Report>>> GetAllImportInBranch(bool IsPaging, int pageSize,
+            int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
         {
             CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
             string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>($"/api/Reports/import-by-branch-id/{BranchId}?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate +toDate);
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>(
+                $"/api/Reports/import-by-branch-id/{BranchId}?IsPging=" + IsPaging.ToString()
+                                                                        + "&PageNumber=" + pageNumber.ToString() +
+                                                                        "&PageSize=" + pageSize.ToString() + fromDate +
+                                                                        toDate);
             if (response.Result != 1)
             {
                 return null;
             }
+
             return response;
         }
 
-        public async Task<ResponseLogin<PagedList<Report>>> GetAllLiquid(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<PagedList<Report>>> GetAllLiquid(bool IsPaging, int pageSize, int pageNumber,
+            DateTime? FromDate, DateTime? ToDate)
         {
             CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
             string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>("/api/Reports/liquidation?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate +toDate);
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>(
+                "/api/Reports/liquidation?IsPging=" + IsPaging.ToString()
+                                                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" +
+                                                    pageSize.ToString() + fromDate + toDate);
             if (response.Result != 1)
             {
                 return null;
             }
+
             return response;
         }
 
-        public async Task<ResponseLogin<PagedList<Report>>> GetAllLiquidInBranch(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<PagedList<Report>>> GetAllLiquidInBranch(bool IsPaging, int pageSize,
+            int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
         {
             CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
             string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>($"/api/Reports/liquidation-by-branch-id/{BranchId}?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate +toDate);
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<Report>>>(
+                $"/api/Reports/liquidation-by-branch-id/{BranchId}?IsPging=" + IsPaging.ToString()
+                                                                             + "&PageNumber=" + pageNumber.ToString() +
+                                                                             "&PageSize=" + pageSize.ToString() +
+                                                                             fromDate + toDate);
             if (response.Result != 1)
             {
                 return null;
             }
+
             return response;
         }
 
         public async Task<ResponseLogin<Report>> GetExportnById(string id)
         {
-            
             var response = await httpClient.GetFromJsonAsync<ResponseLogin<Report>>($"/api/Reports/export/{id}");
             if (response.Result != 1)
             {
                 return null;
             }
+
             return response;
         }
 
@@ -401,6 +457,7 @@ namespace TCH.WebServer.Services.Reports
             {
                 return null;
             }
+
             return response;
         }
 
@@ -411,36 +468,45 @@ namespace TCH.WebServer.Services.Reports
             {
                 return null;
             }
+
             return response;
         }
 
-        public async Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDay(bool IsPaging, int pageSize, int pageNumber, DateTime? FromDate, DateTime? ToDate) 
+        public async Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDay(bool IsPaging, int pageSize,
+            int pageNumber, DateTime? FromDate, DateTime? ToDate)
         {
             CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
             string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<MassMaterial>>>("/api/Reports/get-mass-material-in-day?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate + toDate);
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<MassMaterial>>>(
+                "/api/Reports/get-mass-material-in-day?IsPging=" + IsPaging.ToString()
+                                                                 + "&PageNumber=" + pageNumber.ToString() +
+                                                                 "&PageSize=" + pageSize.ToString() + fromDate +
+                                                                 toDate);
             if (response.Result != 1)
             {
                 return null;
             }
+
             return response;
         }
 
-        public async Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDayByBranchId(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
+        public async Task<ResponseLogin<PagedList<MassMaterial>>> GetMassMaterialInDayByBranchId(bool IsPaging,
+            int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
         {
             CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
             string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<MassMaterial>>>($"/api/Reports/get-mass-material-in-day-by-branch/{BranchId}?IsPging=" + IsPaging.ToString()
-                    + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate + toDate);
+            var response = await httpClient.GetFromJsonAsync<ResponseLogin<PagedList<MassMaterial>>>(
+                $"/api/Reports/get-mass-material-in-day-by-branch/{BranchId}?IsPging=" + IsPaging.ToString()
+                + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" + pageSize.ToString() + fromDate + toDate);
             if (response.Result != 1)
             {
                 return null;
             }
+
             return response;
         }
     }

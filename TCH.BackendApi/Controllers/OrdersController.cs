@@ -391,7 +391,7 @@ public class OrdersController : ControllerBase
     }
 
 
-    [Authorize(Roles = Permission.Branch + Permission.Manage)]
+    [Authorize(Roles = Permission.Branch +","+ Permission.Manage)]
     [HttpDelete("{orderID}")]
     public async Task<IActionResult> Delete(string orderID)
     {
@@ -411,7 +411,7 @@ public class OrdersController : ControllerBase
         }
     }
 
-    [Authorize(Roles = Permission.Branch + Permission.Manage)]
+    [Authorize(Roles = Permission.Branch +","+ Permission.Manage)]
     [HttpPut("{orderId}")]
     //call api with httpClient thi dung FromBody
     public async Task<IActionResult> Update([FromBody] OrderRequest request)

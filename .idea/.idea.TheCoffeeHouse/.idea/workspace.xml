@@ -12,12 +12,19 @@
     <projectFile pubXmlPath="TCH.BackendApi/Properties/PublishProfiles/FolderProfile.pubxml">TCH.BackendApi/TCH.BackendApi.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="seed">
+    <list default="true" id="42e87b88-01a9-4700-8921-23ee932fcbf6" name="Changes" comment="up">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TheCoffeeHouse/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Controllers/OrdersController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Uploads/temp-order.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Uploads/temp-order.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/CustomerManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/RecipeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/RecipeManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.BackendApi/Uploads/temp.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/Uploads/temp.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.BackendApi/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.BackendApi/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/OrdersInBranch.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/OrdersInBranch.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/CustomerDetailFor.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/CustomerDetailFor.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/ExchangeVoucherModal.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/ExchangeVoucherModal.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddImportReportDetail.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddImportReportDetail.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddReportImport.razor" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Pages/ManagerBanch/AddReportImport.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TCH.WebServer/Services/Reports/ReportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/Services/Reports/ReportService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/TCH.WebServer/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,6 +76,8 @@
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.BackendApi/Repositories/DataManager/OrderManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -77,6 +86,7 @@
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/ProductManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.BackendApi/Repositories/DataManager/ProductManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.ViewModel/SubModels/ProductVm.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/ManagerBanch/OrdersInBranch.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/POS/DashBoard.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/admin/Desktop/TheCoffeeHouse/TCH.WebServer/Pages/POS/DashBoard.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/TCH.WebServer/wwwroot/assets/js/custom/apps/subscriptions/list/list.js.map" root0="FORCE_HIGHLIGHTING" />
@@ -281,14 +291,7 @@
       <workItem from="1655187456750" duration="955000" />
       <workItem from="1655190434432" duration="6000" />
       <workItem from="1655191906088" duration="287000" />
-      <workItem from="1655197539023" duration="13327000" />
-    </task>
-    <task id="LOCAL-00003" summary="add layout print">
-      <created>1649421235597</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1649421235597</updated>
+      <workItem from="1655197539023" duration="15079000" />
     </task>
     <task id="LOCAL-00004" summary="add DI for program">
       <created>1654095221195</created>
@@ -626,7 +629,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655216813511</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="up">
+      <created>1655217922150</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1655217922150</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -682,10 +692,10 @@
     <MESSAGE value="okay" />
     <MESSAGE value="out of product" />
     <MESSAGE value="report" />
-    <MESSAGE value="up" />
     <MESSAGE value="update" />
     <MESSAGE value="seed" />
-    <option name="LAST_COMMIT_MESSAGE" value="seed" />
+    <MESSAGE value="up" />
+    <option name="LAST_COMMIT_MESSAGE" value="up" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -780,30 +790,31 @@
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TCH.WebServer/Services/Reports/ReportService.cs</url>
-          <line>86</line>
-          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Services/Reports/ReportService.cs" initialLine="86" containingFunctionPresentation="method 'AddImport'">
+          <url>file://$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/ExchangeVoucherModal.razor</url>
+          <line>93</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Pages/CustomerPage/ExchangeVoucherModal.razor" initialLine="93" isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
             <startOffsets>
-              <option value="4788" />
+              <option value="-1" />
             </startOffsets>
             <endOffsets>
-              <option value="4844" />
+              <option value="-1" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="19" />
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/TCH.WebServer/Services/Reports/ReportService.cs</url>
-          <line>85</line>
-          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Services/Reports/ReportService.cs" initialLine="85" containingFunctionPresentation="method 'AddImport'">
+          <line>110</line>
+          <properties documentPath="$PROJECT_DIR$/TCH.WebServer/Services/Reports/ReportService.cs" initialLine="110" containingFunctionPresentation="method 'AddImport'">
             <startOffsets>
-              <option value="4692" />
+              <option value="4949" />
             </startOffsets>
             <endOffsets>
-              <option value="4771" />
+              <option value="5006" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="20" />
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

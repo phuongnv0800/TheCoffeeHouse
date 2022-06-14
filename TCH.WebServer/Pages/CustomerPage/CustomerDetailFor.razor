@@ -318,7 +318,7 @@
         });
 
         var result = await modal.Result;
-        if (result.Data == (object) true)
+        if (!result.Cancelled)
         {
             var respond = await CustomerService.GetPromotion(customerId);
             if (respond.Result == 1)

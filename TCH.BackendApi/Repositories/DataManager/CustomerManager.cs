@@ -133,6 +133,7 @@ public class CustomerManager : IDisposable, ICustomerRepository
             PromotionId = promotionId,
         };
         await _context.CustomerForPromotions.AddAsync(promotionInCustomer);
+        await _context.SaveChangesAsync();
         return new Respond<Customer>()
         {
             Result = 1,

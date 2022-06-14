@@ -246,6 +246,7 @@
             newReport.TotalAmount = newReport.ReportDetails.Sum(x => x.Quantity * x.PriceOfUnit);
 
             response = await reportService.AddImport(newReport);
+            GbParameter.GbParameter.ReportImport = new();
 
             if (response != null)
             {

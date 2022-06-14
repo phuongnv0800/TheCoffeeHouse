@@ -201,13 +201,13 @@
         var res = await unitService.GetAllMaterials();
         units = res.Data.Items;
         importDetail = new ImportDetail()
-            {
-                MaterialID = materials.First().ID,
-                MaterialName = materials.First().Name,
-                BeginDate = DateTime.Now,
-                    ExpirationDate = DateTime.Now.AddDays(10),
-                    Status = 0,
-                };
+        {
+            MaterialID = materials.First().ID,
+            MaterialName = materials.First().Name,
+            BeginDate = DateTime.Now,
+            ExpirationDate = DateTime.Now.AddDays(10),
+            Status = 0,
+        };
     }
 
     public async Task OnPick()

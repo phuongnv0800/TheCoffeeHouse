@@ -62,6 +62,7 @@ public class RecipeManager : IDisposable, IRecipeRepository
             .Include(x => x.Size)
             .Include(x => x.Material)
             .Where(x => x.ProductID == productID && x.SizeID == sizeID)
+            .OrderBy(x=>x.SizeID)
             .ToListAsync();
         if (result.Count == 0)
         {
