@@ -1,0 +1,320 @@
+﻿@page "/order-by-user"
+@inject IConfiguration Configuration
+@inject IOrderService OrderService;
+@inject IToastService ToastService
+@inject IJSRuntime JsRuntime;
+@inject IBrandService BranchService
+@inject IUserApiClient UserApiClient;
+@inject IUserService UserServices
+@attribute [Authorize]
+
+<div class="page d-flex flex-row flex-column-fluid">
+    <div class="wrapper d-flex flex-column flex-row-fluid mt-5" id="kt_wrapper">
+
+        <div class="content flex-column flex-column-fluid" id="kt_content">
+            <div class="card card-flush " style="">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            <div class="card-title">
+                                <div class="d-flex align-items-center position-relative my-1">
+                                    <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                        </svg>
+                                    </span>
+                                    @if (dateRequest != null)
+                                    {
+                                        <EditForm Model="@dateRequest" OnValidSubmit="SearchByText" class="d-flex">
+                                            <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu"/>
+                                            <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith"/>
+                                            <button onclick="@SearchByText"
+                                                    class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Tìm kiếm
+                                            </button>
+                                        </EditForm>
+                                    }
+                                    @if(BranchId != null)
+                                    {
+                                        <EditForm Model="@BranchId" class="d-flex">
+                                            <InputSelect @bind-Value="BranchId" class="form-control">
+                                                @if (BranchList != null)
+                                                {
+                                                    @foreach (var dept in BranchList)
+                                                    {
+                                                        <option value="@dept.ID">@dept.Name</option>
+                                                    }
+                                                }
+                                            </InputSelect>
+                                        </EditForm>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body pt-0">
+
+                    <RadzenChart>
+                        @if(items != null)
+                        {
+                            <RadzenBarSeries Data="@items" CategoryProperty="Quarter" Title="Lượng đơn hàng" ValueProperty="Revenue">
+
+                        </RadzenBarSeries>
+                            
+                        }
+                        @if (lists != null && lists.Count != 0)
+                        {
+                            @foreach (var item in lists)
+                            {
+                                <RadzenBarSeries  Data="@item.listItems" CategoryProperty="Quarter" Title="Lượng đơn hàng" ValueProperty="Revenue">
+                                    
+                                </RadzenBarSeries>
+                            }
+                        }
+                        <RadzenValueAxis>
+                            @*<RadzenGridLines Visible="true" />*@
+                            <RadzenAxisTitle Text="Lượng tiêu thụ" />
+                        </RadzenValueAxis>
+                    </RadzenChart>
+
+
+                    <div class="text-end d-flex mt-5">
+                        <h1>Nhân viên xuất sắc nhất: </h1>
+                        <h1 class="text-primary ms-2"></h1>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="card card-flush ">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+                                </svg>
+                            </span>
+                            <EditForm Model="searchText" OnValidSubmit="SearchByText">
+                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-450px ps-14" placeholder="Tìm kiếm chinh nhánh theo tên"/>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+
+                    <div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="table-responsive">
+                            <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
+                                <thead>
+                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                        Tên
+                                    </th>
+                                    <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending" style="width: 159.297px;">
+                                        Số lượng đơn
+                                    </th>
+                                    <th class="min-w-150px  sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
+                                        Tổng doanh thu/người
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="fw-bold text-gray-600">
+                                @if (orders?.Count != 0 && orders != null)
+                                {
+                                    foreach (var branch in orders)
+                                    {
+                                        <tr class="odd">
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-5">
+                                                        <a  class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                            @branch.Cashier
+                                                        </a>
+                                                        <div class="text-muted fs-7 fw-bolder">@branch.UserName </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    @branch.QuantityOrder
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    @branch.TotalAmount
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <Spinner Colspan="5"></Spinner>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-start">
+                                <div class="dataTables_length" id="kt_ecommerce_category_table_length">
+                                    <label>
+                                        <EditForm Model="pagination">
+                                            <InputSelect @bind-Value="pagination.pageSize" name="kt_ecommerce_category_table_length" aria-controls="kt_ecommerce_category_table" class="form-select form-select-sm form-select-solid">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </InputSelect>
+                                        </EditForm>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-10 d-flex align-items-center justify-content-center justify-content-md-end">
+                                <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
+                                    <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    bool smooth = true;
+
+    class DataItem
+    {
+        public string Quarter { get; set; }
+        public double Revenue { get; set; }
+    }
+
+    class ListDataItem
+    {
+        public Branch branch { get; set; }
+
+        public List<DataItem> listItems { get; set; }
+    }
+    private List<DataItem> items = new List<DataItem>();
+    private List<ListDataItem> lists = new List<ListDataItem>();
+    public List<Branch>? BranchList = new();
+    public string BranchId;
+    public List<OrderInUser> orders = new();
+    private Models.Pagination.Pagination pagination = new();
+    private DateRequest dateRequest;
+    private string searchText = "";
+
+    public MoneyByDay MoneyByDayAll { get; set; } = new();
+
+    public List<MoneyByDay> MoneyByDayInBranch { get; set; } = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+
+            dateRequest = new DateRequest()
+            {
+                FromDate = new DateTime(2022, 06, 01),
+                ToDate = DateTime.Now
+            };
+            var res = await BranchService.GetAllBranchs("");
+            BranchList = res.Data.Items;
+            BranchId = BranchList.First().ID;
+            await Get(1);
+            await GetChartBranch(BranchId);
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError("có lỗi");
+            }
+    }
+
+    public async Task Get(int pageNumber)
+    {
+        try
+        {
+            var response = await OrderService.GetOrderByCompareUser(true, pagination.pageSize, pagination.PageNumber,BranchId, searchText,dateRequest.FromDate, dateRequest.ToDate);
+            pagination.PageNumber = response.Data.CurrentPage;
+            orders = response.Data.Items.ToList();
+        }
+        catch (Exception e)
+        {
+            ToastService.ShowError("Có lỗi");
+        }
+    }
+
+    public async Task SearchByText()
+    {
+        var res = await OrderService.GetOrderByCompareUser(true,10,pagination.PageNumber,BranchId,searchText,dateRequest.FromDate, dateRequest.ToDate);
+        orders = res.Data.Items;
+        await GetChartBranch(BranchId);
+        MoneyByDayInBranch = new();
+        StateHasChanged();
+    }
+
+    public async Task Change(int link)
+    {
+         pagination.PageNumber = link;
+        lists= new List<ListDataItem>();
+            await GetChartBranch(BranchId);
+        StateHasChanged();
+    }
+    public async Task GetChartBranch(string branchId)
+    {
+        try
+        {
+            lists = lists = new List<ListDataItem>();
+            BranchId = branchId;
+            var resb = await BranchService.GetBranchById(branchId);
+            var branch = resb.Data;
+            
+            List<DataItem> list = new List<DataItem>();
+            foreach (var it in orders)
+            {
+                DataItem data = new DataItem()
+                    {
+                        Quarter = it.Cashier,
+                        Revenue = it.QuantityOrder,
+                    };
+                list.Add(data);
+            }
+            var listdata = new ListDataItem()
+                {
+                    branch = branch,
+                    listItems = list
+                };
+            lists.Add(listdata);
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError("có lỗi");
+        }
+    }
+
+
+}
+
+@code {
+
+    public class DateRequest
+    {
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+    }
+
+}

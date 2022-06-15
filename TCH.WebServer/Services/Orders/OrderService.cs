@@ -40,8 +40,8 @@ namespace TCH.WebServer.Services.Orders
         Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProductsByBranch(bool IsPaging, int pageSize,
             int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
 
-        Task<Respond<PagedList<OrderInUser>>> GetOrderByUser(bool IsPaging, int pageSize,
-            int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
+        Task<Respond<PagedList<OrderInUser>>> GetOrderByCompareUser(bool IsPaging, int pageSize,
+            int pageNumber, string BranchId, string name, DateTime? FromDate, DateTime? ToDate);
         Task<string> PrintPDF(string id);
         Task DeleteOrder(string id);
 
@@ -466,7 +466,7 @@ namespace TCH.WebServer.Services.Orders
             }
         }
 
-        public async Task<Respond<PagedList<OrderInUser>>> GetOrderByUser(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
+        public async Task<Respond<PagedList<OrderInUser>>> GetOrderByCompareUser(bool IsPaging, int pageSize, int pageNumber, string BranchId, string name, DateTime? FromDate, DateTime? ToDate)
         {
             try
             {
