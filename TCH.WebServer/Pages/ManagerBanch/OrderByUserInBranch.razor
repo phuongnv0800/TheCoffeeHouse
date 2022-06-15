@@ -1,11 +1,11 @@
-﻿@page "/order-by-user"
+﻿@page "/order-by-user-in-branch"
 @inject IConfiguration Configuration
 @inject IOrderService OrderService;
 @inject IToastService ToastService
 @inject IJSRuntime JsRuntime;
 @inject IBrandService BranchService
 @inject IUserApiClient UserApiClient;
-@inject IUserService UserServices
+@inject IUserApiClient UserApiClient;
 @attribute [Authorize]
 
 <div class="page d-flex flex-row flex-column-fluid">
@@ -39,20 +39,6 @@
                                                     class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Tìm kiếm
                                             </button>
-                                        </EditForm>
-                                    }
-                                    @if(BranchId != null)
-                                    {
-                                        <EditForm Model="@BranchId" class="d-flex ms-2">
-                                            <select  @onchange="@(value => DoStuff(value))" class="form-control">
-                                                @if (BranchList != null)
-                                                {
-                                                    @foreach (var dept in BranchList)
-                                                    {
-                                                        <option value="@dept.ID">@dept.Name</option>
-                                                    }
-                                                }
-                                            </select>
                                         </EditForm>
                                     }
                                 </div>
@@ -211,7 +197,7 @@
     private Models.Pagination.Pagination pagination = new();
     private DateRequest dateRequest;
     private string searchText = "";
-
+    private AppUser User = null;
     public MoneyByDay MoneyByDayAll { get; set; } = new();
 
     public List<MoneyByDay> MoneyByDayInBranch { get; set; } = new();
@@ -227,6 +213,8 @@
                 FromDate = new DateTime(2022, 06, 01),
                 ToDate = DateTime.Now
             };
+            var resUser = await UserApiClient.GetById(GbParameter.GbParameter.UserId);
+            User = resUser.Data;
             var res = await BranchService.GetAllBranchs("");
             BranchList = res.Data.Items;
             BranchId = BranchList.First().ID;
@@ -243,7 +231,7 @@
     {
         try
         {
-            var response = await OrderService.GetOrderByCompareUser(true, pagination.pageSize, pageNumber,BranchId, searchText,dateRequest.FromDate, dateRequest.ToDate);
+            var response = await OrderService.GetOrderByCompareUser(true, pagination.pageSize, pagination.PageNumber,User.BranchID, searchText,dateRequest.FromDate, dateRequest.ToDate);
             pagination.PageNumber = response.Data.CurrentPage;
             orders = response.Data.Items.ToList();
         }
@@ -255,7 +243,7 @@
 
     public async Task SearchByText()
     {
-        var res = await OrderService.GetOrderByCompareUser(true,10,pagination.PageNumber,BranchId,searchText,dateRequest.FromDate, dateRequest.ToDate);
+        var res = await OrderService.GetOrderByCompareUser(true,10,pagination.PageNumber,User.BranchID,searchText,dateRequest.FromDate, dateRequest.ToDate);
         orders = res.Data.Items;
         //await GetChartBranch(BranchId);
         MoneyByDayInBranch = new();
@@ -307,7 +295,6 @@
 
     private async Task DoStuff(object args)
     {
-        BranchId = args.ToString();
         await Get(1);
         await GetChartBranch(BranchId);
         StateHasChanged();

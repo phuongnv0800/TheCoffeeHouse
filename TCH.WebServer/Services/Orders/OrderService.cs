@@ -474,7 +474,7 @@ namespace TCH.WebServer.Services.Orders
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
                 string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
-                var response = await httpClient.GetAsync($"/api/Orders/get-product-branch/{BranchId}?IsPging=" +
+                var response = await httpClient.GetAsync($"/api/Orders/compare/{BranchId}?IsPging=" +
                                                          IsPaging.ToString()
                                                          + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" +
                                                          pageSize.ToString() + fromDate
