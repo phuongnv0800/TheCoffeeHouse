@@ -692,6 +692,7 @@ public class OrderManager : IOrderRepository, IDisposable
                 .Select(x => new OrderInUser()
                 {
                     UserCreateID = x.Key,
+                    QuantityOrder = x.Select(z=>z).Count(),
                     Cashier = x.First().Cashier,
                     CustomerPut = x.Sum(z => z.CustomerPut),
                     CustomerReceive = x.Sum(z => z.CustomerReceive),
@@ -710,6 +711,7 @@ public class OrderManager : IOrderRepository, IDisposable
             {
                 UserCreateID = x.Key,
                 Cashier = x.First().Cashier,
+                QuantityOrder =  x.Select(z=>z).Count(),
                 CustomerPut = x.Sum(z => z.CustomerPut),
                 CustomerReceive = x.Sum(z => z.CustomerReceive),
                 ReduceAmount = x.Sum(z => z.ReduceAmount),

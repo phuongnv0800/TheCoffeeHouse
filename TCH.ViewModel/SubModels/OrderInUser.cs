@@ -4,7 +4,7 @@ public class OrderInUser
 {
     public string UserName { get; set; }
     public string Cashier { get; set; }
-
+    public int QuantityOrder { get; set; }
     public double ReducePromotion { get; set; }
 
     public double ReduceAmount { get; set; }
