@@ -40,6 +40,8 @@ namespace TCH.WebServer.Services.Orders
         Task<ResponseLogin<PagedList<ProductQuantityVm>>> GetQuantiProductsByBranch(bool IsPaging, int pageSize,
             int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
 
+        Task<Respond<PagedList<OrderInUser>>> GetOrderByUser(bool IsPaging, int pageSize,
+            int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate);
         Task<string> PrintPDF(string id);
         Task DeleteOrder(string id);
 
@@ -448,6 +450,40 @@ namespace TCH.WebServer.Services.Orders
                     var content = await response.Content.ReadAsStringAsync();
                     ResponseLogin<PagedList<ProductQuantityVm>> respond =
                         JsonConvert.DeserializeObject<ResponseLogin<PagedList<ProductQuantityVm>>>(content);
+                    if (respond.Result == 1)
+                    {
+                        return respond;
+                    }
+
+                    return null;
+                }
+
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<Respond<PagedList<OrderInUser>>> GetOrderByUser(bool IsPaging, int pageSize, int pageNumber, string BranchId, DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                string fromDate = FromDate != null ? "&StartDate=" + FromDate.Value.ToShortDateString() : "";
+                string toDate = ToDate != null ? "&EndDate=" + ToDate.Value.ToShortDateString() : "";
+                var response = await httpClient.GetAsync($"/api/Orders/get-product-branch/{BranchId}?IsPging=" +
+                                                         IsPaging.ToString()
+                                                         + "&PageNumber=" + pageNumber.ToString() + "&PageSize=" +
+                                                         pageSize.ToString() + fromDate
+                                                         + toDate);
+                if ((int)response.StatusCode == StatusCodes.Status200OK)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Respond<PagedList<OrderInUser>> respond =
+                        JsonConvert.DeserializeObject<Respond<PagedList<OrderInUser>>>(content);
                     if (respond.Result == 1)
                     {
                         return respond;
