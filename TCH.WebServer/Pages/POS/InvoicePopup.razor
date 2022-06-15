@@ -60,17 +60,7 @@
     {
         myMarkup = await orderService.PrintPDF(Id);
     }
-    public static byte[] PdfSharpConvert(string html)
-    {
-        Byte[] res = null;
-        using (MemoryStream ms = new MemoryStream())
-        {
-            var pdf = TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerator.GeneratePdf(html, PdfSharp.PageSize.A4);
-            pdf.Save(ms);
-            res = ms.ToArray();
-        }
-        return res;
-    }
+
     private async Task ExportPDF()
     {
         try
