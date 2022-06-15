@@ -684,7 +684,7 @@ public class OrderManager : IOrderRepository, IDisposable
                             && request.StartDate != null
                             && x.CreateDate.Date >= request.StartDate.Value.Date);
         //paging
-        int totalRow = await result.CountAsync();
+        int totalRow = await result.GroupBy(x => x.UserCreateID).Select(x=>x).CountAsync();
         List<OrderInUser> data;
         if (request.IsPging)
         {
