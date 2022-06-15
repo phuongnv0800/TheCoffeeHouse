@@ -266,6 +266,7 @@
     {
         pagination.PageNumber = link;
         lists= new List<ListDataItem>();
+        await Get(link);
         //await GetChartBranch(BranchId);
         StateHasChanged();
     }

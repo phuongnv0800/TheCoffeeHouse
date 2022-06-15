@@ -5,7 +5,6 @@
 @inject IJSRuntime JsRuntime;
 @inject IBrandService BranchService
 @inject IUserApiClient UserApiClient;
-@inject IUserApiClient UserApiClient;
 @attribute [Authorize]
 
 <div class="page d-flex flex-row flex-column-fluid">
@@ -200,6 +199,9 @@
     private AppUser User = null;
     public MoneyByDay MoneyByDayAll { get; set; } = new();
 
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
     public List<MoneyByDay> MoneyByDayInBranch { get; set; } = new();
 
 
@@ -207,7 +209,13 @@
     {
         try
         {
-
+            var authState = await AuthenticationState;
+            // Roles = new();
+            if (authState.User.Identity.IsAuthenticated)
+            {
+                // Name = authState.User.FindFirst(x => x.Type == ClaimTypes.GivenName)!.Value;
+                BranchId = authState.User.FindFirst(x => x.Type == ClaimValue.BranhID)!.Value;
+            }
             dateRequest = new DateRequest()
             {
                 FromDate = new DateTime(2022, 06, 01),
@@ -217,7 +225,7 @@
             User = resUser.Data;
             var res = await BranchService.GetAllBranchs("");
             BranchList = res.Data.Items;
-            BranchId = BranchList.First().ID;
+            // BranchId = BranchList.First().ID;
             await Get(1);
             await GetChartBranch(BranchId);
         }
@@ -231,8 +239,9 @@
     {
         try
         {
-            var response = await OrderService.GetOrderByCompareUser(true, pagination.pageSize, pagination.PageNumber,User.BranchID, searchText,dateRequest.FromDate, dateRequest.ToDate);
+            var response = await OrderService.GetOrderByCompareUser(true, pagination.pageSize, pageNumber,BranchId, searchText,dateRequest.FromDate, dateRequest.ToDate);
             pagination.PageNumber = response.Data.CurrentPage;
+            pagination.totalPage = response.Data.TotalPages;
             orders = response.Data.Items.ToList();
         }
         catch (Exception e)
@@ -243,7 +252,7 @@
 
     public async Task SearchByText()
     {
-        var res = await OrderService.GetOrderByCompareUser(true,10,pagination.PageNumber,User.BranchID,searchText,dateRequest.FromDate, dateRequest.ToDate);
+        var res = await OrderService.GetOrderByCompareUser(true,10,pagination.PageNumber,BranchId,searchText,dateRequest.FromDate, dateRequest.ToDate);
         orders = res.Data.Items;
         //await GetChartBranch(BranchId);
         MoneyByDayInBranch = new();
@@ -253,7 +262,9 @@
     public async Task Change(int link)
     {
         pagination.PageNumber = link;
+        await Get(link);
         lists= new List<ListDataItem>();
+        await GetChartBranch(BranchId);
         //await GetChartBranch(BranchId);
         StateHasChanged();
     }

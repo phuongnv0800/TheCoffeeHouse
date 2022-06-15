@@ -100,6 +100,7 @@
                                     <th class="min-w-300px w-475px">món</th>
                                     <th class="min-w-100px w-100px">Số lượng</th>
                                     <th class="min-w-150px w-150px">Giá</th>
+                                    <th>Chức năng</th>
                                 </tr>
                                 </thead>
                                 <!--end::Table head-->
@@ -121,6 +122,10 @@
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" value="@($"{orderDetail.SubAmount:0,0 VND}")" data-kt-element="price">
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-primary" @onclick="() => OnRemove(orderDetail.ProductID)">Xoá</button>
                                             </td>
                                         </tr>
                                     }
@@ -275,7 +280,14 @@
             toastService.ShowError("có lỗi");
         }
     }
-
+    public async Task OnRemove(string id)
+    {
+        var or = order.OrderItems.FirstOrDefault(x => x.ProductID == id);
+        order.OrderItems.Remove(or);
+        order.TotalAmount -= or.SubAmount * or.Quantity;
+        GbParameter.GbParameter.Order = order;
+        StateHasChanged();
+    }
     public async Task ShowPopUp()
     {
         var parameters = new ModalParameters();
@@ -292,7 +304,7 @@
     {
         var result = await promotionService.GetReduceMoney(codeF, order.OrderItems);
         reduce = result.Data.ReducePromotion;
-        // reduce = 6000;
+    // reduce = 6000;
         order.ReducePromotion = reduce;
         order.TotalAmount -= reduce;
         StateHasChanged();
