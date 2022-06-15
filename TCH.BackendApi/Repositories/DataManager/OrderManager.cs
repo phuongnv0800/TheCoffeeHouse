@@ -685,14 +685,16 @@ public class OrderManager : IOrderRepository, IDisposable
                             && x.CreateDate.Date >= request.StartDate.Value.Date);
         //paging
         int totalRow = await result.GroupBy(x => x.UserCreateID).CountAsync();
+
         List<OrderInUser> data;
         if (request.IsPging)
         {
-            data = result.GroupBy(x => x.UserCreateID)
+            data = result
+                .GroupBy(x => x.UserCreateID)
                 .Select(x => new OrderInUser()
                 {
                     UserCreateID = x.Key,
-                    QuantityOrder = x.Select(z=>z).Count(),
+                    QuantityOrder = x.Select(z => z).Count(),
                     Cashier = x.First().Cashier,
                     CustomerPut = x.Sum(z => z.CustomerPut),
                     CustomerReceive = x.Sum(z => z.CustomerReceive),
@@ -703,24 +705,28 @@ public class OrderManager : IOrderRepository, IDisposable
                     TotalAmount = x.Sum(z => z.TotalAmount),
                     // UserName = _context.Users.Find(x.First().UserCreateID)!.UserName,
                 })
+                .OrderBy(x => x.TotalAmount)
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToList();
         }
         else
-            data = result.GroupBy(x => x.UserCreateID).Select(x => new OrderInUser()
-            {
-                UserCreateID = x.Key,
-                Cashier = x.First().Cashier,
-                QuantityOrder =  x.Select(z=>z).Count(),
-                CustomerPut = x.Sum(z => z.CustomerPut),
-                CustomerReceive = x.Sum(z => z.CustomerReceive),
-                ReduceAmount = x.Sum(z => z.ReduceAmount),
-                ReducePromotion = x.Sum(z => z.ReducePromotion),
-                ShippingFee = x.Sum(z => z.ShippingFee),
-                SubAmount = x.Sum(z => z.SubAmount),
-                TotalAmount = x.Sum(z => z.TotalAmount),
-                // UserName = _context.Users.Find(x.First().UserCreateID)!.UserName,
-            }).ToList();
+            data = result.GroupBy(x => x.UserCreateID)
+                .Select(x => new OrderInUser()
+                {
+                    UserCreateID = x.Key,
+                    Cashier = x.First().Cashier,
+                    QuantityOrder = x.Select(z => z).Count(),
+                    CustomerPut = x.Sum(z => z.CustomerPut),
+                    CustomerReceive = x.Sum(z => z.CustomerReceive),
+                    ReduceAmount = x.Sum(z => z.ReduceAmount),
+                    ReducePromotion = x.Sum(z => z.ReducePromotion),
+                    ShippingFee = x.Sum(z => z.ShippingFee),
+                    SubAmount = x.Sum(z => z.SubAmount),
+                    TotalAmount = x.Sum(z => z.TotalAmount),
+                    // UserName = _context.Users.Find(x.First().UserCreateID)!.UserName,
+                })
+                .OrderByDescending(x => x.TotalAmount)
+                .ToList();
 
         var pagedResult = new PagedList<OrderInUser>
         {
