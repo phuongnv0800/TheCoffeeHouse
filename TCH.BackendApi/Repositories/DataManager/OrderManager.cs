@@ -684,7 +684,7 @@ public class OrderManager : IOrderRepository, IDisposable
                             && request.StartDate != null
                             && x.CreateDate.Date >= request.StartDate.Value.Date);
         //paging
-        
+        int totalRow = await result.CountAsync();
         List<OrderInUser> data;
         if (request.IsPging)
         {
@@ -719,7 +719,7 @@ public class OrderManager : IOrderRepository, IDisposable
                 TotalAmount = x.Sum(z => z.TotalAmount),
                 // UserName = _context.Users.Find(x.First().UserCreateID)!.UserName,
             }).ToList();
-        int totalRow = data.Count;
+
         var pagedResult = new PagedList<OrderInUser>
         {
             TotalRecord = totalRow,
