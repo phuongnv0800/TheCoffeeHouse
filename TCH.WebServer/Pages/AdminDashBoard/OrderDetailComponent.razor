@@ -39,8 +39,8 @@
                             @if (dateRequest != null)
                             {
                                 <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
-                                    <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid w-250px ps-14" placeholder="Ngày đầu" />
-                                    <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid w-250px ps-14" placeholder="Ngày cuốith" />
+                                    <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid " placeholder="Ngày đầu" />
+                                    <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid " placeholder="Ngày cuốith" />
                                     <button onclick="@(() => SearchByText())"
                                         class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                         Tìm kiếm
