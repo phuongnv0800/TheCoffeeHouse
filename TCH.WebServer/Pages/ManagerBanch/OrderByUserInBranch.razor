@@ -54,22 +54,28 @@
                         {
                             @foreach (var item in lists)
                             {
-                                <RadzenBarSeries  Data="@item.listItems" CategoryProperty="Quarter" Title="Lượng đơn hàng" ValueProperty="Revenue">
-                                    
-                                </RadzenBarSeries>
+                                <RadzenColumnSeries Data="@item.listItems" CategoryProperty="Quarter" Title="Doanh thu bán được" ValueProperty="Revenue">
+
+                                </RadzenColumnSeries>
                             }
                         }
                         <RadzenValueAxis>
                             @*<RadzenGridLines Visible="true" />*@
-                            <RadzenAxisTitle Text="Lượng tiêu thụ" />
+                            <RadzenAxisTitle Text="Doanh số bán hàng nhiều nhất"/>
                         </RadzenValueAxis>
                     </RadzenChart>
 
 
                     <div class="text-end d-flex mt-5">
-                        <h1>Nhân viên xuất sắc nhất: </h1>
-                        <h1 class="text-primary ms-2"></h1>
-                        
+                        <h4>Nhân viên xuất sắc nhất: </h4>
+                        <h4 class="text-primary ms-2">
+                            @NameMax
+                        </h4>
+
+                    </div>
+                    <div class="text-end d-flex mt-5">
+                        <h5> Doanh thu: </h5>
+                        <h5 class="text-primary ms-2"> @String.Format("{0:0,0 vnđ}", MoneyMax)</h5>
                     </div>
                 </div>
             </div>
@@ -110,14 +116,15 @@
                                 <tbody class="fw-bold text-gray-600">
                                 @if (orders != null)
                                 {
-                                    @if(orders?.Count > 0){
+                                    @if (orders?.Count > 0)
+                                    {
                                         foreach (var branch in orders)
                                         {
                                             <tr class="odd">
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div class="ms-5">
-                                                            <a  class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                            <a class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
                                                                 @branch.Cashier
                                                             </a>
                                                             <div class="text-muted fs-7 fw-bolder">@branch.UserName </div>
@@ -131,7 +138,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
-                                                        @branch.TotalAmount
+                                                        @($"{branch.TotalAmount:0,0 vnđ}")
                                                     </div>
                                                 </td>
                                             </tr>
@@ -140,7 +147,7 @@
                                 }
                                 else
                                 {
-                                    <Spinner Colspan="5"></Spinner>
+                                    <Spinner Colspan="7"></Spinner>
                                 }
                                 </tbody>
                             </table>
@@ -188,20 +195,24 @@
 
         public List<DataItem> listItems { get; set; }
     }
+
     private List<DataItem> items = new List<DataItem>();
     private List<ListDataItem> lists = new List<ListDataItem>();
     public List<Branch>? BranchList = new();
     public string BranchId;
-    public List<OrderInUser> orders = new();
+    public List<OrderInUser> orders;
     private Models.Pagination.Pagination pagination = new();
     private DateRequest dateRequest;
     private string searchText = "";
     private AppUser User = null;
     public MoneyByDay MoneyByDayAll { get; set; } = new();
-
+    public List<OrderInUser> OrderInUsers { get; set; }
+    public string NameMax { get; set; } = "";
+    public double MoneyMax { get; set; } = 0;
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationState { get; set; }
+
     public List<MoneyByDay> MoneyByDayInBranch { get; set; } = new();
 
 
@@ -209,11 +220,12 @@
     {
         try
         {
+            OrderInUsers = new();
             var authState = await AuthenticationState;
-            // Roles = new();
+    // Roles = new();
             if (authState.User.Identity.IsAuthenticated)
             {
-                // Name = authState.User.FindFirst(x => x.Type == ClaimTypes.GivenName)!.Value;
+    // Name = authState.User.FindFirst(x => x.Type == ClaimTypes.GivenName)!.Value;
                 BranchId = authState.User.FindFirst(x => x.Type == ClaimValue.BranhID)!.Value;
             }
             dateRequest = new DateRequest()
@@ -221,11 +233,11 @@
                 FromDate = new DateTime(2022, 06, 01),
                 ToDate = DateTime.Now
             };
-            var resUser = await UserApiClient.GetById(GbParameter.GbParameter.UserId);
-            User = resUser.Data;
-            var res = await BranchService.GetAllBranchs("");
-            BranchList = res.Data.Items;
-            // BranchId = BranchList.First().ID;
+            // var resUser = await UserApiClient.GetById(GbParameter.GbParameter.UserId);
+            // User = resUser.Data;
+            // var res = await BranchService.GetAllBranchs("");
+            // BranchList = res.Data.Items;
+    // BranchId = BranchList.First().ID;
             await Get(1);
             await GetChartBranch(BranchId);
         }
@@ -239,7 +251,7 @@
     {
         try
         {
-            var response = await OrderService.GetOrderByCompareUser(true, pagination.pageSize, pageNumber,BranchId, searchText,dateRequest.FromDate, dateRequest.ToDate);
+            var response = await OrderService.GetOrderByCompareUser(true, pagination.pageSize, pageNumber, BranchId, searchText, dateRequest.FromDate, dateRequest.ToDate);
             pagination.PageNumber = response.Data.CurrentPage;
             pagination.totalPage = response.Data.TotalPages;
             orders = response.Data.Items.ToList();
@@ -252,9 +264,9 @@
 
     public async Task SearchByText()
     {
-        var res = await OrderService.GetOrderByCompareUser(true,10,pagination.PageNumber,BranchId,searchText,dateRequest.FromDate, dateRequest.ToDate);
+        var res = await OrderService.GetOrderByCompareUser(true, 10, pagination.PageNumber, BranchId, searchText, dateRequest.FromDate, dateRequest.ToDate);
         orders = res.Data.Items;
-        //await GetChartBranch(BranchId);
+    //await GetChartBranch(BranchId);
         MoneyByDayInBranch = new();
         StateHasChanged();
     }
@@ -263,11 +275,12 @@
     {
         pagination.PageNumber = link;
         await Get(link);
-        lists= new List<ListDataItem>();
+        lists = new List<ListDataItem>();
         await GetChartBranch(BranchId);
-        //await GetChartBranch(BranchId);
+    //await GetChartBranch(BranchId);
         StateHasChanged();
     }
+
     public async Task GetChartBranch(string branchId)
     {
         try
@@ -278,25 +291,34 @@
             var branch = resb.Data;
             var resp = await OrderService.GetOrderByCompareUser(false, 10, 1, branchId, "", dateRequest.FromDate, dateRequest.ToDate);
             var orderAll = resp.Data.Items;
+            OrderInUsers = resp.Data.Items;
+            NameMax = OrderInUsers.First().Cashier;
+            MoneyMax = OrderInUsers.First().TotalAmount;
             List<DataItem> list = new List<DataItem>();
-            if(orderAll.Count > 0)
+            if (orderAll.Count > 0)
             {
-                foreach (var it in orderAll)
+                var i = 1;
+                foreach (var it in OrderInUsers.OrderByDescending(x => x.TotalAmount).ToList())
                 {
-                    DataItem data = new DataItem()
+                    if (i <= 10)
+                    {
+                        DataItem data = new DataItem()
                         {
                             Quarter = it.Cashier,
-                            Revenue = it.QuantityOrder,
+                            Revenue = it.TotalAmount,
                         };
-                    list.Add(data);
+                        list.Add(data);
+                    }
+                    i++;
                 }
                 var listdata = new ListDataItem()
-                    {
-                        branch = branch,
-                        listItems = list
-                    };
+                {
+                    branch = branch,
+                    listItems = list
+                };
                 lists.Add(listdata);
             }
+            StateHasChanged();
         }
         catch (Exception ex)
         {
@@ -310,6 +332,7 @@
         await GetChartBranch(BranchId);
         StateHasChanged();
     }
+
 }
 
 @code {

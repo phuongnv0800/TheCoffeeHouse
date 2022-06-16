@@ -705,7 +705,7 @@ public class OrderManager : IOrderRepository, IDisposable
                     TotalAmount = x.Sum(z => z.TotalAmount),
                     // UserName = _context.Users.Find(x.First().UserCreateID)!.UserName,
                 })
-                .OrderBy(x => x.TotalAmount)
+                .OrderByDescending(x => x.TotalAmount)
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize).ToList();
         }
