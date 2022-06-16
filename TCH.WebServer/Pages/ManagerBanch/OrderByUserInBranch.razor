@@ -13,38 +13,21 @@
         <div class="content flex-column flex-column-fluid" id="kt_content">
             <div class="card card-flush " style="">
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                    <div class="card-title">
-                        <div class="d-flex align-items-center position-relative my-1">
-                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
-                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
-                                </svg>
-                            </span>
-                            <div class="card-title">
-                                <div class="d-flex align-items-center position-relative my-1">
-                                    <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
-                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
-                                        </svg>
-                                    </span>
-                                    @if (dateRequest != null)
-                                    {
-                                        <EditForm Model="@dateRequest" OnValidSubmit="SearchByText" class="d-flex">
-                                            <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid " placeholder="Ngày đầu"/>
-                                            <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid " placeholder="Ngày cuốith"/>
-                                            <button onclick="@SearchByText"
-                                                    class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Tìm kiếm
-                                            </button>
-                                        </EditForm>
-                                    }
-                                </div>
+                    @if (dateRequest != null)
+                    {
+                        <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="row w-100">
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1"><InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid " placeholder="Ngày đầu" /></div>
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1">
+                                <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid " placeholder="Ngày cuốith" />
                             </div>
-
-                        </div>
-                    </div>
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1">
+                                <button onclick="@(() => SearchByText())"
+                                    class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tìm kiếm
+                                </button>
+                            </div>
+                        </EditForm>
+                    }
 
                 </div>
                 <div class="card-body pt-0">
@@ -61,7 +44,7 @@
                         }
                         <RadzenValueAxis>
                             @*<RadzenGridLines Visible="true" />*@
-                            <RadzenAxisTitle Text="Doanh số bán hàng nhiều nhất"/>
+                            <RadzenAxisTitle Text="Doanh số bán hàng nhiều nhất" />
                         </RadzenValueAxis>
                     </RadzenChart>
 
@@ -90,7 +73,7 @@
                                 </svg>
                             </span>
                             <EditForm Model="searchText" OnValidSubmit="SearchByText">
-                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-450px ps-14" placeholder="Tìm kiếm nhân viên theo tên"/>
+                                <InputText @bind-Value="searchText" type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-450px ps-14" placeholder="Tìm kiếm nhân viên theo tên" />
                             </EditForm>
                         </div>
                     </div>
@@ -101,54 +84,54 @@
                         <div class="table-responsive">
                             <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
                                 <thead>
-                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                    <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                        Tên
-                                    </th>
-                                    <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending" style="width: 159.297px;">
-                                        Số lượng đơn
-                                    </th>
-                                    <th class="min-w-150px  sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
-                                        Tổng doanh thu/người
-                                    </th>
-                                </tr>
+                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                        <th class="min-w-250px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                            Tên
+                                        </th>
+                                        <th class="min-w-150px sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category Type: activate to sort column ascending" style="width: 159.297px;">
+                                            Số lượng đơn
+                                        </th>
+                                        <th class="min-w-150px  sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
+                                            Tổng doanh thu/người
+                                        </th>
+                                    </tr>
                                 </thead>
                                 <tbody class="fw-bold text-gray-600">
-                                @if (orders != null)
-                                {
-                                    @if (orders?.Count > 0)
+                                    @if (orders != null)
                                     {
-                                        foreach (var branch in orders)
+                                        @if (orders?.Count > 0)
                                         {
-                                            <tr class="odd">
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="ms-5">
-                                                            <a class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                @branch.Cashier
-                                                            </a>
-                                                            <div class="text-muted fs-7 fw-bolder">@branch.UserName </div>
+                                            foreach (var branch in orders)
+                                            {
+                                                <tr class="odd">
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="ms-5">
+                                                                <a class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                    @branch.Cashier
+                                                                </a>
+                                                                <div class="text-muted fs-7 fw-bolder">@branch.UserName </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        @branch.QuantityOrder
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        @($"{branch.TotalAmount:0,0 vnđ}")
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            @branch.QuantityOrder
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            @($"{branch.TotalAmount:0,0 vnđ}")
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
                                         }
                                     }
-                                }
-                                else
-                                {
-                                    <Spinner Colspan="7"></Spinner>
-                                }
+                                    else
+                                    {
+                                        <Spinner Colspan="7"></Spinner>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -169,7 +152,7 @@
                             </div>
                             <div class="col-sm-12 col-md-10 d-flex align-items-center justify-content-center justify-content-md-end">
                                 <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
-                                    <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change"/>
+                                    <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
                                 </div>
                             </div>
                         </div>
@@ -222,22 +205,22 @@
         {
             OrderInUsers = new();
             var authState = await AuthenticationState;
-    // Roles = new();
+            // Roles = new();
             if (authState.User.Identity.IsAuthenticated)
             {
-    // Name = authState.User.FindFirst(x => x.Type == ClaimTypes.GivenName)!.Value;
+                // Name = authState.User.FindFirst(x => x.Type == ClaimTypes.GivenName)!.Value;
                 BranchId = authState.User.FindFirst(x => x.Type == ClaimValue.BranhID)!.Value;
             }
             dateRequest = new DateRequest()
-            {
-                FromDate = new DateTime(2022, 06, 01),
-                ToDate = DateTime.Now
-            };
+                {
+                    FromDate = new DateTime(2022, 06, 01),
+                    ToDate = DateTime.Now
+                };
             // var resUser = await UserApiClient.GetById(GbParameter.GbParameter.UserId);
             // User = resUser.Data;
             // var res = await BranchService.GetAllBranchs("");
             // BranchList = res.Data.Items;
-    // BranchId = BranchList.First().ID;
+            // BranchId = BranchList.First().ID;
             await Get(1);
             await GetChartBranch(BranchId);
         }
@@ -266,7 +249,7 @@
     {
         var res = await OrderService.GetOrderByCompareUser(true, 10, pagination.PageNumber, BranchId, searchText, dateRequest.FromDate, dateRequest.ToDate);
         orders = res.Data.Items;
-    //await GetChartBranch(BranchId);
+        //await GetChartBranch(BranchId);
         MoneyByDayInBranch = new();
         StateHasChanged();
     }
@@ -277,7 +260,7 @@
         await Get(link);
         lists = new List<ListDataItem>();
         await GetChartBranch(BranchId);
-    //await GetChartBranch(BranchId);
+        //await GetChartBranch(BranchId);
         StateHasChanged();
     }
 
@@ -303,19 +286,19 @@
                     if (i <= 10)
                     {
                         DataItem data = new DataItem()
-                        {
-                            Quarter = it.Cashier,
-                            Revenue = it.TotalAmount,
-                        };
+                            {
+                                Quarter = it.Cashier,
+                                Revenue = it.TotalAmount,
+                            };
                         list.Add(data);
                     }
                     i++;
                 }
                 var listdata = new ListDataItem()
-                {
-                    branch = branch,
-                    listItems = list
-                };
+                    {
+                        branch = branch,
+                        listItems = list
+                    };
                 lists.Add(listdata);
             }
             StateHasChanged();

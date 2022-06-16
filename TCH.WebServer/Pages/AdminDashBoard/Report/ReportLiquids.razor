@@ -13,27 +13,23 @@
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
             <div class="card card-flush " style="margin-top:65px">
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                    <div class="card-title">
-                        <div class="d-flex align-items-center position-relative my-1">
-                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
-                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
-                                </svg>
-                            </span>
-                            @if (dateRequest != null)
-                            {
-                                <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
-                                    <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid " placeholder="Ngày đầu"/>
-                                    <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid " placeholder="Ngày cuốith"/>
-                                    <button onclick="@(() => SearchByText())"
-                                            class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Tìm kiếm
-                                    </button>
-                                </EditForm>
-                            }
-                        </div>
-                    </div>
+
+                    @if (dateRequest != null)
+                    {
+                        <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="row w-100">
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1"><InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid " placeholder="Ngày đầu" /></div>
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1">
+                                <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid " placeholder="Ngày cuốith" />
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1">
+                                <button onclick="@(() => SearchByText())"
+                                    class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tìm kiếm
+                                </button>
+                            </div>
+                        </EditForm>
+                    }
+
                 </div>
                 <div class="card-body pt-0">
                     <div class="row">
@@ -41,13 +37,13 @@
                             <div class="card-body pt-0">
                                 <RadzenChart>
                                     <RadzenLineSeries Smooth="true" Data="@items" CategoryProperty="Date" Title="Tháng 6/2022" ValueProperty="Revenue">
-                                        <RadzenMarkers MarkerType="MarkerType.Square"/>
+                                        <RadzenMarkers MarkerType="MarkerType.Square" />
                                     </RadzenLineSeries>
 
-                                    <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}"/>
+                                    <RadzenCategoryAxis Padding="20" FormatString="{0:ddd}" />
                                     <RadzenValueA98-xis>
                                         @*<RadzenGridLines Visible="true" />*@
-                                        <RadzenAxisTitle Text="Lượng hàng bị thanh lý"/>
+                                        <RadzenAxisTitle Text="Lượng hàng bị thanh lý" />
                                     </RadzenValueA98-xis>
                                 </RadzenChart>
                                 <div class="text-end d-flex mt-5">
@@ -61,114 +57,114 @@
                                 <div class="table-responsive">
                                     <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
                                         <thead>
-                                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                            <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
-                                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
-                                                </div>
-                                            </th>
-                                            <th class=" sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Tên phiếu thanh lý
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Người thanh lý
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Vai trò
-                                            </th>
-                                            
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Tên kho
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Địa chỉ
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Ngày tạo phiếu
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Chi phí khôi phục
-                                            </th>
-                                            <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
-                                                Thao tác
-                                            </th>
-                                        </tr>
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
+                                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                                        <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
+                                                    </div>
+                                                </th>
+                                                <th class=" sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Tên phiếu thanh lý
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Người thanh lý
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Vai trò
+                                                </th>
+
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Tên kho
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Địa chỉ
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Ngày tạo phiếu
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Chi phí khôi phục
+                                                </th>
+                                                <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
+                                                    Thao tác
+                                                </th>
+                                            </tr>
                                         </thead>
                                         <tbody class="fw-bold text-gray-600">
-                                        @if (ProductsList.Count != 0)
-                                        {
-                                            foreach (var product in ProductsList)
+                                            @if (ProductsList.Count != 0)
                                             {
-                                                string href = "/liquidations/" + product.ID.ToString();
-                                                <tr class="odd">
-                                                    <td>
-                                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                            <input class="form-check-input" type="checkbox" value="1">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="ms-5">
-                                                                <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
-                                                                    @product.Name
-                                                                </a>
-                                                                <div class="text-muted fs-7 fw-bolder">@product.Code</div>
+                                                foreach (var product in ProductsList)
+                                                {
+                                                    string href = "/liquidations/" + product.ID.ToString();
+                                                    <tr class="odd">
+                                                        <td>
+                                                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                                <input class="form-check-input" type="checkbox" value="1">
                                                             </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="ms-5">
+                                                                    <a href="@href" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
+                                                                        @product.Name
+                                                                    </a>
+                                                                    <div class="text-muted fs-7 fw-bolder">@product.Code</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.LiquidationName</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.LiquidationRole</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.StockName</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.Address</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="text-muted fs-7 fw-bolder">@product.CreateDate.ToShortDateString()</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="text-muted text-center fs-7 fw-bolder">@product.RecoveryValue vnđ</div>
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <div class="dropdown">
+                                                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    Thao tác
+                                                                </button>
+                                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                                    <li>
+                                                                        <a class="dropdown-item" onclick="@(() => Delete(@product.ID.ToString()))">Xóa</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr class="odd">
+                                                    <td colspan="9">
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+                                                                <defs>
+                                                                    <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+                                                                        <stop offset="0%" stop-color="hsl(193,90%,55%)" />
+                                                                        <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round" />
+                                                                <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10" />
+                                                            </svg>
                                                         </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="text-muted fs-7 fw-bolder">@product.LiquidationName</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="text-muted fs-7 fw-bolder">@product.LiquidationRole</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="text-muted fs-7 fw-bolder">@product.StockName</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="text-muted fs-7 fw-bolder">@product.Address</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="text-muted fs-7 fw-bolder">@product.CreateDate.ToShortDateString()</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="text-muted text-center fs-7 fw-bolder">@product.RecoveryValue vnđ</div>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                Thao tác
-                                                            </button>
-                                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                                <li>
-                                                                    <a class="dropdown-item" onclick="@(() => Delete(@product.ID.ToString()))">Xóa</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+
                                                     </td>
                                                 </tr>
                                             }
-                                        }
-                                        else
-                                        {
-                                            <tr class="odd">
-                                                <td colspan="9">
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
-                                                            <defs>
-                                                                <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
-                                                                    <stop offset="0%" stop-color="hsl(193,90%,55%)"/>
-                                                                    <stop offset="100%" stop-color="hsl(223,90%,55%)"/>
-                                                                </linearGradient>
-                                                            </defs>
-                                                            <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round"/>
-                                                            <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10"/>
-                                                        </svg>
-                                                    </div>
-
-                                                </td>
-                                            </tr>
-                                        }
                                         </tbody>
                                     </table>
                                 </div>
@@ -189,7 +185,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-10 d-flex align-items-center justify-content-center justify-content-md-end">
                                         <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
-                                            <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change"/>
+                                            <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
                                         </div>
                                     </div>
                                 </div>
@@ -208,7 +204,7 @@
     public List<Report>? ProductsList = new List<Report>();
     private string? token;
     public string Name;
-    private Models.Pagination.Pagination pagination = new ();
+    private Models.Pagination.Pagination pagination = new();
     private DateRequest dateRequest;
     private double Sum;
 
@@ -228,10 +224,10 @@
         try
         {
             dateRequest = new DateRequest()
-            {
-                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 01),
-                ToDate = DateTime.Now
-            };
+                {
+                    FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 01),
+                    ToDate = DateTime.Now
+                };
             await Get(1);
             await GetChart();
             base.OnParametersSet();
@@ -268,10 +264,10 @@
                 double sum = orders.Sum(x => x.TotalAmount);
                 Sum += sum;
                 DataItem item = new DataItem
-                {
-                    Date = date,
-                    Revenue = sum
-                };
+                    {
+                        Date = date,
+                        Revenue = sum
+                    };
                 items.Add(item);
             }
         }

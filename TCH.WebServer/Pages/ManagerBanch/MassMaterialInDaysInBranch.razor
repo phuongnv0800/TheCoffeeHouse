@@ -10,31 +10,25 @@
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
             <div class="card card-flush " style="margin-top:65px">
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                    <div class="card-title">
-                        <div class="d-flex align-items-center position-relative my-1">
-                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
-                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
-                                </svg>
-                            </span>
-                            @if (dateRequest != null)
-                            {
-                                <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
-                                    <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid " placeholder="Ngày đầu" />
-                                    <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid " placeholder="Ngày cuốith" />
-                                    <button onclick="@(() => SearchByText())"
-                                        class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Tìm kiếm
-                                    </button>
-                                </EditForm>
-                            }
-                        </div>
-                    </div>
+                    @if (dateRequest != null)
+                    {
+                        <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="row w-100">
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1"><InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid " placeholder="Ngày đầu" /></div>
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1">
+                                <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid " placeholder="Ngày cuốith" />
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1">
+                                <button onclick="@(() => SearchByText())"
+                                    class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tìm kiếm
+                                </button>
+                            </div>
+                        </EditForm>
+                    }
                 </div>
                 <div class="card-body pt-0">
                     <div class="row">
-                        
+
                         <div class="col-12">
                             <div id="kt_ecommerce_category_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                 <div class="table-responsive">
@@ -62,7 +56,7 @@
                                             {
                                                 foreach (var product in ProductsList)
                                                 {
-                                                    
+
                                                     <tr class="odd">
                                                         <td>
                                                             <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -78,7 +72,7 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                         <td>
+                                                        <td>
                                                             <div class="d-flex align-items-center">
                                                                 <div class="ms-5">
                                                                     <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1" data-kt-ecommerce-category-filter="category_name">
@@ -107,12 +101,12 @@
                                                             <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
                                                                 <defs>
                                                                     <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
-                                                                        <stop offset="0%" stop-color="hsl(193,90%,55%)"/>
-                                                                        <stop offset="100%" stop-color="hsl(223,90%,55%)"/>
+                                                                        <stop offset="0%" stop-color="hsl(193,90%,55%)" />
+                                                                        <stop offset="100%" stop-color="hsl(223,90%,55%)" />
                                                                     </linearGradient>
                                                                 </defs>
-                                                                <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round"/>
-                                                                <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10"/>
+                                                                <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round" />
+                                                                <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10" />
                                                             </svg>
                                                         </div>
 
@@ -195,7 +189,7 @@
                     FromDate = new DateTime(2022, 06, 01),
                     ToDate = DateTime.Now
                 };
-           
+
             await Get(1);
             base.OnParametersSet();
         }

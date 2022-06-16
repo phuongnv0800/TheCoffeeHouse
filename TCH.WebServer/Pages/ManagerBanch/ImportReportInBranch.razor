@@ -12,27 +12,21 @@
         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
             <div class="card card-flush " style="margin-top:65px">
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                    <div class="card-title">
-                        <div class="d-flex align-items-center position-relative my-1">
-                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
-                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
-                                </svg>
-                            </span>
-                            @if (dateRequest != null)
-                            {
-                                <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="d-flex">
-                                    <InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid " placeholder="Ngày đầu"/>
-                                    <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid " placeholder="Ngày cuốith"/>
-                                    <button onclick="@(() => SearchByText())"
-                                            class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Tìm kiếm
-                                    </button>
-                                </EditForm>
-                            }
-                        </div>
-                    </div>
+                    @if (dateRequest != null)
+                    {
+                        <EditForm Model="dateRequest" OnValidSubmit="SearchByText" class="row w-100">
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1"><InputDate @bind-Value="dateRequest.FromDate" class="form-control form-control-solid " placeholder="Ngày đầu" /></div>
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1">
+                                <InputDate @bind-Value="dateRequest.ToDate" class="form-control ms-2 form-control-solid " placeholder="Ngày cuốith" />
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-3 my-1 ms-1">
+                                <button onclick="@(() => SearchByText())"
+                                    class="btn btn-primary  ms-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tìm kiếm
+                                </button>
+                            </div>
+                        </EditForm>
+                    }
                 </div>
                 <div class="card-body pt-0">
                     <div class="row">
@@ -40,13 +34,13 @@
                             <div class="card-body pt-0">
                                 <RadzenChart>
                                     <RadzenLineSeries Smooth="true" Data="@items" CategoryProperty="Date" Title="Tháng 6/2022" ValueProperty="Revenue">
-                                        <RadzenMarkers MarkerType="MarkerType.Square"/>
+                                        <RadzenMarkers MarkerType="MarkerType.Square" />
                                     </RadzenLineSeries>
 
-                                    <RadzenCategoryAxis Padding="20" FormatString="{0:dd-MM-yyyy}"/>
+                                    <RadzenCategoryAxis Padding="20" FormatString="{0:dd-MM-yyyy}" />
                                     <RadzenValueA98-xis>
                                         @*<RadzenGridLines Visible="true" />*@
-                                        <RadzenAxisTitle Text="Lượng hàng nhập"/>
+                                        <RadzenAxisTitle Text="Lượng hàng nhập" />
                                     </RadzenValueA98-xis>
                                 </RadzenChart>
                                 <div class="text-end d-flex mt-5">
@@ -60,42 +54,42 @@
                                 <div class="table-responsive">
                                     <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_ecommerce_category_table">
                                         <thead>
-                                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                            <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
-                                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
-                                                </div>
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Tên phiếu nhập
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Tên kho
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Địa chỉ
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Nơi cung cấp
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Ngày tạo phiếu
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
-                                                Chi phí
-                                            </th>
-                                            <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
-                                                Chức năng
-                                            </th>
-                                        </tr>
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 29.25px;">
+                                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                                        <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1">
+                                                    </div>
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Tên phiếu nhập
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Tên kho
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Địa chỉ
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Nơi cung cấp
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Ngày tạo phiếu
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 637.234px;">
+                                                    Chi phí
+                                                </th>
+                                                <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 103.969px;">
+                                                    Chức năng
+                                                </th>
+                                            </tr>
                                         </thead>
                                         <tbody class="fw-bold text-gray-600">
-                                        @if (ProductsList != null)
-                                        {
-                                            foreach (var product in ProductsList)
+                                            @if (ProductsList != null)
                                             {
-                                                string href = "/imports/" + product.ID.ToString();
-                                                <tr class="odd">
+                                                foreach (var product in ProductsList)
+                                                {
+                                                    string href = "/imports/" + product.ID.ToString();
+                                                    <tr class="odd">
                                                         <td>
                                                             <div class="form-check form-check-sm form-check-custom form-check-solid">
                                                                 <input class="form-check-input" type="checkbox" value="1">
@@ -137,12 +131,12 @@
                                                             </div>
                                                         </td>
                                                     </tr>
+                                                }
                                             }
-                                        }
-                                        else
-                                        {
-                                            <Spinner Colspan="8"></Spinner>
-                                        }
+                                            else
+                                            {
+                                                <Spinner Colspan="8"></Spinner>
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -163,7 +157,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-10 d-flex align-items-center justify-content-center justify-content-md-end">
                                         <div class="dataTables_paginate paging_simple_numbers w-100" id="kt_ecommerce_category_table_paginate">
-                                            <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change"/>
+                                            <Pagination Count="@(pagination.totalPage)" SelectedChanged="Change" />
                                         </div>
                                     </div>
                                 </div>
@@ -208,10 +202,10 @@
         try
         {
             dateRequest = new DateRequest()
-            {
-                FromDate = new DateTime(2022, 06, 01),
-                ToDate = DateTime.Now
-            };
+                {
+                    FromDate = new DateTime(2022, 06, 01),
+                    ToDate = DateTime.Now
+                };
             var authState = await AuthenticationState;
             if (authState.User.Identity!.IsAuthenticated)
             {
@@ -252,17 +246,17 @@
         {
             for (var date = dateRequest.FromDate.Date; date <= dateRequest.ToDate.Date; date = date.AddDays(1))
             {
-    //int daysInMonth = DateTime.DaysInMonth(year: 2022, month: date);
-    //var lastDayOfMonth = new DateTime(2022, date, daysInMonth);
+                //int daysInMonth = DateTime.DaysInMonth(year: 2022, month: date);
+                //var lastDayOfMonth = new DateTime(2022, date, daysInMonth);
                 var respond = await reportService.GetAllImportInBranch(false, 10, 1, BranchId, date, date);
                 List<Report> orders = respond.Data.Items;
                 double sum = orders.Sum(x => x.TotalAmount);
                 Sum += sum;
                 DataItem item = new DataItem
-                {
-                    Date = date,
-                    Revenue = sum
-                };
+                    {
+                        Date = date,
+                        Revenue = sum
+                    };
                 items.Add(item);
             }
         }
