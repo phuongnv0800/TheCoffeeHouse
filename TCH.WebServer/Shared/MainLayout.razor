@@ -6,7 +6,7 @@
 <PageTitle>Quản lý The Coffee House</PageTitle>
 
 <Layout>
-    if (authState.User.Identity.IsAuthenticated){
+
     <Aside>
         <AsideBrand Logo="" Class="px-4">
             <span class="text-primary fw-bolder fs-6 lh-base ms-2">The Coffee House</span>
@@ -18,15 +18,17 @@
 
         <AsideFooter FullName=@Name Description=@Des Image="assets/media/avatars/300-1.jpg"/>
     </Aside>
-    }
-    <Page Logo="">
-        <Mobile>
-            <span class="text-primary fw-bolder fs-6 lh-base ms-2">The Coffee House</span>
-        </Mobile>
-        <Content>
-            @Body
-        </Content>
-    </Page>
+
+
+    <div class="full-content">
+        <div class="full-mobile d-flex">
+            <Mobile>
+                <span class="text-primary fw-bolder fs-6 lh-base ms-2">The Coffee House</span>
+            </Mobile>
+        </div>
+        @Body
+    </div>
+
 </Layout>
 
 <Overlay/>
