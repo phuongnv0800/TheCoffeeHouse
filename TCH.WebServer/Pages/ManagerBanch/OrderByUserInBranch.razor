@@ -196,16 +196,16 @@
         public List<DataItem> listItems { get; set; }
     }
 
+    public MoneyByDay MoneyByDayAll { get; set; } = new();
     private List<DataItem> items = new List<DataItem>();
-    private List<ListDataItem> lists = new List<ListDataItem>();
     public List<Branch>? BranchList = new();
+    private List<ListDataItem> lists = new List<ListDataItem>();
     public string BranchId;
     public List<OrderInUser> orders;
     private Models.Pagination.Pagination pagination = new();
     private DateRequest dateRequest;
     private string searchText = "";
     private AppUser User = null;
-    public MoneyByDay MoneyByDayAll { get; set; } = new();
     public List<OrderInUser> OrderInUsers { get; set; }
     public string NameMax { get; set; } = "";
     public double MoneyMax { get; set; } = 0;
