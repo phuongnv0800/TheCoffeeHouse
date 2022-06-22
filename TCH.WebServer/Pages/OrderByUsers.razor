@@ -40,17 +40,15 @@
                         <div class="col-12 col-lg-2 my-2">
                             @if (BranchId != null)
                             {
-                                <EditForm Model="@BranchId" class="d-flex ms-2">
-                                    <select @onchange="@(value => DoStuff(value))" class="form-control">
-                                        @if (BranchList != null)
+                                <select @onchange="@DoStuff" class="form-control">
+                                    @if (BranchList != null)
+                                    {
+                                        @foreach (var dept in BranchList)
                                         {
-                                            @foreach (var dept in BranchList)
-                                            {
-                                                <option value="@dept.ID">@dept.Name</option>
-                                            }
+                                            <option value="@dept.ID">@dept.Name</option>
                                         }
-                                    </select>
-                                </EditForm>
+                                    }
+                                </select>
                             }
                         </div>
                     </div>
@@ -320,7 +318,7 @@
         BranchId = args?.Value.ToString();
         await Get(1);
         await GetChartBranch(BranchId);
-        StateHasChanged();
+    // StateHasChanged();
     }
 
 }
